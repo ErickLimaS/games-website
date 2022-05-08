@@ -15,6 +15,7 @@ export const Container = styled.header`
         h1{
             font-size: 2.4rem;
             font-weight: 600;
+            color: #5c16c5;
         }
     }
 
@@ -26,19 +27,24 @@ export const Container = styled.header`
         }
 
         button{
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 36px;
             width: 36px;
             padding: 0.9rem 0.3rem;
             background-color: rgba(250,250,250,.9);
-            border: 1px solid #e3e3e3;
+            border: 1px solid transparent;
             border-radius: 4px;
 
             svg{
-                fill: #000;
+                fill: #5c16c5;
+                height: 36px;
+                width: 36px;
             }
 
             :hover{
-              border: 1px solid #c0c0c0;
+              border: 1px solid #5c16c5;
               background-color: rgba(250,250,250,.1);
             }
         }
@@ -63,10 +69,12 @@ export const Container = styled.header`
             h2{
                 font-size: 2.4rem;
                 margin: 2rem 0;
+                color: #5c16c5;
             }
             li{
                 font-size: 1.6rem;
                 margin: 1rem 0;
+                color: #3a3a3a;
             }
         }
         .dropdown-not-active{
@@ -94,6 +102,10 @@ export const Container = styled.header`
             h2{
                 font-size: 2rem;
                 font-weight: 600;
+
+                a{
+                    color: #5c16c5;
+                }
             }
 
             :hover > .desktop-ul-hover{
@@ -109,6 +121,7 @@ export const Container = styled.header`
                 li{
                     width: 100%;
                     margin: 0.5rem 0;
+                    color: #5c16c5;
                 }
 
 
@@ -133,13 +146,16 @@ export const Container = styled.header`
                 height: inherit;
                 padding: 0.9rem 0.3rem;
                 background-color: rgba(250,250,250,.9);
-                border: 1px solid #e3e3e3;
+                border: 1px solid transparent;
                 border-radius: 4px;
                 display: flex;
                 align-items: center;
 
                 svg{
                     margin: 0 0.6rem;
+                    color: #5c16c5;
+                    width: 20px;
+                    height: 20px;
                 }
 
                 @media(max-width: 490px){
@@ -150,7 +166,7 @@ export const Container = styled.header`
 
                 :hover{
                     background-color: rgba(250,250,250,1);
-                    border: 1px solid #c0c0c0;
+                    border: 1px solid #5c16c5;
                 }
             }
             button.active{
@@ -218,14 +234,22 @@ export const Container = styled.header`
         }
         button{
             padding: 0.8rem 0.6rem;
-            border: 1px solid #c0c0c0;
+            border: 1px solid #5c16c5;
             border-radius: 4000px;
             background-color: rgba(250,250,250,.8);
             cursor: pointer;
 
+            svg{
+                color: #5c16c5;
+
+            }
+
             :hover{
-                border: 1px solid #000;
-                background-color: rgba(250,250,250,1);
+                background-color: #955eed;
+
+                svg{
+                    color: #FFF;
+                }
             }
         }
     }

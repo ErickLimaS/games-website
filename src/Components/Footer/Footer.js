@@ -21,11 +21,11 @@ export default function Footer() {
           </nav>
         </div>
         <div className='disclaimer'>
-          <h5>Site usando a IGDB API, operada pela Twitch.</h5>
+          <h5>Site usando a IGDB API, operada pela <a href='https://www.twitch.tv/' target='_blank' rel='noreferrer'><span>Twitch</span></a>.</h5>
         </div>
       </div>
       <div>
-        <small>Site para o Portfólio de <a href='https://erick-lima.netlify.app/' target='_blank' rel='noreferrer'>Erick Lima</a>.</small>
+        <small>Site para o <a href='https://erick-lima.netlify.app/' target='_blank' rel='noreferrer'>Meu Portfólio</a>.</small>
       </div>
     </C.Container>
   )

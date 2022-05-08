@@ -19,6 +19,10 @@ export const Container = styled.footer`
 
         nav{
             margin: 1rem 0;
+
+            *{
+                color: #5c16c5;
+            }
         }
 
         .disclaimer{
@@ -27,7 +31,15 @@ export const Container = styled.footer`
             padding: 0.5rem;
             border-radius: 4px;
             font-size: 1.6rem;
-            margin: 1rem 0;
+            margin: 1rem 2.5rem;
+
+            span{
+                color: #5c16c5;
+            }
+
+            a:hover{
+                text-decoration: underline;
+            }
 
             *{
                 font-weight: 600;
