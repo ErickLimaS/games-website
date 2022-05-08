@@ -1,12 +1,31 @@
 import React, { useState } from 'react'
 import * as C from './styles'
-import { ReactComponent as SearchSvg } from '../../img/svg/search.svg'
-import { ReactComponent as ListSvg } from '../../img/svg/list.svg'
+import API from '../../../API/IGDB'
+import SearchFromHeader from '../../../Components/Search/SearchFromHeader'
+import { ReactComponent as SearchSvg } from '../../../img/svg/search.svg'
+import { ReactComponent as ListSvg } from '../../../img/svg/list.svg'
 
 export default function Header() {
 
   const [mobileClickSearch, setMobileCLickSearch] = useState(false)
   const [mobileClickMenu, setMobileCLickMenu] = useState(false)
+  const [gamesSearched, setGamesSearched] = useState([])
+  const [isFetch, setIsFetch] = useState(false)
+
+  const searchForGames = async (itemToBeSearched) => {
+    const data = await API.getSearchResults(itemToBeSearched)
+    setGamesSearched(data)
+    setTimeout(function () {
+      setIsFetch(true)
+    }
+      , 3000)
+
+    console.log(data)
+    console.log(gamesSearched)
+
+    return gamesSearched
+
+  }
 
   return (
     <C.Container>
@@ -124,7 +143,7 @@ export default function Header() {
       </div>
 
       <div className='header-company-name'>
-        <a href='#'>
+        <a href='/'>
           <h1>My Next Game</h1>
         </a>
       </div>
@@ -235,6 +254,7 @@ export default function Header() {
           </div>
         </nav>
       </div>
+
       <div className='mobile-search'>
 
         <button id='header-button-mobile' className={mobileClickSearch === true ? 'active' : ''} type='button' onClick={() => { setMobileCLickSearch(!mobileClickSearch) }}>
@@ -242,19 +262,42 @@ export default function Header() {
         </button>
 
         <div className={mobileClickSearch === true ? 'mobile-input active' : 'mobile-input'}>
-          <label htmlFor='input-search-text'></label>
-          <input type='text' id='input-search-text' placeholder='Ex: Tomb Raider'></input>
-          <button type='button'><SearchSvg /></button>
+          <div className='input-and-button'>
+            <label htmlFor='input-search-text'></label>
+            <input type='text'
+              id='input-search-text'
+              placeholder='Ex: Tomb Raider'
+              onChange={(e) => { if (e.target.value.length >= 3) setTimeout(searchForGames(e.target.value), 3000) }}
+            ></input>
+            <button type='button'><SearchSvg /></button>
+          </div>
+          <div className='search-results-mobile-2'>
+            {isFetch === true &&
+              gamesSearched.map((item, key) => (
+                <SearchFromHeader item={item} key={key} />
+              ))
+            }
+          </div>
         </div>
 
       </div>
 
       <div className='search-input'>
-
         <label htmlFor='input-search-text'></label>
-        <input type='text' id='input-search-text' placeholder='Ex: Tomb Raider'></input>
+        <input type='text'
+          id='input-search-text'
+          placeholder='Ex: Tomb Raider'
+          onChange={(e) => { if (e.target.value.length >= 3) { setTimeout(searchForGames(e.target.value), 3000) } }}
+        ></input>
         <button type='button'><SearchSvg /></button>
 
+        <div className='search-results-desktop'>
+          {isFetch === true &&
+            gamesSearched.map((item, key) => (
+              <SearchFromHeader item={item} key={key} />
+            ))
+          }
+        </div>
       </div>
 
     </C.Container>

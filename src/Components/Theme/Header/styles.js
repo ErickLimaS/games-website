@@ -182,10 +182,19 @@ export const Container = styled.header`
                 background: rgba(0,0,0,.4);
                 border-radius: 4px 0px 0px 4px;
                 display: flex;
+                flex-direction: column;
                 position: fixed;
                 right: 0rem;
                 top: 9vh;
 
+                .input-and-button{
+                    display: flex;
+                    justify-content: center;
+                    margin-bottom: 1rem;
+                }
+                .search-results-mobile-2{
+                    overflow: auto;
+                }
                 input{
                     padding: 0.5rem;
                     font-size: 1.6rem;
@@ -223,6 +232,7 @@ export const Container = styled.header`
         *{
             margin: 0 0.4rem;
         }
+
         input#input-search-text{
             padding: 0.5rem;
             font-size: 1.6rem;
@@ -232,6 +242,7 @@ export const Container = styled.header`
             width: 170px;
 
         }
+
         button{
             padding: 0.8rem 0.6rem;
             border: 1px solid #5c16c5;
@@ -251,6 +262,12 @@ export const Container = styled.header`
                     color: #FFF;
                 }
             }
+        }
+
+        .search-results-desktop{
+            position: absolute;
+            top: 10vh;
+            right: 5vh;
         }
     }
 

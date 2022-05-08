@@ -262,7 +262,6 @@ export default {
             //get ScreenShots
             gameInfo[0].screenshots = await response.data[0].screenshots.map(item => {
 
-
                 let results = [];
 
                 Axios({
@@ -363,6 +362,59 @@ export default {
         });
 
         return gameInfo[0]
+
+    },
+
+    getSearchResults: async (searchedItem) => { // Value = any
+
+        let data = [];
+
+        await Axios({
+            url: `${CORS_ANYWHERE}${API_BASE}/games/?search=${searchedItem}&fields=*`,
+            // url: `${CORS_ANYWHERE}${API_BASE}/games/?search=zelda&fields=*`, TEST
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Client-ID': `${CLIENT_ID}`,
+                'Authorization': `Bearer ${AUTHORIZATION}`,
+            },
+            data: ""
+
+        }
+        ).then(async (response) => {
+
+            console.log(response)
+
+            data = await response.data.map(item => {
+
+                let results = [];
+
+                results.name = item.name
+                results.id = item.id
+
+                Axios({
+                    url: `${CORS_ANYWHERE}${API_BASE}/covers/${item.cover}?fields=*`,
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Client-ID': `${CLIENT_ID}`,
+                        'Authorization': `Bearer ${AUTHORIZATION}`,
+                    }
+                }).then(response2 => {
+
+                    results.cover_big_url = (`https://images.igdb.com/igdb/image/upload/t_cover_big/${response2.data[0].image_id}.png`)
+                    results.cover_small_url = (response2.data[0].url)
+
+                })
+
+                return results
+
+            })
+
+        }).catch(err => { console.log(err) })
+
+        console.log(data)
+        return data;
 
     }
 }
