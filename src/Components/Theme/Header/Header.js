@@ -4,6 +4,16 @@ import API from '../../../API/IGDB'
 import SearchFromHeader from '../../../Components/Search/SearchFromHeader'
 import { ReactComponent as SearchSvg } from '../../../img/svg/search.svg'
 import { ReactComponent as ListSvg } from '../../../img/svg/list.svg'
+import { ReactComponent as DotsSvg } from '../../../img/svg/three-dots.svg'
+import { ReactComponent as NintendoSvg } from '../../../img/svg/nintendo-switch.svg'
+import { ReactComponent as XboxSvg } from '../../../img/svg/xbox.svg'
+import { ReactComponent as PlaystationSvg } from '../../../img/svg/playstation.svg'
+import { ReactComponent as PcSvg } from '../../../img/svg/pc.svg'
+import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
+import { ReactComponent as SpinnerWhiteSvg } from '../../../img/svg/Spinner-1s-200px-white.svg'
+// import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 export default function Header() {
 
@@ -11,14 +21,20 @@ export default function Header() {
   const [mobileClickMenu, setMobileCLickMenu] = useState(false)
   const [gamesSearched, setGamesSearched] = useState([])
   const [isFetch, setIsFetch] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const searchForGames = async (itemToBeSearched) => {
+    setLoading(true)
     const data = await API.getSearchResults(itemToBeSearched)
     setGamesSearched(data)
     setTimeout(function () {
+
       setIsFetch(true)
-    }
-      , 3000)
+
+      setLoading(false)
+
+    }, 3000)
+
 
     console.log(data)
     console.log(gamesSearched)
@@ -157,31 +173,31 @@ export default function Header() {
             <ul>
               <a href='#'>
                 <li>
-                  <i></i>Playstation
+                  <PlaystationSvg fill='#00439C' /> <span>Playstation</span>
                 </li>
               </a>
               <hr />
               <a href='#'>
                 <li>
-                  <i></i>Xbox
+                  <XboxSvg fill='#107C10' /> <span>Xbox</span>
                 </li>
               </a>
               <hr />
               <a href='#'>
                 <li>
-                  <i></i>Nintendo
+                  <NintendoSvg fill='#E70009' /> <span>Nintendo</span>
                 </li>
               </a>
               <hr />
               <a href='#'>
                 <li>
-                  <i></i>PC
+                  <PcSvg fill='#000' /> <span>PC</span>
                 </li>
               </a>
               <hr />
               <a href='#'>
                 <li>
-                  <i></i>Others
+                  <DotsSvg fill='#000' /> <span>Others</span>
                 </li>
               </a>
             </ul>
@@ -272,31 +288,47 @@ export default function Header() {
             <button type='button'><SearchSvg /></button>
           </div>
           <div className='search-results-mobile-2'>
-            {isFetch === true &&
-              gamesSearched.map((item, key) => (
-                <SearchFromHeader item={item} key={key} />
-              ))
-            }
+            {loading === true && (
+              <div className='loading'>
+                <SpinnerWhiteSvg width={50} height={50} />
+              </div>
+            )}
+            <div className='search-result'>
+              {isFetch === true &&
+                gamesSearched.map((item, key) => (
+                  <SearchFromHeader item={item} key={key} />
+                ))
+              }
+            </div>
           </div>
         </div>
 
       </div>
 
       <div className='search-input'>
-        <label htmlFor='input-search-text'></label>
-        <input type='text'
-          id='input-search-text'
-          placeholder='Ex: Tomb Raider'
-          onChange={(e) => { if (e.target.value.length >= 3) { setTimeout(searchForGames(e.target.value), 3000) } }}
-        ></input>
-        <button type='button'><SearchSvg /></button>
+        <div>
+          <label htmlFor='input-search-text'></label>
+          <input type='text'
+            id='input-search-text'
+            placeholder='Ex: Tomb Raider'
+            onChange={(e) => { if (e.target.value.length >= 3) { setTimeout(searchForGames(e.target.value), 3000) } }}
+          ></input>
+          <button type='button'><SearchSvg /></button>
+        </div>
 
         <div className='search-results-desktop'>
-          {isFetch === true &&
-            gamesSearched.map((item, key) => (
-              <SearchFromHeader item={item} key={key} />
-            ))
-          }
+          {loading === true && (
+            <div className='loading'>
+              <SpinnerSvg width={50} height={50} />
+            </div>
+          )}
+          <div className='search-result'>
+            {isFetch === true &&
+              gamesSearched.map((item, key) => (
+                <SearchFromHeader item={item} key={key} />
+              ))
+            }
+          </div>
         </div>
       </div>
 

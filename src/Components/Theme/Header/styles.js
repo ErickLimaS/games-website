@@ -98,10 +98,13 @@ export const Container = styled.header`
     
         >nav{
             margin: 0 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
 
             h2{
                 font-size: 2rem;
-                font-weight: 600;
+                font-weight: 400;
 
                 a{
                     color: #5c16c5;
@@ -110,23 +113,43 @@ export const Container = styled.header`
 
             :hover > .desktop-ul-hover{
                 display: block!important;
-                width: 100px;
+                width: 110px;
+                top: 7vh;
+                padding: 1rem;
                 position: absolute;
-                margin-left: -4vh;
-                background-color: #e3e3e3;
+                background-color: #7a30e8;
                 padding: 1rem 1rem;
                 border: 1px solid transparent;
                 border-radius: 4px;
 
+                hr{
+                    border-width: 0.5px;
+                    color: #FFF;
+                }
+
                 li{
                     width: 100%;
-                    margin: 0.5rem 0;
-                    color: #5c16c5;
+                    margin: 0.6rem 0;
+                    color: #FFF;
+                    font-weight: 400;
+
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    svg{
+                        background-color: #FFF;
+                        padding: 0.3rem;
+                        border-radius: 40000px;
+                    }
+
+                    :hover{
+                        font-weight: 600;
+                    }
                 }
 
 
                 font-size: 1.6rem;
-                font-weight: 600;
 
             }
 
@@ -183,17 +206,18 @@ export const Container = styled.header`
                 border-radius: 4px 0px 0px 4px;
                 display: flex;
                 flex-direction: column;
-                position: fixed;
+                align-items: center;
+                position: absolute;
                 right: 0rem;
                 top: 9vh;
+
+                width: 100%;
+                position: absolute;
 
                 .input-and-button{
                     display: flex;
                     justify-content: center;
                     margin-bottom: 1rem;
-                }
-                .search-results-mobile-2{
-                    overflow: auto;
                 }
                 input{
                     padding: 0.5rem;
@@ -265,9 +289,17 @@ export const Container = styled.header`
         }
 
         .search-results-desktop{
-            position: absolute;
-            top: 10vh;
-            right: 5vh;
+            .loading {
+                position: absolute;
+                top: 1vh;
+                  
+            }
+
+            .search-result{
+                position: absolute;
+                top: 10vh;
+                right: 5vh;
+            }
         }
     }
 

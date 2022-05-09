@@ -10,6 +10,7 @@ export default function index(item) {
 
             <Link to={`/game/${item.item.id}`}>
                 <div className='img'>
+                    
                     <img src={item.item.cover_big_url} alt={item.item.name}></img>
                 </div>
                 <div className='game-details'>

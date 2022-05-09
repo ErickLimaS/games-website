@@ -1,4 +1,4 @@
-import Axios from 'axios'
+import Axios, { AxiosError } from 'axios'
 
 const API_BASE = 'https://api.igdb.com/v4'
 const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
@@ -358,6 +358,15 @@ export default {
 
 
         }).catch(err => {
+            if (err.response.status === 403) {
+                alert(`Erro da URL da API! Entre nesse link para ativar o funcinamento integral do site: ${CORS_ANYWHERE}`)
+            }
+            else if (err.response.status === 404) {
+                alert(`Error 404: Não Encontrado.`)
+            }
+            else if (err.response.status === 429) {
+                alert(`Problemas com a API. Muitas Requisições ao mesmo tempo. Tente atualizar a página.`)
+            }
             console.error(err);
         });
 
@@ -411,7 +420,18 @@ export default {
 
             })
 
-        }).catch(err => { console.log(err) })
+        }).catch(err => {
+            if (err.response.status === 403) {
+                alert(`Erro da URL da API! Entre nesse link para ativar o funcinamento integral do site: ${CORS_ANYWHERE}`)
+            }
+            else if (err.response.status === 404) {
+                alert(`Error 404: Não Encontrado.`)
+            }
+            else if (err.response.status === 429) {
+                alert(`Problemas com a API. Muitas Requisições ao mesmo tempo. Tente atualizar a página.`)
+            }
+            console.error(err)
+        })
 
         console.log(data)
         return data;

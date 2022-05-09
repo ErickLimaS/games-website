@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
-import API from './API/IGDB'
 import * as C from './styles'
 import Header from './Components/Theme/Header/Header'
 import Footer from './Components/Theme/Footer/Footer'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home'
 import Game from './Pages/Game'
-
 
 function App() {
 
@@ -18,6 +15,7 @@ function App() {
         <C.Container> {/* tag main */}
 
           <Routes>
+            {/* <Route path='/search/:search' element={<Search />} /> */}
             <Route path='/game/:id' element={<Game />} />
             <Route path='/' element={<Home />} />
           </Routes>
