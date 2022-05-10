@@ -17,6 +17,10 @@ export const Container = styled.footer`
         align-items: center;
         flex-wrap: wrap;
 
+        @media(max-width: 540px){
+            font-size: 2rem;
+        }
+
         nav{
             margin: 1rem 0;
 
@@ -32,6 +36,10 @@ export const Container = styled.footer`
             border-radius: 4px;
             font-size: 1.6rem;
             margin: 1rem 2.5rem;
+
+            @media(max-width: 540px){
+                font-size: 2rem;
+            }
 
             span{
                 color: #5c16c5;
@@ -55,6 +63,10 @@ export const Container = styled.footer`
     }
     small{
         font-size: 1.2rem;
+        
+        @media(max-width: 540px){
+            font-size: 1.6rem;
+        }
 
         a:hover{
             text-decoration: underline;

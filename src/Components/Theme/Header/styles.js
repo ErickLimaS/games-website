@@ -24,6 +24,7 @@ export const Container = styled.header`
 
         @media(max-width: 580px){
             display: flex;
+            z-index: 1;
         }
 
         button{

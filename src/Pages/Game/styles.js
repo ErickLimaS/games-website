@@ -81,6 +81,9 @@ export const HeadingContent = styled.div`
         }
     }
 
+`
+
+export const Details = styled.div`
 
 
 

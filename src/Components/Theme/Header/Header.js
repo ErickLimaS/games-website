@@ -297,7 +297,7 @@ export default function Header() {
             )}
             <div className='search-result'>
               {isFetch === true &&
-                gamesSearched.map((item, key) => (
+                gamesSearched.data.map((item, key) => (
                   <SearchFromHeader item={item} key={key} />
                 ))
               }
@@ -328,7 +328,7 @@ export default function Header() {
             {isFetch === true &&
               <div className={mobileClickSearch === true ? 'results-active' : 'results-deactive'}>
                 <button type='button' onClick={() => { setMobileCLickSearch(false) }}>X</button>
-                {gamesSearched.map((item, key) => (
+                {gamesSearched.data.map((item, key) => (
                   <SearchFromHeader item={item} key={key} />
                 ))}
               </div>

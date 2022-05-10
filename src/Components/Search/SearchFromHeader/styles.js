@@ -15,6 +15,10 @@ export const Container = styled.div`
     a{
         display: flex;
         flex-direction: row;
+
+        :hover > h1{
+            text-decoration: underline;
+        }
     }
 
     .img{
