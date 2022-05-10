@@ -9,7 +9,7 @@ export const Container = styled.footer`
     padding: 1rem 0;
 
     .about{
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -34,7 +34,7 @@ export const Container = styled.footer`
             border: 1px solid #e3e3e3;
             padding: 0.5rem;
             border-radius: 4px;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             margin: 1rem 2.5rem;
 
             @media(max-width: 540px){
@@ -62,7 +62,7 @@ export const Container = styled.footer`
         }
     }
     small{
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         
         @media(max-width: 540px){
             font-size: 1.6rem;

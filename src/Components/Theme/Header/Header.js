@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import * as C from './styles'
 import API from '../../../API/IGDB'
 import SearchFromHeader from '../../../Components/Search/SearchFromHeader'
@@ -22,15 +22,23 @@ export default function Header() {
   const [gamesSearched, setGamesSearched] = useState([])
   const [isFetch, setIsFetch] = useState(false)
   const [loading, setLoading] = useState(false)
+  const searchInput = useRef('')
 
   const searchForGames = async (itemToBeSearched) => {
     setLoading(true)
-    const data = await API.getSearchResults(itemToBeSearched)
-    setGamesSearched(data)
+    let data
+
+    setTimeout(async function () {
+      data = await API.getSearchResults(itemToBeSearched)
+
+      setGamesSearched(data)
+    }, 1500)
+
+
     setTimeout(function () {
 
       setIsFetch(true)
-      
+
       setMobileCLickSearch(true)
 
       setLoading(false)
@@ -285,9 +293,10 @@ export default function Header() {
             <input type='text'
               id='input-search-text'
               placeholder='Ex: Tomb Raider'
-              onChange={(e) => { if (e.target.value.length >= 3) setTimeout(searchForGames(e.target.value), 3000) }}
+              onChange={(e) => { if (e.target.value.length >= 4) setTimeout(searchForGames(e.target.value), 3000) }}
+              ref={searchInput}
             ></input>
-            <button type='button'><SearchSvg /></button>
+            <button type='button' onClick={() => { searchForGames(searchInput.current.value) }}><SearchSvg /></button>
           </div>
           <div className='search-results-mobile-2'>
             {loading === true && (
@@ -313,9 +322,10 @@ export default function Header() {
           <input type='text'
             id='input-search-text'
             placeholder='Ex: Tomb Raider'
-            onChange={(e) => { if (e.target.value.length >= 3) { setTimeout(searchForGames(e.target.value), 3000) } }}
+            onChange={(e) => { if (e.target.value.length >= 4) { setTimeout(searchForGames(e.target.value), 3000) } }}
+            ref={searchInput}
           ></input>
-          <button type='button'><SearchSvg /></button>
+          <button type='button' onClick={() => { searchForGames(searchInput.current.value) }}><SearchSvg /></button>
         </div>
 
         <div className='search-results-desktop'>

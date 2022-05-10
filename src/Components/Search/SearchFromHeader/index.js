@@ -9,7 +9,7 @@ export default function index(item) {
 
             <Link to={`/game/${item.item.id}`}>
                 <div className='img'>
-                    {item.item.cover.url !== undefined ? (<img src={item.item.cover.url} alt={item.item.name}></img>) : (<></>)}
+                    {item.item.cover === undefined ? (<img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg' alt='Não Disponível'></img>) : (<img src={item.item.cover.url} alt={item.item.name}></img>)}
 
                 </div>
                 <div className='game-details'>
