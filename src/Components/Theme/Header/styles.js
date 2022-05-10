@@ -101,6 +101,7 @@ export const Container = styled.header`
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 1;
 
             h2{
                 font-size: 2rem;
@@ -113,8 +114,8 @@ export const Container = styled.header`
 
             :hover > .desktop-ul-hover{
                 display: block!important;
-                width: 110px;
-                top: 7vh;
+                width: 140px;
+                top: 6.5vh;
                 padding: 1rem;
                 position: absolute;
                 background-color: #7a30e8;
@@ -129,7 +130,7 @@ export const Container = styled.header`
 
                 li{
                     width: 100%;
-                    margin: 0.6rem 0;
+                    margin: 1rem 0;
                     color: #FFF;
                     font-weight: 400;
 
@@ -160,6 +161,7 @@ export const Container = styled.header`
 
     div.mobile-search{
         display: none;
+        z-index: 1;
 
         @media(max-width: 800px){
             display: flex;
@@ -248,6 +250,7 @@ export const Container = styled.header`
         display: flex;
         flex-direction: row;
         align-items: center;
+                z-index: 1;
 
         @media(max-width: 800px){
             display: none;
@@ -289,6 +292,7 @@ export const Container = styled.header`
         }
 
         .search-results-desktop{
+            z-index: 1;
             .loading {
                 position: absolute;
                 top: 1vh;
@@ -299,6 +303,33 @@ export const Container = styled.header`
                 position: absolute;
                 top: 10vh;
                 right: 5vh;
+                z-index: 1;
+
+                .results-active{
+                    display: block;
+                    background-color: rgba(0,0,0,.2);
+                    padding: 0.5rem;
+                    border-radius: 4px;
+
+                    button{
+                        border: 1px solid #ff4d4d;
+                        border-radius: 4px;
+                        padding: 1rem;
+                        margin-bottom: 0.5rem;
+                        background-color: transparent;
+                        background-color: #ffb3b3;
+                        color: #FFF;
+
+                        :hover{
+                            background-color: #ff4d4d;
+                            color: #FFF;
+                        }
+                    }
+                }
+                .results-deactive{
+                    display: none;
+                }
+
             }
         }
     }

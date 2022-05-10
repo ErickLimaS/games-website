@@ -1,4 +1,6 @@
 import Axios, { AxiosError } from 'axios'
+import axiosRetry from 'axios-retry'
+
 
 const API_BASE = 'https://api.igdb.com/v4'
 const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
@@ -7,8 +9,10 @@ const CLIENT_ID = 'iabefriibnfuksd1j23hqr2qm1cdez'
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
+    
 
     getGameInfo: async (gameId) => {
+        axiosRetry(Axios, { retries: 100 });
 
         let gameInfo = [
             {
@@ -27,6 +31,9 @@ export default {
                 artworks: '',
                 screenshots: {},
                 videos: {},
+                involved_companies: {},
+                release_dates: {},
+                first_release_date: '',
                 // aggregated_rating: '',
                 // aggregated_rating_count: '',
                 // alternative_names: {},
@@ -36,18 +43,15 @@ export default {
                 // collection: '',
                 // created_at: '',
                 // external_games: {},
-                // first_release_date: '',
                 // franchises: '',
                 // game_engines: '',
                 // game_modes: {},
                 // genres: {},
                 // hypes: '',
-                // involved_companies: {},
                 // keywords: {},
                 // multiplayer_modes: {},
                 // platforms: {},
                 // player_perspectives: {},
-                // release_dates: {},
                 // remasters: {},
                 // similar_games: {},
                 // summary: '',
@@ -62,7 +66,7 @@ export default {
         ]
 
         await Axios({
-            // url: `${CORS_ANYWHERE}${API_BASE}/games/732?fields=*`, *FOR TESTS*
+            // url: `${CORS_ANYWHERE}${API_BASE}/games/732?fields=*`, 
             url: `${CORS_ANYWHERE}${API_BASE}/games/${gameId}?fields=*`,
             method: 'GET',
             headers: {
@@ -73,6 +77,8 @@ export default {
             data: ""
 
         }).then(async (response) => { //all data here
+
+            console.log(response)
 
             //get name
             gameInfo[0].name = response.data[0].name;
@@ -102,7 +108,7 @@ export default {
             gameInfo[0].slug = response.data[0].slug;
 
             //get Cover img
-            Axios({
+            setTimeout(Axios({
                 url: `${CORS_ANYWHERE}${API_BASE}/covers/${response.data[0].cover}?fields=*`,
                 method: 'GET',
                 headers: {
@@ -114,8 +120,8 @@ export default {
 
                 gameInfo[0].cover.cover_big_url = (`https://images.igdb.com/igdb/image/upload/t_cover_big/${response.data[0].image_id}.png`)
                 gameInfo[0].cover.cover_small_url = (response.data[0].url)
-
-            })
+                return
+            }),2000)
 
             //get Age Rating
             gameInfo[0].age_ratings = await response.data[0].age_ratings.map(item => {
@@ -260,7 +266,7 @@ export default {
             })
 
             //get ScreenShots
-            gameInfo[0].screenshots = await response.data[0].screenshots.map(item => {
+            setTimeout(gameInfo[0].screenshots = await response.data[0].screenshots.slice(0,3).map(item => {
 
                 let results = [];
 
@@ -274,8 +280,6 @@ export default {
                     }
                 }).then(response => {
 
-                    console.log(response.data[0])
-
                     results.image_id = response.data[0].image_id
                     results.id = response.data[0].id
                     results.height = response.data[0].height
@@ -283,16 +287,18 @@ export default {
                     results.url_small = response.data[0].url
                     results.url_large = `https://images.igdb.com/igdb/image/upload/t_original/${response.data[0].image_id}.jpg`
 
+                    return
+
                 })
 
                 return results
 
-            })
+            }), 30000)
 
 
             //get Artwork
             setTimeout(async () => {
-                gameInfo[0].artworks = await response.data[0].artworks.map(item => {
+                gameInfo[0].artworks = await response.data[0].artworks.slice(0,3).map(item => {
 
                     let results = [];
 
@@ -313,18 +319,73 @@ export default {
                         results.animated = response.data[0].animated
                         results.small = response.data[0].url
                         results.large = `https://images.igdb.com/igdb/image/upload/t_original/${response.data[0].image_id}.jpg`
-
+                        return
                     })
 
                     return results
 
-                }, 10000)
+                })
+            }, 5000)
+
+            //get Involved Companies - need to add Country
+            gameInfo[0].involved_companies = await response.data[0].involved_companies.slice(0,3).map(item => {
+
+                let results = []
+
+                Axios({
+                    url: `${CORS_ANYWHERE}https://api.igdb.com/v4/multiquery`,
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Client-ID': `${CLIENT_ID}`,
+                        'Authorization': `Bearer ${AUTHORIZATION}`,
+                    },
+                    data: `query companies "Companie" {
+                                fields *;
+                                where published = [${response.data[0].id}];
+                              };`
+                }).then(res => {
+                    results.name = res.data[0].result[0].name
+                    results.country = res.data[0].result[0].country
+                    results.logo = res.data[0].result[0].logo
+                    results.developed = res.data[0].result[0].developed
+                    results.parent = res.data[0].result[0].name
+                    results.published = res.data[0].result[0].name
+                    results.slug = res.data[0].result[0].name
+                    results.start_date_category = res.data[0].result[0].start_date_category
+                    results.updated_at = res.data[0].result[0].updated_at
+                    results.websites = res.data[0].result[0].websites
+                    results.change_date_category = res.data[0].result[0].change_date_category
+                    results.change_date = res.data[0].result[0].change_date
+
+                    Axios({
+                        url: `${CORS_ANYWHERE}https://api.igdb.com/v4/multiquery`,
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Client-ID': `${CLIENT_ID}`,
+                            'Authorization': `Bearer ${AUTHORIZATION}`,
+                        },
+                        data: `query company_logos "Companie Logo" {
+                                fields *;
+                                where id = ${results.logo};
+                              };`
+                    }).then(res => {
+                        results.logo = `https://images.igdb.com/igdb/image/upload/t_logo_med/${res.data[0].result[0].image_id}.png`
+                    })
+                })
+
+                return results
             })
 
-            //get Videos
+            //get First release date
+            const unix_gameReleaseDate = response.data[0].first_release_date
+            const date = new Date(unix_gameReleaseDate * 1000)
+            gameInfo[0].first_release_date = date
 
+            //get Videos
             setTimeout(async () => {
-                gameInfo[0].videos = await response.data[0].videos.map(item => {
+                gameInfo[0].videos = await response.data[0].videos.slice(0,3).map(item => {
 
                     let results = [];
 
@@ -346,18 +407,19 @@ export default {
                         results.video_id = response.data[0].video_id
                         results.url_video = `https://youtu.be/${response.data[0].video_id}`
 
-
+                        return
                     })
 
                     return results
                 })
-            }, 16000)
+            }, 2000)
 
-            console.log(response.data);
-            console.log(gameInfo[0]);
+            // console.log(response.data);
+            // console.log(gameInfo[0]);
 
 
         }).catch(err => {
+            console.error(err);
             if (err.response.status === 403) {
                 alert(`Erro da URL da API! Entre nesse link para ativar o funcinamento integral do site: ${CORS_ANYWHERE}`)
             }
@@ -413,7 +475,7 @@ export default {
 
                     results.cover_big_url = (`https://images.igdb.com/igdb/image/upload/t_cover_big/${response2.data[0].image_id}.png`)
                     results.cover_small_url = (response2.data[0].url)
-
+                    return
                 })
 
                 return results
@@ -433,7 +495,6 @@ export default {
             console.error(err)
         })
 
-        console.log(data)
         return data;
 
     }

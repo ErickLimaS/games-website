@@ -30,6 +30,8 @@ export default function Header() {
     setTimeout(function () {
 
       setIsFetch(true)
+      
+      setMobileCLickSearch(true)
 
       setLoading(false)
 
@@ -324,9 +326,12 @@ export default function Header() {
           )}
           <div className='search-result'>
             {isFetch === true &&
-              gamesSearched.map((item, key) => (
-                <SearchFromHeader item={item} key={key} />
-              ))
+              <div className={mobileClickSearch === true ? 'results-active' : 'results-deactive'}>
+                <button type='button' onClick={() => { setMobileCLickSearch(false) }}>X</button>
+                {gamesSearched.map((item, key) => (
+                  <SearchFromHeader item={item} key={key} />
+                ))}
+              </div>
             }
           </div>
         </div>
