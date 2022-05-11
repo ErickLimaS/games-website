@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
 
-    height: max-content;
 
     .loading-active{
         height: 90vh;
@@ -45,40 +44,43 @@ export const Container = styled.div`
 
     }
 
+    hr{
+        margin: 4rem 0;
+    }
+
 
 `
 
 export const HeadingContent = styled.div`
 
-    top: 40vh;
-    height: 80vh;
+    border-top: 1px solid white;
+    border-bottom: 10px solid white;
+    background-size: 100%;
+    background-position: center;
 
-    .backImage-blur{
-
-        height: 40vh;
-        top: 40vh;
-        border-top: 1px solid white;
-        border-bottom: 10px solid white;
-        background-size: 100%;
-        filter: blur(4px);
+    @media(max-width: 990px){
         background-position: top;
+    }
 
-        @media(max-width: 540px){
-            background-size: 200%;
-        }
-
+    @media(max-width: 540px){
+        background-size: 200%;
     }
 
     .game-first-content{
+        padding-top: 10vh;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-evenly;
-        position: absolute;
-        top: 16vh;
         width: 100%;
-        height: inherit;
+        background-image: linear-gradient(rgba(0 ,0 ,0 ,0.4), rgba(250,250,250,1) 60%);
+
+        
+        @media(max-width: 620px){
+            flex-direction: column;
+            background-image: linear-gradient(rgba(0 ,0 ,0 ,0.5),rgba(250,250,250,1) 80%);
+        }
 
         @media(max-width: 540px){
             top: 25vh;
@@ -109,8 +111,16 @@ export const HeadingContent = styled.div`
             flex-direction: column;
             justify-content: space-around;
 
+            @media(max-width: 620px){
+                width: 90%;
+            }
+
             >div:first-child{
                 margin-top: -10rem;
+
+                @media(max-width: 620px){
+                    margin-top: 0rem;
+                }
             }
         }
 
@@ -135,13 +145,13 @@ export const HeadingContent = styled.div`
                 font-size: 5rem;
                 font-weight: 600;
                 color: white;
-                text-shadow: 0 1px 1px rgb(0 0 0 / 40%);
+                text-shadow: 0 1px 1px rgb(0 0 0 / 80%);
             }
             h2{
                 font-size: 2rem;
                 font-weight: 400;
                 color: #FFF;
-                text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+                text-shadow: 0 1px 1px rgb(0 0 0 / 60%);
 
                 a:hover{
                     text-decoration: underline;
@@ -150,7 +160,7 @@ export const HeadingContent = styled.div`
                 *{
                     font-size: 1.8rem;
                     color: #FFF;
-                    text-shadow: 0 1px 1px rgb(0 0 0 / 40%);
+                    text-shadow: 0 1px 1px rgb(0 0 0 / 60%);
                 }
             }
             h3{
@@ -220,18 +230,20 @@ export const HeadingContent = styled.div`
 
 export const Details = styled.div`
 
-    border-top: 2px solid #5c16c5;
-    position: absolute;
     width: 100%;
-    top: 116vh;
     display: flex;
     flex-direction: column;
+    margin: 2rem 0;
 
     .navigation{
         display: flex;
         flex-direction: row;
         justify-content: center;
         margin-bottom: 1.5rem;
+
+        @media(max-width: 384px){
+            flex-direction: column;
+        }
 
 
         h3{
@@ -263,6 +275,10 @@ export const Details = styled.div`
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
+
+            @media(max-width: 620px){
+                flex-direction: column;
+            }
                 
                 .list-imgs{
                     display: flex;
@@ -272,6 +288,15 @@ export const Details = styled.div`
                     width: 32vh;
                     overflow: auto;
                     margin: 0 3rem;
+
+                    @media(max-width: 620px){
+                        flex-direction: row;
+                        justify-content: center;
+                        width: auto;
+                        overflow: auto;
+                        height: initial;
+                        margin: 2rem 0;
+                    }
 
                     ::-webkit-scrollbar {
                     width: 5px;
@@ -291,8 +316,8 @@ export const Details = styled.div`
 
                     img{
                         margin: 0.2rem 0;
-                        width: 160px!important;
-                        height: 100px!important;
+                        width: 160px;
+                        height: 100px;
                         cursor: pointer;
                         border: 1px solid transparent;
 
@@ -314,8 +339,14 @@ export const Details = styled.div`
                     
                     img.active{
                         display: block;
-                        width: 780px;
-                        height: 480px;
+                        max-width: 780px;
+                        width: 90%;
+                        height: auto;
+
+                        @media(max-width: 620px){
+                            width: 90%;
+                            height: auto;
+                        }
                     }
                     img.not-active{
                         display: none!important;
@@ -332,6 +363,10 @@ export const Details = styled.div`
             background-color: #200845;
             padding: 2rem 1rem;
 
+            @media(max-width: 620px){
+                flex-direction: column;
+            }
+
 
             .list-videos{
                 display: flex;
@@ -342,6 +377,12 @@ export const Details = styled.div`
                 width: 40vh;
                 overflow: auto;
                 margin: 0 3rem;
+
+                @media(max-width: 620px){
+                    height: auto;
+                    flex-direction: row;
+                    width: 90%;
+                }
 
                 ::-webkit-scrollbar {
                     width: 5px;
@@ -370,6 +411,12 @@ export const Details = styled.div`
                     border-radius: 4px;
                     width: 80%;
 
+                    @media(max-width: 620px){
+                        height: max-content;
+                        width: auto;
+                        margin: 0 0.5rem;
+                    }
+
                     :hover{
                         border: 1px solid #FFF;
                     }
@@ -394,7 +441,13 @@ export const Details = styled.div`
                 iframe.active{
                     display: block;
                     height: 480px;
-                    width: 854px;
+                    width: 80%;
+
+                    @media(max-width: 620px){
+                        height: 300px;
+                        width: 90%;
+                        margin: 0 0.5rem;
+                    }
                 }
 
                 .not-active{
@@ -411,18 +464,26 @@ export const Details = styled.div`
             background-color: #200845;
             padding: 2rem 1rem;
 
+            @media(max-width: 620px){
+                padding: 1rem;
+            }
 
             .list-details{
                 ul{
                     border-left: 4px solid #FFF;
                     margin: 2rem 1rem;
 
+                    @media(max-width: 620px){
+                        margin: 1rem 0.5rem;
+                    }
+
                     ul{
                         border-left: 2px solid #FFF;
                         margin: 2rem 1rem;
 
                         h6{
-                            font-size: 2.6rem;
+                            font-size: 1.8rem;
+                            font-weight: 600;
                         }
 
                         li{
@@ -443,20 +504,26 @@ export const Details = styled.div`
                 }
                 li{
                     color: #FFF;
+                    flex-direction: column;
                     font-size: 1.6rem;
                     padding-left: 2rem;
                     margin: 2rem 0;
+
+                    @media(max-width: 620px){
+                        display: flex;
+                        margin: 0.5rem 0;
+                    }
 
                     display: flex;
                     align-items: baseline;
 
                     h5{
-                        font-size: 2.2rem;
+                        font-size: 1.8rem;
                         margin: 2rem 1rem;
-                        font-weight: 400;
+                        font-weight: 600;
                     }
                     h6{
-                        font-size: 1.8rem;
+                        font-size: 1.6rem;
                         margin: 1rem 0rem;
                         font-weight: 400;
                     }

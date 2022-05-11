@@ -26,7 +26,11 @@ export default function Game() {
       setGameInfo(data)
       setIsFetch(true)
 
-      setTimeout(function () { setLoading(false) }, 3000) //7000
+      setTimeout(function () {
+        setLoading(false)
+        if (data.screenshots) { setAuxBigImgDisplay(data.screenshots[0].image_id) }
+        if (data.videos) { setAuxBigVideoDisplay(data.videos[0].video_id) }
+      }, 3000) //7000
 
       console.log(data, auxBigImgDisplay, auxBigVideoDisplay)
 
@@ -49,17 +53,16 @@ export default function Game() {
         ) : (
           // eslint-disable-next-line eqeqeq
           <>
-            <C.HeadingContent>
+            <C.HeadingContent style={gameInfo.artworks === undefined ? {
+              backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${gameInfo.screenshots[0].image_id}.jpg)`,
+              backgroundRepeat: 'no-repeat',
+            } : {
+              backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${gameInfo.artworks[Math.floor(Math.random() * gameInfo.artworks.length)].image_id}.jpg)`,
+              backgroundRepeat: 'no-repeat',
+            }}>
 
-              <div className='backImage-blur' style={gameInfo.artworks === undefined ? {
-                backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${gameInfo.screenshots[0].image_id}.jpg)`,
-                backgroundRepeat: 'no-repeat',
-              } : {
-                backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${gameInfo.artworks[0].image_id}.jpg)`,
-                backgroundRepeat: 'no-repeat',
-              }}></div>
 
-              <div className='game-first-content'>
+              <div className='game-first-content'  >
                 <div className='game-cover-art'>
                   <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`} alt={gameInfo.name}></img>
                   <span>{gameInfo.follows} Follower{gameInfo.follows > 1 ? 's' : ''}</span>
@@ -71,12 +74,12 @@ export default function Game() {
                         <h1>{gameInfo.name}</h1>
                       </li>
                       <li>
-                        <h2>{gameInfo.involved_companies[0].name}</h2>
+                        {gameInfo.involved_companies && (<h2>{gameInfo.involved_companies[0].name}</h2>)}
                       </li>
                       <li>
-                        <h2>Developed By: {gameInfo.involved_companies.map((item, key) => (
+                        {gameInfo.involved_companies && (<h2>Developed By: {gameInfo.involved_companies.map((item, key) => (
                           <strong><Link to={`/companies/${item.company.id}`} key={item.company.id}>{item.company.name} </Link></strong>
-                        ))}</h2>
+                        ))}</h2>)}
                       </li>
 
                     </ul>
@@ -101,22 +104,22 @@ export default function Game() {
                     </ul>
                   </div>
                 </div>
-                <div className='rating' style={gameInfo.rating >= 90 ? {
+                <div className='rating' style={gameInfo.rating >= 80 ? {
                   border: '1px solid #00e600',
                   backgroundColor: '#e4ffe4'
                 } : {
                   border: '1px solid #ffd9b3',
                   backgroundColor: '#ffd9b3'
                 }}>
-                  <div className='rating-score' style={gameInfo.rating >= 90 ? {
+                  <div className='rating-score' style={gameInfo.rating >= 80 ? {
                     border: '10px solid green'
                   } : {
                     border: '10px solid #ff8c1a'
                   }}>
-                    <h2>{(gameInfo.rating).toFixed(1)}</h2>
+                    {gameInfo.rating && (<h2>{(gameInfo.rating).toFixed(1)}</h2>)}
 
                     <p>Rating Score</p>
-                    {gameInfo.rating >= 90 ? (
+                    {gameInfo.rating >= 80 ? (
                       <p style={{
                         color: '#80ff00'
                       }}>Good</p>
@@ -133,9 +136,13 @@ export default function Game() {
             </C.HeadingContent>
 
             <div className='summary'>
-              <p>{gameInfo.summary}</p>
+              <p>
+                {gameInfo.storyline ?
+                  gameInfo.storyline : gameInfo.summary}
+              </p>
             </div>
 
+            <hr />
             <C.Details>
 
               <div className='navigation'>
@@ -155,7 +162,13 @@ export default function Game() {
                 <div className={indexGameDetails === 0 ? 'dropdown-item active screenshots' : 'dropdown-item screenshots'}>
                   <div className='list-imgs'>
                     {gameInfo.screenshots.map((item, key) => (
-                      <img src={`//images.igdb.com/igdb/image/upload/t_original/${item.image_id}.jpg`} alt={gameInfo.name} key={key} onClick={() => { setAuxBigImgDisplay(item.image_id) }}></img>
+                      <img
+                        src={`//images.igdb.com/igdb/image/upload/t_original/${item.image_id}.jpg`} alt={gameInfo.name}
+                        key={key}
+                        onClick={() => { setAuxBigImgDisplay(item.image_id) }}
+                        style={auxBigImgDisplay === item.image_id ?
+                          { border: '1px solid #FFF' } : {}}
+                      ></img>
 
                     ))}
                   </div>
@@ -174,13 +187,18 @@ export default function Game() {
 
                 <div className={indexGameDetails === 1 ? 'dropdown-item active videos' : 'dropdown-item videos'}>
 
-                  <div className='list-videos'>
+                  {gameInfo.videos && (<div className='list-videos'>
                     {gameInfo.videos.map((item, key) => (
-                      <h4 key={key} onClick={() => { setAuxBigVideoDisplay(item.video_id) }}>{item.name}</h4>
+                      <h4 key={key}
+                        onClick={() => { setAuxBigVideoDisplay(item.video_id) }}
+                        style={auxBigVideoDisplay === item.video_id ?
+                          { backgroundColor: '#FFF', color: '#5c16c5' } : {}}
+                      >{item.name}</h4>
                     ))}
-                  </div>
+                  </div>)
+                  }
 
-                  <div className='video-display'>
+                  {gameInfo.videos && (<div className='video-display'>
                     {gameInfo.videos.map((item, key) => (
                       <><h2 className={auxBigVideoDisplay === item.video_id ? 'active' : 'not-active'}>{item.name}</h2>
                         <iframe
@@ -190,7 +208,8 @@ export default function Game() {
                           className={auxBigVideoDisplay === item.video_id ? 'active' : 'not-active'}></iframe>
                       </>
                     ))}
-                  </div>
+                  </div>)
+                  }
                 </div>
 
               </div>
@@ -200,8 +219,9 @@ export default function Game() {
                 <div className={indexGameDetails === 2 ? 'dropdown-item active details' : 'dropdown-item details'}>
                   <div className='list-details'>
                     <ul>
-                      <li>
+                      {gameInfo.age_ratings[0] && (<li>
                         <h5>Age Ratings:</h5>
+
                         <ul>
                           {gameInfo.age_ratings.map((item, key) => (
                             <li key={key}>
@@ -212,7 +232,8 @@ export default function Game() {
                             </li>
                           ))}
                         </ul>
-                      </li>
+                      </li>)
+                      }
                       <li>
                         <h5>Platforms:</h5>
                         {gameInfo.platforms.map((item, key) => (
@@ -241,15 +262,29 @@ export default function Game() {
                         <li>
                           <h5>MultiPlayer Modes:</h5>
                           {gameInfo.multiplayer_modes.map((item, key) => (
-                            <p key={key}><Link to={`/multiplayer-mode/${item.slug}`}>{item.name}</Link></p>
+                            <><h6>On {item.platform.name}</h6>
+                              <ul>
+                                <li><p key={key}>Campaign Coop: {item.campaigncoop === 0 ? 'Not Available' : 'Available'}</p></li>
+                                <li><p key={key}>Lan Coop: {item.lancoop === 0 ? 'Not Supported' : 'Supported'}</p></li>
+                                <li><p key={key}>Offline Coop: {item.offlinecoop === 0 ? 'Not Supported' : 'Supported'}</p></li>
+                                {item.offlinecoop !== 0 && <li><p key={key}>Max Players on Offline Coop: {item.offlinecoopmax}</p></li>}
+                                {item.offlinemax !== 0 && <li><p key={key}>Max Players on Offline MultiPlayer: {item.offlinemax}</p></li>}
+                                <li><p key={key}>Online Coop: {item.onlinecoop === 0 ? 'Not Supported' : 'Supported'}</p></li>
+                                {item.onlinecoop !== 0 && <li><p key={key}>Max Players on Online Coop: {item.onlinecoopmax}</p></li>}
+                                {item.onlinecoop !== 0 && <li><p key={key}>Max Players on Online MultiPlayer: {item.onlinemax}</p></li>}
+                                <li><p key={key}>Split Screen: {item.splitscreen === 0 ? 'Not Supported' : 'Supported'}</p></li>
+                                <li><p key={key}>Split Screen Online: {item.splitscreenonline === 0 ? 'Not Supported' : 'Supported'}</p></li>
+                              </ul>
+                            </>
                           ))}
                         </li>
                       }
                       <li>
                         <h5>Player Perspective:</h5>
-                        {gameInfo.player_perspectives.map((item, key) => (
+                        {gameInfo.player_perspectives && (gameInfo.player_perspectives.map((item, key) => (
                           <p key={key}><Link to={`/player-perspective/${item.slug}`}>{item.name}</Link></p>
-                        ))}
+                        )))
+                        }
                       </li>
                       <li>
                         <h5>Game Modes:</h5>

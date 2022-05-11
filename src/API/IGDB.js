@@ -67,7 +67,7 @@ export default {
 
         await Axios({
             // url: `${CORS_ANYWHERE}${API_BASE}/games/732?fields=*`, 
-            url: `${CORS_ANYWHERE}${API_BASE}/games/${gameId}?fields=*,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*`,
+            url: `${CORS_ANYWHERE}${API_BASE}/games/${gameId}?fields=*,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*`,
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
