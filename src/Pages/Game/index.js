@@ -10,9 +10,11 @@ export default function Game() {
   const [gameInfo, setGameInfo] = useState([])
   const [isFetch, setIsFetch] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [indexGameDetails, setIndexGameDetails] = useState(0)
+  const [auxBigImgDisplay, setAuxBigImgDisplay] = useState(0)
+  const [auxBigVideoDisplay, setAuxBigVideoDisplay] = useState(0)
 
   const gameId = useParams();
-  let date;
 
   useEffect(() => {
 
@@ -23,17 +25,16 @@ export default function Game() {
       const data = await API.getGameInfo(gameId.id);
       setGameInfo(data)
       setIsFetch(true)
+
       setTimeout(function () { setLoading(false) }, 3000) //7000
 
-      console.log(data)
-
-      date = new Date()
-
+      console.log(data, auxBigImgDisplay, auxBigVideoDisplay)
 
     }
     load1()
 
     console.log(gameInfo)
+
 
 
   }, [gameId])
@@ -52,17 +53,16 @@ export default function Game() {
 
               <div className='backImage-blur' style={gameInfo.artworks === undefined ? {
                 backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${gameInfo.screenshots[0].image_id}.jpg)`,
-                backgroundPosition: 'top',
                 backgroundRepeat: 'no-repeat',
               } : {
                 backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${gameInfo.artworks[0].image_id}.jpg)`,
-                backgroundPosition: 'top',
                 backgroundRepeat: 'no-repeat',
               }}></div>
 
               <div className='game-first-content'>
                 <div className='game-cover-art'>
                   <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`} alt={gameInfo.name}></img>
+                  <span>{gameInfo.follows} Follower{gameInfo.follows > 1 ? 's' : ''}</span>
                 </div>
                 <div className='game-first-info'>
                   <div className='info-1'>
@@ -97,7 +97,7 @@ export default function Game() {
                         <h4><strong>{gameInfo.first_release_date.dd}/{gameInfo.first_release_date.mm}/{gameInfo.first_release_date.yyyy}</strong></h4>
                       </li>
 
-                      <button type='button' onClick={() => { console.log(gameInfo) }}>console</button>
+                      <button type='button' onClick={() => { console.log(gameInfo, auxBigImgDisplay, auxBigVideoDisplay) }}>console</button>
                     </ul>
                   </div>
                 </div>
@@ -109,9 +109,9 @@ export default function Game() {
                   backgroundColor: '#ffd9b3'
                 }}>
                   <div className='rating-score' style={gameInfo.rating >= 90 ? {
-                    border: '1px solid green'
+                    border: '10px solid green'
                   } : {
-                    border: '1px solid #ff8c1a'
+                    border: '10px solid #ff8c1a'
                   }}>
                     <h2>{(gameInfo.rating).toFixed(1)}</h2>
 
@@ -131,34 +131,135 @@ export default function Game() {
               </div>
 
             </C.HeadingContent>
+
+            <div className='summary'>
+              <p>{gameInfo.summary}</p>
+            </div>
+
             <C.Details>
 
-              <div className='details dropdown'>
-                <div className='pointer'>
-                  <h3>Info</h3>
+              <div className='navigation'>
+                <div className='pointer' style={indexGameDetails === 0 ? { borderBottom: '2px solid #5c16c5' } : {}} onClick={() => { setIndexGameDetails(0) }}>
+                  <h3>Screenshots</h3>
                 </div>
-                <div className='dropdown-item'>
+                <div className='pointer' style={indexGameDetails === 1 ? { borderBottom: '2px solid #5c16c5' } : {}} onClick={() => { setIndexGameDetails(1) }}>
+                  <h3>Vídeos</h3>
+                </div>
+                <div className='pointer' style={indexGameDetails === 2 ? { borderBottom: '2px solid #5c16c5' } : {}} onClick={() => { setIndexGameDetails(2) }}>
+                  <h3>More Details</h3>
+                </div>
+              </div>
 
+              <div className='details dropdown'>
+
+                <div className={indexGameDetails === 0 ? 'dropdown-item active screenshots' : 'dropdown-item screenshots'}>
+                  <div className='list-imgs'>
+                    {gameInfo.screenshots.map((item, key) => (
+                      <img src={`//images.igdb.com/igdb/image/upload/t_original/${item.image_id}.jpg`} alt={gameInfo.name} key={key} onClick={() => { setAuxBigImgDisplay(item.image_id) }}></img>
+
+                    ))}
+                  </div>
+                  <div className='big-img'>
+
+                    {gameInfo.screenshots.map((item, key) => (
+                      <img src={`//images.igdb.com/igdb/image/upload/t_original/${item.image_id}.jpg`} alt={gameInfo.name} key={key} className={auxBigImgDisplay === item.image_id ? 'active' : 'not-active'} ></img>
+                    ))}
+
+                  </div>
                 </div>
 
               </div>
 
               <div className='details dropdown'>
-                <div className='pointer'>
-                  <h3>Place</h3>
-                </div>
-                <div className='dropdown-item'>
 
+                <div className={indexGameDetails === 1 ? 'dropdown-item active videos' : 'dropdown-item videos'}>
+
+                  <div className='list-videos'>
+                    {gameInfo.videos.map((item, key) => (
+                      <h4 key={key} onClick={() => { setAuxBigVideoDisplay(item.video_id) }}>{item.name}</h4>
+                    ))}
+                  </div>
+
+                  <div className='video-display'>
+                    {gameInfo.videos.map((item, key) => (
+                      <><h2 className={auxBigVideoDisplay === item.video_id ? 'active' : 'not-active'}>{item.name}</h2>
+                        <iframe
+                          src={`https://www.youtube-nocookie.com/embed/${item.video_id}`}
+                          key={key}
+                          title={item.name}
+                          className={auxBigVideoDisplay === item.video_id ? 'active' : 'not-active'}></iframe>
+                      </>
+                    ))}
+                  </div>
                 </div>
 
               </div>
 
               <div className='details dropdown'>
-                <div className='pointer'>
-                  <h3>Place</h3>
-                </div>
-                <div className='dropdown-item'>
 
+                <div className={indexGameDetails === 2 ? 'dropdown-item active details' : 'dropdown-item details'}>
+                  <div className='list-details'>
+                    <ul>
+                      <li>
+                        <h5>Age Ratings:</h5>
+                        <ul>
+                          {gameInfo.age_ratings.map((item, key) => (
+                            <li key={key}>
+                              <h6>{item.category} | {item.rating}</h6>
+                              {item.synopsis &&
+                                <p>{item.synopsis}</p>
+                              }
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                      <li>
+                        <h5>Platforms:</h5>
+                        {gameInfo.platforms.map((item, key) => (
+                          <p key={key}><Link to={`/platforms/${item.slug}`}>{item.name}</Link></p>
+                        ))}
+                      </li>
+                      {gameInfo.storyline &&
+                        <li>
+                          <h5>Storyline:</h5>
+                          <p>{gameInfo.storyline}</p>
+                        </li>
+                      }
+                      {gameInfo.summary &&
+                        <li>
+                          <h5>Summary:</h5>
+                          <p>{gameInfo.summary}</p>
+                        </li>
+                      }
+                      <li>
+                        <h5>Theme:</h5>
+                        {gameInfo.themes.map((item, key) => (
+                          <p key={key}><Link to={`/themes/${item.slug}`}>{item.name}</Link></p>
+                        ))}
+                      </li>
+                      {gameInfo.multiplayer_modes &&
+                        <li>
+                          <h5>MultiPlayer Modes:</h5>
+                          {gameInfo.multiplayer_modes.map((item, key) => (
+                            <p key={key}><Link to={`/multiplayer-mode/${item.slug}`}>{item.name}</Link></p>
+                          ))}
+                        </li>
+                      }
+                      <li>
+                        <h5>Player Perspective:</h5>
+                        {gameInfo.player_perspectives.map((item, key) => (
+                          <p key={key}><Link to={`/player-perspective/${item.slug}`}>{item.name}</Link></p>
+                        ))}
+                      </li>
+                      <li>
+                        <h5>Game Modes:</h5>
+                        {gameInfo.game_modes.map((item, key) => (
+                          <p key={key}><Link to={`/game-modes/${item.slug}`}>{item.name}</Link></p>
+                        ))}
+                      </li>
+
+                    </ul>
+                  </div>
                 </div>
 
               </div>
