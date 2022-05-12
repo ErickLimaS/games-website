@@ -40,8 +40,11 @@ export const Container = styled.div`
             width: 70%;
             font-size: 2rem;
             font-weight: 400;
-        }
 
+            @media(max-width: 620px){
+                width: 90%;
+            }
+        }
     }
 
     hr{
@@ -194,7 +197,6 @@ export const HeadingContent = styled.div`
         align-items: center;
         jusitfy-content: center;
         border-radius: 4px;
-        background-color: #e7e7e7;
         padding: 1rem 1rem 0.5rem 1rem;
         height: 40vh;
         width: 30vh;
@@ -291,7 +293,6 @@ export const Details = styled.div`
 
                     @media(max-width: 620px){
                         flex-direction: row;
-                        justify-content: center;
                         width: auto;
                         overflow: auto;
                         height: initial;
@@ -319,10 +320,10 @@ export const Details = styled.div`
                         width: 160px;
                         height: 100px;
                         cursor: pointer;
-                        border: 1px solid transparent;
+                        border: 2px solid transparent;
 
                         :hover{
-                            border: 1px solid #FFF;
+                            border: 2px solid #FFF;
                             background-color: blue;
                             opacity: 0.7;
                         }
@@ -381,24 +382,25 @@ export const Details = styled.div`
                 @media(max-width: 620px){
                     height: auto;
                     flex-direction: row;
+                    justify-content: initial;
                     width: 90%;
                 }
 
                 ::-webkit-scrollbar {
                     width: 5px;
-                    }
+                }
 
-                    ::-webkit-scrollbar-track {
+                ::-webkit-scrollbar-track {
                     background: #f1f1f1; 
-                    }
+                }
                     
-                    ::-webkit-scrollbar-thumb {
+                ::-webkit-scrollbar-thumb {
                     background: #888; 
-                    }
+                }
 
-                    ::-webkit-scrollbar-thumb:hover {
+                ::-webkit-scrollbar-thumb:hover {
                     background: #555; 
-                    }
+                }
 
                 h4{
                     font-size: 2rem;
@@ -547,6 +549,69 @@ export const Details = styled.div`
 
         }
     }
+
+`
+
+export const SimilarGame = styled.div`
+
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin:  0 0 2rem 0;
+
+    h5{
+        font-size: 3rem;
+        font-weight: 600;
+        margin: 2rem 0;
+        border-bottom: 4px solid #5c16c5;
+    }
+
+    ul{
+
+        display: flex;
+        flex-direction: row; 
+        width: 90%;
+        overflow: auto;
+
+        ::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+            
+        ::-webkit-scrollbar-thumb {
+            background: #888; 
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555; 
+        }
+
+        .background-cover{
+            height: 150px;
+            width: 120px;
+            border: 2px solid transparent;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+
+            margin: 0 0.2rem;
+            margin-bottom: 0.6rem;
+
+            :hover{
+                opacity: 0.8;
+                border: 2px solid #5c16c5;
+
+            }
+        }
+
+    }
+
 
 
 `

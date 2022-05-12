@@ -296,7 +296,9 @@ export default function Header() {
               onChange={(e) => { if (e.target.value.length >= 4) setTimeout(searchForGames(e.target.value), 3000) }}
               ref={searchInput}
             ></input>
-            <button type='button' onClick={() => { searchForGames(searchInput.current.value) }}><SearchSvg /></button>
+            <button type='button' onClick={() => {
+              searchForGames(searchInput.current.value) && setMobileCLickMenu(false)
+            }}><SearchSvg /></button>
           </div>
           <div className='search-results-mobile-2'>
             {loading === true && (
@@ -325,7 +327,7 @@ export default function Header() {
             onChange={(e) => { if (e.target.value.length >= 4) { setTimeout(searchForGames(e.target.value), 3000) } }}
             ref={searchInput}
           ></input>
-          <button type='button' onClick={() => { searchForGames(searchInput.current.value) }}><SearchSvg /></button>
+          <button type='button' onClick={() => { searchForGames(searchInput.current.value) && setMobileCLickMenu(false) }}><SearchSvg /></button>
         </div>
 
         <div className='search-results-desktop'>
