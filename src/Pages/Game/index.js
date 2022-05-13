@@ -61,7 +61,7 @@ export default function Game() {
               backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${gameInfo.screenshots[0].image_id}.jpg)`,
               backgroundRepeat: 'no-repeat',
             } : {
-              backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${gameInfo.artworks[Math.floor(Math.random() * gameInfo.artworks.length)].image_id}.jpg)`,
+              backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${gameInfo.artworks[Math.floor(Math.random() * gameInfo.artworks.length)].image_id}.jpg)`,
               backgroundRepeat: 'no-repeat',
             }}>
 
@@ -321,7 +321,7 @@ export default function Game() {
                       <li>
                         <Link to={`/game/${item.id}`}>
                           <div key={key} className='background-cover' style={item.cover ? {
-                            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${item.cover.image_id}.jpg)`,
+                            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_cover_big/${item.cover.image_id}.jpg)`,
                             backgroundPosition: 'center',
                             backgroundRepeat: 'no-repeat',
                             backgroundSize: 'cover'

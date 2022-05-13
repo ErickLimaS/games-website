@@ -134,8 +134,6 @@ export default {
             //get Similar Games
             gameInfo[0].similar_games = response.data[0].similar_games
 
-            // //get Cover img
-
             //get Cover
             gameInfo[0].cover = response.data[0].cover
 
@@ -294,73 +292,128 @@ export default {
                     return filter
                 })
             }
-                //get Artwork
-                gameInfo[0].artworks = response.data[0].artworks
+            //get Artwork
+            gameInfo[0].artworks = response.data[0].artworks
 
-                //get Involved Companies - need to add Country
-                gameInfo[0].involved_companies = response.data[0].involved_companies
+            //get Involved Companies - need to add Country
+            gameInfo[0].involved_companies = response.data[0].involved_companies
 
-                //get First release date
-                const unix_gameReleaseDate = response.data[0].first_release_date
-                const date = new Date(unix_gameReleaseDate * 1000)
-                gameInfo[0].first_release_date = date
-                gameInfo[0].first_release_date.yyyy = date.getFullYear()
-                gameInfo[0].first_release_date.mm = date.getMonth()
-                gameInfo[0].first_release_date.dd = date.getDate()
-
-
-                // console.log(response.data);
-                // console.log(gameInfo[0]);
+            //get First release date
+            const unix_gameReleaseDate = response.data[0].first_release_date
+            const date = new Date(unix_gameReleaseDate * 1000)
+            gameInfo[0].first_release_date = date
+            gameInfo[0].first_release_date.yyyy = date.getFullYear()
+            gameInfo[0].first_release_date.mm = date.getMonth()
+            gameInfo[0].first_release_date.dd = date.getDate()
 
 
-            }).catch(err => {
-                console.error(err);
-                if (err.response.status === 403) {
-                    alert(`Erro da URL da API! Entre nesse link para ativar o funcionamento integral do site: ${CORS_ANYWHERE}`)
-                }
-                else if (err.response.status === 404) {
-                    alert(`Error 404: Não Encontrado.`)
-                }
-                else if (err.response.status === 429) {
-                    alert(`Problemas com a API. Muitas Requisições ao mesmo tempo. Tente atualizar a página.`)
-                }
-                console.error(err);
-            });
+            // console.log(response.data);
+            // console.log(gameInfo[0]);
+
+
+        }).catch(err => {
+            console.error(err);
+            if (err.response.status === 403) {
+                alert(`Erro da URL da API! Entre nesse link para ativar o funcionamento integral do site: ${CORS_ANYWHERE}`)
+            }
+            else if (err.response.status === 404) {
+                alert(`Error 404: Não Encontrado.`)
+            }
+            else if (err.response.status === 429) {
+                alert(`Problemas com a API. Muitas Requisições ao mesmo tempo. Tente atualizar a página.`)
+            }
+            console.error(err);
+        });
 
         return gameInfo[0]
-},
+    },
 
-getSearchResults: async (searchedItem) => { // Value = any
+    getSearchResults: async (searchedItem) => { // Value = any
 
-    let data = await Axios({
-        url: `${CORS_ANYWHERE}${API_BASE}/games/?search=${searchedItem}&fields=*,cover.*`,
-        // url: `${CORS_ANYWHERE}${API_BASE}/games/?search=zelda&fields=*`, TEST
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Client-ID': `${CLIENT_ID}`,
-            'Authorization': `Bearer ${AUTHORIZATION}`,
-        },
-        data: ""
+        let data = await Axios({
+            url: `${CORS_ANYWHERE}${API_BASE}/games/?search=${searchedItem}&fields=*,cover.*`,
+            // url: `${CORS_ANYWHERE}${API_BASE}/games/?search=zelda&fields=*`, TEST
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Client-ID': `${CLIENT_ID}`,
+                'Authorization': `Bearer ${AUTHORIZATION}`,
+            },
+            data: ""
+
+        }
+        ).then(response => {
+
+            return response
+        }).catch(err => {
+            if (err.response.status === 403) {
+                alert(`Erro da URL da API! Entre nesse link para ativar o funcionamento integral do site: ${CORS_ANYWHERE}`)
+            }
+            else if (err.response.status === 404) {
+                alert(`Error 404: Não Encontrado.`)
+            }
+            else if (err.response.status === 429) {
+                alert(`Problemas com a API. Muitas Requisições ao mesmo tempo. Tente atualizar a página.`)
+            }
+            console.error(err)
+        })
+
+        return data;
+
+    },
+
+    getMonthRelease: async () => {
+
+        const { data } = await Axios({
+            url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Client-ID': `${CLIENT_ID}`,
+                'Authorization': `Bearer ${AUTHORIZATION}`,
+            },
+            data: `
+                query release_dates "Latest Releases" {
+                    fields game.*, game.cover.*, game.artworks.*, game.screenshots.*, game.release_dates.*, game.platforms.*, game.player_perspectives.*, game.involved_companies.*, game.game_modes.*, game.themes.*;
+                    where m = ${new Date().getMonth()} & y = ${new Date().getFullYear()};
+                };
+                
+            `
+        }).catch(error => {
+            console.error(error)
+        })
+
+        return data[0].result;
+
+    },
+
+    getLastMonthHighestRatings: async () => {
+
+        const { data } = await Axios({
+            url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Client-ID': `${CLIENT_ID}`,
+                'Authorization': `Bearer ${AUTHORIZATION}`,
+            },
+            data: `
+                query release_dates "Highest Ratings"{
+                    fields game.*, game.screenshots.*, game.artworks.*, game.cover.*;
+                    sort game.rating asc;
+                    where game.rating >= 85 & m = ${new Date().getMonth() - 1} & y = ${new Date().getFullYear()} ;
+                    limit 10;
+                };
+            `
+        }).catch(error => {
+            console.error(error)
+        })
+
+
+        console.log(data[0].result)
+
+        return data[0].result;
 
     }
-    ).then(response => {
 
-        return response
-    }).catch(err => {
-        if (err.response.status === 403) {
-            alert(`Erro da URL da API! Entre nesse link para ativar o funcionamento integral do site: ${CORS_ANYWHERE}`)
-        }
-        else if (err.response.status === 404) {
-            alert(`Error 404: Não Encontrado.`)
-        }
-        else if (err.response.status === 429) {
-            alert(`Problemas com a API. Muitas Requisições ao mesmo tempo. Tente atualizar a página.`)
-        }
-        console.error(err)
-    })
-
-    return data;
-
-}
 }
