@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import * as C from './styles'
 import API from '../../API/IGDB'
 import { Link } from 'react-router-dom'
+import { ReactComponent as SpinnerSvg } from '../../img/svg/Spinner-1s-200px.svg'
 
 export default function Home() {
 
@@ -9,21 +10,26 @@ export default function Home() {
   const [highestRatings, setHighestRatings] = useState([])
   const [loading, setLoading] = useState(true)
   const [headingGameChose, setHeadingGameChose] = useState(Math.floor(Math.random() * 9))
+  const [array, setArray] = useState([])
   const [auxClickGamesLastMonth, setAuxClickGamesLastMonth] = useState(0)
 
   useEffect(() => {
     document.title = 'Home | My Next Game'
     const load1 = async () => {
+      window.scrollTo(0, 0);
       const data1 = await API.getMonthRelease();
       const data2 = await API.getLastMonthHighestRatings();
       setReleasingThisMonth(data1)
       setHighestRatings(data2)
-      const load2 = () => {
+      const loadInside = () => {
         if (data1[headingGameChose] && data2) {
           setLoading(false)
         }
+        else {
+          alert('api')
+        }
       }
-      load2()
+      loadInside()
     }
     load1()
 
@@ -31,13 +37,17 @@ export default function Home() {
 
   return (
     <C.Container>
-      {loading === false &&
+      {loading === true ? (
+        <div className='loading-active'>
+          <SpinnerSvg />
+        </div>
+      ) : (
 
         <>
           <div className='mobile-website-heading'>
             <h1>What will be your Next Game?</h1>
             <h2>See the new releases and pick the one who will entertain you the most!</h2>
-          </div>
+          </div >
           <C.HeadingContent style={releasingThisMonth[headingGameChose].game.artworks ? {
             backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${releasingThisMonth[headingGameChose].game.artworks[0].image_id}.jpg)`,
           } : {}}>
@@ -88,35 +98,41 @@ export default function Home() {
 
           <C.HighestRatingsLastMonth>
 
-            <h2>Highest Ratings From Last Month</h2>
+            <h2>Highest Rating From Last Month</h2>
 
             <div className='ratings-section'>
               <div className='ratings-text'>
                 <h3>The Most Best Rated!</h3>
                 <p>
-                  According with the users, these are the best games of the month!
+                  According with the users, this is the best game of the month!
                 </p>
 
               </div>
               <div className='ratings-games'>
                 <ul>
-                  <span onClick={() => { setAuxClickGamesLastMonth(auxClickGamesLastMonth - 1) }}>{'<'}</span>
-                  {highestRatings.map((item, key) => (
-                    <>
-                      <li key={key}>
-                        <h4>{item.game.name}</h4>
-                        <div style={item.game.artworks[0] ? {
-                          backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${item.game.artworks[0].image_id}.jpg)`,
-                          backgroundSize: 'cover',
-                          backgroundRepeat: 'no-repeat'
-                        } : {}}>
-                          <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${item.game.cover.image_id}.jpg`} alt={item.game.name}></img>
+                  <li>
+                    <div className='background-image' style={highestRatings[0].game.artworks[0] ? {
+                      backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${highestRatings[0].game.artworks[0].image_id}.jpg)`,
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat'
+                    } : {}}>
+                      <Link to={`/game/${highestRatings[0].game.id}`}>
+                        <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`} alt={highestRatings[0].game.name}></img>
+                        <div className='rating' style={highestRatings[0].game.rating >= 70 ? {
+                          border: '4px solid green'
+                        } : {
+                          border: '40x solid #fc3'
+                        }}>
+                          {(highestRatings[0].game.rating).toFixed(1)}
                         </div>
-                      </li>
-                    </>
-                  ))}
-                  <span onClick={() => { setAuxClickGamesLastMonth(auxClickGamesLastMonth + 1) }}>{'>'}</span>
+                      </Link>
+                    </div>
+                    <Link to={`/game/${highestRatings[0].game.id}`}>
+                      <h4>{highestRatings[0].game.name}</h4>
+                    </Link>
+                  </li>
                 </ul>
+
               </div>
             </div>
 
@@ -125,8 +141,9 @@ export default function Home() {
           </C.HighestRatingsLastMonth>
 
         </>
+      )
       }
-    </C.Container>
+    </C.Container >
   )
 
 }

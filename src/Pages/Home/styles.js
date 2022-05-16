@@ -2,7 +2,10 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
 
-
+    .loading-active{
+        display: flex;
+        height: 90vh;
+    }
 
     div.mobile-website-heading{
         display: flex;
@@ -188,10 +191,10 @@ export const HeadingContent = styled.div`
 
         a.a-tag-button-style{
             font-size: 2.4rem;
-            width: 50%;
+            width: max-content;
             display: flex;
             justify-content: center;
-            padding: 0.5rem;
+            padding: 0.5rem 1rem;
             border-radius: 4px;
             border: 1px solid rgba(250,250,250,.5);
             background-color: #7a30e8;
@@ -223,55 +226,96 @@ export const HighestRatingsLastMonth = styled.section`
         display: flex;
         flex-direction: row;
         margin: 1rem 0;
+        justify-content space-around;
+
+        >div{
+            width: 40%;
+            margin: 2rem 0;
+        }
 
         .ratings-text{
-            height: 50%;
 
-            h3{
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            h3{ 
                 color: #5c16c5;
-                font-size: 3rem;
+                font-size: 4.8rem;
                 font-weight: 600;
+                margin: 2rem 0;
             }
             p{
-                font-size: 2rem;
+                font-size: 3rem;
                 font-weight: 400;
+                width: 90%;
             }
             
         }
 
         .ratings-games{
+            overflow: auto;
+            display: flex;
+            flex-direction: row;
 
-            width: 50%;
             ul{
                 display: flex;
                 flex-direction: row;
                 align-items: center;
-                justify-content: center;
-                overflox: auto;
-
-                li:first-child{
-                    display: flex;
-                }
 
                 li{
-                    div{
-                        height: 250px;
-                        width: 320px;
+                    a{
                         display: flex;
                         flex-direction: column;
                         align-items: center;
                         justify-content: center;
+                        color: unset;
+                    }
+                    h4{
+                        font-size: 1.6rem;
+                        font-weight: 400;
+                        :hover{
+                            text-decoration: underline;
+                        }
+                    }
+                    div{
+                        margin: 0.5rem 0;
+                    }
+                    div.background-image{
+                        height: 250px;
+                        width: 340px;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        border-radius: 10px;
+                    }
+                    div.rating{
+                        padding: 1.5rem 1.2rem;
+                        border-radius: 4000px;
+                        background-color: #f2f2f2;
+                        font-size: 1.4rem;
+                        font-weight: 600;
+                        position: relative;
+                        width: min-content;
                     }
 
-
                     img{
-                        height: 120px;
+                        height: auto;
                         width: 100px;
+                    }
+                    
+                    :hover > div.background-image{
+                        background-image: linear-gradient(to right,rgba(0,0,0,.85) 70%,rgba(0,0,0,.4) 95%,rgba(0,0,0,.02) 100%);
+
                     }
 
                 }
             }
         }
+
+        
     }
 
 `

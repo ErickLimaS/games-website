@@ -160,7 +160,7 @@ export default function Game() {
                   <div className='list-imgs'>
                     {gameInfo.screenshots.map((item, key) => (
                       <img
-                        src={`//images.igdb.com/igdb/image/upload/t_original/${item.image_id}.jpg`} alt={gameInfo.name}
+                        src={`//images.igdb.com/igdb/image/upload/t_screenshot_med/${item.image_id}.jpg`} alt={gameInfo.name}
                         key={key}
                         onClick={() => { setAuxBigImgDisplay(item.image_id) }}
                         style={auxBigImgDisplay === item.image_id ?
@@ -172,7 +172,7 @@ export default function Game() {
                   <div className='big-img'>
 
                     {gameInfo.screenshots.map((item, key) => (
-                      <img src={`//images.igdb.com/igdb/image/upload/t_original/${item.image_id}.jpg`} alt={gameInfo.name} key={key} className={auxBigImgDisplay === item.image_id ? 'active' : 'not-active'} ></img>
+                      <img src={`//images.igdb.com/igdb/image/upload/t_screenshot_huge/${item.image_id}.jpg`} alt={gameInfo.name} key={key} className={auxBigImgDisplay === item.image_id ? 'active' : 'not-active'} ></img>
                     ))}
 
                   </div>

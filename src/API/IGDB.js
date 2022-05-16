@@ -1,5 +1,6 @@
-import Axios, { AxiosError } from 'axios'
+import Axios from 'axios'
 import axiosRetry from 'axios-retry'
+import Swal from 'sweetalert2'
 
 
 const API_BASE = 'https://api.igdb.com/v4'
@@ -314,7 +315,19 @@ export default {
         }).catch(err => {
             console.error(err);
             if (err.response.status === 403) {
-                alert(`Erro da URL da API! Entre nesse link para ativar o funcionamento integral do site: ${CORS_ANYWHERE}`)
+                Swal.fire({
+                    title: 'Ops!',
+                    text: 'A API usada tem um limite de teste que é renovada diariamente. Para usar o site entre no link descrito abaixo.',
+                    icon: 'info',
+                    footer: 'Esse link: https://cors-anywhere.herokuapp.com/corsdemo',
+                    confirmButtonText: 'Já Ativei a API',
+                    showConfirmButton: 'true',
+                    confirmButtonColor: '#5c16c5',
+                    backdrop: 'true',
+                    width: '90vh',
+                    allowOutsideClick: 'false'
+
+                })
             }
             else if (err.response.status === 404) {
                 alert(`Error 404: Não Encontrado.`)
@@ -347,7 +360,19 @@ export default {
             return response
         }).catch(err => {
             if (err.response.status === 403) {
-                alert(`Erro da URL da API! Entre nesse link para ativar o funcionamento integral do site: ${CORS_ANYWHERE}`)
+                Swal.fire({
+                    title: 'Ops!',
+                    text: 'A API usada tem um limite de teste que é renovada diariamente. Para usar o site entre no link descrito abaixo.',
+                    icon: 'info',
+                    footer: 'Esse link: https://cors-anywhere.herokuapp.com/corsdemo',
+                    confirmButtonText: 'Já Ativei a API',
+                    showConfirmButton: 'true',
+                    confirmButtonColor: '#5c16c5',
+                    backdrop: 'true',
+                    width: '90vh',
+                    allowOutsideClick: 'false'
+
+                })
             }
             else if (err.response.status === 404) {
                 alert(`Error 404: Não Encontrado.`)
@@ -376,13 +401,38 @@ export default {
                 query release_dates "Latest Releases" {
                     fields game.*, game.cover.*, game.artworks.*, game.screenshots.*, game.release_dates.*, game.platforms.*, game.player_perspectives.*, game.involved_companies.*, game.game_modes.*, game.themes.*;
                     where m = ${new Date().getMonth()} & y = ${new Date().getFullYear()};
+                    limit 15;
                 };
                 
             `
-        }).catch(error => {
-            console.error(error)
+        }).catch(err => {
+            if (err.response.status === 403) {
+                Swal.fire({
+                    title: 'Ops!',
+                    text: 'A API usada tem um limite de teste que é renovada diariamente. Para usar o site entre no link descrito abaixo.',
+                    icon: 'info',
+                    footer: 'Esse link: https://cors-anywhere.herokuapp.com/corsdemo',
+                    confirmButtonText: 'Já Ativei a API',
+                    showConfirmButton: 'true',
+                    confirmButtonColor: '#5c16c5',
+                    backdrop: 'true',
+                    width: '90vh',
+                    allowOutsideClick: 'false',
+                    didClose: (item) => {
+                        window.location.reload()
+                    }
+                })
+            }
+            else if (err.response.status === 404) {
+                alert(`Error 404: Não Encontrado.`)
+            }
+            else if (err.response.status === 429) {
+                alert(`Problemas com a API. Muitas Requisições ao mesmo tempo. Tente atualizar a página.`)
+            }
+            console.error(err);
         })
 
+        console.log(data);
         return data[0].result;
 
     },
@@ -400,13 +450,13 @@ export default {
             data: `
                 query release_dates "Highest Ratings"{
                     fields game.*, game.screenshots.*, game.artworks.*, game.cover.*;
-                    sort game.rating asc;
-                    where game.rating >= 85 & m = ${new Date().getMonth() - 1} & y = ${new Date().getFullYear()} ;
+                    sort game.rating desc;
+                    where game.rating >= 90 & m = ${new Date().getMonth() - 1} & y = ${new Date().getFullYear()} ;
                     limit 10;
                 };
             `
-        }).catch(error => {
-            console.error(error)
+        }).catch(err => {
+            console.error(err);
         })
 
 
