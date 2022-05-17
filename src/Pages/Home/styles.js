@@ -220,6 +220,10 @@ export const HighestRatingsLastMonth = styled.section`
         width: max-content;
         font-size: 3rem;
         font-weight: 600;
+
+        @media(max-width: 470px){
+            font-size: 2.2rem;
+        }
     }
 
     .ratings-section{
@@ -227,6 +231,15 @@ export const HighestRatingsLastMonth = styled.section`
         flex-direction: row;
         margin: 1rem 0;
         justify-content space-around;
+
+        @media(max-width: 898px){
+            flex-direction: column;
+            flex-wrap: wrap;
+
+            >div{
+                width: initial!important;
+            }
+        }
 
         >div{
             width: 40%;
@@ -247,7 +260,7 @@ export const HighestRatingsLastMonth = styled.section`
                 margin: 2rem 0;
             }
             p{
-                font-size: 3rem;
+                font-size: 2.6rem;
                 font-weight: 400;
                 width: 90%;
             }
@@ -258,6 +271,13 @@ export const HighestRatingsLastMonth = styled.section`
             overflow: auto;
             display: flex;
             flex-direction: row;
+
+            @media(max-width: 898px){
+
+                align-items: center;
+                justify-content: center;
+                
+            }
 
             ul{
                 display: flex;
@@ -290,6 +310,12 @@ export const HighestRatingsLastMonth = styled.section`
                         align-items: center;
                         justify-content: center;
                         border-radius: 10px;
+
+                        @media(max-width: 470px){
+                            
+                            height: 220px;
+                            width: 300px;
+                        }
                     }
                     div.rating{
                         padding: 1.5rem 1.2rem;
@@ -304,6 +330,7 @@ export const HighestRatingsLastMonth = styled.section`
                     img{
                         height: auto;
                         width: 100px;
+                        
                     }
                     
                     :hover > div.background-image{

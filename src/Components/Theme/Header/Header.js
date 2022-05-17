@@ -11,6 +11,7 @@ import { ReactComponent as PlaystationSvg } from '../../../img/svg/playstation.s
 import { ReactComponent as PcSvg } from '../../../img/svg/pc.svg'
 import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
 import { ReactComponent as SpinnerWhiteSvg } from '../../../img/svg/Spinner-1s-200px-white.svg'
+import { Link } from 'react-router-dom'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -63,39 +64,39 @@ export default function Header() {
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
           <nav>
             <h2>
-              <a href='#'>Platform</a>
+              <Link to={`/platforms/`}>Platform</Link>
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
-                <a href='#'>
+                <Link to={`/platforms/ps4--1`}>
                   <li>
-                    <i></i>Playstation
+                    <PlaystationSvg fill='#00439C' /> <span>Playstation 4</span>
                   </li>
-                </a>
+                </Link>
                 <hr />
-                <a href='#'>
+                <Link to={`/platforms/xboxone`}>
                   <li>
-                    <i></i>Xbox
+                    <XboxSvg fill='#107C10' /> <span>Xbox One</span>
                   </li>
-                </a>
+                </Link>
                 <hr />
-                <a href='#'>
+                <Link to={`/platforms/switch`}>
                   <li>
-                    <i></i>Nintendo
+                    <NintendoSvg fill='#E70009' /> <span>Nin. Switch</span>
                   </li>
-                </a>
+                </Link>
                 <hr />
-                <a href='#'>
+                <Link to={`/platforms/win`}>
                   <li>
-                    <i></i>PC
+                    <PcSvg fill='#000' /> <span>PC</span>
                   </li>
-                </a>
+                </Link>
                 <hr />
-                <a href='#'>
+                <Link to={`/platforms/others`}>
                   <li>
-                    <i></i>Others
+                    <DotsSvg fill='#000' /> <span>Others</span>
                   </li>
-                </a>
+                </Link>
               </ul>
             </div>
           </nav>
@@ -177,39 +178,39 @@ export default function Header() {
       <div className='nav-and-hover-list'>
         <nav>
           <h2>
-            <a href='#'>Platform</a>
+            <Link to={`/platforms/`}>Platform</Link>
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
-              <a href='#'>
+              <Link to={`/platforms/ps4--1`}>
                 <li>
-                  <PlaystationSvg fill='#00439C' /> <span>Playstation</span>
+                  <PlaystationSvg fill='#00439C' /> <span>Playstation 4</span>
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={`/platforms/xboxone`}>
                 <li>
-                  <XboxSvg fill='#107C10' /> <span>Xbox</span>
+                  <XboxSvg fill='#107C10' /> <span>Xbox One</span>
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={`/platforms/switch`}>
                 <li>
-                  <NintendoSvg fill='#E70009' /> <span>Nintendo</span>
+                  <NintendoSvg fill='#E70009' /> <span>Nin. Switch</span>
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={`/platforms/win`}>
                 <li>
                   <PcSvg fill='#000' /> <span>PC</span>
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={`/platforms/others`}>
                 <li>
                   <DotsSvg fill='#000' /> <span>Others</span>
                 </li>
-              </a>
+              </Link>
             </ul>
           </div>
         </nav>

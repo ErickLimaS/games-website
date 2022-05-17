@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import * as C from './styles'
 import API from '../../API/IGDB'
-import SearchFromHeader from '../../Components/Search/SearchFromHeader'
 import { Link, useParams } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../img/svg/Spinner-1s-200px.svg'
 
@@ -83,7 +82,7 @@ export default function Game() {
                       </li>
                       <li>
                         {gameInfo.involved_companies && (<h2>Developed By: {gameInfo.involved_companies.map((item, key) => (
-                          <strong><Link to={`/companies/${item.company.id}`} key={item.company.id}>{item.company.name} </Link></strong>
+                          <strong><Link to={`/companies/${item.company.slug}`} key={item.company.id}>{item.company.name} </Link></strong>
                         ))}</h2>)}
                       </li>
 
@@ -93,7 +92,7 @@ export default function Game() {
                     <ul>
                       <li>
                         <h2>Platforms: {gameInfo.platforms.map((item, key) => (
-                          <strong><Link to={`/platforms/${item.id}`} key={item.id}>{item.name} ({item.abbreviation}) </Link></strong>
+                          <strong><Link to={`/platforms/${item.slug}`} key={item.id}>{item.name} ({item.abbreviation}) </Link></strong>
                         ))}</h2>
                       </li>
                       <li>

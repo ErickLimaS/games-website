@@ -4,6 +4,7 @@ import Footer from './Components/Theme/Footer/Footer'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from './Pages/Home'
 import Game from './Pages/Game'
+import Platforms from './Pages/Platforms';
 
 function App() {
 
@@ -16,15 +17,16 @@ function App() {
 
           <Routes>
             {/* <Route path='/search/:search' element={<Search />} /> */}
-            <Route path='/game/:id' element={<Game />} />
-            <Route path='/' element={<Home />} />
-          </Routes>
+            <Route path='/platforms/:slug' element={<Platforms/>}/>
+          <Route path='/game/:id' element={<Game />} />
+          <Route path='/' element={<Home />} />
+        </Routes>
 
-        </C.Container>
+      </C.Container>
 
-        <Footer />
-      </div >
-    </BrowserRouter>
+      <Footer />
+    </div >
+    </BrowserRouter >
   );
 }
 

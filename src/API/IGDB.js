@@ -459,11 +459,57 @@ export default {
             console.error(err);
         })
 
-
-        console.log(data[0].result)
-
         return data[0].result;
 
+    },
+
+    getPlatformInfo: async (slug) => {
+
+        const { data } = await Axios({
+            url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Client-ID': `${CLIENT_ID}`,
+                'Authorization': `Bearer ${AUTHORIZATION}`,
+            },
+            data: ` 
+            query platforms "Platform" {
+                fields *, platform_family.name, platform_logo.*, versions.*, versions.platform_version_release_dates.*, platform_logo.*, versions.companies.*, versions.platform_logo.* , websites.*;
+                where slug = "${slug}";
+            };
+            
+            query games "Games for ${slug}" {
+                fields *, artworks.*, screenshots.*, cover.*;
+                sort rating desc;
+                where platforms.slug = "${slug}" & rating >= 85;
+                limit 15;
+            };`
+
+        }).then(res => {
+            console.log(res)
+            return res;
+            
+        }).catch(err => {
+            console.error(err)
+            if (err.response.status === 403) {
+                Swal.fire({
+                    title: 'Ops!',
+                    text: 'A API usada tem um limite de teste que é renovada diariamente. Para usar o site entre no link descrito abaixo.',
+                    icon: 'info',
+                    footer: 'Esse link: https://cors-anywhere.herokuapp.com/corsdemo',
+                    confirmButtonText: 'Já Ativei a API',
+                    showConfirmButton: 'true',
+                    confirmButtonColor: '#5c16c5',
+                    backdrop: 'true',
+                    width: '90vh',
+                    allowOutsideClick: 'false'
+
+                })
+            }
+        })
+
+        return data;
     }
 
 }
