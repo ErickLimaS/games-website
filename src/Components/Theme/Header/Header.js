@@ -14,8 +14,6 @@ import { ReactComponent as SpinnerWhiteSvg } from '../../../img/svg/Spinner-1s-2
 import { Link } from 'react-router-dom'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
-
-
 export default function Header() {
 
   const [mobileClickSearch, setMobileCLickSearch] = useState(false)
@@ -63,6 +61,9 @@ export default function Header() {
         </button>
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
           <nav>
+            <h1>
+              <Link to={`/user/login`}>Login</Link>
+            </h1>
             <h2>
               <Link to={`/platforms/`}>Platform</Link>
             </h2>
@@ -347,6 +348,9 @@ export default function Header() {
               </div>
             }
           </div>
+        </div>
+        <div className='user-login'>
+          <Link to={`/user/login`}>Login</Link>
         </div>
       </div>
 

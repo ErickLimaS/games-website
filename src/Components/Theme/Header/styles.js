@@ -22,7 +22,7 @@ export const Container = styled.header`
     .mobile-menu-dropdown{
         display: none;
 
-        @media(max-width: 580px){
+        @media(max-width: 800px){
             display: flex;
             z-index: 1;
         }
@@ -88,7 +88,7 @@ export const Container = styled.header`
         flex-direction: row;
         justify-content: space-between;
 
-        @media(max-width: 580px){
+        @media(max-width: 800px){
             display: none;
         }
 
@@ -332,6 +332,10 @@ export const Container = styled.header`
                 }
 
             }
+        }
+
+        .user-login{
+            font-size: 2rem;
         }
     }
 
