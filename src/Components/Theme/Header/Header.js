@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as C from './styles'
 import API from '../../../API/IGDB'
 import SearchFromHeader from '../../../Components/Search/SearchFromHeader'
@@ -18,7 +18,9 @@ import { ReactComponent as BoxArrowLeftSvg } from '../../../img/svg/box-arrow-in
 import { ReactComponent as CaretDownSvg } from '../../../img/svg/caret-down-fill.svg'
 import { ReactComponent as CaretUpSvg } from '../../../img/svg/caret-up-fill.svg'
 import { Link } from 'react-router-dom'
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../../redux/actions/userActions'
 
 export default function Header(userInfo) {
 
@@ -30,7 +32,7 @@ export default function Header(userInfo) {
   const [loading, setLoading] = useState(false)
   const searchInput = useRef('')
 
-  console.log(userInfo)
+  const dispatch = useDispatch()
 
   const searchForGames = async (itemToBeSearched) => {
     setLoading(true)
@@ -61,6 +63,12 @@ export default function Header(userInfo) {
 
   }
 
+  const logoutUser = (e) =>{
+    e.preventDefault()
+    dispatch(logout())
+    document.location.reload()
+  }
+
   return (
     <C.Container>
 
@@ -71,7 +79,7 @@ export default function Header(userInfo) {
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
           <nav>
             <C.User>
-              {userInfo !== null ? (
+              {userInfo.item ? (
                 <>
                   <div className='user-name-and-caret' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
                     <h2 to={`/user/profile`} ><PersonCircleSvg /> {userInfo.item.name}</h2>
@@ -82,7 +90,7 @@ export default function Header(userInfo) {
                     <ul>
                       <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
                       <li><Link to={`/user/favorite`}><StartSvg />Marked Games</Link></li>
-                      <li><Link to={`/user/signout`}><BoxArrowLeftSvg />Sign Out</Link></li>
+                      <li><Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg />Sign Out</Link></li>
                     </ul>
                   </div>
                 </>
@@ -376,14 +384,19 @@ export default function Header(userInfo) {
           </div>
         </div>
         <C.User>
-          {userInfo !== null ? (
+          {userInfo.item ? (
             <>
-              <Link to={`/user/profile`}>{userInfo.item.name}</Link>
+              <div className='user-name-and-caret-desktop'>
+                <Link to={`/user/profile`}>{userInfo.item.name}</Link>
+                {mobileClickUser === false && <CaretDownSvg />}
+                {mobileClickUser === true && <CaretUpSvg />}
+              </div>
+
               <div className='dropdown desktop'>
                 <ul>
                   <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
-                  <li><Link to={`/user/favorite`}><StartSvg />Marked Games</Link></li>
-                  <li><Link to={`/user/signout`}><BoxArrowLeftSvg />Sign Out</Link></li>
+                  <li><Link to={`/user/favorite`}><StartSvg /> Marked Games</Link></li>
+                  <li><Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg /> Sign Out</Link></li>
                 </ul>
               </div>
             </>

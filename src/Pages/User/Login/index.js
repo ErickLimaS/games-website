@@ -1,22 +1,105 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import * as C from './styles'
-import Axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
 import { ReactComponent as Dot } from '../../../img/svg/dot.svg'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../../redux/actions/userActions'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
-export default function Login() {
+export default function Login(props) {
 
   const email = useRef('')
   const password = useRef('')
 
   const dispatch = useDispatch()
 
+  const navigate = useNavigate()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo, error } = userLogin
+
+  useEffect(() => {
+    if (userInfo === 'Wrong Password.') {
+      return (
+        Swal.fire({
+          title: 'Wrong Password!',
+          text: 'Insert your Password Again.',
+          icon: 'error',
+          confirmButtonText: 'OK, I Will Try.',
+          showConfirmButton: 'true',
+          confirmButtonColor: '#5c16c5',
+          backdrop: 'true',
+          width: '90%',
+          height: 'auto',
+          allowOutsideClick: 'false'
+
+        }),
+        localStorage.removeItem('userInfo')
+      )
+    }
+    if (userInfo) {
+      navigate('/')
+    }
+  }, [userInfo])
+
+
   const submitRegisterForm = (e) => {
     e.preventDefault()
-    dispatch(login(email.current.valueOf, password.current.value))
+    if (!(email.current.value).includes('@')) {
+      return (
+        Swal.fire({
+          title: 'Email is Not Right!',
+          text: 'Your Email is Not complete. Please, Check Again.',
+          icon: 'error',
+          confirmButtonText: 'I Got It',
+          showConfirmButton: 'true',
+          confirmButtonColor: '#5c16c5',
+          backdrop: 'true',
+          height: '80vh',
+          width: '90%',
+          allowOutsideClick: 'false'
+
+        })
+      )
+    }
+    if ((password.current.value).length < 8) {
+      return (
+        Swal.fire({
+          title: 'Password is Too Short!',
+          text: 'The password is shorter than 8 characters',
+          icon: 'error',
+          confirmButtonText: 'I Got It',
+          showConfirmButton: 'true',
+          confirmButtonColor: '#5c16c5',
+          backdrop: 'true',
+          height: '80vh',
+          width: '90%',
+          allowOutsideClick: 'false'
+
+        })
+      )
+    }
+    try {
+      dispatch(login(email.current.value, password.current.value))
+    } catch {
+      return (
+        Swal.fire({
+          title: 'Error',
+          text: 'Try Again Later.',
+          icon: 'error',
+          confirmButtonText: 'I Got It',
+          showConfirmButton: 'true',
+          confirmButtonColor: '#5c16c5',
+          backdrop: 'true',
+          width: '90%',
+          height: 'auto',
+          allowOutsideClick: 'false'
+
+        })
+      )
+    }
   }
 
   return (
@@ -31,6 +114,7 @@ export default function Login() {
           <li><Dot /> And More!</li>
         </ul>
       </div>
+      {error && <h1>error</h1>}
       <div>
         <form className='register-form' onSubmit={submitRegisterForm}>
 
@@ -53,7 +137,7 @@ export default function Login() {
             </div>
             <div>
               <label />
-              <Link to={`/user/register`}>Dont Have a Account?</Link>
+              <Link to={`/user/register`}>I don't Have a Account</Link>
             </div>
           </div>
 

@@ -347,10 +347,32 @@ export const User = styled.div`
     }
 
     .user-name-and-caret{
+
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+
+    }
+    .user-name-and-caret-desktop{
+
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: center;
+
+        svg{
+            fill: #666666;
+        }
+
+        :hover{
+            svg{
+                fill: #c0c0c0;
+                transition: all cubic-bezier(0.4, 0, 0.2, 1) 750ms;
+                transform: rotate(180deg);
+            }
+        }
+
     }
 
     .dropdown.active{
@@ -358,8 +380,6 @@ export const User = styled.div`
         background-color: rgba(0,0,0,.5);
         border-radius: 4px;
         padding: 1rem;
-
-        
 
         ul{
             li{

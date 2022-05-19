@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose } from 'redux';
 import { legacy_createStore as createStore } from 'redux'
 import thunk from 'redux-thunk';
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
+import { userLoginReducer, userLogoutReducer, userRegisterReducer } from './reducers/userReducers';
 
 const initialState = {
     userLogin: {
@@ -14,6 +14,7 @@ const initialState = {
 const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userLogin: userLoginReducer,
+    userLogout: userLogoutReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -6,7 +6,7 @@ import {
     USER_LOGIN_FAIL,
     USER_LOGIN_REQUEST,
     USER_LOGIN_SUCCESS,
-    USER_SIGNOUT,
+    USER_LOGOUT,
 } from '../constants/userConstants';
 
 const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
@@ -16,7 +16,6 @@ export const register = (name, email, password) => async (dispatch) => {
     dispatch({ type: USER_REGISTER_REQUEST, payload: { email, password } })
     try {
         const { data } = await Axios.post(`${CORS_ANYWHERE}${API_BASE}/register`, { name, email, password })
-        console.log(data)
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data })
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
         localStorage.setItem('userInfo', JSON.stringify(data))
@@ -48,4 +47,8 @@ export const login = (email, password) => async (dispatch) => {
                     : error.message,
         });
     }
+}
+
+export const logout = () => (dispatch) => {
+    dispatch({ type: USER_LOGOUT, payload: null })
 }

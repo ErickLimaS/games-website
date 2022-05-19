@@ -432,7 +432,6 @@ export default {
             console.error(err);
         })
 
-        console.log(data);
         return data[0].result;
 
     },
