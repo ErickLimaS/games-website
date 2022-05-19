@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as C from './styles'
-import Axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
 import { ReactComponent as Dot } from '../../../img/svg/dot.svg'
+import { register } from '../../../redux/actions/userActions'
 
-export default function Register() {
+export default function Register(props) {
 
   const name = useRef('')
   const email = useRef('')
@@ -13,8 +14,20 @@ export default function Register() {
   const confirmPassword = useRef('')
   const checkbox = useRef('')
 
+  const userRegister = useSelector((state) => state.userRegister)
+  const { userInfo, loading, error } = userRegister
+
+  useEffect(() => {
+    if (userInfo) {
+    }
+  }, [userInfo]);
+
+  const dispatch = useDispatch()
+
   const submitRegisterForm = (e) => {
-    console.log('oi')
+    e.preventDefault();
+    console.log(name.current.value)
+    dispatch(register(name.current.value, email.current.value, password.current.value))
   }
 
   return (
@@ -32,6 +45,7 @@ export default function Register() {
 
       <div>
         <form className='register-form' onSubmit={submitRegisterForm}>
+        {/* <form className='register-form'> */}
 
           <h2>Sign Up</h2>
 
@@ -63,6 +77,7 @@ export default function Register() {
           <div className='buttons'>
             <div>
               <label />
+              {/* <button type='button' onClick={submitRegisterForm} placeholder='Confirm Password' required>Sign Up</button> */}
               <button type='submit' placeholder='Confirm Password' required>Sign Up</button>
             </div>
             <div>

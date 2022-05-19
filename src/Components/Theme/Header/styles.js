@@ -330,13 +330,146 @@ export const Container = styled.header`
                 .results-deactive{
                     display: none;
                 }
-
             }
         }
 
-        .user-login{
-            font-size: 2rem;
+    }
+
+`
+
+export const User = styled.div`
+
+    font-size: 2rem;
+
+    
+    :hover > .dropdown.desktop{
+        display: block;
+    }
+
+    .user-name-and-caret{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .dropdown.active{
+        display: block;
+        background-color: rgba(0,0,0,.5);
+        border-radius: 4px;
+        padding: 1rem;
+
+        
+
+        ul{
+            li{
+                a{
+                    display: flex;
+                    align-items: center;
+
+                    color: #FFF;
+
+                    svg{
+                        margin-right: 2rem; 
+                        color: #FFF;
+                    }
+
+                    :hover{
+                       text-decoration: underline;
+                    }
+
+                    
+                }
+            }
+            li:last-child{
+
+                svg{
+                    color: red;
+                }
+
+                :hover{
+                    a, svg{
+                        color: red;
+                    }
+                }
+            }
+            
         }
     }
+    .dropdown.deactive{
+        display: none;
+    }
+
+
+    .dropdown.desktop{
+        display: none;
+        position: absolute;
+        right: 0;
+
+        width: max-content;
+
+        background-color: rgba(250,250,250,1);
+        border-radius: 4px;
+        border: 1px solid #c0c0c0;
+        
+        padding: 1rem;
+
+        :hover{
+            display: block;
+        }
+
+        ul{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            li{
+                padding: 0.2rem 0;
+                margin: 0.5rem 0;
+                border-bottom: 1px solid #c0c0c0;
+
+                
+
+                :hover{
+                    background-color: rgba(250,250,250,0.4);
+                    border-radius: 2px;
+                    
+                }
+
+                a{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    color: #666666;
+                    font-weight: 300;
+
+                    :hover{
+                        color: #000;
+                        svg{
+                            color: #5c16c5;
+                        }
+                    }
+
+                    svg{
+                        margin-right: 1rem;
+                        width: 20px;
+                        height: 20px;
+
+                    }
+                }
+
+                :last-child{
+
+                    :hover{
+                        a, svg{
+                            color: red;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
 `

@@ -11,17 +11,26 @@ import { ReactComponent as PlaystationSvg } from '../../../img/svg/playstation.s
 import { ReactComponent as PcSvg } from '../../../img/svg/pc.svg'
 import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
 import { ReactComponent as SpinnerWhiteSvg } from '../../../img/svg/Spinner-1s-200px-white.svg'
+import { ReactComponent as PersonCircleSvg } from '../../../img/svg/person-circle.svg'
+import { ReactComponent as StartSvg } from '../../../img/svg/star.svg'
+import { ReactComponent as BoxArrowRightSvg } from '../../../img/svg/box-arrow-left.svg'
+import { ReactComponent as BoxArrowLeftSvg } from '../../../img/svg/box-arrow-in-right.svg'
+import { ReactComponent as CaretDownSvg } from '../../../img/svg/caret-down-fill.svg'
+import { ReactComponent as CaretUpSvg } from '../../../img/svg/caret-up-fill.svg'
 import { Link } from 'react-router-dom'
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
-export default function Header() {
+export default function Header(userInfo) {
 
   const [mobileClickSearch, setMobileCLickSearch] = useState(false)
   const [mobileClickMenu, setMobileCLickMenu] = useState(false)
+  const [mobileClickUser, setMobileCLickUser] = useState(false)
   const [gamesSearched, setGamesSearched] = useState([])
   const [isFetch, setIsFetch] = useState(false)
   const [loading, setLoading] = useState(false)
   const searchInput = useRef('')
+
+  console.log(userInfo)
 
   const searchForGames = async (itemToBeSearched) => {
     setLoading(true)
@@ -61,9 +70,26 @@ export default function Header() {
         </button>
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
           <nav>
-            <h1>
-              <Link to={`/user/login`}>Login</Link>
-            </h1>
+            <C.User>
+              {userInfo !== null ? (
+                <>
+                  <div className='user-name-and-caret' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                    <h2 to={`/user/profile`} ><PersonCircleSvg /> {userInfo.item.name}</h2>
+                    {mobileClickUser === false && <CaretDownSvg />}
+                    {mobileClickUser === true && <CaretUpSvg />}
+                  </div>
+                  <div className={mobileClickUser === true ? 'dropdown active' : 'dropdown deactive'}>
+                    <ul>
+                      <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
+                      <li><Link to={`/user/favorite`}><StartSvg />Marked Games</Link></li>
+                      <li><Link to={`/user/signout`}><BoxArrowLeftSvg />Sign Out</Link></li>
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <Link to={`/user/login`}>Login</Link>
+              )}
+            </C.User>
             <h2>
               <Link to={`/platforms/`}>Platform</Link>
             </h2>
@@ -349,11 +375,24 @@ export default function Header() {
             }
           </div>
         </div>
-        <div className='user-login'>
-          <Link to={`/user/login`}>Login</Link>
-        </div>
+        <C.User>
+          {userInfo !== null ? (
+            <>
+              <Link to={`/user/profile`}>{userInfo.item.name}</Link>
+              <div className='dropdown desktop'>
+                <ul>
+                  <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
+                  <li><Link to={`/user/favorite`}><StartSvg />Marked Games</Link></li>
+                  <li><Link to={`/user/signout`}><BoxArrowLeftSvg />Sign Out</Link></li>
+                </ul>
+              </div>
+            </>
+          ) : (
+            <Link to={`/user/login`}>Login</Link>
+          )}
+        </C.User>
       </div>
 
-    </C.Container>
+    </C.Container >
   )
 }

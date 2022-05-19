@@ -7,13 +7,17 @@ import Game from './Pages/Game'
 import Platforms from './Pages/Platforms';
 import Register from './Pages/User/Register';
 import Login from './Pages/User/Login';
+import { useSelector } from 'react-redux';
 
 function App() {
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
   return (
     <BrowserRouter>
       <div className="App">
-        <Header />
+        <Header item={userInfo}/>
 
         <C.Container> {/* tag main */}
 

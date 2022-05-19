@@ -4,14 +4,19 @@ import Axios from 'axios'
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
 import { ReactComponent as Dot } from '../../../img/svg/dot.svg'
+import { useDispatch } from 'react-redux'
+import { login } from '../../../redux/actions/userActions'
 
 export default function Login() {
 
   const email = useRef('')
   const password = useRef('')
 
+  const dispatch = useDispatch()
+
   const submitRegisterForm = (e) => {
-    console.log('oi')
+    e.preventDefault()
+    dispatch(login(email.current.valueOf, password.current.value))
   }
 
   return (
