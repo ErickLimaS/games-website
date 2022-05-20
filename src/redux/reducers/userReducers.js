@@ -6,6 +6,12 @@ import {
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
   USER_LOGOUT,
+  USER_FAIL_NEW_FAV_GAME,
+  USER_SUCCESS_NEW_FAV_GAME,
+  USER_REQUEST_NEW_FAV_GAME,
+  USER_REQUEST_REMOVE_FAV_GAME,
+  USER_SUCCESS_REMOVE_FAV_GAME,
+  USER_FAIL_REMOVE_FAV_GAME,
 } from '../constants/userConstants';
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -40,4 +46,32 @@ export const userLogoutReducer = (state = {}, action) => {
     return { userInfo: action.payload }
   }
   return state;
+}
+
+export const userNewFavGameReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_REQUEST_NEW_FAV_GAME:
+      return { loading: true }
+    case USER_SUCCESS_NEW_FAV_GAME:
+      console.log(action.payload)
+      return { loading: false, userInfo: action.payload }
+    case USER_FAIL_NEW_FAV_GAME:
+      return { loading: false, error: action.payload }
+    default:
+      return state;
+  }
+}
+
+export const userRemoveFavGameReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_REQUEST_REMOVE_FAV_GAME:
+      return { loading: true }
+    case USER_SUCCESS_REMOVE_FAV_GAME:
+      console.log(action.payload)
+      return { loading: false, userInfo: action.payload }
+    case USER_FAIL_REMOVE_FAV_GAME:
+      return { loading: false, error: action.payload }
+    default:
+      return state;
+  }
 }

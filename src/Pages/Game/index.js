@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import * as C from './styles'
 import API from '../../API/IGDB'
+import SERVER from '../../API/Server-api'
 import { Link, useParams } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../img/svg/Spinner-1s-200px.svg'
+import { ReactComponent as StarSvg } from '../../img/svg/star.svg'
+import { ReactComponent as StarFillSvg } from '../../img/svg/star-fill.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { favoriteGame, removeFavoriteGame } from '../../redux/actions/userActions'
 
 export default function Game() {
 
@@ -14,6 +19,9 @@ export default function Game() {
   const [auxBigVideoDisplay, setAuxBigVideoDisplay] = useState(0)
 
   const gameId = useParams();
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
 
   useEffect(() => {
 
@@ -42,9 +50,17 @@ export default function Game() {
 
     console.log(gameInfo)
 
-
-
   }, [gameId])
+
+  const dispatch = useDispatch()
+
+  const favoriteThisGame = () => {
+    dispatch(favoriteGame(gameInfo, userLogin))
+  }
+
+  const removeFavoriteFromThisGame = () => {
+    dispatch(removeFavoriteGame(gameInfo, userLogin))
+  }
 
   return (
     <C.Container>
@@ -64,11 +80,33 @@ export default function Game() {
               backgroundRepeat: 'no-repeat',
             }}>
 
-
               <div className='game-first-content'  >
                 <div className='game-cover-art'>
                   <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`} alt={gameInfo.name}></img>
-                  <span>{gameInfo.follows} Follower{gameInfo.follows > 1 ? 's' : ''}</span>
+
+                  <span className='followers'>{gameInfo.follows} Follower{gameInfo.follows > 1 ? 's' : ''}</span>
+
+
+                  {userInfo ? (
+
+                    (
+                      userInfo.favoriteGames.find(game => game.id === gameId.id) ? (
+
+                        <button className='favorite-button' type='button' onClick={() => { removeFavoriteFromThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#FFF' }}>
+                          <StarFillSvg style={{ color: '#5c16c5 ', fill: '#5c16c5' }} /> <span style={{ color: '#333333' }}>Favorited</span>
+                        </button>
+                      ) : (
+                        <button className='favorite-button' type='button' onClick={() => { favoriteThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#7a30e8' }}>
+                          <StarSvg style={{ color: '#FFF ', fill: '#FFF' }} /> Favorite
+                        </button>
+                      )
+                    )
+                  ) : (
+                    <button className='favorite-button need-login' type='button' style={{ border: '1px solid #5c16c5', backgroundColor: '#FFF' }}>
+                      <Link to={'/user/login'} style={{ color: '#5c16c5 ' }}>Login your Account to Favorite <StarSvg style={{ color: '#5c16c5 ', fill: '#5c16c5' }} /></Link>
+                    </button>
+                  )
+                  }
                 </div>
                 <div className='game-first-info'>
                   <div className='info-1'>

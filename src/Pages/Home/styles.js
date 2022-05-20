@@ -28,6 +28,13 @@ export const Container = styled.div`
             font-weight: 600;
 
             @media(max-width: 620px){
+                display: flex;
+                margin: 5vh 0;
+                margin-top: 10vh;
+                font-size: 6.6rem;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
                 width: -webkit-fill-available;
             }
         }

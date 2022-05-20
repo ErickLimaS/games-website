@@ -94,7 +94,7 @@ export const HeadingContent = styled.div`
             flex-direction: column;
             align-items: center;
 
-            span{
+            span.followers{
                 padding: 0.5rem;
                 margin: 1rem 0;
                 background-color: #5c16c5;
@@ -105,6 +105,45 @@ export const HeadingContent = styled.div`
                 font-size: 1.8rem;
                 color: #FFF;
                 font-weight: 600;
+            }
+
+            button.favorite-button{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                font-size: 1.8rem;
+
+                cursor: pointer;
+                width: 93%;
+                
+                color: #FFF;
+
+                padding: 0.5rem;
+                
+                background-color: #FFF;
+
+               
+                
+                border: 1px solid #5c16c5;
+                border-radius: 4px;
+
+                svg{
+                    width: 20px;
+                    height: 20px;
+                    margin: 0 1rem;
+                }
+
+
+                :hover{
+                    transition: all ease-in 100ms;
+                    background-color: #5c16c5;
+
+                    opacity: 0.85;
+                }
+            }
+            button.favorite-button.need-login{
+                background-color: #f2f2f2!important;
             }
         }
 
