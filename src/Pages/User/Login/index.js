@@ -8,7 +8,7 @@ import { login } from '../../../redux/actions/userActions'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
-export default function Login(props) {
+export default function Login() {
 
   const email = useRef('')
   const password = useRef('')

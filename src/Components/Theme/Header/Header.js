@@ -89,7 +89,7 @@ export default function Header(userInfo) {
                   <div className={mobileClickUser === true ? 'dropdown active' : 'dropdown deactive'}>
                     <ul>
                       <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
-                      <li><Link to={`/user/favorite`}><StartSvg />Marked Games</Link></li>
+                      <li><Link to={`/user/my-favorite-games`}><StartSvg />Marked Games</Link></li>
                       <li><Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg />Sign Out</Link></li>
                     </ul>
                   </div>
@@ -397,7 +397,7 @@ export default function Header(userInfo) {
               <div className='dropdown desktop'>
                 <ul>
                   <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
-                  <li><Link to={`/user/favorite`}><StartSvg /> Marked Games</Link></li>
+                  <li><Link to={`/user/my-favorite-games`}><StartSvg /> Marked Games</Link></li>
                   <li><Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg /> Sign Out</Link></li>
                 </ul>
               </div>

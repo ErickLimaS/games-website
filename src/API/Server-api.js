@@ -2,44 +2,33 @@
 import Axios from 'axios'
 
 const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
-const API_BASE = 'https://games-website-1.herokuapp.com/users'
-
-const userLogin = ((state) => state.userLogin)
-const { userInfo } = userLogin
+const SERVER_BASE = 'https://games-website-1.herokuapp.com'
 
 export default {
 
-    favoriteGame: async (gameInfo, userInfo) => {
+    allFavoriteGame: async (id) => {
 
-        if (userInfo) {
-            const { data } = Axios({
-                url: `${CORS_ANYWHERE}${API_BASE}/add-favorite-game`,
-                method: 'PUT',
-                data: {
-                    userId: `${userInfo.id}`,
-                    gameId: `${gameInfo.id}`,
-                    gameName: `${gameInfo.name}`,
-                    gameSlug: `${gameInfo.slug}`,
-                    gameCover: `https://images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`,
-                    gameRating: `${gameInfo.rating}`,
-                    gameVotes: `${gameInfo.rating_count}`
-                }
+        console.log(id)
+
+        const { data } = await Axios({
+            url: `${CORS_ANYWHERE}${SERVER_BASE}/users/my-favorite-games`,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: {
+                userId: `${id}`
+            }
 
 
-            }).catch(err => {
-                console.error(err);
+        }).catch(err => {
+            console.error(err);
 
-            })
+        })
 
-            let newUserInfo = userInfo
-            newUserInfo.favoriteGames = data
+        return data;
 
-            localStorage.setItem('userInfo', JSON.stringify(newUserInfo))
-        }
-        else {
-            console.log('user null')
-        }
     }
-
 }
+
 

@@ -8,6 +8,7 @@ import Platforms from './Pages/Platforms';
 import Register from './Pages/User/Register';
 import Login from './Pages/User/Login';
 import { useSelector } from 'react-redux';
+import MyFavoriteGames from './Pages/User/MyFavoriteGames';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
 
           <Routes>
             {/* <Route path='/search/:search' element={<Search />} /> */}
+            <Route path='/user/my-favorite-games' element={<MyFavoriteGames />} />
             <Route path='/user/register' element={<Register />} />
             <Route path='/user/login' element={<Login />} />
             <Route path='/platforms/:slug' element={<Platforms />} />

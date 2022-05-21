@@ -22,7 +22,7 @@ export const Container = styled.header`
     .mobile-menu-dropdown{
         display: none;
 
-        @media(max-width: 800px){
+        @media(max-width: 842px){
             display: flex;
             z-index: 1;
         }
@@ -91,7 +91,7 @@ export const Container = styled.header`
         flex-direction: row;
         justify-content: space-between;
 
-        @media(max-width: 800px){
+        @media(max-width: 842px){
             display: none;
         }
 
@@ -167,7 +167,7 @@ export const Container = styled.header`
         display: none;
         z-index: 1;
 
-        @media(max-width: 800px){
+        @media(max-width: 842px){
             display: flex;
             flex-direction: column;
 
@@ -257,7 +257,7 @@ export const Container = styled.header`
         align-items: center;
                 z-index: 1;
 
-        @media(max-width: 800px){
+        @media(max-width: 842px){
             display: none;
         }
 
