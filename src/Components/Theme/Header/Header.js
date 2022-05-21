@@ -13,8 +13,8 @@ import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.
 import { ReactComponent as SpinnerWhiteSvg } from '../../../img/svg/Spinner-1s-200px-white.svg'
 import { ReactComponent as PersonCircleSvg } from '../../../img/svg/person-circle.svg'
 import { ReactComponent as StartSvg } from '../../../img/svg/star.svg'
-import { ReactComponent as BoxArrowRightSvg } from '../../../img/svg/box-arrow-left.svg'
-import { ReactComponent as BoxArrowLeftSvg } from '../../../img/svg/box-arrow-in-right.svg'
+import { ReactComponent as BoxArrowLeftSvg } from '../../../img/svg/box-arrow-left.svg'
+import { ReactComponent as BoxArrowRightSvg } from '../../../img/svg/box-arrow-in-right.svg'
 import { ReactComponent as CaretDownSvg } from '../../../img/svg/caret-down-fill.svg'
 import { ReactComponent as CaretUpSvg } from '../../../img/svg/caret-up-fill.svg'
 import { Link } from 'react-router-dom'
@@ -63,7 +63,7 @@ export default function Header(userInfo) {
 
   }
 
-  const logoutUser = (e) =>{
+  const logoutUser = (e) => {
     e.preventDefault()
     dispatch(logout())
     document.location.reload()
@@ -95,7 +95,9 @@ export default function Header(userInfo) {
                   </div>
                 </>
               ) : (
-                <Link to={`/user/login`}>Login</Link>
+                <div className='login'>
+                  <Link to={`/user/login`}><BoxArrowRightSvg />Login</Link>
+                </div>
               )}
             </C.User>
             <h2>

@@ -43,12 +43,8 @@ export default function Game() {
         if (data.videos) { setAuxBigVideoDisplay(data.videos[0].video_id) }
       }, 3000) //7000
 
-      console.log(data, auxBigImgDisplay, auxBigVideoDisplay)
-
     }
     load1()
-
-    console.log(gameInfo)
 
   }, [gameId])
 

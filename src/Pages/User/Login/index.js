@@ -114,7 +114,8 @@ export default function Login(props) {
           <li><Dot /> And More!</li>
         </ul>
       </div>
-      {error && <h1>error</h1>}
+      {/* {error && (<div>{Swal.fire(
+        'The Internet?', 'That thing is still around?', 'question')}</div>)} */}
       <div>
         <form className='register-form' onSubmit={submitRegisterForm}>
 

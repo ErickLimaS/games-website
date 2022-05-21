@@ -109,7 +109,7 @@ export const HeadingContent = styled.div`
 
             button.favorite-button{
                 display: flex;
-                align-items: center;
+                align-items: flex-start;
                 justify-content: center;
 
                 font-size: 1.8rem;

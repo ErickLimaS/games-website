@@ -45,7 +45,6 @@ export const Container = styled.header`
             }
 
             :hover{
-              border: 1px solid #5c16c5;
               background-color: rgba(250,250,250,.1);
             }
         }
@@ -71,6 +70,10 @@ export const Container = styled.header`
                 font-size: 2.4rem;
                 margin: 2rem 0;
                 color: #5c16c5;
+
+                a{
+                    color: #5c16c5;
+                }
             }
             li{
                 font-size: 1.6rem;
@@ -192,8 +195,8 @@ export const Container = styled.header`
 
                 :hover{
                     background-color: rgba(250,250,250,1);
-                    border: 1px solid #5c16c5;
                 }
+
             }
             button.active{
                 background-color: rgba(0,0,0,.1)!important;
@@ -204,7 +207,7 @@ export const Container = styled.header`
             }
 
             div.mobile-input.active{
-                padding: 1rem;
+                padding: 1rem 0;
                 background: rgba(0,0,0,.4);
                 border-radius: 4px 0px 0px 4px;
                 display: flex;
@@ -218,17 +221,18 @@ export const Container = styled.header`
                 position: absolute;
 
                 .input-and-button{
+                    width: -webkit-fill-available;
                     display: flex;
                     justify-content: center;
                     margin-bottom: 1rem;
                 }
                 input{
+                    width: 70%;
                     padding: 0.5rem;
                     font-size: 1.6rem;
                     font-weight: 400;
                     border: 1px solid #c0c0c0;
                     border-radius: 4px;
-                    width: 170px;
                     margin-right: 1rem;
                 }
                 button{
@@ -340,7 +344,25 @@ export const Container = styled.header`
 export const User = styled.div`
 
     font-size: 2rem;
+    border: 1px solid #c0c0c0;
+    border-radius: 4px;
+    padding: 1rem 0.5rem;
 
+    .login{
+        font-size: 2.6rem;
+
+        a{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+
+            svg{
+                width: 30px;
+                height: 30px;
+            }
+        }
+    }
     
     :hover > .dropdown.desktop{
         display: block;
@@ -352,6 +374,10 @@ export const User = styled.div`
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
+
+        h2{
+            margin: 0!important; 
+        }
 
     }
     .user-name-and-caret-desktop{
@@ -380,6 +406,7 @@ export const User = styled.div`
         background-color: rgba(0,0,0,.5);
         border-radius: 4px;
         padding: 1rem;
+        margin-top: 2rem;
 
         ul{
             li{
