@@ -17,7 +17,20 @@ export const Container = styled.div`
         }
 
         @media(max-width: 620px){
-            width: 80%;
+            width: 85%;
+
+            h1{
+                font-size: 4rem!important;
+                font-weight: 600!important;
+            }
+            h2{
+                font-size: 2.4rem!important;
+                font-weight: 400!important;
+            }
+            p{
+                font-size: 2.0rem!important;
+                font-weight: 400!important;
+            }
         }
 
         margin: 3rem 0;
@@ -81,7 +94,7 @@ export const Games = styled.div`
             margin: 1rem 0;
 
             display:flex;
-        flex-wrap: wrap;
+            flex-wrap: wrap;
         }
 
         display: flex;
@@ -181,6 +194,7 @@ export const Games = styled.div`
         align-items: center;
         
         padding: 2rem;
+        margin: 0 1rem;
         
         box-shadow: 20px 19px 11px 8px #00000085;
 

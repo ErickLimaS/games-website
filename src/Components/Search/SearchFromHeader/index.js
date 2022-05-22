@@ -4,18 +4,20 @@ import * as C from './styles'
 
 export default function index(item) {
 
+    console.log(item.item)
+
     return (
         <C.Container>
 
             <Link to={`/game/${item.item.id}`}>
                 <div className='img'>
-                    {item.item.cover === undefined ? (<img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg' alt='Não Disponível'></img>) : (<img src={item.item.cover.url} alt={item.item.name}></img>)}
+                    {item.item.cover === undefined ? (<img src='https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg' alt='Não Disponível'></img>) : (<img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${item.item.cover.image_id}.jpg`} alt={item.item.name}></img>)}
 
                 </div>
                 <div className='game-details'>
                     <h1><Link to={`/game/${item.item.id}`}>{item.item.name}</Link></h1>
-                    {/* <hr/>
-                <h2>Released on US: {item.release_date}</h2> */}
+                    {item.item.release_dates[0] && <p>Released on: {item.item.release_dates[0].human}</p>}
+                    <Link to={`game/${item.item.id}`}>Go to Page</Link>
                 </div>
             </Link>
 

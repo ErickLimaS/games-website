@@ -55,12 +55,12 @@ export const Container = styled.header`
         .dropdown-active{
             display: flex;
             position: absolute;
-            top: 10vh;
+            top: 9vh;
             left: 0;
             right: 0;
             flex-direction: column;
             width: 100%;
-            background-color: #e3e3e3;
+            background-color: rgba(250,250,250,1);
 
             nav{
                 padding: 1rem;
@@ -246,7 +246,21 @@ export const Container = styled.header`
                         background-color: rgba(250,250,250,1);
                     }
                 }
+
+                .search-results-mobile-2{
+                    width: -webkit-fill-available;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+
+                    .search-result{
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                }
             }
+
         }
     }
 
@@ -364,7 +378,7 @@ export const User = styled.div`
         }
     }
     
-    :hover > .dropdown.desktop{
+    > .dropdown.desktop.desk-active{
         display: block;
     }
 
@@ -380,23 +394,25 @@ export const User = styled.div`
         }
 
     }
+    
     .user-name-and-caret-desktop{
 
         display: flex;
         flex-direction: row;
         align-items: baseline;
         justify-content: center;
+        transition: all cubic-bezier(0.4, 0, 0.2, 1) 750ms;
 
-        svg{
-            fill: #666666;
+        cursor : pointer;
+
+        h3{
+            color: #4b12a1;
+            border-bottom: 1px solid #4b12a1;
         }
-
-        :hover{
-            svg{
-                fill: #c0c0c0;
-                transition: all cubic-bezier(0.4, 0, 0.2, 1) 750ms;
-                transform: rotate(180deg);
-            }
+        svg{
+            fill: #c0c0c0;
+            transition: all cubic-bezier(0.4, 0, 0.2, 1) 750ms;
+            transform: rotate(180deg);
         }
 
     }
@@ -461,10 +477,6 @@ export const User = styled.div`
         
         padding: 1rem;
 
-        :hover{
-            display: block;
-        }
-
         ul{
             display: flex;
             flex-direction: column;
@@ -474,8 +486,6 @@ export const User = styled.div`
                 padding: 0.2rem 0;
                 margin: 0.5rem 0;
                 border-bottom: 1px solid #c0c0c0;
-
-                
 
                 :hover{
                     background-color: rgba(250,250,250,0.4);
@@ -489,7 +499,7 @@ export const User = styled.div`
                     justify-content: space-between;
                     align-items: center;
                     color: #666666;
-                    font-weight: 300;
+                    font-weight: 400;
 
                     :hover{
                         color: #000;
@@ -517,6 +527,7 @@ export const User = styled.div`
             }
         }
     }
+
 
 
 `

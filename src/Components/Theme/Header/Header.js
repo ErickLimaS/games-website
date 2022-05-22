@@ -69,6 +69,7 @@ export default function Header(userInfo) {
     document.location.reload()
   }
 
+
   return (
     <C.Container>
 
@@ -388,13 +389,13 @@ export default function Header(userInfo) {
         <C.User>
           {userInfo.item ? (
             <>
-              <div className='user-name-and-caret-desktop'>
-                <Link to={`/user/profile`}>{userInfo.item.name}</Link>
-                {mobileClickUser === false && <CaretDownSvg />}
-                {mobileClickUser === true && <CaretUpSvg />}
+              <div className='user-name-and-caret-desktop' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                <h3>{userInfo.item.name}</h3>
+                {mobileClickUser === true && <CaretDownSvg />}
+                {mobileClickUser === false && <CaretUpSvg />}
               </div>
 
-              <div className='dropdown desktop'>
+              <div className={mobileClickUser === true ? 'dropdown desktop desk-active' : 'dropdown desktop'}>
                 <ul>
                   <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
                   <li><Link to={`/user/my-favorite-games`}><StartSvg /> Marked Games</Link></li>

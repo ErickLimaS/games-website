@@ -344,7 +344,7 @@ export default {
     getSearchResults: async (searchedItem) => { // Value = any
 
         let data = await Axios({
-            url: `${CORS_ANYWHERE}${API_BASE}/games/?search=${searchedItem}&fields=*,cover.*`,
+            url: `${CORS_ANYWHERE}${API_BASE}/games/?search=${searchedItem}&fields=*,cover.*,release_dates.*`,
             // url: `${CORS_ANYWHERE}${API_BASE}/games/?search=zelda&fields=*`, TEST
             method: 'GET',
             headers: {
