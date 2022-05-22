@@ -89,15 +89,21 @@ export default function Header(userInfo) {
                   </div>
                   <div className={mobileClickUser === true ? 'dropdown active' : 'dropdown deactive'}>
                     <ul>
-                      <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
-                      <li><Link to={`/user/my-favorite-games`}><StartSvg />Marked Games</Link></li>
-                      <li><Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg />Sign Out</Link></li>
+                      <li onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
+                        <Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link>
+                      </li>
+                      <li onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
+                        <Link to={`/user/my-favorite-games`}><StartSvg />Marked Games</Link>
+                      </li>
+                      <li>
+                        <Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg />Sign Out</Link>
+                      </li>
                     </ul>
                   </div>
                 </>
               ) : (
                 <div className='login'>
-                  <Link to={`/user/login`}><BoxArrowRightSvg />Login</Link>
+                  <Link to={`/user/login`} onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}><BoxArrowRightSvg />Login</Link>
                 </div>
               )}
             </C.User>
@@ -397,9 +403,15 @@ export default function Header(userInfo) {
 
               <div className={mobileClickUser === true ? 'dropdown desktop desk-active' : 'dropdown desktop'}>
                 <ul>
-                  <li><Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link></li>
-                  <li><Link to={`/user/my-favorite-games`}><StartSvg /> Marked Games</Link></li>
-                  <li><Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg /> Sign Out</Link></li>
+                  <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                    <Link to={`/user/profile`} ><PersonCircleSvg /> Profile</Link>
+                  </li>
+                  <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                    <Link to={`/user/my-favorite-games`}><StartSvg /> Marked Games</Link>
+                  </li>
+                  <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                    <Link to={`/user/signout`} ><BoxArrowLeftSvg /> Sign Out</Link>
+                  </li>
                 </ul>
               </div>
             </>

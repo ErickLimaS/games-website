@@ -28,6 +28,23 @@ export default {
 
         return data;
 
+    },
+
+    getNewProfileChanges: async (id, newPassword, newName) => {
+
+        const { data } = await Axios({
+            url: `${CORS_ANYWHERE}${SERVER_BASE}/users/update-profile`,
+            method: 'PUT',
+            data: {
+                userId: `${id}`,
+                newPassword: `${newPassword}`,
+                newName: `${newName}`
+            },
+
+        })
+
+        return data;
+
     }
 }
 

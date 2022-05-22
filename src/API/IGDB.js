@@ -345,7 +345,6 @@ export default {
 
         let data = await Axios({
             url: `${CORS_ANYWHERE}${API_BASE}/games/?search=${searchedItem}&fields=*,cover.*,release_dates.*`,
-            // url: `${CORS_ANYWHERE}${API_BASE}/games/?search=zelda&fields=*`, TEST
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -418,7 +417,7 @@ export default {
                     backdrop: 'true',
                     width: '90vh',
                     allowOutsideClick: 'false',
-                    didClose: (item) => {
+                    didClose: () => {
                         window.location.reload()
                     }
                 })
