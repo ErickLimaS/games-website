@@ -96,9 +96,9 @@ export const favoriteGame = (gameInfo, userInfo) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: USER_FAIL_NEW_FAV_GAME,
-            action: error.response && error.response.data.message
+            payload: error.response && error.response.data.message
                 ? error.response.data.message
-                : error.message,
+                : error.message
         })
     }
 }
@@ -128,7 +128,7 @@ export const removeFavoriteGame = (gameInfo, userInfo) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: USER_FAIL_REMOVE_FAV_GAME,
-            action: error.response && error.response.data.message
+            payload: error.response && error.response.data.message
                 ? error.response.data.message
                 : error.message,
         })
@@ -174,7 +174,7 @@ export const getNewProfileChanges = (id, newPassword, newName) => async (dispatc
     catch (error) {
         dispatch({
             type: USER_UPDATE_PROFILE_FAIL,
-            action: error.response && error.response.data.message ?
+            payload: error.response && error.response.data.message ?
                 error.response.data.message : error.message,
         })
     }

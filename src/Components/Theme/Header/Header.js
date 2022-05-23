@@ -40,7 +40,6 @@ export default function Header(userInfo) {
 
     setTimeout(async function () {
       data = await API.getSearchResults(itemToBeSearched)
-
       setGamesSearched(data)
     }, 1500)
 
@@ -175,38 +174,40 @@ export default function Header(userInfo) {
             </div>
           </nav>
           <nav>
-            <h2><a href='#'>Genres</a></h2>
+            <h2>
+              <Link to={'/genre/'}>Genres</Link>
+            </h2>
             <div className='desktop-ul-hover'>
               <ul>
-                <a href='#'>
+                <Link to={'/genre/adventure'}>
                   <li>
-                    <i></i>Action
+                    <i></i>Adventure
                   </li>
-                </a>
+                </Link>
                 <hr />
-                <a href='#'>
+                <Link to={'/genre/shooter'}>
                   <li>
                     <i></i>Shooter
                   </li>
-                </a>
+                </Link>
                 <hr />
-                <a href='#'>
+                <Link to={'/genre/sport'}>
                   <li>
                     <i></i>Sports
                   </li>
-                </a>
+                </Link>
                 <hr />
-                <a href='#'>
+                <Link to={'/genre/racing'}>
                   <li>
                     <i></i>Racing
                   </li>
-                </a>
+                </Link>
                 <hr />
-                <a href='#'>
+                <Link to={'/genre/'}>
                   <li>
                     <i></i>More...
                   </li>
-                </a>
+                </Link>
               </ul>
             </div>
           </nav>
@@ -289,38 +290,40 @@ export default function Header(userInfo) {
           </div>
         </nav>
         <nav>
-          <h2><a href='#'>Genres</a></h2>
+          <h2>
+            <Link to={`/genre/`}>Genres</Link>
+          </h2>
           <div className='desktop-ul-hover'>
             <ul>
-              <a href='#'>
+              <Link to={'/genre/adventure'}>
                 <li>
-                  <i></i>Action
+                  <i></i>Adventure
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={'/genre/shooter'}>
                 <li>
                   <i></i>Shooter
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={'/genre/sport'}>
                 <li>
                   <i></i>Sports
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={'/genre/racing'}>
                 <li>
                   <i></i>Racing
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={'/genre/'}>
                 <li>
                   <i></i>More...
                 </li>
-              </a>
+              </Link>
             </ul>
           </div>
         </nav>
@@ -384,7 +387,7 @@ export default function Header(userInfo) {
           <div className='search-result'>
             {isFetch === true &&
               <div className={mobileClickSearch === true ? 'results-active' : 'results-deactive'}>
-                <button type='button' onClick={() => { setMobileCLickSearch(false) }}>X</button>
+                <button type='button' onClick={() => { setMobileCLickSearch(false) }}>Close</button>
                 {gamesSearched.data.map((item, key) => (
                   <SearchFromHeader item={item} key={key} />
                 ))}

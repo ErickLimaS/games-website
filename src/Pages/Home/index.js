@@ -48,9 +48,11 @@ export default function Home() {
             <h1>What will be your Next Game?</h1>
             <h2>See the new releases and pick the one who will entertain you the most!</h2>
           </div >
-          <C.HeadingContent style={releasingThisMonth[headingGameChose].game.artworks ? {
+          <C.HeadingContent style={(releasingThisMonth[headingGameChose].game.artworks && {
             backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${releasingThisMonth[headingGameChose].game.artworks[0].image_id}.jpg)`,
-          } : {}}>
+          }) || (releasingThisMonth[headingGameChose].game.screenshots[0] && {
+            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${releasingThisMonth[headingGameChose].game.screenshots[0].image_id}.jpg)`
+          })}>
 
             <div className='desktop-website-heading'>
               <h1>What will be your Next Game?</h1>

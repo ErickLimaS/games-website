@@ -142,6 +142,29 @@ export const HeadingContent = styled.div`
                     opacity: 0.85;
                 }
             }
+
+            span.error-new-fav-game{
+                transition: all ease 90ms;
+                margin: 1rem 0;
+                
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+
+                font-size: 1.8rem;
+                font-weight: 600;
+                
+                width: auto;
+
+                padding: 0.5rem;
+                
+                color: #FFF;
+                background-color: red;
+
+                border: 1px solid red;
+                border-radius: 4px;
+            }
+
             button.favorite-button.need-login{
                 background-color: #f2f2f2!important;
             }

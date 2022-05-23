@@ -4,8 +4,6 @@ import * as C from './styles'
 
 export default function index(item) {
 
-    console.log(item.item)
-
     return (
         <C.Container>
 
@@ -15,8 +13,8 @@ export default function index(item) {
 
                 </div>
                 <div className='game-details'>
-                    <h1><Link to={`/game/${item.item.id}`}>{item.item.name}</Link></h1>
-                    {item.item.release_dates[0] && <p>Released on: {item.item.release_dates[0].human}</p>}
+                    {item.item.id && item.item.name && <h1><Link to={`/game/${item.item.id}`}>{item.item.name}</Link></h1>}
+                    {item.item.release_dates && <p>Released on: {item.item.release_dates[0].human}</p>}
                     <Link to={`game/${item.item.id}`}>Go to Page</Link>
                 </div>
             </Link>

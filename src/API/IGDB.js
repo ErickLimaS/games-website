@@ -487,7 +487,7 @@ export default {
         }).then(res => {
             console.log(res)
             return res;
-            
+
         }).catch(err => {
             console.error(err)
             if (err.response.status === 403) {
@@ -508,6 +508,36 @@ export default {
         })
 
         return data;
+    },
+
+    getGenreInfo: async (slug) => {
+
+        try {
+
+            const { data } = await Axios({
+                url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Client-ID': `${CLIENT_ID}`,
+                    'Authorization': `Bearer ${AUTHORIZATION}`,
+                },
+                data: `
+                    query games "Games Genre ${slug}" {
+                        fields *, genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
+                        where genres.slug = "${slug}";
+                        limit 10;
+                    };
+
+                `
+            })
+
+            return data[0].result
+
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 
 }

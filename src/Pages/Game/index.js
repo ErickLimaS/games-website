@@ -23,6 +23,11 @@ export default function Game() {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  const userNewFavGame = useSelector((state) => state.userNewFavGame)
+  const { error } = userNewFavGame
+
+  console.log(userNewFavGame)
+
   useEffect(() => {
 
     document.title = "Loading..."
@@ -82,7 +87,6 @@ export default function Game() {
 
                   <span className='followers'>{gameInfo.follows} Follower{gameInfo.follows > 1 ? 's' : ''}</span>
 
-
                   {userInfo ? (
 
                     (
@@ -92,9 +96,12 @@ export default function Game() {
                           <StarFillSvg style={{ color: '#5c16c5 ', fill: '#5c16c5' }} /> <span style={{ color: '#333333' }}>Favorited</span>
                         </button>
                       ) : (
-                        <button className='favorite-button' type='button' onClick={() => { favoriteThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#7a30e8' }}>
-                          <StarSvg style={{ color: '#FFF ', fill: '#FFF' }} /> Favorite
-                        </button>
+                        <>
+                          <button className='favorite-button' type='button' onClick={() => { favoriteThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#7a30e8' }}>
+                            <StarSvg style={{ color: '#FFF ', fill: '#FFF' }} /> Favorite
+                          </button>
+                          {error && <span className='error-new-fav-game'>Error: Check Your Login</span>}
+                        </>
                       )
                     )
                   ) : (
@@ -116,7 +123,7 @@ export default function Game() {
                       </li>
                       <li>
                         {gameInfo.involved_companies && (<h2>Developed By: {gameInfo.involved_companies.map((item, key) => (
-                          <strong><Link to={`/companies/${item.company.slug}`} key={item.company.id}>{item.company.name} </Link></strong>
+                          <strong><Link to={`/companies/${item.company.slug}`} key={key}>{item.company.name} </Link></strong>
                         ))}</h2>)}
                       </li>
 
@@ -131,7 +138,7 @@ export default function Game() {
                       </li>
                       <li>
                         <h3>{gameInfo.genres.map((item, key) => (
-                          <strong><Link to={`/genre/${item.id}`} key={item.id}>{item.name}/ </Link></strong>
+                          <strong><Link to={`/genre/${item.slug}`} key={item.slug}>{item.name}/ </Link></strong>
                         ))}</h3>
                       </li>
                       <li>
@@ -141,25 +148,41 @@ export default function Game() {
                   </div>
                 </div>
                 <div className='rating'>
-                  <div className='rating-score' style={gameInfo.rating >= 75 ? {
+                  <div className='rating-score' style={(gameInfo.rating >= 75 && {
                     border: '10px solid green'
-                  } : {
+                  }) || (gameInfo.rating < 75 && {
                     border: '10px solid #fc3'
-                  }}>
+                  }) || (gameInfo.rating === undefined && {
+                    border: '10px solid #333333'
+                  })}>
                     {gameInfo.rating && (<h2>{(gameInfo.rating).toFixed(1)}</h2>)}
 
-                    <p>Rating Score</p>
-                    {gameInfo.rating >= 75 ? (
+                    {gameInfo.rating === undefined && (
                       <p style={{
-                        color: 'green'
-                      }}>Good</p>
-                    ) : (
-                      <p style={{
-                        color: '#fc3'
-                      }}>Average</p>
+                        color: '#666666'
+                      }}>Not Available</p>
+                    )}
+
+                    {gameInfo.rating >= 75 && (
+                      <>
+                        <p>Rating Score</p>
+                        <p style={{
+                          color: 'green'
+                        }}>Good</p>
+                      </>
+                    )}
+
+                    {gameInfo.rating < 75 && (
+                      <>
+                        <p>Rating Score</p>
+                        <p style={{
+                          color: '#fc3'
+                        }}>Average</p>
+                      </>
                     )}
                   </div>
-                  <span>{gameInfo.rating_count} voted</span>
+                  {gameInfo.rating_count === undefined && <span>No Votes Received</span>}
+                  {gameInfo.rating_count && <span>{gameInfo.rating_count} voted</span>}
                 </div>
               </div>
 
