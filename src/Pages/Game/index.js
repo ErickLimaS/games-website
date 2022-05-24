@@ -36,11 +36,11 @@ export default function Game() {
       window.scrollTo(0, 0);
       setLoading(true)
 
-      const data = await API.getGameInfo(gameId.id);
+      const data = await API.getGameInfo(gameId.slug);
       setGameInfo(data)
       setIsFetch(true)
 
-      document.title = `${data.name} (${data.first_release_date.yyyy}) | My Next Game`
+      document.title = `${data.name} | My Next Game`
 
       setTimeout(function () {
         setLoading(false)
@@ -62,6 +62,8 @@ export default function Game() {
   const removeFavoriteFromThisGame = () => {
     dispatch(removeFavoriteGame(gameInfo, userLogin))
   }
+
+  console.log(gameInfo)
 
   return (
     <C.Container>
@@ -142,7 +144,7 @@ export default function Game() {
                         ))}</h3>
                       </li>
                       <li>
-                        <h4><strong>{gameInfo.first_release_date.dd}/{gameInfo.first_release_date.mm}/{gameInfo.first_release_date.yyyy}</strong></h4>
+                        <h4><strong>{gameInfo.first_release_date}</strong></h4>
                       </li>
                     </ul>
                   </div>
@@ -375,7 +377,7 @@ export default function Game() {
                   <ul>
                     {gameInfo.similar_games.map((item, key) => (
                       <li>
-                        <Link to={`/game/${item.id}`}>
+                        <Link to={`/game/${item.slug}`}>
                           <div key={key} className='background-cover' style={item.cover ? {
                             backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_cover_big/${item.cover.image_id}.jpg)`,
                             backgroundPosition: 'center',

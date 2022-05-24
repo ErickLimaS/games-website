@@ -68,91 +68,96 @@ export default {
 
         await Axios({
             // url: `${CORS_ANYWHERE}${API_BASE}/games/732?fields=*`, 
-            url: `${CORS_ANYWHERE}${API_BASE}/games/${gameId}?fields=*,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*`,
-            method: 'GET',
+            url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Client-ID': `${CLIENT_ID}`,
                 'Authorization': `Bearer ${AUTHORIZATION}`,
             },
-            data: ""
+            data: `
+                query games "Chosed Game"{
+                    fields *,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
+                    where slug = "${gameId}";
+                };
+            `
 
         }).then(async (response) => { //all data here
 
             console.log(response)
 
             //get name
-            gameInfo[0].name = response.data[0].name;
+            gameInfo[0].name = response.data[0].result[0].name;
 
             //get id
-            gameInfo[0].id = response.data[0].id;
+            gameInfo[0].id = response.data[0].result[0].id;
 
             //get summary
-            gameInfo[0].summary = response.data[0].summary;
+            gameInfo[0].summary = response.data[0].result[0].summary;
 
             //get storyline
-            gameInfo[0].storyline = response.data[0].storyline;
+            gameInfo[0].storyline = response.data[0].result[0].storyline;
 
             //get genres
-            gameInfo[0].genres = response.data[0].genres;
+            gameInfo[0].genres = response.data[0].result[0].genres;
 
             //get rating
-            gameInfo[0].rating = response.data[0].rating;
+            gameInfo[0].rating = response.data[0].result[0].rating;
 
             //get rating count
-            gameInfo[0].rating_count = response.data[0].rating_count;
+            gameInfo[0].rating_count = response.data[0].result[0].rating_count;
 
             //get total rating
-            gameInfo[0].total_rating = response.data[0].total_rating;
+            gameInfo[0].total_rating = response.data[0].result[0].total_rating;
 
             //get total rating count
-            gameInfo[0].total_rating_count = response.data[0].total_rating_count;
+            gameInfo[0].total_rating_count = response.data[0].result[0].total_rating_count;
 
             //get follows
-            gameInfo[0].follows = response.data[0].follows;
+            gameInfo[0].follows = response.data[0].result[0].follows;
 
             //get slug
-            gameInfo[0].slug = response.data[0].slug;
+            gameInfo[0].slug = response.data[0].result[0].slug;
 
             //get ScreenShots
-            gameInfo[0].screenshots = response.data[0].screenshots
+            gameInfo[0].screenshots = response.data[0].result[0].screenshots
 
             //get Videos
-            gameInfo[0].videos = response.data[0].videos
+            gameInfo[0].videos = response.data[0].result[0].videos
 
             //get Platforms
-            gameInfo[0].platforms = response.data[0].platforms
+            gameInfo[0].platforms = response.data[0].result[0].platforms
 
             //get Game Modes
-            gameInfo[0].game_modes = response.data[0].game_modes
+            gameInfo[0].game_modes = response.data[0].result[0].game_modes
 
             //get Franchises
-            gameInfo[0].franchises = response.data[0].franchises
+            gameInfo[0].franchises = response.data[0].result[0].franchises
 
             //get Player Perspective
-            gameInfo[0].player_perspectives = response.data[0].player_perspectives
+            gameInfo[0].player_perspectives = response.data[0].result[0].player_perspectives
 
             //get Similar Games
-            gameInfo[0].similar_games = response.data[0].similar_games
+            gameInfo[0].similar_games = response.data[0].result[0].similar_games
 
             //get Cover
-            gameInfo[0].cover = response.data[0].cover
+            gameInfo[0].cover = response.data[0].result[0].cover
 
             //get Themes
-            gameInfo[0].themes = response.data[0].themes
+            gameInfo[0].themes = response.data[0].result[0].themes
 
             //get Similar games
-            gameInfo[0].similar_games = response.data[0].similar_games
+            gameInfo[0].similar_games = response.data[0].result[0].similar_games
 
             //get Platforms
-            gameInfo[0].platforms = response.data[0].platforms
+            gameInfo[0].platforms = response.data[0].result[0].platforms
 
             //get Multi Modes
-            gameInfo[0].multiplayer_modes = response.data[0].multiplayer_modes
+            gameInfo[0].multiplayer_modes = response.data[0].result[0].multiplayer_modes
 
             //get Age Rating
-            if (response.data[0].age_ratings) {
-                gameInfo[0].age_ratings = await response.data[0].age_ratings.map(item => {
+            if (response.data[0].result[0].age_ratings) {
+                gameInfo[0].age_ratings = await response.data[0].result[0].age_ratings.map(item => {
 
                     let results = [];
                     let filter = []
@@ -167,7 +172,7 @@ export default {
                         }
                     }).then(response => {
 
-                        results.push(response.data[0])
+                        results.push(response.data[0].result[0])
 
                         filter.id = (results[0].id)
                         filter.rating = (results[0].rating)
@@ -294,18 +299,13 @@ export default {
                 })
             }
             //get Artwork
-            gameInfo[0].artworks = response.data[0].artworks
+            gameInfo[0].artworks = response.data[0].result[0].artworks
 
             //get Involved Companies - need to add Country
-            gameInfo[0].involved_companies = response.data[0].involved_companies
+            gameInfo[0].involved_companies = response.data[0].result[0].involved_companies
 
             //get First release date
-            const unix_gameReleaseDate = response.data[0].first_release_date
-            const date = new Date(unix_gameReleaseDate * 1000)
-            gameInfo[0].first_release_date = date
-            gameInfo[0].first_release_date.yyyy = date.getFullYear()
-            gameInfo[0].first_release_date.mm = date.getMonth()
-            gameInfo[0].first_release_date.dd = date.getDate()
+            gameInfo[0].first_release_date = response.data[0].result[0].release_dates[0].human
 
 
             // console.log(response.data);
@@ -526,7 +526,7 @@ export default {
                     query games "Games Genre ${slug}" {
                         fields *, genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
                         where genres.slug = "${slug}";
-                        limit 10;
+                        limit 20;
                     };
 
                 `

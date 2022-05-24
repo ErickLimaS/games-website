@@ -113,7 +113,7 @@ export default function Platforms() {
                       } || {
                         backgroundColor: '#a3a3a3'
                       }}>
-                        <Link to={`/game/${item.id}`}>
+                        <Link to={`/game/${item.slug}`}>
 
                           <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${item.cover.image_id}.jpg`} alt={`${item.name}`}></img>
 

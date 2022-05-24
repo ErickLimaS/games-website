@@ -27,12 +27,13 @@ function App() {
           <Routes>
             {/* <Route path='/search/:search' element={<Search />} /> */}
             <Route path='/genre/:slug' element={<Genres />} />
+            {/* <Route path='/genre' element={<GenreHome />} /> */}
             <Route path='/user/profile' element={<Profile />} />
             <Route path='/user/my-favorite-games' element={<MyFavoriteGames />} />
             <Route path='/user/register' element={<Register />} />
             <Route path='/user/login' element={<Login />} />
             <Route path='/platforms/:slug' element={<Platforms />} />
-            <Route path='/game/:id' element={<Game />} />
+            <Route path='/game/:slug' element={<Game />} />
             <Route path='/' element={<Home />} />
           </Routes>
 

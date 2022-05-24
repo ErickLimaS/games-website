@@ -337,9 +337,9 @@ export default function Header(userInfo) {
 
         <div className={mobileClickSearch === true ? 'mobile-input active' : 'mobile-input'}>
           <div className='input-and-button'>
-            <label htmlFor='input-search-text'></label>
+            <label htmlFor='mobile-input-search-text'></label>
             <input type='text'
-              id='input-search-text'
+              id='mobile-search-text'
               placeholder='Ex: Tomb Raider'
               onChange={(e) => { if (e.target.value.length >= 4) setTimeout(searchForGames(e.target.value), 3000) }}
               ref={searchInput}
