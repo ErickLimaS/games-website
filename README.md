@@ -21,5 +21,5 @@ Fique atualizado com os jogos recem-lançados e novos lançamentos através da p
   - [Axios](https://axios-http.com/).
   - [Express](https://expressjs.com/pt-br/).
   - [React Router](https://reactrouter.com/).
-  - [bcrypt](https://axios-http.com/](https://www.npmjs.com/package/bcrypt).
+  - [bcrypt](https://www.npmjs.com/package/bcrypt).
   - [Axios](https://axios-http.com/).
