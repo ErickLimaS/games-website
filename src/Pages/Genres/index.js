@@ -3,12 +3,14 @@ import * as C from './styles'
 import API from '../../API/IGDB'
 import { Link, useParams } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../img/svg/Spinner-1s-200px.svg'
+import bg_img from '../../img/bg-gaming.jpg'
 
 export default function Genres() {
 
   const genre = useParams();
   const [loading, setLoading] = useState(true)
   const [genreInfo, setGenreInfo] = useState([])
+  const [imageIndex, setImageIndex] = useState(0)
 
   useEffect(() => {
     setLoading(true)
@@ -21,12 +23,14 @@ export default function Genres() {
       setGenreInfo(data)
 
       document.title = ` ${genre.slug.charAt(0).toUpperCase() + genre.slug.slice(1)} Genre | My Next Game`
-
+      setImageIndex(Math.floor(Math.random() * data.length))
       setLoading(false)
     }
     load1()
 
   }, [genre])
+
+  console.log(imageIndex)
 
   return (
     <C.Container>
@@ -38,14 +42,19 @@ export default function Genres() {
 
         <div >
 
-          <C.HeadingContent style={genreInfo[0].screenshots ? {
-            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${genreInfo[(Math.floor(Math.random() * genreInfo.length))].screenshots[0].image_id}.jpg)`,
+          <C.HeadingContent style={genreInfo[imageIndex].screenshots ? {
+            backgroundImage: `
+            url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${genreInfo[imageIndex].screenshots[0].image_id}.jpg)`,
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             height: '91vh',
           } : {
-            backgroundColor: "#c0c0c0"
+            backgroundImage: `url(${bg_img})`,
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            height: '91vh',
           }}>
 
             <div className='genre-name-heading'>
@@ -65,10 +74,10 @@ export default function Genres() {
                 <>
                   <li key={key} style={item.artworks ? {
                     backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.artworks[0].image_id}.jpg)`
-                  } : {
+                  } : item.screenshots ? {
                     backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.screenshots[0].image_id}.jpg)`
-                  } || {
-                    backgroundColor: '#a3a3a3'
+                  } : {
+                    backgroundColor: '#c0c0c0'
                   }}>
                     <Link to={`/game/${item.slug}`}>
 
@@ -94,7 +103,8 @@ export default function Genres() {
 
         </div>
 
-      )}
+      )
+      }
     </C.Container >
   )
 }
