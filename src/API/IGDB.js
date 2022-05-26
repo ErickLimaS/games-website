@@ -538,6 +538,62 @@ export default {
             console.log(err)
         }
 
+    },
+
+    getReleasingGames: async () => {
+
+        const date = new Date()
+        const mm = date.getMonth()
+        const yyyy = date.getFullYear()
+
+        const { data } = await Axios({
+            url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Client-ID': `${CLIENT_ID}`,
+                'Authorization': `Bearer ${AUTHORIZATION}`,
+            },
+            data: `
+                query games "Releasing"{
+                    fields *,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*, hypes, similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
+                    where status != 0 & release_dates.y > ${yyyy} & release_dates.m > ${mm};
+                    limit 15;
+                };
+                query games "Released"{
+                    fields *,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*, hypes, similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
+                    where release_dates.y = 2022;
+                    limit 15;
+                };
+            `
+        })
+
+        return data;
+
+    },
+
+    getMostPopularGames: async () => {
+
+        const { data } = await Axios({
+            url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Client-ID': `${CLIENT_ID}`,
+                'Authorization': `Bearer ${AUTHORIZATION}`,
+            },
+            data: `
+                query games "Games Releasing and Released"{
+                    fields *,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*, hypes,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
+                    where total_rating >= 80;
+                    sort total_rating_count desc;
+                    limit 15;
+                };
+            `
+        })
+
+        return data[0].result;
+
     }
 
 }

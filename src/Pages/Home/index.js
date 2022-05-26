@@ -118,7 +118,7 @@ export default function Home() {
                       backgroundSize: 'cover',
                       backgroundRepeat: 'no-repeat'
                     } : {}}>
-                      <Link to={`/game/${highestRatings[0].game.id}`}>
+                      <Link to={`/game/${highestRatings[0].game.slug}`}>
                         <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`} alt={highestRatings[0].game.name}></img>
                         <div className='rating' style={highestRatings[0].game.rating >= 70 ? {
                           border: '4px solid green'

@@ -12,15 +12,20 @@ import { ReactComponent as PcSvg } from '../../../img/svg/pc.svg'
 import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
 import { ReactComponent as SpinnerWhiteSvg } from '../../../img/svg/Spinner-1s-200px-white.svg'
 import { ReactComponent as PersonCircleSvg } from '../../../img/svg/person-circle.svg'
-import { ReactComponent as StartSvg } from '../../../img/svg/star.svg'
+import { ReactComponent as StarSvg } from '../../../img/svg/star.svg'
 import { ReactComponent as BoxArrowLeftSvg } from '../../../img/svg/box-arrow-left.svg'
 import { ReactComponent as BoxArrowRightSvg } from '../../../img/svg/box-arrow-in-right.svg'
 import { ReactComponent as CaretDownSvg } from '../../../img/svg/caret-down-fill.svg'
 import { ReactComponent as CaretUpSvg } from '../../../img/svg/caret-up-fill.svg'
+import { ReactComponent as FlameSvg } from '../../../img/svg/fire-flame-curved-solid.svg'
+import { ReactComponent as PlusSvg } from '../../../img/svg/plus-solid.svg'
 import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../../redux/actions/userActions'
+
+
+
 
 export default function Header(userInfo) {
 
@@ -92,7 +97,7 @@ export default function Header(userInfo) {
                         <Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link>
                       </li>
                       <li onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
-                        <Link to={`/user/my-favorite-games`}><StartSvg />Marked Games</Link>
+                        <Link to={`/user/my-favorite-games`}><StarSvg />Marked Games</Link>
                       </li>
                       <li>
                         <Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg />Sign Out</Link>
@@ -144,32 +149,32 @@ export default function Header(userInfo) {
             </div>
           </nav>
           <nav>
-            <h2><a href='#'>Games</a></h2>
+            <h2>
+              <Link to={`/games`}>Games</Link>
+              </h2>
             <div className='desktop-ul-hover'>
               <ul>
-                <a href='#'>
-                  <li>
-                    <i></i>New Releases
-                  </li>
-                </a>
-                <hr />
-                <a href='#'>
-                  <li>
-                    <i></i>Released This Year
-                  </li>
-                </a>
-                <hr />
-                <a href='#'>
-                  <li>
-                    <i></i>Most Populars
-                  </li>
-                </a>
-                <hr />
-                <a href='#'>
-                  <li>
-                    <i></i>Games Rating
-                  </li>
-                </a>
+              <Link to={`/games/releases`}>
+                <li>
+                  Releases
+                  {/* <PlusSvg /> New Releases */}
+                </li>
+              </Link>
+              <hr />
+              <hr />
+              <Link to={`/games/most-populars`}>
+                <li>
+                  Most Populars
+                  {/* <FlameSvg /> Most Populars */}
+                </li>
+              </Link>
+              <hr />
+              <Link to={`/games/ratings`}>
+                <li>
+                  Games Rating
+                  {/* <StarSvg /> Games Rating */}
+                </li>
+              </Link>
               </ul>
             </div>
           </nav>
@@ -260,32 +265,31 @@ export default function Header(userInfo) {
           </div>
         </nav>
         <nav>
-          <h2><a href='#'>Games</a></h2>
+          <h2>
+            <Link to={`/games`}>Games</Link>
+          </h2>
           <div className='desktop-ul-hover'>
             <ul>
-              <a href='#'>
+              <Link to={`/games/releases`}>
                 <li>
-                  <i></i>New Releases
+                  Releases
+                  {/* <PlusSvg /> New Releases */}
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={`/games/most-populars`}>
                 <li>
-                  <i></i>Released This Year
+                  Most Populars
+                  {/* <FlameSvg /> Most Populars */}
                 </li>
-              </a>
+              </Link>
               <hr />
-              <a href='#'>
+              <Link to={`/games/ratings`}>
                 <li>
-                  <i></i>Most Populars
+                  Games Rating
+                  {/* <StarSvg /> Games Rating */}
                 </li>
-              </a>
-              <hr />
-              <a href='#'>
-                <li>
-                  <i></i>Games Rating
-                </li>
-              </a>
+              </Link>
             </ul>
           </div>
         </nav>
@@ -410,7 +414,7 @@ export default function Header(userInfo) {
                     <Link to={`/user/profile`} ><PersonCircleSvg /> Profile</Link>
                   </li>
                   <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                    <Link to={`/user/my-favorite-games`}><StartSvg /> Marked Games</Link>
+                    <Link to={`/user/my-favorite-games`}><StarSvg /> Marked Games</Link>
                   </li>
                   <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
                     <Link to={`/user/signout`} ><BoxArrowLeftSvg /> Sign Out</Link>

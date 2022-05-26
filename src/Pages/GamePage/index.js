@@ -9,7 +9,7 @@ import { ReactComponent as StarFillSvg } from '../../img/svg/star-fill.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { favoriteGame, removeFavoriteGame } from '../../redux/actions/userActions'
 
-export default function Game() {
+export default function GamePage() {
 
   const [gameInfo, setGameInfo] = useState([])
   const [isFetch, setIsFetch] = useState(false)
@@ -92,7 +92,7 @@ export default function Game() {
                   {userInfo ? (
 
                     (
-                      userInfo.favoriteGames.find(game => game.id === gameId.id) ? (
+                      userInfo.favoriteGames.find(game => game.id === gameInfo.id) ? (
 
                         <button className='favorite-button' type='button' onClick={() => { removeFavoriteFromThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#FFF' }}>
                           <StarFillSvg style={{ color: '#5c16c5 ', fill: '#5c16c5' }} /> <span style={{ color: '#333333' }}>Favorited</span>
@@ -205,7 +205,9 @@ export default function Game() {
                   <h3>Screenshots</h3>
                 </div>
                 <div className='pointer' style={indexGameDetails === 1 ? { borderBottom: '2px solid #5c16c5' } : {}} onClick={() => { setIndexGameDetails(1) }}>
-                  <h3>Videos</h3>
+                  <h3 style={gameInfo.videos === undefined ? { display: 'none' } : {}}>
+                    Videos
+                  </h3>
                 </div>
                 <div className='pointer' style={indexGameDetails === 2 ? { borderBottom: '2px solid #5c16c5' } : {}} onClick={() => { setIndexGameDetails(2) }}>
                   <h3>More Details</h3>
@@ -240,7 +242,7 @@ export default function Game() {
 
               <div className='details dropdown'>
 
-                <div className={indexGameDetails === 1 ? 'dropdown-item active videos' : 'dropdown-item videos'}>
+                <div className={indexGameDetails === 1 ? 'dropdown-item active videos' : 'dropdown-item videos'} >
 
                   {gameInfo.videos && (<div className='list-videos'>
                     {gameInfo.videos.map((item, key) => (
