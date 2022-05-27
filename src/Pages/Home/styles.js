@@ -68,14 +68,14 @@ export const HeadingContent = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
-    background-cover: cover;
+    background-image: cover;
 
     @media(max-width: 620px){
         height: auto;
         background-position: center;
     }
     @media(min-width: 860px){
-        height: 65vh;
+        height: 75vh;
     }
     
 
@@ -237,7 +237,7 @@ export const HighestRatingsLastMonth = styled.section`
         display: flex;
         flex-direction: row;
         margin: 1rem 0;
-        justify-content space-around;
+        justify-content: space-around;
 
         @media(max-width: 898px){
             flex-direction: column;

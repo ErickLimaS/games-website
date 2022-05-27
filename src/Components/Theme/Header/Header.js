@@ -161,14 +161,6 @@ export default function Header(userInfo) {
                 </li>
               </Link>
               <hr />
-              <hr />
-              <Link to={`/games/most-populars`}>
-                <li>
-                  Most Populars
-                  {/* <FlameSvg /> Most Populars */}
-                </li>
-              </Link>
-              <hr />
               <Link to={`/games/ratings`}>
                 <li>
                   Games Rating
@@ -274,13 +266,6 @@ export default function Header(userInfo) {
                 <li>
                   Releases
                   {/* <PlusSvg /> New Releases */}
-                </li>
-              </Link>
-              <hr />
-              <Link to={`/games/most-populars`}>
-                <li>
-                  Most Populars
-                  {/* <FlameSvg /> Most Populars */}
                 </li>
               </Link>
               <hr />

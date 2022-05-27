@@ -12,6 +12,7 @@ import MyFavoriteGames from './Pages/User/MyFavoriteGames';
 import Profile from './Pages/User/Profile';
 import Genres from './Pages/Genres';
 import ReleasingGames from './Pages/GameNav/ReleasingGames';
+import GamesRating from './Pages/GameNav/GamesRating';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             {/* <Route path='/genre' element={<GenreHome />} /> */}
             <Route path='/genre/:slug' element={<Genres />} />
             <Route path='/games/releases' element={<ReleasingGames />} />
+            <Route path='/games/ratings' element={<GamesRating />} />
             <Route path='/user/profile' element={<Profile />} />
             <Route path='/user/my-favorite-games' element={<MyFavoriteGames />} />
             <Route path='/user/register' element={<Register />} />

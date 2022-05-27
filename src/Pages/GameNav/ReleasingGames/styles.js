@@ -1,3 +1,6 @@
+
+
+
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -245,7 +248,7 @@ export const GamesThisYear = styled.div`
 export const GamesReleased = styled.div`
 
     
-border-top: 2px solid #fff;
+    border-top: 2px solid #fff;
     background-image: linear-gradient(rgba(0,0,0,.95),  rgba(0,0,0,.25));
     width: 100%;
 
