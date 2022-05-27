@@ -249,7 +249,7 @@ export default function GamePage() {
                   (
                     <p>
                       {gameInfo.storyline}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ...Read Less</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ...Less</span>
                     </p>
                   )
 
@@ -265,7 +265,7 @@ export default function GamePage() {
                   (
                     <p>
                       {gameInfo.summary}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ...Read Less</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ...Less</span>
                     </p>
                   )
               }
@@ -276,7 +276,7 @@ export default function GamePage() {
 
               <div className='navigation'>
                 <div className='pointer' style={indexGameDetails === 0 ? { borderBottom: '2px solid #5c16c5' } : {}} onClick={() => { setIndexGameDetails(0) }}>
-                  <h3>Screenshots</h3>
+                  <h3 style={gameInfo.screenshots === undefined ? { display: 'none' } : {}}>Screenshots</h3>
                 </div>
                 <div className='pointer' style={indexGameDetails === 1 ? { borderBottom: '2px solid #5c16c5' } : {}} onClick={() => { setIndexGameDetails(1) }}>
                   <h3 style={gameInfo.videos === undefined ? { display: 'none' } : {}}>

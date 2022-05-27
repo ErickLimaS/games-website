@@ -41,7 +41,6 @@ export const HeadingContent = styled.div`
             width: 300px;
             height: auto;
             padding: 1rem;
-            border-radius:150px;
         }
 
     }

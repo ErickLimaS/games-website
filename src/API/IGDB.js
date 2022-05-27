@@ -399,7 +399,7 @@ export default {
             data: `
                 query release_dates "Latest Releases" {
                     fields game.*, game.cover.*, game.artworks.*, game.screenshots.*, game.release_dates.*, game.platforms.*, game.player_perspectives.*, game.involved_companies.*, game.game_modes.*, game.themes.*;
-                    where m = ${new Date().getMonth()} & y = ${new Date().getFullYear()};
+                    where m = ${new Date().getMonth() + 1} & y = ${new Date().getFullYear()};
                     limit 15;
                 };
                 

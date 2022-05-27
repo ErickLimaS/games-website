@@ -10,21 +10,26 @@ export default function Home() {
   const [highestRatings, setHighestRatings] = useState([])
   const [loading, setLoading] = useState(true)
   const [headingGameChose, setHeadingGameChose] = useState(Math.floor(Math.random() * 9))
-  const [array, setArray] = useState([])
   const [auxClickGamesLastMonth, setAuxClickGamesLastMonth] = useState(0)
 
   useEffect(() => {
+
     document.title = 'Home | My Next Game'
+
     const load1 = async () => {
+
       window.scrollTo(0, 0);
+
       const data1 = await API.getMonthRelease();
       const data2 = await API.getLastMonthHighestRatings();
       setReleasingThisMonth(data1)
       setHighestRatings(data2)
+
       const loadInside = () => {
         if (data1[headingGameChose] && data2) {
           setLoading(false)
         }
+        
         else {
           alert('api')
         }

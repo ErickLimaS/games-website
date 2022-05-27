@@ -106,13 +106,14 @@ export default function Platforms() {
                 <ul>
                   {platformInfo[1].result.map((item, key) => (
                     <>
-                      <li key={key} style={item.artworks ? {
+                      <li key={key} style={(item.artworks && {
                         backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.artworks[0].image_id}.jpg)`
-                      } : {
-                        backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.screenshots[0].image_id}.jpg)`
-                      } || {
-                        backgroundColor: '#a3a3a3'
-                      }}>
+                      })
+                        || (item.screenshots && {
+                          backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.screenshots[0].image_id}.jpg)`
+                        }) || ({
+                          backgroundColor: '#a3a3a3'
+                        })}>
                         <Link to={`/game/${item.slug}`}>
 
                           <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${item.cover.image_id}.jpg`} alt={`${item.name}`}></img>
