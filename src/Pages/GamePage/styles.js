@@ -44,6 +44,12 @@ export const Container = styled.div`
             @media(max-width: 620px){
                 width: 90%;
             }
+
+            span{
+                cursor: pointer;
+                text-decoration: underline;
+                color: #666666;
+            }
         }
     }
 
@@ -180,26 +186,81 @@ export const HeadingContent = styled.div`
                 width: 90%;
             }
 
-            >div:first-child{
+            >div.info-1{
                 margin-top: -10rem;
 
                 @media(max-width: 620px){
                     margin-top: 0rem;
+                }
+
+                ul{
+                    ul{
+                        font-size: 1.8rem;
+
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+
+                        *{
+                            color: #444444;
+
+                            :hover{
+                                color: #222222;
+                            }
+                        }
+
+                        a{
+                            text-decoration: underline;
+                        }
+
+                        li::after{
+                            content: ",  ";
+                            padding-right: 0.5rem;
+                        }
+                        li:last-child::after{
+                            content: "";
+                        }
+                    }
                 }
             }
         }
 
         
         .info-2{
-            h2{
-                color: #696969;
-                text-shadow: 0 1px 1px rgb(0 0 0 / 60%);
+            ul{
+                    ul{
+                        font-size: 1.8rem;
 
-                *{
-                    color: #696969;
-                    text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+
+                        *{
+                            color: #444444;
+                            text-shadow: 0 1px 1px rgb(0 0 0 / 20%);
+                            
+                            :hover{
+                                color: #222222;
+                            }
+                        }
+
+                        span:hover{
+                                color: #444444;
+                        }
+
+                        a{
+                            text-decoration: underline;
+                        }
+
+                        li::after{
+                            content: ",  ";
+                            padding-right: 0.5rem;
+                        }
+                        li:last-child::after{
+                            content: "";
+                        }
+                    }
                 }
-            }
         }
 
         li{

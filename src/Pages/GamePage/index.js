@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import * as C from './styles'
 import API from '../../API/IGDB'
-import SERVER from '../../API/Server-api'
 import { Link, useParams } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../img/svg/Spinner-1s-200px.svg'
 import { ReactComponent as StarSvg } from '../../img/svg/star.svg'
 import { ReactComponent as StarFillSvg } from '../../img/svg/star-fill.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { favoriteGame, removeFavoriteGame } from '../../redux/actions/userActions'
+import bg_img from '../../img/bg-gaming.jpg'
 
 export default function GamePage() {
 
   const [gameInfo, setGameInfo] = useState([])
   const [isFetch, setIsFetch] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [readMore, setReadMore] = useState(false) // set click to read more of description
   const [indexGameDetails, setIndexGameDetails] = useState(0)
-  const [auxBigImgDisplay, setAuxBigImgDisplay] = useState(0)
-  const [auxBigVideoDisplay, setAuxBigVideoDisplay] = useState(0)
+  const [auxBigImgDisplay, setAuxBigImgDisplay] = useState(0) // helps getting Id of first image to show
+  const [auxBigVideoDisplay, setAuxBigVideoDisplay] = useState(0) // helps getting Id of first video to show, just like with the images
 
   const gameId = useParams();
 
@@ -75,19 +76,45 @@ export default function GamePage() {
         ) : (
           // eslint-disable-next-line eqeqeq
           <>
-            <C.HeadingContent style={gameInfo.artworks === undefined ? {
+            {/* <C.HeadingContent style={gameInfo.artworks === undefined ? {
               backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${gameInfo.screenshots[0].image_id}.jpg)`,
               backgroundRepeat: 'no-repeat',
             } : {
               backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${gameInfo.artworks[Math.floor(Math.random() * gameInfo.artworks.length)].image_id}.jpg)`,
               backgroundRepeat: 'no-repeat',
-            }}>
+            }}> */}
+            <C.HeadingContent style={
+              (gameInfo.artworks && {
+                backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${gameInfo.artworks[Math.floor(Math.random() * gameInfo.artworks.length)].image_id}.jpg)`,
+                backgroundRepeat: 'no-repeat',
+              })
+              ||
+              (gameInfo.screenshots && {
+                backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${gameInfo.screenshots[0].image_id}.jpg)`,
+                backgroundRepeat: 'no-repeat',
+              })
+              ||
+              ({
+                backgroundImage: `url(${bg_img})`,
+                backgroundRepeat: 'no-repeat',
+              })
+            }>
 
               <div className='game-first-content'  >
                 <div className='game-cover-art'>
-                  <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`} alt={gameInfo.name}></img>
+                  {/* <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`} alt={gameInfo.name}></img> */}
+                  {gameInfo.cover ? (
+                    <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`} alt={gameInfo.name}></img>
+                  ) : (
+                    <img src={`https://upload.wikimedia.org/wikipedia/commons/a/ac/No_image_available.svg`} alt={gameInfo.name}></img>
+                  )}
+                  {gameInfo.follows > 0 ? (
+                    <span className='followers'>{gameInfo.follows} Follower{gameInfo.follows > 1 ? 's' : ''}</span>
+                  ) :
+                    (
+                      <span className='followers'>No Followers</span>
+                    )}
 
-                  <span className='followers'>{gameInfo.follows} Follower{gameInfo.follows > 1 ? 's' : ''}</span>
 
                   {userInfo ? (
 
@@ -113,6 +140,7 @@ export default function GamePage() {
                   )
                   }
                 </div>
+
                 <div className='game-first-info'>
                   <div className='info-1'>
                     <ul>
@@ -120,13 +148,13 @@ export default function GamePage() {
                         <h1>{gameInfo.name}</h1>
                       </li>
                       <li>
-                        {gameInfo.involved_companies &&
-                          (<h2>{gameInfo.involved_companies[0].name}</h2>)}
-                      </li>
-                      <li>
-                        {gameInfo.involved_companies && (<h2>Developed By: {gameInfo.involved_companies.map((item, key) => (
-                          <strong><Link to={`/companies/${item.company.slug}`} key={key}>{item.company.name} </Link></strong>
-                        ))}</h2>)}
+                        {gameInfo.involved_companies && (
+                          <ul>
+                            {gameInfo.involved_companies.map((item, key) => (
+                              <li><Link to={`/companies/${item.company.slug}`} key={key}>{item.company.name}</Link></li>
+                            ))}
+                          </ul>
+                        )}
                       </li>
 
                     </ul>
@@ -134,17 +162,32 @@ export default function GamePage() {
                   <div className='info-2'>
                     <ul>
                       <li>
-                        <h2>Platforms: {gameInfo.platforms.map((item, key) => (
-                          <strong><Link to={`/platforms/${item.slug}`} key={item.id}>{item.name} ({item.abbreviation}) </Link></strong>
-                        ))}</h2>
+                        {gameInfo.platforms && (
+                          <ul>
+                            {gameInfo.platforms.slice(0, 4).map((item, key) => (
+                              <li>
+                                <Link to={`/platforms/${item.slug}`} key={key}>{item.name}</Link>
+                              </li>
+                            ))}
+                            {gameInfo.platforms.length > 4 && (<span>and more.</span>)}
+                          </ul>
+                        )}
                       </li>
                       <li>
-                        <h3>{gameInfo.genres.map((item, key) => (
-                          <strong><Link to={`/genre/${item.slug}`} key={item.slug}>{item.name}/ </Link></strong>
-                        ))}</h3>
+                        {gameInfo.genres && (
+                          <ul>
+                            {gameInfo.genres.map((item, key) => (
+                              <li>
+                                <Link to={`/genre/${item.slug}`} key={key}>{item.name}</Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                       </li>
                       <li>
-                        <h4><strong>{gameInfo.first_release_date}</strong></h4>
+                        {gameInfo.first_release_date && (
+                          <h4><strong>{gameInfo.first_release_date}</strong></h4>
+                        )}
                       </li>
                     </ul>
                   </div>
@@ -157,7 +200,9 @@ export default function GamePage() {
                   }) || (gameInfo.rating === undefined && {
                     border: '10px solid #333333'
                   })}>
-                    {gameInfo.rating && (<h2>{(gameInfo.rating).toFixed(1)}</h2>)}
+                    {gameInfo.rating && (
+                      <h2>{(gameInfo.rating).toFixed(1)}</h2>
+                    )}
 
                     {gameInfo.rating === undefined && (
                       <p style={{
@@ -191,10 +236,39 @@ export default function GamePage() {
             </C.HeadingContent>
 
             <div className='summary'>
-              <p>
-                {gameInfo.storyline ?
-                  gameInfo.storyline : gameInfo.summary}
-              </p>
+
+              {gameInfo.storyline ?
+                readMore === false ?
+                  (
+                    <p>
+                      {gameInfo.storyline.slice(0, 400)}
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ...Read More</span>
+                    </p>
+                  )
+                  :
+                  (
+                    <p>
+                      {gameInfo.storyline}
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ...Read Less</span>
+                    </p>
+                  )
+
+                :
+                readMore === false ?
+                  (
+                    <p>
+                      {gameInfo.summary.slice(0, 400)}
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ...Read More</span>
+                    </p>
+                  )
+                  :
+                  (
+                    <p>
+                      {gameInfo.summary}
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ...Read Less</span>
+                    </p>
+                  )
+              }
             </div>
 
             <hr />
@@ -214,62 +288,66 @@ export default function GamePage() {
                 </div>
               </div>
 
-              <div className='details dropdown'>
+              {gameInfo.screenshots && (
+                <div className='details dropdown'>
 
-                <div className={indexGameDetails === 0 ? 'dropdown-item active screenshots' : 'dropdown-item screenshots'}>
-                  <div className='list-imgs'>
-                    {gameInfo.screenshots.map((item, key) => (
-                      <img
-                        src={`//images.igdb.com/igdb/image/upload/t_screenshot_med/${item.image_id}.jpg`} alt={gameInfo.name}
-                        key={key}
-                        onClick={() => { setAuxBigImgDisplay(item.image_id) }}
-                        style={auxBigImgDisplay === item.image_id ?
-                          { border: '2px solid #FFF' } : {}}
-                      ></img>
-
-                    ))}
-                  </div>
-                  <div className='big-img'>
-
-                    {gameInfo.screenshots.map((item, key) => (
-                      <img src={`//images.igdb.com/igdb/image/upload/t_screenshot_huge/${item.image_id}.jpg`} alt={gameInfo.name} key={key} className={auxBigImgDisplay === item.image_id ? 'active' : 'not-active'} ></img>
-                    ))}
-
-                  </div>
-                </div>
-
-              </div>
-
-              <div className='details dropdown'>
-
-                <div className={indexGameDetails === 1 ? 'dropdown-item active videos' : 'dropdown-item videos'} >
-
-                  {gameInfo.videos && (<div className='list-videos'>
-                    {gameInfo.videos.map((item, key) => (
-                      <h4 key={key}
-                        onClick={() => { setAuxBigVideoDisplay(item.video_id) }}
-                        style={auxBigVideoDisplay === item.video_id ?
-                          { backgroundColor: '#FFF', color: '#5c16c5' } : {}}
-                      >{item.name}</h4>
-                    ))}
-                  </div>)
-                  }
-
-                  {gameInfo.videos && (<div className='video-display'>
-                    {gameInfo.videos.map((item, key) => (
-                      <><h2 className={auxBigVideoDisplay === item.video_id ? 'active' : 'not-active'}>{item.name}</h2>
-                        <iframe
-                          src={`https://www.youtube-nocookie.com/embed/${item.video_id}`}
+                  <div className={indexGameDetails === 0 ? 'dropdown-item active screenshots' : 'dropdown-item screenshots'}>
+                    <div className='list-imgs'>
+                      {gameInfo.screenshots.map((item, key) => (
+                        <img
+                          src={`//images.igdb.com/igdb/image/upload/t_screenshot_med/${item.image_id}.jpg`} alt={gameInfo.name}
                           key={key}
-                          title={item.name}
-                          className={auxBigVideoDisplay === item.video_id ? 'active' : 'not-active'}></iframe>
-                      </>
-                    ))}
-                  </div>)
-                  }
-                </div>
+                          onClick={() => { setAuxBigImgDisplay(item.image_id) }}
+                          style={auxBigImgDisplay === item.image_id ?
+                            { border: '2px solid #FFF' } : {}}
+                        ></img>
 
-              </div>
+                      ))}
+                    </div>
+                    <div className='big-img'>
+
+                      {gameInfo.screenshots.map((item, key) => (
+                        <img src={`//images.igdb.com/igdb/image/upload/t_screenshot_huge/${item.image_id}.jpg`} alt={gameInfo.name} key={key} className={auxBigImgDisplay === item.image_id ? 'active' : 'not-active'} ></img>
+                      ))}
+
+                    </div>
+                  </div>
+
+                </div>
+              )}
+
+              {gameInfo.videos && (
+                <div className='details dropdown'>
+
+                  <div className={indexGameDetails === 1 ? 'dropdown-item active videos' : 'dropdown-item videos'} >
+
+                    {gameInfo.videos && (<div className='list-videos'>
+                      {gameInfo.videos.map((item, key) => (
+                        <h4 key={key}
+                          onClick={() => { setAuxBigVideoDisplay(item.video_id) }}
+                          style={auxBigVideoDisplay === item.video_id ?
+                            { backgroundColor: '#FFF', color: '#5c16c5' } : {}}
+                        >{item.name}</h4>
+                      ))}
+                    </div>)
+                    }
+
+                    {gameInfo.videos && (<div className='video-display'>
+                      {gameInfo.videos.map((item, key) => (
+                        <><h2 className={auxBigVideoDisplay === item.video_id ? 'active' : 'not-active'}>{item.name}</h2>
+                          <iframe
+                            src={`https://www.youtube.com/embed/${item.video_id}`}
+                            key={key}
+                            title={item.name}
+                            className={auxBigVideoDisplay === item.video_id ? 'active' : 'not-active'}></iframe>
+                        </>
+                      ))}
+                    </div>)
+                    }
+                  </div>
+
+                </div>
+              )}
 
               <div className='details dropdown'>
 
@@ -369,6 +447,7 @@ export default function GamePage() {
                 </div>
 
               </div>
+
             </C.Details>
             <hr />
             <C.SimilarGame>
