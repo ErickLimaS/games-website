@@ -19,7 +19,7 @@ export default function MyFavoriteGames() {
             title: 'Are you Logged In?',
             text: 'It seems you have not been logedin on our website!',
             icon: 'question',
-            confirmButtonText: "I'm Goint to Login Now!",
+            confirmButtonText: "I'm Logging Right Now!",
             showConfirmButton: 'true',
             confirmButtonColor: '#5c16c5',
             backdrop: 'true',
@@ -44,8 +44,6 @@ export default function MyFavoriteGames() {
             load1()
         }
     }, [])
-    console.log(favoriteGames)
-
     return (
         <C.Container>
 
@@ -63,10 +61,10 @@ export default function MyFavoriteGames() {
                     <ul>
                         {userInfo.favoriteGames.map((item, key) => (
                             <li key={key} className='game'>
-                                <Link to={`/game/${item.id}`}><img src={`${item.cover}`} alt={`${item.name} Cover`} /></Link>
+                                <Link to={`/game/${item.slug}`}><img src={`${item.cover}`} alt={`${item.name} Cover`} /></Link>
                                 <div className='game-name'>
-                                <Link to={`/game/${item.id}`}><h3>{item.name}</h3></Link>
-                                    <Link to={`/game/${item.id}`}>Go to Page</Link>
+                                <Link to={`/game/${item.slug}`}><h3>{item.name}</h3></Link>
+                                    <Link to={`/game/${item.slug}`}>Go to Page</Link>
                                 </div>
                                 <div className='game-rating'>
                                     <div style={Number(item.rating) >= 75 ? {

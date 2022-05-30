@@ -397,8 +397,37 @@ export const User = styled.div`
         align-items: center;
         justify-content: space-between;
 
+        
+
         h2{
             margin: 0!important; 
+
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+
+            *{
+                margin-right: 2rem;
+            }
+
+            span{
+                margin: 0 1rem;
+
+                width: 30px!important;
+                height: 30px!important;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                color: #fff;
+                font-size: 2rem;
+                font-weight: 400;
+
+                border-radius: 4000px;
+                background-color: #c0c0c0;
+        }
         }
 
     }
@@ -413,9 +442,27 @@ export const User = styled.div`
 
         cursor : pointer;
 
+        span{
+                width: 30px!important;
+                height: 30px!important;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                color: #fff;
+                font-size: 2rem;
+                font-weight: 400;
+
+                border-radius: 4000px;
+                background-color: #c0c0c0;
+        }
+
         h3{
             color: #4b12a1;
             border-bottom: 1px solid #4b12a1;
+
+            
         }
         svg{
             fill: #c0c0c0;
@@ -448,7 +495,18 @@ export const User = styled.div`
                     :hover{
                        text-decoration: underline;
                     }
+                    
+                    span{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
 
+                        height: 30px;
+                        width: 30px;
+                        
+                        border-radius: 4000px;
+                        border: 1px solid #c0c0c0;
+                    }
                     
                 }
             }
@@ -514,6 +572,11 @@ export const User = styled.div`
                         svg{
                             color: #5c16c5;
                         }
+
+                        span{
+                            background-color: #5c16c5;
+                            color: #FFF;
+                        }
                     }
 
                     svg{
@@ -521,6 +584,18 @@ export const User = styled.div`
                         width: 20px;
                         height: 20px;
 
+                    }
+
+                    span{
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        height: 30px;
+                        width: 30px;
+                        
+                        border-radius: 4000px;
+                        background-color: #c0c0c0;
                     }
                 }
 

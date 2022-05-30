@@ -20,6 +20,8 @@ export default function Login() {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo, error } = userLogin
 
+  document.title = 'Login | My Next Game'
+
   useEffect(() => {
     if (userInfo === 'Wrong Password.') {
       return (
@@ -114,8 +116,27 @@ export default function Login() {
           <li><Dot /> And More!</li>
         </ul>
       </div>
-      {/* {error && (<div>{Swal.fire(
-        'The Internet?', 'That thing is still around?', 'question')}</div>)} */}
+      {error &&
+        <>
+          {
+            Swal.fire({
+              title: 'Wrong User Info',
+              text: 'Check your email and password and try again.',
+              icon: 'error',
+              confirmButtonText: 'OK, I Will Try.',
+              showConfirmButton: 'true',
+              confirmButtonColor: '#5c16c5',
+              backdrop: 'true',
+              width: '90%',
+              height: 'auto',
+              allowOutsideClick: 'false',
+              didClose: () => {
+                window.location.reload()
+              }
+            })
+          }
+        </>
+      }
       <div>
         <form className='register-form' onSubmit={submitRegisterForm}>
 

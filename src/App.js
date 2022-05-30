@@ -7,12 +7,13 @@ import GamePage from './Pages/GamePage'
 import Platforms from './Pages/Platforms';
 import Register from './Pages/User/Register';
 import Login from './Pages/User/Login';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MyFavoriteGames from './Pages/User/MyFavoriteGames';
 import Profile from './Pages/User/Profile';
 import Genres from './Pages/Genres';
 import ReleasingGames from './Pages/GameNav/ReleasingGames';
 import GamesRating from './Pages/GameNav/GamesRating';
+import NotificationPage from './Pages/User/NotificationPage';
 
 function App() {
 
@@ -22,13 +23,14 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <Header item={userInfo} />
+        <Header />
 
         <C.Container> {/* tag main */}
 
           <Routes>
             {/* <Route path='/genre' element={<GenreHome />} /> */}
             <Route path='/genre/:slug' element={<Genres />} />
+            <Route path='/user/notifications' element={<NotificationPage />} />
             <Route path='/games/releases' element={<ReleasingGames />} />
             <Route path='/games/ratings' element={<GamesRating />} />
             <Route path='/user/profile' element={<Profile />} />

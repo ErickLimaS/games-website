@@ -3,6 +3,9 @@ import * as C from './styles'
 import API from '../../API/IGDB'
 import { Link } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../img/svg/Spinner-1s-200px.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { userNotificationsReducer } from '../../redux/reducers/userReducers'
+import { getNotifications } from '../../redux/actions/userActions'
 
 export default function Home() {
 
@@ -12,10 +15,18 @@ export default function Home() {
   const [headingGameChose, setHeadingGameChose] = useState(Math.floor(Math.random() * 9))
   const [auxClickGamesLastMonth, setAuxClickGamesLastMonth] = useState(0)
 
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  // console.log(userInfo)
+
   useEffect(() => {
 
     document.title = 'Home | My Next Game'
 
+    
     const load1 = async () => {
 
       window.scrollTo(0, 0);
@@ -25,11 +36,12 @@ export default function Home() {
       setReleasingThisMonth(data1)
       setHighestRatings(data2)
 
+
       const loadInside = () => {
         if (data1[headingGameChose] && data2) {
           setLoading(false)
         }
-        
+
         else {
           alert('api')
         }
@@ -57,7 +69,9 @@ export default function Home() {
             backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${releasingThisMonth[headingGameChose].game.artworks[0].image_id}.jpg)`,
           }) || (releasingThisMonth[headingGameChose].game.screenshots[0] && {
             backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${releasingThisMonth[headingGameChose].game.screenshots[0].image_id}.jpg)`
-          })}>
+          }) || {
+            backgroundColor: '#c0c0c0'
+          }}>
 
             <div className='desktop-website-heading'>
               <h1>What will be your Next Game?</h1>
@@ -134,7 +148,7 @@ export default function Home() {
                         </div>
                       </Link>
                     </div>
-                    <Link to={`/game/${highestRatings[0].game.id}`}>
+                    <Link to={`/game/${highestRatings[0].game.slug}`}>
                       <h4>{highestRatings[0].game.name}</h4>
                     </Link>
                   </li>

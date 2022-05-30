@@ -17,28 +17,100 @@ import { ReactComponent as BoxArrowLeftSvg } from '../../../img/svg/box-arrow-le
 import { ReactComponent as BoxArrowRightSvg } from '../../../img/svg/box-arrow-in-right.svg'
 import { ReactComponent as CaretDownSvg } from '../../../img/svg/caret-down-fill.svg'
 import { ReactComponent as CaretUpSvg } from '../../../img/svg/caret-up-fill.svg'
-import { ReactComponent as FlameSvg } from '../../../img/svg/fire-flame-curved-solid.svg'
-import { ReactComponent as PlusSvg } from '../../../img/svg/plus-solid.svg'
+import { ReactComponent as BellSvg } from '../../../img/svg/bell.svg'
+import { ReactComponent as BellFillSvg } from '../../../img/svg/bell-fill.svg'
 import { Link } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { logout } from '../../../redux/actions/userActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { getNotifications, logout } from '../../../redux/actions/userActions'
 
-
-
-
-export default function Header(userInfo) {
+export default function Header() {
 
   const [mobileClickSearch, setMobileCLickSearch] = useState(false)
   const [mobileClickMenu, setMobileCLickMenu] = useState(false)
   const [mobileClickUser, setMobileCLickUser] = useState(false)
+
   const [gamesSearched, setGamesSearched] = useState([])
+  const [gamesToObserveRating, setGamesToObserveRating] = useState([])
+  const [notifications, setNotifications] = useState(0)
+
   const [isFetch, setIsFetch] = useState(false)
   const [loading, setLoading] = useState(false)
+
   const searchInput = useRef('')
 
   const dispatch = useDispatch()
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  useLayoutEffect(() => {
+    if (userInfo) {
+      if ((userInfo.favoriteGames).length > 0) {
+
+        const qtdFavGames = userInfo.favoriteGames.map((item) => {
+          return item.id
+        })
+
+        const load1 = async () => {
+          const data = await API.compareRatings(qtdFavGames)
+          console.log(data)
+
+          setGamesToObserveRating(data)
+        }
+        load1()
+
+      }
+    }
+
+  }, [userInfo])
+
+  useEffect(() => {
+    // compare games rating
+    const load2 = () => {
+      
+      let comparingRatings = []
+
+      for (let i = 0; i < (userInfo.favoriteGames).length; i++) {
+
+        // eslint-disable-next-line array-callback-return
+        gamesToObserveRating.map((item) => {
+          if (Number(item.id) === Number(userInfo.favoriteGames[i].id)) {
+
+            if (Number(item.rating) > Number(userInfo.favoriteGames[i].rating)) {
+              setNotifications(notifications + 1)
+
+              return comparingRatings.push(
+                {
+                  name: item.name,
+                  slug: item.slug,
+                  id: item.id,
+                  newRating: item.rating,
+                  olderRating: userInfo.favoriteGames[i].rating,
+                  NewRating_count: item.rating_count,
+                  olderRating_count: userInfo.favoriteGames[i].rating_count
+                }
+              )
+            }
+            else {
+              return console.log('rating nao');
+            }
+          }
+          else {
+            return console.log('id nao');
+          }
+        })
+
+        if(comparingRatings.length > 0){
+          // dispatch new game info to redux and display on Notification Page 
+        }
+
+      }
+      console.log(comparingRatings)
+    }
+    load2()
+  }, [gamesToObserveRating])
+  
+  // search feature
   const searchForGames = async (itemToBeSearched) => {
     setLoading(true)
     let data
@@ -67,6 +139,7 @@ export default function Header(userInfo) {
 
   }
 
+  // logout
   const logoutUser = (e) => {
     e.preventDefault()
     dispatch(logout())
@@ -84,15 +157,28 @@ export default function Header(userInfo) {
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
           <nav>
             <C.User>
-              {userInfo.item ? (
+              {userInfo ? (
                 <>
                   <div className='user-name-and-caret' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                    <h2 to={`/user/profile`} ><PersonCircleSvg /> {userInfo.item.name}</h2>
+                    <h2 to={`/user/profile`} ><PersonCircleSvg /> {userInfo.name}{notifications > 0 && <span>{notifications}</span>}</h2>
                     {mobileClickUser === false && <CaretDownSvg />}
                     {mobileClickUser === true && <CaretUpSvg />}
                   </div>
                   <div className={mobileClickUser === true ? 'dropdown active' : 'dropdown deactive'}>
                     <ul>
+                      {notifications > 0 ?
+                        (
+                          <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                            <Link to={`/user/notifications`} ><BellFillSvg /> Notifications <span>{notifications}</span></Link>
+                          </li>
+                        )
+                        :
+                        (
+                          <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                            <Link to={`/user/notifications`} ><BellSvg /> Notifications</Link>
+                          </li>
+                        )
+                      }
                       <li onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
                         <Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link>
                       </li>
@@ -151,22 +237,22 @@ export default function Header(userInfo) {
           <nav>
             <h2>
               <Link to={`/games`}>Games</Link>
-              </h2>
+            </h2>
             <div className='desktop-ul-hover'>
               <ul>
-              <Link to={`/games/releases`}>
-                <li>
-                  Releases
-                  {/* <PlusSvg /> New Releases */}
-                </li>
-              </Link>
-              <hr />
-              <Link to={`/games/ratings`}>
-                <li>
-                  Games Rating
-                  {/* <StarSvg /> Games Rating */}
-                </li>
-              </Link>
+                <Link to={`/games/releases`}>
+                  <li>
+                    Releases
+                    {/* <PlusSvg /> New Releases */}
+                  </li>
+                </Link>
+                <hr />
+                <Link to={`/games/ratings`}>
+                  <li>
+                    Games Rating
+                    {/* <StarSvg /> Games Rating */}
+                  </li>
+                </Link>
               </ul>
             </div>
           </nav>
@@ -385,16 +471,30 @@ export default function Header(userInfo) {
           </div>
         </div>
         <C.User>
-          {userInfo.item ? (
+          {userInfo ? (
             <>
               <div className='user-name-and-caret-desktop' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                <h3>{userInfo.item.name}</h3>
+                {notifications > 0 && <span>{notifications}</span>}
+                <h3>{userInfo.name}</h3>
                 {mobileClickUser === true && <CaretDownSvg />}
                 {mobileClickUser === false && <CaretUpSvg />}
               </div>
 
               <div className={mobileClickUser === true ? 'dropdown desktop desk-active' : 'dropdown desktop'}>
                 <ul>
+                  {notifications > 0 ?
+                    (
+                      <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                        <Link to={`/user/notifications`} ><BellFillSvg /> Notifications <span>{notifications}</span></Link>
+                      </li>
+                    )
+                    :
+                    (
+                      <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                        <Link to={`/user/notifications`} ><BellSvg /> Notifications</Link>
+                      </li>
+                    )
+                  }
                   <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
                     <Link to={`/user/profile`} ><PersonCircleSvg /> Profile</Link>
                   </li>
@@ -402,7 +502,7 @@ export default function Header(userInfo) {
                     <Link to={`/user/my-favorite-games`}><StarSvg /> Marked Games</Link>
                   </li>
                   <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                    <Link to={`/user/signout`} ><BoxArrowLeftSvg /> Sign Out</Link>
+                    <Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg /> Sign Out</Link>
                   </li>
                 </ul>
               </div>

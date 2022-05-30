@@ -1,7 +1,15 @@
 import { applyMiddleware, combineReducers, compose } from 'redux';
 import { legacy_createStore as createStore } from 'redux'
 import thunk from 'redux-thunk';
-import { userLoginReducer, userLogoutReducer, userNewFavGameReducer, userRegisterReducer, userRemoveFavGameReducer, userUpdateProfileReducer } from './reducers/userReducers';
+import {
+    userLoginReducer,
+    userLogoutReducer,
+    userNewFavGameReducer,
+    userNotificationsReducer,
+    userRegisterReducer,
+    userRemoveFavGameReducer,
+    userUpdateProfileReducer
+} from './reducers/userReducers';
 
 const initialState = {
     userLogin: {
@@ -17,7 +25,8 @@ const reducer = combineReducers({
     userLogout: userLogoutReducer,
     userNewFavGame: userNewFavGameReducer,
     userRemoveFavGame: userRemoveFavGameReducer,
-    userUpdateProfile: userUpdateProfileReducer
+    userUpdateProfile: userUpdateProfileReducer,
+    userNotifications: userNotificationsReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

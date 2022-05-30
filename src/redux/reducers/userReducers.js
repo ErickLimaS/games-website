@@ -15,6 +15,9 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
+  NOTIFICATIONS_REQUEST,
+  NOTIFICATIONS_SUCCESS,
+  NOTIFICATIONS_FAIL,
 } from '../constants/userConstants';
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -85,6 +88,19 @@ export const userUpdateProfileReducer = (state = {}, action) => {
     case USER_UPDATE_PROFILE_SUCCESS:
       return { loading: false, userInfo: action.payload }
     case USER_UPDATE_PROFILE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state;
+  }
+}
+
+export const userNotificationsReducer = (state = {}, action) => {
+  switch (action.type) {
+    case NOTIFICATIONS_REQUEST:
+      return { loading: true }
+    case NOTIFICATIONS_SUCCESS:
+      return { loading: false, userInfo: action.payload }
+    case NOTIFICATIONS_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state;

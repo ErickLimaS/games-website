@@ -594,6 +594,28 @@ export default {
 
         return data[0].result;
 
+    },
+
+    // NOTIFICATION SYSTEM, get info of all Fav Games to comapare ratings with local storage
+    compareRatings: async (gameId) => {
+
+        const { data } = await Axios({
+            url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Client-ID': `${CLIENT_ID}`,
+                'Authorization': `Bearer ${AUTHORIZATION}`,
+            },
+            data: `query games "Compare Ratings"{
+                    fields *;
+                    where id = (${gameId.map(item => { return item })});
+                }; `
+
+        })
+        
+        return data[0].result;
+
     }
 
 }

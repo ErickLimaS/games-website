@@ -16,6 +16,8 @@ export default function Profile() {
 
   const navigate = useNavigate()
 
+  document.title = 'Profile | My Next Game'
+
   useEffect(() => {
 
     if (userInfo == null) {

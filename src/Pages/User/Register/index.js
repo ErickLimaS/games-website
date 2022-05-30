@@ -23,6 +23,8 @@ export default function Register(props) {
 
   const dispatch = useDispatch()
 
+  document.title = 'Register | My Next Game'
+
   const submitRegisterForm = (e) => {
     e.preventDefault();
 

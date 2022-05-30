@@ -1,5 +1,4 @@
 import Axios from 'axios'
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import {
     USER_REGISTER_REQUEST,
@@ -18,6 +17,9 @@ import {
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_FAIL,
     USER_UPDATE_PROFILE_SUCCESS,
+    NOTIFICATIONS_REQUEST,
+    NOTIFICATIONS_SUCCESS,
+    NOTIFICATIONS_FAIL,
 } from '../constants/userConstants';
 
 const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
@@ -30,6 +32,7 @@ export const register = (name, email, password) => async (dispatch) => {
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data })
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
         localStorage.setItem('userInfo', JSON.stringify(data))
+
     }
     catch (error) {
         dispatch({
@@ -45,9 +48,9 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({ type: USER_LOGIN_REQUEST, payload: { email, password } })
     try {
         const { data } = await Axios.post(`${CORS_ANYWHERE}${SERVER_BASE_URl}/users/login`, { email, password });
-        console.log(JSON.stringify(data))
         dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
         localStorage.setItem('userInfo', JSON.stringify(data))
+
     }
     catch (error) {
         dispatch({
@@ -178,5 +181,38 @@ export const getNewProfileChanges = (id, newPassword, newName) => async (dispatc
                 error.response.data.message : error.message,
         })
     }
+
+}
+
+export const getNotifications = (id) => async (dispatch) => {
+
+    dispatch({ type: NOTIFICATIONS_REQUEST, action: id })
+
+    try {
+
+        const response  = await Axios({
+            url: `${CORS_ANYWHERE}${SERVER_BASE_URl}/users/notifications`,
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            params: {
+                userId: id
+            }
+        })
+
+        dispatch({ type: NOTIFICATIONS_SUCCESS, action: response.data })
+
+        localStorage.setItem('userInfo', JSON.stringify(response.data))
+
+    }
+    catch (error) {
+        dispatch({
+            type: NOTIFICATIONS_FAIL,
+            payload: error.response && error.response.data.message ?
+                error.response.data.message : error.message,
+        })
+    }
+
 
 }

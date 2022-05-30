@@ -27,8 +27,6 @@ export default function GamePage() {
   const userNewFavGame = useSelector((state) => state.userNewFavGame)
   const { error } = userNewFavGame
 
-  console.log(userNewFavGame)
-
   useEffect(() => {
 
     document.title = "Loading..."
@@ -49,6 +47,7 @@ export default function GamePage() {
         if (data.videos) { setAuxBigVideoDisplay(data.videos[0].video_id) }
       }, 3000) //7000
 
+      
     }
     load1()
 
