@@ -184,26 +184,26 @@ export const getNewProfileChanges = (id, newPassword, newName) => async (dispatc
 
 }
 
-export const getNotifications = (id) => async (dispatch) => {
+export const getNotifications = (games) => async (dispatch) => {
 
-    dispatch({ type: NOTIFICATIONS_REQUEST, action: id })
+    dispatch({ type: NOTIFICATIONS_REQUEST, action: games })
 
     try {
 
-        const response  = await Axios({
-            url: `${CORS_ANYWHERE}${SERVER_BASE_URl}/users/notifications`,
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            params: {
-                userId: id
-            }
-        })
+        // const response  = await Axios({
+        //     url: `${CORS_ANYWHERE}${SERVER_BASE_URl}/users/notifications`,
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     params: {
+        //         userId: id
+        //     }
+        // })
 
-        dispatch({ type: NOTIFICATIONS_SUCCESS, action: response.data })
+        dispatch({ type: NOTIFICATIONS_SUCCESS, action: games})
 
-        localStorage.setItem('userInfo', JSON.stringify(response.data))
+        localStorage.setItem('gamesNotifications', JSON.stringify(games))
 
     }
     catch (error) {

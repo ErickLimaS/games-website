@@ -49,6 +49,7 @@ export const userLoginReducer = (state = {}, action) => {
 export const userLogoutReducer = (state = {}, action) => {
   if (action.type === USER_LOGOUT) {
     localStorage.removeItem('userInfo')
+    localStorage.removeItem('notifications')
     return { userInfo: action.payload }
   }
   return state;
@@ -99,7 +100,7 @@ export const userNotificationsReducer = (state = {}, action) => {
     case NOTIFICATIONS_REQUEST:
       return { loading: true }
     case NOTIFICATIONS_SUCCESS:
-      return { loading: false, userInfo: action.payload }
+      return { loading: false, gamesNotifications: action.payload }
     case NOTIFICATIONS_FAIL:
       return { loading: false, error: action.payload }
     default:

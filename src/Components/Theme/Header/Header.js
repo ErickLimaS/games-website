@@ -64,52 +64,55 @@ export default function Header() {
 
   }, [userInfo])
 
+
+  // compare games rating
   useEffect(() => {
-    // compare games rating
     const load2 = () => {
-      
+
       let comparingRatings = []
 
-      for (let i = 0; i < (userInfo.favoriteGames).length; i++) {
+      if (userInfo) {
+        for (let i = 0; i < (userInfo.favoriteGames).length; i++) {
 
-        // eslint-disable-next-line array-callback-return
-        gamesToObserveRating.map((item) => {
-          if (Number(item.id) === Number(userInfo.favoriteGames[i].id)) {
+          // eslint-disable-next-line array-callback-return
+          gamesToObserveRating.map((item) => {
+            if (Number(item.id) === Number(userInfo.favoriteGames[i].id)) {
 
-            if (Number(item.rating) > Number(userInfo.favoriteGames[i].rating)) {
-              setNotifications(notifications + 1)
-
-              return comparingRatings.push(
-                {
-                  name: item.name,
-                  slug: item.slug,
-                  id: item.id,
-                  newRating: item.rating,
-                  olderRating: userInfo.favoriteGames[i].rating,
-                  NewRating_count: item.rating_count,
-                  olderRating_count: userInfo.favoriteGames[i].rating_count
-                }
-              )
+              if (Number(item.rating) !== Number(userInfo.favoriteGames[i].rating)) {
+                setNotifications(notifications + 1)
+                return comparingRatings.push(
+                  {
+                    name: item.name,
+                    slug: item.slug,
+                    id: item.id,
+                    newRating: item.rating,
+                    olderRating: userInfo.favoriteGames[i].rating,
+                    newRating_count: item.rating_count,
+                    olderRating_count: userInfo.favoriteGames[i].totalVotes,
+                    cover: userInfo.favoriteGames[i].cover
+                  }
+                )
+              }
+              else {
+                return console.log('rating nao');
+              }
             }
             else {
-              return console.log('rating nao');
+              return console.log('id nao');
             }
-          }
-          else {
-            return console.log('id nao');
-          }
-        })
+          })
 
-        if(comparingRatings.length > 0){
-          // dispatch new game info to redux and display on Notification Page 
         }
-
+        if (comparingRatings.length > 0) {
+          // dispatch new game info to redux and display on Notification Page 
+          dispatch(getNotifications(comparingRatings))
+        }
+        console.log(comparingRatings)
       }
-      console.log(comparingRatings)
     }
     load2()
   }, [gamesToObserveRating])
-  
+
   // search feature
   const searchForGames = async (itemToBeSearched) => {
     setLoading(true)

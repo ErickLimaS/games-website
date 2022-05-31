@@ -118,7 +118,7 @@ export default function GamePage() {
                   {userInfo ? (
 
                     (
-                      userInfo.favoriteGames.find(game => game.id === gameInfo.id) ? (
+                      userInfo.favoriteGames.find(game => Number(game.id) === Number(gameInfo.id)) ? (
 
                         <button className='favorite-button' type='button' onClick={() => { removeFavoriteFromThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#FFF' }}>
                           <StarFillSvg style={{ color: '#5c16c5 ', fill: '#5c16c5' }} /> <span style={{ color: '#333333' }}>Favorited</span>

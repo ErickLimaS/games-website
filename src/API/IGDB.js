@@ -608,7 +608,7 @@ export default {
                 'Authorization': `Bearer ${AUTHORIZATION}`,
             },
             data: `query games "Compare Ratings"{
-                    fields *;
+                    fields *, cover.*;
                     where id = (${gameId.map(item => { return item })});
                 }; `
 

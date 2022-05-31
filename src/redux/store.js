@@ -13,10 +13,13 @@ import {
 
 const initialState = {
     userLogin: {
-        userInfo: localStorage.getItem('userInfo')
-            ? JSON.parse(localStorage.getItem('userInfo'))
-            : null,
+        userInfo: localStorage.getItem('userInfo') ?
+            JSON.parse(localStorage.getItem('userInfo')) : null,
+
+            gamesNotifications: localStorage.getItem('gamesNotifications') ?
+            JSON.parse(localStorage.getItem('gamesNotifications')) : null,
     },
+
 }
 
 const reducer = combineReducers({
