@@ -149,6 +149,35 @@ export const HeadingContent = styled.div`
                 }
             }
 
+            span.loading-new-fav-game{
+
+                svg{
+                    height: 60px;
+                    width: auto;
+                }
+                
+                transition: all ease 90ms;
+                margin: 1rem 0;
+                
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+
+                font-size: 1.8rem;
+                font-weight: 600;
+                
+                width: auto;
+
+                padding: 0.5rem;
+                
+                color: #FFF;
+                background-color: transparent;
+
+                border: 1px solid transparent;
+                border-radius: 4px;
+
+            }
+
             span.error-new-fav-game{
                 transition: all ease 90ms;
                 margin: 1rem 0;
@@ -194,6 +223,23 @@ export const HeadingContent = styled.div`
                 }
 
                 ul{
+
+                    .involved-companies{
+
+                        li {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            > *{
+                            margin-right: 0.5rem;
+
+                            
+                            }
+                        }
+
+                    }
+
                     ul{
                         font-size: 1.8rem;
 
@@ -598,79 +644,96 @@ export const Details = styled.div`
             }
 
             .list-details{
-                ul{
+                >ul{
                     border-left: 4px solid #FFF;
                     margin: 2rem 1rem;
 
                     @media(max-width: 620px){
                         margin: 1rem 0.5rem;
                     }
+                    li{
+                        color: #FFF;
+                        flex-direction: column;
+                        font-size: 1.6rem;
+                        padding-left: 2rem;
+                        margin: 2rem 0;
 
-                    ul{
-                        border-left: 2px solid #FFF;
-                        margin: 2rem 1rem;
+                        ul >li{
+                            padding-left: 0;
+                            padding-right: 0.4rem;
+
+                            ::after{
+                                content: ",  ";
+                            }
+                            :last-child::after{
+                                content: "";
+                            }
+                        }
+
+                        h5{
+                            font-size: 2.2rem;
+                            font-weight: 400;
+                            border-bottom: 4px solid #5c16c5;
+                            margin-bottom: 1rem;
+                            width: max-content;
+                        }
 
                         h6{
-                            font-size: 1.8rem;
-                            font-weight: 600;
+                                font-size: 1.8rem;
+                                font-weight: 400;
                         }
 
-                        li{
+                        >ul{
+                            display: flex;
+                            border-left: 2px solid #fff;
+                            border-radius: 4px;
+                            margin: 1rem 0;
+                            padding-left: 1rem;
+                        }
+
+                        >ul.rating{
                             display: flex;
                             flex-direction: column;
-                            align-items: baseline;
 
                         }
-                    }
-                }
-                a{
-                    color: #FFF;
-                    text-decoration: underline;
 
-                    :hover{
-                        opacity: 0.7;
+                        >ul.multiplayer{
+                            display: flex;
+                            flex-direction: column;
+                            margin-left: 1rem;
+                            
+                            li{
+                                width: max-content;
+                                border-bottom: 1px solid #c0c0c0;
+
+                                ::after{
+                                    content: "";
+                                }
+                            }
+
+                            
+                        }
+
+                        a{
+                            color: #FFF;
+                            text-decoration: underline;
+
+                            :hover{
+                                opacity: 0.7;
+                            }
+                        }
+
                     }
-                }
-                li{
-                    color: #FFF;
-                    flex-direction: column;
-                    font-size: 1.6rem;
-                    padding-left: 2rem;
-                    margin: 2rem 0;
+
+                    
 
                     @media(max-width: 620px){
-                        display: flex;
                         margin: 0.5rem 0;
                     }
 
-                    display: flex;
-                    align-items: baseline;
 
-                    h5{
-                        font-size: 1.8rem;
-                        margin: 2rem 1rem;
-                        font-weight: 600;
-                    }
-                    h6{
-                        font-size: 1.6rem;
-                        margin: 1rem 0rem;
-                        font-weight: 400;
-                    }
-
-                    p{
-                        padding: 0 0.2rem;
-                    }
-
-                    p::after{
-                        content:  ",";
-                    }
-                    
-                    p:last-child{
-                        ::after{
-                            content: ".";
-                        }
-                    }
                 }
+                
             }
 
 

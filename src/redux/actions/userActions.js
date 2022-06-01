@@ -97,7 +97,6 @@ export const favoriteGame = (gameInfo, userInfo) => async (dispatch) => {
 
         dispatch({ type: USER_SUCCESS_NEW_FAV_GAME, payload: userInfo.userInfo })
 
-        window.location.reload()
     }
     catch (error) {
         dispatch({

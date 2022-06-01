@@ -79,7 +79,9 @@ export default function Header() {
             if (Number(item.id) === Number(userInfo.favoriteGames[i].id)) {
 
               if (Number(item.rating) !== Number(userInfo.favoriteGames[i].rating)) {
+
                 setNotifications(notifications + 1)
+
                 return comparingRatings.push(
                   {
                     name: item.name,
@@ -130,7 +132,7 @@ export default function Header() {
 
       setMobileCLickSearch(true)
 
-      setLoading(false)
+      // setLoading(false)
 
     }, 3000)
 
@@ -178,7 +180,7 @@ export default function Header() {
                         :
                         (
                           <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                            <Link to={`/user/notifications`} ><BellSvg /> Notifications</Link>
+                            <Link to={`/user/notifications`} onClick={() => setNotifications(0)}><BellSvg /> Notifications</Link>
                           </li>
                         )
                       }
@@ -478,7 +480,16 @@ export default function Header() {
             <>
               <div className='user-name-and-caret-desktop' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
                 {notifications > 0 && <span>{notifications}</span>}
-                <h3>{userInfo.name}</h3>
+                {
+                  (userInfo.name).length > 9 ?
+                    (
+                      <h3>{(userInfo.name).slice(0, 9)}...</h3>
+                    )
+                    :
+                    (
+                      <h3>{userInfo.name}</h3>
+                    )
+                }
                 {mobileClickUser === true && <CaretDownSvg />}
                 {mobileClickUser === false && <CaretUpSvg />}
               </div>
@@ -488,7 +499,7 @@ export default function Header() {
                   {notifications > 0 ?
                     (
                       <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                        <Link to={`/user/notifications`} ><BellFillSvg /> Notifications <span>{notifications}</span></Link>
+                        <Link to={`/user/notifications`} onClick={() => setNotifications(0)}><BellFillSvg /> Notifications <span>{notifications}</span></Link>
                       </li>
                     )
                     :

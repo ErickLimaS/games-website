@@ -13,7 +13,7 @@ export default function GamePage() {
 
   const [gameInfo, setGameInfo] = useState([])
   const [isFetch, setIsFetch] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [loadingPage, setLoadingPage] = useState(true)
   const [readMore, setReadMore] = useState(false) // set click to read more of description
   const [indexGameDetails, setIndexGameDetails] = useState(0)
   const [auxBigImgDisplay, setAuxBigImgDisplay] = useState(0) // helps getting Id of first image to show
@@ -25,7 +25,7 @@ export default function GamePage() {
   const { userInfo } = userLogin
 
   const userNewFavGame = useSelector((state) => state.userNewFavGame)
-  const { error } = userNewFavGame
+  const { error, loading } = userNewFavGame
 
   useEffect(() => {
 
@@ -33,7 +33,7 @@ export default function GamePage() {
 
     const load1 = async () => {
       window.scrollTo(0, 0);
-      setLoading(true)
+      setLoadingPage(true)
 
       const data = await API.getGameInfo(gameId.slug);
       setGameInfo(data)
@@ -42,12 +42,12 @@ export default function GamePage() {
       document.title = `${data.name} | My Next Game`
 
       setTimeout(function () {
-        setLoading(false)
+        setLoadingPage(false)
         if (data.screenshots) { setAuxBigImgDisplay(data.screenshots[0].image_id) }
         if (data.videos) { setAuxBigVideoDisplay(data.videos[0].video_id) }
       }, 3000) //7000
 
-      
+
     }
     load1()
 
@@ -68,7 +68,7 @@ export default function GamePage() {
   return (
     <C.Container>
       {
-        loading === true ? (
+        loadingPage === true ? (
           <div className={isFetch === true ? 'loading-deactive' : 'loading-active'}>
             <SpinnerSvg />
           </div>
@@ -121,6 +121,7 @@ export default function GamePage() {
                           <button className='favorite-button' type='button' onClick={() => { favoriteThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#7a30e8' }}>
                             <StarSvg style={{ color: '#FFF ', fill: '#FFF' }} /> Favorite
                           </button>
+                          {loading && <span className='loading-new-fav-game'><SpinnerSvg /></span>}
                           {error && <span className='error-new-fav-game'>Error: Check Your Login</span>}
                         </>
                       )
@@ -141,9 +142,14 @@ export default function GamePage() {
                       </li>
                       <li>
                         {gameInfo.involved_companies && (
-                          <ul>
+                          <ul className='involved-companies'>
                             {gameInfo.involved_companies.map((item, key) => (
-                              <li><Link to={`/companies/${item.company.slug}`} key={key}>{item.company.name}</Link></li>
+                              <li>
+                                {item.company.logo && (
+                                  <img src={`https://images.igdb.com/igdb/image/upload/t_original/${item.company.logo.image_id}.jpg`} alt={item.name} style={{ height: 'auto', width: '40px' }} />
+                                )}
+                                <Link to={`/companies/${item.company.slug}`} key={key}>{item.company.name}</Link>
+                              </li>
                             ))}
                           </ul>
                         )}
@@ -234,14 +240,14 @@ export default function GamePage() {
                   (
                     <p>
                       {gameInfo.storyline.slice(0, 400)}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ...Read More</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ... read more</span>
                     </p>
                   )
                   :
                   (
                     <p>
                       {gameInfo.storyline}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ...Less</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> less</span>
                     </p>
                   )
 
@@ -250,14 +256,14 @@ export default function GamePage() {
                   (
                     <p>
                       {gameInfo.summary.slice(0, 400)}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ...Read More</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ... show more</span>
                     </p>
                   )
                   :
                   (
                     <p>
                       {gameInfo.summary}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ...Less</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ... show less</span>
                     </p>
                   )
               }
@@ -348,12 +354,14 @@ export default function GamePage() {
                     <ul>
 
                       {gameInfo.storyline ?
-                        (<li>
-                          <h5>Storyline:</h5>
-                          <p>{gameInfo.storyline}</p>
-                        </li>) : (
+                        (
                           <li>
-                            <h5>Summary:</h5>
+                            <h5>Storyline</h5>
+                            <p>{gameInfo.storyline}</p>
+                          </li>
+                        ) : (
+                          <li>
+                            <h5>Summary</h5>
                             <p>{gameInfo.summary}</p>
                           </li>
                         )
@@ -361,44 +369,60 @@ export default function GamePage() {
 
                       {gameInfo.game_modes &&
                         <li>
-                          <h5>Game Modes:</h5>
-                          {gameInfo.game_modes.map((item, key) => (
-                            <p key={key}><Link to={`/game-modes/${item.slug}`}>{item.name}</Link></p>
-                          ))}
+                          <h5>Game Modes</h5>
+                          <ul>
+                            {gameInfo.game_modes.map((item, key) => (
+                              <li key={key}>
+                                <Link to={`/game-modes/${item.slug}`}>{item.name}</Link>
+                              </li>
+                            ))}
+                          </ul>
                         </li>
                       }
 
                       {gameInfo.player_perspectives && (
                         <li>
-                          <h5>Player Perspective:</h5>
-                          {gameInfo.player_perspectives.map((item, key) => (
-                            <p key={key}><Link to={`/player-perspective/${item.slug}`}>{item.name}</Link></p>
-                          ))}
+                          <h5>Player Perspective</h5>
+                          <ul>
+                            {gameInfo.player_perspectives.map((item, key) => (
+                              <li key={key}>
+                                <Link to={`/player-perspective/${item.slug}`}>{item.name}</Link>
+                              </li>
+                            ))}
+                          </ul>
                         </li>
                       )}
 
                       {gameInfo.platforms &&
                         <li>
-                          <h5>Platforms:</h5>
-                          {gameInfo.platforms.map((item, key) => (
-                            <p key={key}><Link to={`/platforms/${item.slug}`}>{item.name}</Link></p>
-                          ))}
+                          <h5>Platforms</h5>
+                          <ul>
+                            {gameInfo.platforms.map((item, key) => (
+                              <li key={key}>
+                                <Link to={`/platforms/${item.slug}`}>{item.name}</Link>
+                              </li>
+                            ))}
+                          </ul>
                         </li>
                       }
 
                       {gameInfo.themes &&
                         <li>
-                          <h5>Theme:</h5>
-                          {gameInfo.themes.map((item, key) => (
-                            <p key={key}><Link to={`/themes/${item.slug}`}>{item.name}</Link></p>
-                          ))}
+                          <h5>Themes</h5>
+                          <ul>
+                            {gameInfo.themes.map((item, key) => (
+                              <li key={key}>
+                                <Link to={`/themes/${item.slug}`}>{item.name}</Link>
+                              </li>
+                            ))}
+                          </ul>
                         </li>
                       }
 
                       {gameInfo.age_ratings[0] && (<li>
-                        <h5>Age Ratings:</h5>
+                        <h5>Age Ratings</h5>
 
-                        <ul>
+                        <ul className='ratings'>
                           {gameInfo.age_ratings.map((item, key) => (
                             <li key={key}>
                               <h6>{item.category} | {item.rating}</h6>
@@ -410,24 +434,23 @@ export default function GamePage() {
                         </ul>
                       </li>)
                       }
-
                       {gameInfo.multiplayer_modes &&
                         <li>
-                          <h5>MultiPlayer Modes:</h5>
+                          <h5>MultiPlayer Modes</h5>
                           {gameInfo.multiplayer_modes.map((item, key) => (
                             <>
                               {item.platform && <h6>On <strong>{item.platform.name}</strong></h6>}
-                              <ul>
-                                <li><p key={key}>Campaign Coop: {item.campaigncoop === 0 ? 'Not Available' : 'Available'}</p></li>
-                                <li><p key={key}>Lan Coop: {item.lancoop === 0 ? 'Not Supported' : 'Supported'}</p></li>
-                                <li><p key={key}>Offline Coop: {item.offlinecoop === 0 ? 'Not Supported' : 'Supported'}</p></li>
-                                {item.offlinecoop !== 0 && <li><p key={key}>Max Players on Offline Coop: {item.offlinecoopmax}</p></li>}
-                                {item.offlinemax !== 0 && <li><p key={key}>Max Players on Offline MultiPlayer: {item.offlinemax}</p></li>}
-                                <li><p key={key}>Online Coop: {item.onlinecoop === 0 ? 'Not Supported' : 'Supported'}</p></li>
-                                {item.onlinecoop !== 0 && <li><p key={key}>Max Players on Online Coop: {item.onlinecoopmax}</p></li>}
-                                {item.onlinecoop !== 0 && <li><p key={key}>Max Players on Online MultiPlayer: {item.onlinemax}</p></li>}
-                                <li><p key={key}>Split Screen: {item.splitscreen === 0 ? 'Not Supported' : 'Supported'}</p></li>
-                                <li><p key={key}>Split Screen Online: {item.splitscreenonline === 0 ? 'Not Supported' : 'Supported'}</p></li>
+                              <ul className='multiplayer'>
+                                <li><p key={key}>Campaign Coop: <strong>{item.campaigncoop === 0 ? 'Not Available' : 'Available'}</strong></p></li>
+                                <li><p key={key}>Lan Coop: <strong>{item.lancoop === 0 ? 'Not Supported' : 'Supported'}</strong></p></li>
+                                <li><p key={key}>Offline Coop: <strong>{item.offlinecoop === 0 ? 'Not Supported' : 'Supported'}</strong></p></li>
+                                {item.offlinecoop !== 0 && <li><p key={key}>Max Players on Offline Coop: <strong>{item.offlinecoopmax}</strong></p></li>}
+                                {item.offlinemax !== 0 && <li><p key={key}>Max Players on Offline MultiPlayer: <strong>{item.offlinemax}</strong></p></li>}
+                                <li><p key={key}>Online Coop: <strong>{item.onlinecoop === 0 ? 'Not Supported' : 'Supported'}</strong></p></li>
+                                {item.onlinecoop !== 0 && <li><p key={key}>Max Players on Online Coop: <strong>{item.onlinecoopmax}</strong></p></li>}
+                                {item.onlinecoop !== 0 && <li><p key={key}>Max Players on Online MultiPlayer: <strong>{item.onlinemax}</strong></p></li>}
+                                <li><p key={key}>Split Screen: <strong>{item.splitscreen === 0 ? 'Not Supported' : 'Supported'}</strong></p></li>
+                                <li><p key={key}>Split Screen Online: <strong>{item.splitscreenonline === 0 ? 'Not Supported' : 'Supported'}</strong></p></li>
                               </ul>
                             </>
                           ))}

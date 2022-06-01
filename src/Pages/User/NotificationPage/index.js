@@ -6,7 +6,6 @@ import * as C from './styles'
 
 export default function NotificationPage() {
 
-
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo, gamesNotifications, error } = userLogin
 
@@ -58,7 +57,7 @@ export default function NotificationPage() {
                         <div className='heading'>
                             <h1>Your Favorite Games May Have Changed Their Rating!</h1>
 
-                            <p>There is {gamesNotifications.length} update{gamesNotifications.length > 1 && 's'} for this games</p>
+                            <p>There is {gamesNotifications.length} update{gamesNotifications.length > 1 && 's'}.</p>
 
                             <button type='button' onClick={() => { handleEmptyNotifications() }}>
                                 Clear Notifications

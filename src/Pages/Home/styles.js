@@ -325,13 +325,21 @@ export const HighestRatingsLastMonth = styled.section`
                         }
                     }
                     div.rating{
-                        padding: 1.5rem 1.2rem;
-                        border-radius: 4000px;
-                        background-color: #f2f2f2;
-                        font-size: 1.4rem;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+
+                        width: 40px!important;
+                        height: 40px!important;
+
+                        border-radius: 8px;
+                        background-color: green;
+
+                        color: #fff;
+                        font-size: 1.6rem;
                         font-weight: 600;
                         position: relative;
-                        width: min-content;
                     }
 
                     img{

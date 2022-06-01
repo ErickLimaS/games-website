@@ -106,7 +106,7 @@ export default function Home() {
 
                 }
 
-                <Link className='a-tag-button-style' to={`/game/${releasingThisMonth[headingGameChose].game.id}`}>More Info</Link>
+                <Link className='a-tag-button-style' to={`/game/${releasingThisMonth[headingGameChose].game.slug}`}>More Info</Link>
               </div>
             </div>
 
