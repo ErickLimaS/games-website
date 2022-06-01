@@ -240,14 +240,14 @@ export default function GamePage() {
                   (
                     <p>
                       {gameInfo.storyline.slice(0, 400)}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ... read more</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ...show more.</span>
                     </p>
                   )
                   :
                   (
                     <p>
                       {gameInfo.storyline}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> less</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.storyline.length < 400 ? { display: 'none' } : {}}> ... show less.</span>
                     </p>
                   )
 
@@ -256,14 +256,14 @@ export default function GamePage() {
                   (
                     <p>
                       {gameInfo.summary.slice(0, 400)}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ... show more</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ... show more.</span>
                     </p>
                   )
                   :
                   (
                     <p>
                       {gameInfo.summary}
-                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ... show less</span>
+                      <span onClick={() => setReadMore(!readMore)} style={gameInfo.summary.length < 400 ? { display: 'none' } : {}}> ... show less.</span>
                     </p>
                   )
               }
@@ -422,10 +422,10 @@ export default function GamePage() {
                       {gameInfo.age_ratings[0] && (<li>
                         <h5>Age Ratings</h5>
 
-                        <ul className='ratings'>
+                        <ul className='age-ratings'>
                           {gameInfo.age_ratings.map((item, key) => (
                             <li key={key}>
-                              <h6>{item.category} | {item.rating}</h6>
+                              <h6>{item.category} - <strong>{item.rating}</strong></h6>
                               {item.synopsis &&
                                 <p>{item.synopsis}</p>
                               }

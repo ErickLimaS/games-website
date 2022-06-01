@@ -95,12 +95,6 @@ export default function Header() {
                   }
                 )
               }
-              else {
-                return console.log('rating nao');
-              }
-            }
-            else {
-              return console.log('id nao');
             }
           })
 
@@ -132,7 +126,7 @@ export default function Header() {
 
       setMobileCLickSearch(true)
 
-      // setLoading(false)
+      setLoading(false)
 
     }, 3000)
 

@@ -658,17 +658,21 @@ export const Details = styled.div`
                         padding-left: 2rem;
                         margin: 2rem 0;
 
-                        ul >li{
-                            padding-left: 0;
-                            padding-right: 0.4rem;
+                        ul {
+                            flex-wrap: wrap;
 
-                            ::after{
-                                content: ",  ";
+                            >li{
+                                padding-left: 0;
+                                padding-right: 0.4rem;
+
+                                ::after{
+                                    content: ",  ";
+                                }
+                                :last-child::after{
+                                    content: "";
+                                }
                             }
-                            :last-child::after{
-                                content: "";
-                            }
-                        }
+                        } 
 
                         h5{
                             font-size: 2.2rem;
@@ -691,9 +695,37 @@ export const Details = styled.div`
                             padding-left: 1rem;
                         }
 
-                        >ul.rating{
+                        >ul.age-ratings{
                             display: flex;
                             flex-direction: column;
+
+                            li{
+                                width: 70%;
+
+                                @media(max-width: 768px){
+                                    width: 90%;
+                                }
+
+                                border-bottom: 2px solid #c0c0c0;
+
+                                *{
+                                    margin: 0 0 1rem 0;
+                                }
+
+                                h6{
+                                    font-size: 2rem;
+                                    font-weight: 400;
+                                }
+
+                                ::after{
+                                    content: "";
+                                }
+
+                                :last-child{
+                                    border-bottom: 0;
+                                }
+                            }
+                            
 
                         }
 
