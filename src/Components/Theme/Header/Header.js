@@ -197,7 +197,7 @@ export default function Header() {
               )}
             </C.User>
             <h2>
-              <Link to={`/platforms/`}>Platform</Link>
+              Platform
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -235,7 +235,7 @@ export default function Header() {
           </nav>
           <nav>
             <h2>
-              <Link to={`/games`}>Games</Link>
+              Games
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -257,7 +257,7 @@ export default function Header() {
           </nav>
           <nav>
             <h2>
-              <Link to={'/genre/'}>Genres</Link>
+              Genres
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -305,7 +305,7 @@ export default function Header() {
       <div className='nav-and-hover-list'>
         <nav>
           <h2>
-            <Link to={`/platforms/`}>Platform</Link>
+            Platform
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
@@ -343,7 +343,7 @@ export default function Header() {
         </nav>
         <nav>
           <h2>
-            <Link to={`/games`}>Games</Link>
+            Games
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
@@ -365,7 +365,7 @@ export default function Header() {
         </nav>
         <nav>
           <h2>
-            <Link to={`/genre/`}>Genres</Link>
+            Genres
           </h2>
           <div className='desktop-ul-hover'>
             <ul>

@@ -63,8 +63,6 @@ export default function GamePage() {
     dispatch(removeFavoriteGame(gameInfo, userLogin))
   }
 
-  console.log(gameInfo)
-
   return (
     <C.Container>
       {
@@ -94,7 +92,6 @@ export default function GamePage() {
 
               <div className='game-first-content'  >
                 <div className='game-cover-art'>
-                  {/* <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`} alt={gameInfo.name}></img> */}
                   {gameInfo.cover ? (
                     <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${gameInfo.cover.image_id}.png`} alt={gameInfo.name}></img>
                   ) : (
@@ -193,8 +190,10 @@ export default function GamePage() {
                 <div className='rating'>
                   <div className='rating-score' style={(gameInfo.rating >= 75 && {
                     border: '10px solid green'
-                  }) || (gameInfo.rating < 75 && {
+                  }) || (gameInfo.rating < 75 && gameInfo.rating > 50 && {
                     border: '10px solid #fc3'
+                  }) || (gameInfo.rating < 50 && {
+                    border: '10px solid red'
                   }) || (gameInfo.rating === undefined && {
                     border: '10px solid #333333'
                   })}>
@@ -217,12 +216,21 @@ export default function GamePage() {
                       </>
                     )}
 
-                    {gameInfo.rating < 75 && (
+                    {gameInfo.rating < 75 && gameInfo.rating > 50 && (
                       <>
                         <p>Rating Score</p>
                         <p style={{
                           color: '#fc3'
                         }}>Average</p>
+                      </>
+                    )}
+
+                    {gameInfo.rating <= 50 && (
+                      <>
+                        <p>Rating Score</p>
+                        <p style={{
+                          color: 'red'
+                        }}>Not Good</p>
                       </>
                     )}
                   </div>

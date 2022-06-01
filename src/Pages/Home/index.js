@@ -26,7 +26,7 @@ export default function Home() {
 
     document.title = 'Home | My Next Game'
 
-    
+
     const load1 = async () => {
 
       window.scrollTo(0, 0);
@@ -84,7 +84,7 @@ export default function Home() {
               )}
               <div>
                 <h3>
-                  <Link to={`/game/${releasingThisMonth[headingGameChose].game.id}`}>{releasingThisMonth[headingGameChose].game.name}</Link>
+                  <Link to={`/game/${releasingThisMonth[headingGameChose].game.slug}`}>{releasingThisMonth[headingGameChose].game.name}</Link>
                 </h3>
                 {releasingThisMonth[headingGameChose].game.themes &&
                   <ul>
@@ -137,16 +137,18 @@ export default function Home() {
                       backgroundSize: 'cover',
                       backgroundRepeat: 'no-repeat'
                     } : {}}>
-                      <Link to={`/game/${highestRatings[0].game.slug}`}>
-                        <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`} alt={highestRatings[0].game.name}></img>
-                        <div className='rating' style={highestRatings[0].game.rating >= 70 ? {
-                          border: '4px solid green'
-                        } : {
-                          border: '40x solid #fc3'
-                        }}>
-                          {(highestRatings[0].game.rating).toFixed(1)}
-                        </div>
-                      </Link>
+                      <div>
+                        <Link to={`/game/${highestRatings[0].game.slug}`}>
+                          <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`} alt={highestRatings[0].game.name}></img>
+                          <div className='rating' style={highestRatings[0].game.rating >= 70 ? {
+                            border: '4px solid green'
+                          } : {
+                            border: '40x solid #fc3'
+                          }}>
+                            {(highestRatings[0].game.rating).toFixed(1)}
+                          </div>
+                        </Link>
+                      </div>
                     </div>
                     <Link to={`/game/${highestRatings[0].game.slug}`}>
                       <h4>{highestRatings[0].game.name}</h4>

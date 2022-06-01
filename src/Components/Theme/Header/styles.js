@@ -70,10 +70,9 @@ export const Container = styled.header`
                 font-size: 2.4rem;
                 margin: 2rem 0;
                 color: #5c16c5;
+                
+                cursor: default;
 
-                a{
-                    color: #5c16c5;
-                }
             }
             li{
                 font-size: 1.6rem;
@@ -90,6 +89,8 @@ export const Container = styled.header`
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        align-items: center;
+        height: 100%;
 
         @media(max-width: 842px){
             display: none;
@@ -99,33 +100,52 @@ export const Container = styled.header`
             display: none;
         }
 
-    
         >nav{
+            height: 100%;
             margin: 0 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             z-index: 1;
+            border-top: 4px solid transparent;
+            transition: all ease 200ms;
 
             h2{
+                cursor: default;
                 font-size: 2rem;
                 font-weight: 400;
+                color: #5c16c5;
 
-                a{
-                    color: #5c16c5;
-                }
+            }
+
+            :hover{
+                border-top: 4px solid #7a30e8;
             }
 
             :hover > .desktop-ul-hover{
                 display: block!important;
                 width: 140px;
-                top: 6.5vh;
+                top: 9vh;
                 padding: 1rem;
                 position: absolute;
                 background-color: #7a30e8;
                 padding: 1rem 1rem;
                 border: 1px solid transparent;
                 border-radius: 4px;
+
+                ::after{
+                    content: "";
+                    position: absolute;
+                    top: -6px;
+                    left: 45%;
+                    border-left: 5px solid transparent;
+                    border-right: 5px solid transparent;
+                    border-bottom: 5px solid #7a30e8;
+                    width: 0;
+                    height:0;
+                    z-index: 1;
+                }
 
                 hr{
                     border-width: 0.5px;
@@ -396,8 +416,6 @@ export const User = styled.div`
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-
-        
 
         h2{
             margin: 0!important; 

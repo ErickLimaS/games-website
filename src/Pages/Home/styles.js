@@ -323,35 +323,51 @@ export const HighestRatingsLastMonth = styled.section`
                             height: 220px;
                             width: 300px;
                         }
-                    }
-                    div.rating{
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
 
-                        width: 40px!important;
-                        height: 40px!important;
+                        >div{
+                            margin: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-color: rgba(0,0,0,.3);
+                            border-radius: 10px;
 
-                        border-radius: 8px;
-                        background-color: green;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
 
-                        color: #fff;
-                        font-size: 1.6rem;
-                        font-weight: 600;
-                        position: relative;
-                    }
+                            div.rating{
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                justify-content: center;
 
-                    img{
-                        height: auto;
-                        width: 100px;
+                                width: 40px!important;
+                                height: 40px!important;
+
+                                border-radius: 8px;
+                                background-color: green;
+
+                                color: #fff;
+                                font-size: 1.6rem;
+                                font-weight: 600;
+                                position: relative;
+                            }
+
+                            img{
+                                height: auto;
+                                width: 100px;
+                                
+                            }
+                            
+                            :hover > div.background-image{
+                                background-image: linear-gradient(to right,rgba(0,0,0,.85) 70%,rgba(0,0,0,.4) 95%,rgba(0,0,0,.02) 100%);
+
+                            }
+                        }
+
                         
                     }
                     
-                    :hover > div.background-image{
-                        background-image: linear-gradient(to right,rgba(0,0,0,.85) 70%,rgba(0,0,0,.4) 95%,rgba(0,0,0,.02) 100%);
-
-                    }
 
                 }
             }
