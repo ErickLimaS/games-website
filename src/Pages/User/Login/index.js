@@ -18,7 +18,7 @@ export default function Login() {
   const navigate = useNavigate()
 
   const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo, error } = userLogin
+  const { userInfo, error, loading } = userLogin
 
   document.title = 'Login | My Next Game'
 
@@ -156,6 +156,7 @@ export default function Login() {
             <div>
               <label />
               <button type='submit' placeholder='Confirm Password' required>Login</button>
+              {loading && <p>loading</p>}
             </div>
             <div>
               <label />

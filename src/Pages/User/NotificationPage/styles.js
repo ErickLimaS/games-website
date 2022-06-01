@@ -29,7 +29,7 @@ export const Container = styled.div`
             font-weight: 400;
             color: #fff;
         }
-        
+
         @media(max-width: 740px){
             h1{
                 font-size: 4.2rem;
@@ -52,18 +52,48 @@ export const Container = styled.div`
         align-items: center;
         justify-content: center;
 
+        *{
+            margin: 2rem 0;
+        }
+
         h1{
             font-size: 5rem;
             font-weight: 600;
             color: #fff;
         }
+
         p{
             font-size: 2.8rem;
             font-weight: 400;
             color: #fff;
         }
 
+        button{
+            cursor: pointer;
+
+            padding: 1rem;
+
+            color:  #5c16c5;
+
+            font-size: 1.8rem;
+
+            background-color: #e3e3e3;
+            border: 1px solid #5c16c5;
+            border-radius: 4px;
+
+            :hover{
+                box-shadow: 0px 0px 10px 0px #0000007a;
+                opacity: 1.1;
+            }
+        }
+        
+        @media(max-width: 1024px){
+            
+            width: 80%;
+        }
+
         @media(max-width: 740px){
+
             h1{
                 font-size: 4.2rem;
                 font-weight: 600;
@@ -102,6 +132,8 @@ export const Games = styled.div`
     padding: 1rem;
 
     background-color: #efefef;
+
+    border: 1px solid #5c16c560;
     border-radius: 4px;
 
     >*{
@@ -150,6 +182,12 @@ export const Games = styled.div`
                 justify-content: center;
 
                 margin: 0 2rem;
+
+                @media(max-width: 374px){
+
+                    margin: 0 0.5rem;
+
+                }
 
                 h4{
                     font-size: 2rem;
@@ -217,8 +255,8 @@ export const Games = styled.div`
 
             cursor: pointer;
 
-            font-size: 2.6rem;
-            font-weight: 600;
+            font-size: 2.2rem;
+            font-weight: 400;
             color: #fff;
 
             background-color: #5c16c5;

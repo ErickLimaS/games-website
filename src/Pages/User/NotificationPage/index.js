@@ -1,25 +1,54 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { updateFavoriteGames } from '../../../redux/actions/userActions'
 import * as C from './styles'
 
 export default function NotificationPage() {
 
-    document.title = "Notifications | My Next Game"
 
     const userLogin = useSelector((state) => state.userLogin)
-    const { userInfo, gamesNotifications } = userLogin
+    const { userInfo, gamesNotifications, error } = userLogin
 
+    let newGames
+    // to be dispatch to server
+    if (gamesNotifications) {
+        newGames = gamesNotifications.map((item) => {
+            return {
+                id: `${item.id}`,
+                name: `${item.name}`,
+                slug: `${item.slug}`,
+                cover: `${item.cover}`,
+                rating: `${item.newRating}`,
+                totalVotes: `${item.newRating_count}`
+            }
+        })
+    }
+    const dispatch = useDispatch()
 
+    const handleEmptyNotifications = () => {
+
+        dispatch(updateFavoriteGames(newGames, userInfo))
+
+    }
+
+    console.log(newGames)
+
+    if (gamesNotifications) {
+        document.title = `${gamesNotifications.length} Notifications | My Next Game`
+    }
+    else {
+        document.title = `Notifications | My Next Game`
+    }
     return (
         <C.Container>
-            {gamesNotifications == null ?
+            {gamesNotifications == null || gamesNotifications === undefined ?
                 (
 
                     <div className='no-notifications'>
                         <h1>No Notifications Yet</h1>
 
-                        <p>You will see a number next to your username next time you get a notification. :)</p>
+                        <p>You will see a number next to your username next time you get a notification. (carinha feliz)</p>
                     </div>
 
                 )
@@ -29,11 +58,14 @@ export default function NotificationPage() {
                         <div className='heading'>
                             <h1>Your Favorite Games May Have Changed Their Rating!</h1>
 
-                            <p>You will see a number next to your username next time you get a notification. :)</p>
+                            <p>There is {gamesNotifications.length} update{gamesNotifications.length > 1 && 's'} for this games</p>
+
+                            <button type='button' onClick={() => { handleEmptyNotifications() }}>
+                                Clear Notifications
+                            </button>
+                            {error && <p>{error}</p>}
                         </div>
                         <C.Notifications>
-
-
 
                             {gamesNotifications.map((item, key) => (
                                 <C.Games key={key} item={item}>

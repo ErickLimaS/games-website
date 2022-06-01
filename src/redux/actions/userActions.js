@@ -20,6 +20,9 @@ import {
     NOTIFICATIONS_REQUEST,
     NOTIFICATIONS_SUCCESS,
     NOTIFICATIONS_FAIL,
+    USER_UPDATE_REQUEST_FAVORITE_GAMES,
+    USER_UPDATE_SUCCESS_FAVORITE_GAMES,
+    USER_UPDATE_FAIL_FAVORITE_GAMES,
 } from '../constants/userConstants';
 
 const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
@@ -201,7 +204,7 @@ export const getNotifications = (games) => async (dispatch) => {
         //     }
         // })
 
-        dispatch({ type: NOTIFICATIONS_SUCCESS, action: games})
+        dispatch({ type: NOTIFICATIONS_SUCCESS, action: games })
 
         localStorage.setItem('gamesNotifications', JSON.stringify(games))
 
@@ -215,4 +218,66 @@ export const getNotifications = (games) => async (dispatch) => {
     }
 
 
+}
+
+export const updateFavoriteGames = (newGames, userInfo) => async (dispatch) => {
+
+    let newUserInfo = userInfo
+
+    try {
+
+        dispatch({ type: USER_UPDATE_REQUEST_FAVORITE_GAMES, action: newGames })
+
+        Axios({
+
+            url: `${CORS_ANYWHERE}${SERVER_BASE_URl}/users/update-favorite-games`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: { userInfo, newGames }
+
+        }).then(res => {
+
+            /*
+                Compare ids between arrays. if equal, removes the game from main variable to 
+                and add new info of the game, then returns the whole data to localStorage
+            */
+            for (let i = 0; i < (userInfo.favoriteGames).length; i++) {
+
+                // eslint-disable-next-line array-callback-return
+                res.data.favoriteGames.map(item => {
+
+                    if (Number(item.id) === Number(userInfo.favoriteGames[i].id)) {
+
+                        newUserInfo.favoriteGames = userInfo.favoriteGames.filter(item =>
+                            item.id !== userInfo.favoriteGames[i].id
+                        )
+
+
+                        newUserInfo.favoriteGames.push(item)
+
+                    }
+                })
+
+            }
+
+            userInfo.favoriteGames = newUserInfo.favoriteGames
+
+            localStorage.setItem('userInfo', JSON.stringify(newUserInfo))
+
+            dispatch({ type: USER_UPDATE_SUCCESS_FAVORITE_GAMES, action: newUserInfo })
+
+        })
+
+    }
+    catch (error) {
+
+        dispatch({
+            type: USER_UPDATE_FAIL_FAVORITE_GAMES,
+            payload: error.response && error.response.data.message ?
+                error.response.data.message : error.message,
+        })
+
+    }
 }

@@ -8,6 +8,7 @@ import {
     userNotificationsReducer,
     userRegisterReducer,
     userRemoveFavGameReducer,
+    userUpdateFavoriteGamesReducer,
     userUpdateProfileReducer
 } from './reducers/userReducers';
 
@@ -29,7 +30,8 @@ const reducer = combineReducers({
     userNewFavGame: userNewFavGameReducer,
     userRemoveFavGame: userRemoveFavGameReducer,
     userUpdateProfile: userUpdateProfileReducer,
-    userNotifications: userNotificationsReducer
+    userNotifications: userNotificationsReducer,
+    updateFavoriteGames: userUpdateFavoriteGamesReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

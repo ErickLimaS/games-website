@@ -75,13 +75,6 @@ export default function GamePage() {
         ) : (
           // eslint-disable-next-line eqeqeq
           <>
-            {/* <C.HeadingContent style={gameInfo.artworks === undefined ? {
-              backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${gameInfo.screenshots[0].image_id}.jpg)`,
-              backgroundRepeat: 'no-repeat',
-            } : {
-              backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${gameInfo.artworks[Math.floor(Math.random() * gameInfo.artworks.length)].image_id}.jpg)`,
-              backgroundRepeat: 'no-repeat',
-            }}> */}
             <C.HeadingContent style={
               (gameInfo.artworks && {
                 backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${gameInfo.artworks[Math.floor(Math.random() * gameInfo.artworks.length)].image_id}.jpg)`,

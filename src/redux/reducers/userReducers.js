@@ -18,6 +18,9 @@ import {
   NOTIFICATIONS_REQUEST,
   NOTIFICATIONS_SUCCESS,
   NOTIFICATIONS_FAIL,
+  USER_UPDATE_REQUEST_FAVORITE_GAMES,
+  USER_UPDATE_SUCCESS_FAVORITE_GAMES,
+  USER_UPDATE_FAIL_FAVORITE_GAMES,
 } from '../constants/userConstants';
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -102,6 +105,19 @@ export const userNotificationsReducer = (state = {}, action) => {
     case NOTIFICATIONS_SUCCESS:
       return { loading: false, gamesNotifications: action.payload }
     case NOTIFICATIONS_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state;
+  }
+}
+
+export const userUpdateFavoriteGamesReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_UPDATE_REQUEST_FAVORITE_GAMES:
+      return { loading: true }
+    case USER_UPDATE_SUCCESS_FAVORITE_GAMES:
+      return { loading: false, userInfo: action.payload }
+    case USER_UPDATE_FAIL_FAVORITE_GAMES:
       return { loading: false, error: action.payload }
     default:
       return state;
