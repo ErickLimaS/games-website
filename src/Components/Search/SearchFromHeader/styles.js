@@ -2,8 +2,12 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
 
+    width: 40%;
 
-    width: 90%;
+    @media(max-width: 868px){
+        width: 90%;
+    }
+
     height: auto;
     
     padding: 0.5rem 1rem;
@@ -27,7 +31,7 @@ export const Container = styled.div`
     }
 
     img{
-        height: auto;
+        height: 133px;
         width: 100px;
         border-radius: 2px;
     }

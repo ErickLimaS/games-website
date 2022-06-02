@@ -34,6 +34,7 @@ export default function Header() {
   const [notifications, setNotifications] = useState(0)
 
   const [isFetch, setIsFetch] = useState(false)
+  const [showResults, setShowResults] = useState(false)
   const [loading, setLoading] = useState(false)
 
   const searchInput = useRef('')
@@ -43,6 +44,7 @@ export default function Header() {
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
+  // compare games rating
   useLayoutEffect(() => {
     if (userInfo) {
       if ((userInfo.favoriteGames).length > 0) {
@@ -63,7 +65,6 @@ export default function Header() {
     }
 
   }, [userInfo])
-
 
   // compare games rating
   useEffect(() => {
@@ -124,7 +125,7 @@ export default function Header() {
 
       setIsFetch(true)
 
-      setMobileCLickSearch(true)
+      setShowResults(true)
 
       setLoading(false)
 
@@ -155,7 +156,7 @@ export default function Header() {
         </button>
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
           <nav>
-            <C.User>
+            <C.UserMobile>
               {userInfo ? (
                 <>
                   <div className='user-name-and-caret' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
@@ -167,19 +168,31 @@ export default function Header() {
                     <ul>
                       {notifications > 0 ?
                         (
-                          <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                            <Link to={`/user/notifications`} ><BellFillSvg /> Notifications <span>{notifications}</span></Link>
+                          <li onClick={() => {
+                            setMobileCLickUser(!mobileClickUser)
+                            setMobileCLickMenu(!mobileClickMenu)
+                          }}>
+                            <Link to={`/user/notifications`} onClick={() => setNotifications(0)}>
+                              <BellFillSvg /> Notifications <span>{notifications}</span>
+                            </Link>
                           </li>
                         )
                         :
                         (
-                          <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                            <Link to={`/user/notifications`} onClick={() => setNotifications(0)}><BellSvg /> Notifications</Link>
+                          <li onClick={() => {
+                            setMobileCLickUser(!mobileClickUser)
+                            setMobileCLickMenu(!mobileClickMenu)
+                          }}>
+                            <Link to={`/user/notifications`} onClick={() => setNotifications(0)}>
+                              <BellSvg /> Notifications
+                            </Link>
                           </li>
                         )
                       }
                       <li onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
-                        <Link to={`/user/profile`}><PersonCircleSvg /> Profile</Link>
+                        <Link to={`/user/profile`}>
+                          <PersonCircleSvg /> Profile
+                        </Link>
                       </li>
                       <li onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
                         <Link to={`/user/my-favorite-games`}><StarSvg />Marked Games</Link>
@@ -195,7 +208,7 @@ export default function Header() {
                   <Link to={`/user/login`} onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}><BoxArrowRightSvg />Login</Link>
                 </div>
               )}
-            </C.User>
+            </C.UserMobile>
             <h2>
               Platform
             </h2>
@@ -401,6 +414,46 @@ export default function Header() {
             </ul>
           </div>
         </nav>
+        <div className='search-input'>
+
+          <button type='button' onClick={() => {
+            setMobileCLickSearch(!mobileClickSearch)
+            setShowResults(false)
+          }} >
+            Search <SearchSvg />
+          </button>
+
+          <div className='input' style={mobileClickSearch === true ? { display: 'flex' } : { display: 'none' }}>
+            <label htmlFor='input-search-text'></label>
+            <input type='text'
+              id='input-search-text'
+              placeholder='Ex: Tomb Raider'
+              onChange={(e) => { if (e.target.value.length >= 4) { setTimeout(searchForGames(e.target.value), 3000) } }}
+              ref={searchInput}
+            ></input>
+            <button type='button' onClick={() => { searchForGames(searchInput.current.value) && setShowResults(false) }}><SearchSvg /></button>
+
+          </div>
+
+          <div className='search-results-desktop'>
+
+            <div className='search-result'>
+              {loading === true && (
+                <div className='loading'>
+                  <SpinnerSvg width={50} height={50} />
+                </div>
+              )}
+              {isFetch === true &&
+                <div className={showResults === true ? 'results-active' : 'results-deactive'}>
+                  <button type='button' onClick={() => { setShowResults(false) }}>Close</button>
+                  {gamesSearched.data.map((item, key) => (
+                    <SearchFromHeader item={item} key={key} />
+                  ))}
+                </div>
+              }
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className='mobile-search'>
@@ -440,86 +493,56 @@ export default function Header() {
 
       </div>
 
-      <div className='search-input'>
-        <div>
-          <label htmlFor='input-search-text'></label>
-          <input type='text'
-            id='input-search-text'
-            placeholder='Ex: Tomb Raider'
-            onChange={(e) => { if (e.target.value.length >= 4) { setTimeout(searchForGames(e.target.value), 3000) } }}
-            ref={searchInput}
-          ></input>
-          <button type='button' onClick={() => { searchForGames(searchInput.current.value) && setMobileCLickMenu(false) }}><SearchSvg /></button>
-        </div>
-
-        <div className='search-results-desktop'>
-          {loading === true && (
-            <div className='loading'>
-              <SpinnerSvg width={50} height={50} />
+      <C.UserDesktop>
+        {userInfo ? (
+          <>
+            <div className='user-name-and-caret-desktop' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+              {notifications > 0 && <span>{notifications}</span>}
+              {
+                (userInfo.name).length > 9 ?
+                  (
+                    <h3>{(userInfo.name).slice(0, 9)}...</h3>
+                  )
+                  :
+                  (
+                    <h3>{userInfo.name}</h3>
+                  )
+              }
+              {mobileClickUser === true && <CaretDownSvg />}
+              {mobileClickUser === false && <CaretUpSvg />}
             </div>
-          )}
-          <div className='search-result'>
-            {isFetch === true &&
-              <div className={mobileClickSearch === true ? 'results-active' : 'results-deactive'}>
-                <button type='button' onClick={() => { setMobileCLickSearch(false) }}>Close</button>
-                {gamesSearched.data.map((item, key) => (
-                  <SearchFromHeader item={item} key={key} />
-                ))}
-              </div>
-            }
-          </div>
-        </div>
-        <C.User>
-          {userInfo ? (
-            <>
-              <div className='user-name-and-caret-desktop' onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                {notifications > 0 && <span>{notifications}</span>}
-                {
-                  (userInfo.name).length > 9 ?
-                    (
-                      <h3>{(userInfo.name).slice(0, 9)}...</h3>
-                    )
-                    :
-                    (
-                      <h3>{userInfo.name}</h3>
-                    )
-                }
-                {mobileClickUser === true && <CaretDownSvg />}
-                {mobileClickUser === false && <CaretUpSvg />}
-              </div>
 
-              <div className={mobileClickUser === true ? 'dropdown desktop desk-active' : 'dropdown desktop'}>
-                <ul>
-                  {notifications > 0 ?
-                    (
-                      <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                        <Link to={`/user/notifications`} onClick={() => setNotifications(0)}><BellFillSvg /> Notifications <span>{notifications}</span></Link>
-                      </li>
-                    )
-                    :
-                    (
-                      <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                        <Link to={`/user/notifications`} ><BellSvg /> Notifications</Link>
-                      </li>
-                    )
-                  }
-                  <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                    <Link to={`/user/profile`} ><PersonCircleSvg /> Profile</Link>
-                  </li>
-                  <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                    <Link to={`/user/my-favorite-games`}><StarSvg /> Marked Games</Link>
-                  </li>
-                  <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
-                    <Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg /> Sign Out</Link>
-                  </li>
-                </ul>
-              </div>
-            </>
-          ) : (
-            <Link to={`/user/login`}>Login</Link>
-          )}
-        </C.User>
-      </div>
+            <div className={mobileClickUser === true ? 'dropdown desktop desk-active' : 'dropdown desktop'}>
+              <ul>
+                {notifications > 0 ?
+                  (
+                    <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                      <Link to={`/user/notifications`} onClick={() => setNotifications(0)}><BellFillSvg /> Notifications <span>{notifications}</span></Link>
+                    </li>
+                  )
+                  :
+                  (
+                    <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                      <Link to={`/user/notifications`} ><BellSvg /> Notifications</Link>
+                    </li>
+                  )
+                }
+                <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                  <Link to={`/user/profile`} ><PersonCircleSvg /> Profile</Link>
+                </li>
+                <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                  <Link to={`/user/my-favorite-games`}><StarSvg /> Marked Games</Link>
+                </li>
+                <li onClick={() => { setMobileCLickUser(!mobileClickUser) }}>
+                  <Link to={`/user/signout`} onClick={logoutUser}><BoxArrowLeftSvg /> Sign Out</Link>
+                </li>
+              </ul>
+            </div>
+          </>
+        ) : (
+          <Link to={`/user/login`}>Login</Link>
+        )}
+      </C.UserDesktop>
 
     </C.Container >
   )

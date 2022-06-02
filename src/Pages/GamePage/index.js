@@ -416,11 +416,11 @@ export default function GamePage() {
 
                       {gameInfo.themes &&
                         <li>
-                          <h5>Themes</h5>
+                          <h5>Genres</h5>
                           <ul>
                             {gameInfo.themes.map((item, key) => (
                               <li key={key}>
-                                <Link to={`/themes/${item.slug}`}>{item.name}</Link>
+                                <Link to={`/genre/${item.slug}`}>{item.name}</Link>
                               </li>
                             ))}
                           </ul>
