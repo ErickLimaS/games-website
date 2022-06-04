@@ -66,9 +66,9 @@ export default function Home() {
             <h2>See the new releases and pick the one who will entertain you the most!</h2>
           </div >
           <C.HeadingContent style={(releasingThisMonth[headingGameChose].game.artworks && {
-            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${releasingThisMonth[headingGameChose].game.artworks[0].image_id}.jpg)`,
+            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_1080p/${releasingThisMonth[headingGameChose].game.artworks[0].image_id}.jpg)`,
           }) || (releasingThisMonth[headingGameChose].game.screenshots[0] && {
-            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_huge/${releasingThisMonth[headingGameChose].game.screenshots[0].image_id}.jpg)`
+            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_1080p/${releasingThisMonth[headingGameChose].game.screenshots[0].image_id}.jpg)`
           }) || {
             backgroundColor: '#c0c0c0'
           }}>

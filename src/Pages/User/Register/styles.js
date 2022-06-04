@@ -160,6 +160,15 @@ export const Container = styled.div`
                 border: 1px solid #7a30e8;
                 border-radius: 4px;
 
+                svg{
+                    margin: 0;
+
+                    height: auto;
+                    width: 30px;
+
+                    transform: scale(1.5);
+                }
+
                 :hover{
                     opacity: 0.9;
                     border: 1px solid #6017cf;

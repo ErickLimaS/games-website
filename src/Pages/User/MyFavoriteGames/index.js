@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, Redirect } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import * as C from './styles'
 // import SERVER from '../../../API/Server-api'
@@ -63,7 +63,7 @@ export default function MyFavoriteGames() {
                             <li key={key} className='game'>
                                 <Link to={`/game/${item.slug}`}><img src={`${item.cover}`} alt={`${item.name} Cover`} /></Link>
                                 <div className='game-name'>
-                                <Link to={`/game/${item.slug}`}><h3>{item.name}</h3></Link>
+                                    <Link to={`/game/${item.slug}`}><h3>{item.name}</h3></Link>
                                     <Link to={`/game/${item.slug}`}>Go to Page</Link>
                                 </div>
                                 <div className='game-rating'>

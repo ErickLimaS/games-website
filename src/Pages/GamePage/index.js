@@ -111,12 +111,12 @@ export default function GamePage() {
                       userInfo.favoriteGames.find(game => Number(game.id) === Number(gameInfo.id)) ? (
 
                         <button className='favorite-button' type='button' onClick={() => { removeFavoriteFromThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#FFF' }}>
-                          <StarFillSvg style={{ color: '#5c16c5 ', fill: '#5c16c5' }} /> <span style={{ color: '#333333' }}>Favorited</span>
+                          <StarFillSvg style={{ color: '#5c16c5 ', fill: '#5c16c5' }} /> <span style={{ color: '#333333' }}>Added to Favorite</span>
                         </button>
                       ) : (
                         <>
                           <button className='favorite-button' type='button' onClick={() => { favoriteThisGame() }} style={{ border: '1px solid #5c16c5', backgroundColor: '#7a30e8' }}>
-                            <StarSvg style={{ color: '#FFF ', fill: '#FFF' }} /> Favorite
+                            <StarSvg style={{ color: '#FFF ', fill: '#FFF' }} /> Add to Favorite
                           </button>
                           {loading && <span className='loading-new-fav-game'><SpinnerSvg /></span>}
                           {error && <span className='error-new-fav-game'>Error: Check Your Login</span>}

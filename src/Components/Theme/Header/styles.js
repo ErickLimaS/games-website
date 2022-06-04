@@ -70,8 +70,18 @@ export const Container = styled.header`
                 font-size: 2.4rem;
                 margin: 2rem 0;
                 color: #5c16c5;
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
                 
                 cursor: default;
+
+                svg{
+                    margin-right: 2rem;
+                    width: auto;
+                    height: 40px;
+                }
 
             }
             li{
@@ -116,6 +126,17 @@ export const Container = styled.header`
                 font-size: 2rem;
                 font-weight: 400;
                 color: #5c16c5;
+
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+
+                svg.icons8{
+                    margin-right: 2rem;
+                    width: auto;
+                    height: 30px;
+                }
 
             }
 
@@ -438,6 +459,7 @@ export const UserMobile = styled.div`
     border-radius: 4px;
     padding: 1rem 0.5rem;
 
+
     .login{
         font-size: 2.6rem;
 
@@ -544,6 +566,8 @@ export const UserMobile = styled.div`
         border-radius: 4px;
         padding: 1rem;
         margin-top: 2rem;
+
+        
 
         ul{
             li{

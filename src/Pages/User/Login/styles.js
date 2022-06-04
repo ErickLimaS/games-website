@@ -145,6 +145,7 @@ export const Container = styled.div`
             align-items: center;
 
             >div{
+                transition: all ease-in 200ms;
                 margin: 1rem 0;
                 
                 width: inherit;
@@ -152,6 +153,12 @@ export const Container = styled.div`
                 button{
                     padding: 0.8rem 1rem;
                     width: inherit;
+
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    
 
                     font-size: 2rem;
                     font-weight: 400;
@@ -161,6 +168,15 @@ export const Container = styled.div`
                     background-color: #6b19e6;
                     border: 1px solid #7a30e8;
                     border-radius: 4px;
+                    
+                    svg{
+                        margin: 0;
+
+                        height: auto;
+                        width: 30px;
+
+                        transform: scale(1.5);
+                    }
 
                     :hover{
                         opacity: 0.9;
@@ -177,8 +193,10 @@ export const Container = styled.div`
                         text-decoration: underline;
                     }
                 }
+               
                 
             }
+
         }
     }
 

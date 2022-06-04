@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import * as C from './styles'
+import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
@@ -19,7 +20,7 @@ export default function Register(props) {
   const navigate = useNavigate()
 
   const userRegister = useSelector((state) => state.userRegister)
-  const { userInfo } = userRegister
+  const { userInfo, loading } = userRegister
 
   const dispatch = useDispatch()
 
@@ -134,7 +135,7 @@ export default function Register(props) {
             <div>
               <label />
               {/* <button type='button' onClick={submitRegisterForm} placeholder='Confirm Password' required>Sign Up</button> */}
-              <button type='submit' placeholder='Confirm Password' required>Sign Up</button>
+              <button type='submit' placeholder='Confirm Password' required>{!loading ? 'Sign Up' : <SpinnerSvg />}</button>
             </div>
             <div>
               <label />

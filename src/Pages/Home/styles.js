@@ -166,7 +166,7 @@ export const HeadingContent = styled.div`
             font-weight: 400;
         }
         h3{
-            width: 100%;
+            width: max-content;
             color: #FFF;
             font-size: 1.8rem;
             font-weight: 400;

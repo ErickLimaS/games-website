@@ -2,6 +2,8 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as C from './styles'
 import API from '../../../API/IGDB'
 import SearchFromHeader from '../../../Components/Search/SearchFromHeader'
+import { ReactComponent as ArcadeSvg } from '../../../img/svg/arcade.svg'
+import { ReactComponent as MarioSvg } from '../../../img/svg/mario.svg'
 import { ReactComponent as SearchSvg } from '../../../img/svg/search.svg'
 import { ReactComponent as ListSvg } from '../../../img/svg/list.svg'
 import { ReactComponent as DotsSvg } from '../../../img/svg/three-dots.svg'
@@ -210,7 +212,7 @@ export default function Header() {
               )}
             </C.UserMobile>
             <h2>
-              Platform
+              <ArcadeSvg fill='#5c16c5' /> Platform
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -248,7 +250,7 @@ export default function Header() {
           </nav>
           <nav>
             <h2>
-              Games
+              <MarioSvg fill='#5c16c5' />  Games
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -318,7 +320,7 @@ export default function Header() {
       <div className='nav-and-hover-list'>
         <nav>
           <h2>
-            Platform
+            <ArcadeSvg fill='#5c16c5' className='icons8'/> Platform
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
@@ -356,7 +358,7 @@ export default function Header() {
         </nav>
         <nav>
           <h2>
-            Games
+            <MarioSvg fill='#5c16c5' className='icons8'/>  Games
           </h2>
           <div className='desktop-ul-hover'>
             <ul>

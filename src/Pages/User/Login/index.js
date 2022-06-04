@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import * as C from './styles'
+import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
 import { Link } from 'react-router-dom'
 import { useRef } from 'react'
 import { ReactComponent as Dot } from '../../../img/svg/dot.svg'
@@ -155,8 +156,9 @@ export default function Login() {
           <div className='buttons'>
             <div>
               <label />
-              <button type='submit' placeholder='Confirm Password' required>Login</button>
-              {loading && <p>loading</p>}
+              <button type='submit' placeholder='Confirm Password' required>
+                {!loading ? 'Login' : <SpinnerSvg />}
+              </button>
             </div>
             <div>
               <label />
