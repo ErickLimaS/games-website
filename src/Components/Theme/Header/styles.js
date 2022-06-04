@@ -12,10 +12,8 @@ export const Container = styled.header`
     background-color: rgba(250,250,250,.8);
 
     .header-company-name{
-        h1{
-            font-size: 2.4rem;
-            font-weight: 600;
-            color: #5c16c5;
+        img{
+            height: 7vh;
         }
     }
 
@@ -38,7 +36,7 @@ export const Container = styled.header`
             border: 1px solid transparent;
             border-radius: 4px;
 
-            svg{
+            svg.list-button{
                 fill: #5c16c5;
                 height: 36px;
                 width: 36px;
@@ -77,7 +75,7 @@ export const Container = styled.header`
                 
                 cursor: default;
 
-                svg{
+                svg.icons8{
                     margin-right: 2rem;
                     width: auto;
                     height: 40px;
@@ -270,21 +268,29 @@ export const Container = styled.header`
                 input{
                     width: 70%;
                     padding: 0.5rem;
+
                     font-size: 1.6rem;
                     font-weight: 400;
-                    border: 1px solid #c0c0c0;
-                    border-radius: 4px;
-                    margin-right: 1rem;
+
+                    border: 0;
+                    border-radius: 4px 0 0 4px;
+
+                    outline: 0;
                 }
                 button{
-                    border: 1px solid #c0c0c0;
-                    padding: 0.8rem 1rem;
-                    border: 1px solid #c0c0c0;
-                    border-radius: 4000px;
+                    padding: 1.1rem;
+
+                    border: 0;
+                    border-radius: 0 4px 4px 0;
+
+                    background-color: #5c16c5;
+
+                    color: #fff;
 
                     :hover{
-                        border: 1px solid #000;
-                        background-color: rgba(250,250,250,1);
+                        transition: all ease-in-out 200ms;
+                        background-color: #fff;
+                        color: #5c16c5;
                     }
                 }
 
@@ -355,8 +361,8 @@ export const Container = styled.header`
             button{
                 background-color: #fff;
                 border: 0;
-                height: inherit;
-                padding: 1rem;
+                height: inherit;    
+                padding: 1.05rem;
                 margin: 0;
                 border-radius: 0 4px 4px 0;
 
@@ -382,6 +388,9 @@ export const Container = styled.header`
 
             svg{
                 color: #5c16c5;
+
+                height: 20px;
+                width: auto;
             }
 
             :hover{
@@ -459,7 +468,6 @@ export const UserMobile = styled.div`
     border-radius: 4px;
     padding: 1rem 0.5rem;
 
-
     .login{
         font-size: 2.6rem;
 
@@ -494,6 +502,14 @@ export const UserMobile = styled.div`
             flex-direction: row;
             align-content: center;
             align-items: center;
+            
+            svg{
+                height: 20px;
+                width: auto;
+                transform: scale(1.5);
+
+                margin-left: 1rem;
+            }
 
             *{
                 margin-right: 2rem;
@@ -515,7 +531,7 @@ export const UserMobile = styled.div`
 
                 border-radius: 4000px;
                 background-color: #c0c0c0;
-        }
+            }
         }
 
     }
@@ -567,14 +583,13 @@ export const UserMobile = styled.div`
         padding: 1rem;
         margin-top: 2rem;
 
-        
-
         ul{
             li{
                 a{
                     display: flex;
                     align-items: center;
 
+                    font-size: 1.8rem;
                     color: #FFF;
 
                     svg{
@@ -714,6 +729,12 @@ export const UserDesktop = styled.div`
     border-left: 1px solid #c0c0c0;
     border-right: 1px solid #c0c0c0;
     padding: 1rem 0.5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
 
     .login{
         font-size: 2.6rem;

@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import * as C from './styles'
 import API from '../../../API/IGDB'
 import SearchFromHeader from '../../../Components/Search/SearchFromHeader'
+import logo from '../../../img/logo/logo.png'
 import { ReactComponent as ArcadeSvg } from '../../../img/svg/arcade.svg'
 import { ReactComponent as MarioSvg } from '../../../img/svg/mario.svg'
 import { ReactComponent as SearchSvg } from '../../../img/svg/search.svg'
@@ -154,7 +155,7 @@ export default function Header() {
 
       <div className='mobile-menu-dropdown'>
         <button type='button' className={mobileClickMenu === true ? 'active' : ''} onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
-          <ListSvg />
+          <ListSvg className='list-button'/>
         </button>
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
           <nav>
@@ -212,7 +213,7 @@ export default function Header() {
               )}
             </C.UserMobile>
             <h2>
-              <ArcadeSvg fill='#5c16c5' /> Platform
+              <ArcadeSvg fill='#5c16c5' className='icons8'/> Platform
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -250,7 +251,7 @@ export default function Header() {
           </nav>
           <nav>
             <h2>
-              <MarioSvg fill='#5c16c5' />  Games
+              <MarioSvg fill='#5c16c5' className='icons8'/>  Games
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -313,14 +314,14 @@ export default function Header() {
 
       <div className='header-company-name'>
         <a href='/'>
-          <h1>My Next Game</h1>
+          <img src={logo} alt='My Next Game Logo'></img>
         </a>
       </div>
 
       <div className='nav-and-hover-list'>
         <nav>
           <h2>
-            <ArcadeSvg fill='#5c16c5' className='icons8'/> Platform
+            <ArcadeSvg fill='#5c16c5' className='icons8' /> Platform
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
@@ -416,13 +417,19 @@ export default function Header() {
             </ul>
           </div>
         </nav>
-        <div className='search-input'>
+        <div className='search-input'
+          style={mobileClickSearch === true ? {
+            borderTop: '4px solid #7a30e8'
+          } : {}}
+        >
 
-          <button type='button' onClick={() => {
-            setMobileCLickSearch(!mobileClickSearch)
-            setShowResults(false)
-          }} >
-            Search <SearchSvg />
+          <button type='button'
+            onClick={() => {
+              setMobileCLickSearch(!mobileClickSearch)
+              setShowResults(false)
+            }}
+          >
+            <SearchSvg /> Search 
           </button>
 
           <div className='input' style={mobileClickSearch === true ? { display: 'flex' } : { display: 'none' }}>

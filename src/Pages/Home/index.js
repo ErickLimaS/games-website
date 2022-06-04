@@ -125,7 +125,7 @@ export default function Home() {
               <div className='ratings-text'>
                 <h3>The Most Best Rated!</h3>
                 <p>
-                  According with the users, this is the best game of the month!
+                  According with the users, this is the best game of the last month!
                 </p>
 
               </div>
