@@ -238,14 +238,16 @@ export const ConsoleGamesRelated = styled.div`
                     align-items: center;
                     justify-content: center;
                     
-                    p{
-                        border-radius: 4000px;
-                        background-color: #FFF;
+                    >div{
+                        border-radius: 8px;
                         width: min-content;
                         padding: 1.2rem 1rem;
-                        font-size: 1.2rem;
-                        font-weight: 600;
-                        color: initial;
+
+                        p{
+                            font-size: 1.4rem;
+                            font-weight: 600;
+                            color: #FFF;
+                        }
                     }
                 }
 

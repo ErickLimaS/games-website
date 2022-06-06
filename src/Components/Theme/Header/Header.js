@@ -5,6 +5,7 @@ import SearchFromHeader from '../../../Components/Search/SearchFromHeader'
 import logo from '../../../img/logo/logo.png'
 import { ReactComponent as ArcadeSvg } from '../../../img/svg/arcade.svg'
 import { ReactComponent as MarioSvg } from '../../../img/svg/mario.svg'
+import { ReactComponent as SwordSvg } from '../../../img/svg/sword.svg'
 import { ReactComponent as SearchSvg } from '../../../img/svg/search.svg'
 import { ReactComponent as ListSvg } from '../../../img/svg/list.svg'
 import { ReactComponent as DotsSvg } from '../../../img/svg/three-dots.svg'
@@ -40,7 +41,7 @@ export default function Header() {
   const [showResults, setShowResults] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const searchInput = useRef('')
+  const [searchInput, setSearchInput] = useState('')
 
   const dispatch = useDispatch()
 
@@ -114,15 +115,17 @@ export default function Header() {
   }, [gamesToObserveRating])
 
   // search feature
-  const searchForGames = async (itemToBeSearched) => {
+  const searchForGames = async () => {
     setLoading(true)
     let data
 
     setTimeout(async function () {
-      data = await API.getSearchResults(itemToBeSearched)
+      data = await API.getSearchResults(searchInput)
       setGamesSearched(data)
     }, 1500)
 
+
+    console.log(searchInput)
 
     setTimeout(function () {
 
@@ -134,21 +137,19 @@ export default function Header() {
 
     }, 3000)
 
-
-    console.log(data)
-    console.log(gamesSearched)
-
     return gamesSearched
 
   }
 
   // logout
   const logoutUser = (e) => {
+
     e.preventDefault()
+
     dispatch(logout())
+
     document.location.reload()
   }
-
 
   return (
     <C.Container>
@@ -273,7 +274,7 @@ export default function Header() {
           </nav>
           <nav>
             <h2>
-              Genres
+              <SwordSvg fill='#5c16c5' className='icons8 icons-2' /> Genres
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -375,7 +376,7 @@ export default function Header() {
         </nav>
         <nav>
           <h2>
-            Genres
+            <SwordSvg fill='#5c16c5' className='icons8 icons-2' /> Genres
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
@@ -425,10 +426,14 @@ export default function Header() {
             <input type='text'
               id='input-search-text'
               placeholder='Ex: Tomb Raider'
-              onChange={(e) => { if (e.target.value.length >= 4) { setTimeout(searchForGames(e.target.value), 3000) } }}
-              ref={searchInput}
+              onChange={(e) => {
+                setSearchInput(e.target.value)
+                if (e.target.value.length >= 5) {
+                  searchForGames()
+                }
+              }}
             ></input>
-            <button type='button' onClick={() => { searchForGames(searchInput.current.value) && setShowResults(false) }}><SearchSvg /></button>
+            <button type='button' onClick={() => { searchForGames() && setShowResults(false) }}><SearchSvg /></button>
 
           </div>
 
@@ -442,7 +447,9 @@ export default function Header() {
               )}
               {isFetch === true &&
                 <div className={showResults === true ? 'results-active' : 'results-deactive'}>
-                  <button type='button' onClick={() => { setShowResults(false) }}>Close</button>
+                  <button type='button' onClick={() => { setShowResults(false) }}>
+                    Close
+                  </button>
                   {gamesSearched.data.map((item, key) => (
                     <SearchFromHeader item={item} key={key} />
                   ))}
@@ -456,7 +463,7 @@ export default function Header() {
       <div className='mobile-search'>
 
         <button id='header-button-mobile' className={mobileClickSearch === true ? 'active' : ''} type='button' onClick={() => { setMobileCLickSearch(!mobileClickSearch) }}>
-          <SearchSvg /> <span>Procurar</span>
+          <SearchSvg /> <span>Search</span>
         </button>
 
         <div className={mobileClickSearch === true ? 'mobile-input active' : 'mobile-input'}>
@@ -465,11 +472,15 @@ export default function Header() {
             <input type='text'
               id='mobile-search-text'
               placeholder='Ex: Tomb Raider'
-              onChange={(e) => { if (e.target.value.length >= 4) setTimeout(searchForGames(e.target.value), 3000) }}
-              ref={searchInput}
+              onChange={(e) => {
+                setSearchInput(e)
+                if (e.target.value.length >= 5) {
+                  searchForGames()
+                }
+              }}
             ></input>
             <button type='button' onClick={() => {
-              searchForGames(searchInput.current.value) && setMobileCLickMenu(false)
+              searchForGames() && setMobileCLickMenu(false)
             }}><SearchSvg /></button>
           </div>
           <div className='search-results-mobile-2'>

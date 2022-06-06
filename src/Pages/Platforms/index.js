@@ -119,11 +119,13 @@ export default function Platforms() {
                           <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${item.cover.image_id}.jpg`} alt={`${item.name}`}></img>
 
                           <div className='rating'>
-                            <p style={item.rating >= 70 ? {
-                              border: '4px solid green'
+                            <div style={item.rating >= 70 ? {
+                              backgroundColor: 'green'
                             } : {
-                              border: '40x solid #fc3'
-                            }}>{(item.rating).toFixed(1)}</p>
+                              backgroundColor: '#fc3'
+                            }}>
+                              <p>{(item.rating).toFixed(1)}</p>
+                            </div>
                           </div>
                         </Link>
                       </li>
@@ -132,8 +134,6 @@ export default function Platforms() {
 
                 </ul>
               </div>
-
-
 
             </C.ConsoleGamesRelated>
           )}

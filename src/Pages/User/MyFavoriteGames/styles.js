@@ -80,8 +80,43 @@ export const Games = styled.div`
         }
     }
 
-    li.game{
+    .alert-no-games{
         background-color: #FFF;
+        border: 2px solid #5c16c5;
+        border-radius: 4px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+        padding: 2rem;
+        margin: 0 1rem;
+        
+        box-shadow: 20px 19px 11px 8px #00000085;
+
+        h3{
+            font-size: 4rem;
+            font-weight: 600;
+            color: #5c16c5;
+        }
+        h4{
+            margin: 2rem 0;
+            font-size: 2.4rem;
+            font-weight: 400;
+        }
+        h5{
+            margin: 2rem 0;
+            font-size: 2rem;
+            font-weight: 300;
+        }
+    }
+
+`
+
+export const MapGame = styled.li`
+
+
+    background-color: #FFF;
         border: 2px solid #5c16c5;
         border-radius: 4px;
 
@@ -160,7 +195,6 @@ export const Games = styled.div`
             align-items: center;
             
             >div{
-                border-radius: 4000px;
                 width: 47px;
                 height: auto;
 
@@ -170,11 +204,22 @@ export const Games = styled.div`
 
                 margin: 1rem 0;
 
+                background-color: ${props => Number(props.item.rating) >= 75 && ('green;')};
+                background-color: ${props => {
+        if (Number(props.item.rating) < 75 && Number(props.item.rating) > 50) {
+            return 'orange;'
+        }
+    }};
+                background-color: ${props => Number(props.item.rating) < 50 && ('red;')};
+                border-radius: 8px;
+
                 p{
                     margin: 0;
                     padding: 1rem 1rem;
+
                     font-size: 2rem;
                     font-weight: 400;
+                    color:#fff;
                 }
             }
             p{
@@ -182,37 +227,6 @@ export const Games = styled.div`
                 font-weight: 600;
             }
         }
-    }
 
-    .alert-no-games{
-        background-color: #FFF;
-        border: 2px solid #5c16c5;
-        border-radius: 4px;
-
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        
-        padding: 2rem;
-        margin: 0 1rem;
-        
-        box-shadow: 20px 19px 11px 8px #00000085;
-
-        h3{
-            font-size: 4rem;
-            font-weight: 600;
-            color: #5c16c5;
-        }
-        h4{
-            margin: 2rem 0;
-            font-size: 2.4rem;
-            font-weight: 400;
-        }
-        h5{
-            margin: 2rem 0;
-            font-size: 2rem;
-            font-weight: 300;
-        }
-    }
 
 `

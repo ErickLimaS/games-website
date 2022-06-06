@@ -135,6 +135,10 @@ export const Container = styled.header`
                     width: auto;
                     height: 30px;
                 }
+                
+                .icons-2{
+                    height: 25px!important;
+                }
 
             }
 
@@ -442,13 +446,12 @@ export const Container = styled.header`
                         border-radius: 4px;
                         padding: 1rem;
                         margin-bottom: 0.5rem;
-                        background-color: transparent;
-                        color: #ff4d4d;
-                        text-decoration: underline;
+                        background-color: #ff4d4d;
+                        color: #FFF;
 
                         :hover{
                             background-color: #ff4d4d;
-                            color: #FFF;
+                            opacity: 0.9;
                         }
                     }
                 }

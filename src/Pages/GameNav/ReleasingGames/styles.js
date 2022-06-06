@@ -328,8 +328,12 @@ export const GamesReleased = styled.div`
                     h3{
                         font-size: 1.4rem;
                         font-weight: 400;
+
+                        display: flex;
+                        justify-content: center;
+
                         color: #fff;
-                        width: fit-content;
+                        width: 80%;
                     }
                 }
 
@@ -349,13 +353,15 @@ export const GamesReleased = styled.div`
                     justify-content: center;
                     
                     p{
-                        border-radius: 4000px;
+                        border-radius: 8px;
                         background-color: #FFF;
+
                         width: min-content;
                         padding: 1.2rem 1rem;
-                        font-size: 1.2rem;
+
+                        font-size: 1.4rem;
                         font-weight: 600;
-                        color: initial;
+                        color: #fff;
                     }
                 }
         }

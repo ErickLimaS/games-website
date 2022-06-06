@@ -29,9 +29,8 @@ export default function NotificationPage() {
 
         dispatch(updateFavoriteGames(newGames, userInfo))
         localStorage.removeItem('gamesNotifications')
+        document.location.reload()
     }
-
-    console.log(newGames)
 
     if (gamesNotifications) {
         document.title = `${gamesNotifications.length} Notifications | My Next Game`
@@ -40,14 +39,14 @@ export default function NotificationPage() {
         document.title = `Notifications | My Next Game`
     }
     return (
-        <C.Container>
+        <C.Container item={gamesNotifications}>
             {gamesNotifications == null || gamesNotifications === undefined ?
                 (
 
                     <div className='no-notifications'>
-                        <h1>No Notifications Yet</h1>
+                        <h1>There's no Notifications</h1>
 
-                        <p>You will see a number next to your username next time you get a notification. (carinha feliz)</p>
+                        <p>You will see a number next to your username next time you get a notification. &#128516;</p>
                     </div>
 
                 )

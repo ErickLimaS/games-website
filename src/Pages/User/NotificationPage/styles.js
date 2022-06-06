@@ -2,8 +2,15 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
 
-    background-image: linear-gradient(#5c16c5, #fff);
-
+    ${(props) => {
+        if (props.item == null) {
+            return 'background-color: #5c16c5;'
+        }
+        else {
+            return 'background-image: linear-gradient(#5c16c5, #fff);'
+        }
+    }}
+    
     padding: 2rem 0;
 
     display: flex;
@@ -12,7 +19,8 @@ export const Container = styled.div`
     justify-content: center;
 
     .no-notifications{
-        height: 100vh;
+        height: 91vh;
+        width: 80%;
 
         display: flex;
         flex-direction: column;
@@ -23,6 +31,7 @@ export const Container = styled.div`
             font-size: 5rem;
             font-weight: 600;
             color: #fff;
+            margin: 2rem 0;
         }
         p{
             font-size: 2.8rem;

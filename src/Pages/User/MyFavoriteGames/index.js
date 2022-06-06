@@ -51,36 +51,34 @@ export default function MyFavoriteGames() {
 
                 <h1>{userInfo.name}'s Favorite Games<span></span></h1>
 
-                <h2>This is where every game you set as "Favorite" will be displayed.</h2>
+                <h2>This is where every game you added as "Favorite" will be displayed.</h2>
 
-                <p>Marking a game with "Favorite" will allow you to receive a notification every time your games change their rating or any info.</p>
+                <p>Marking a game with "Favorite" will allow you to receive a notification every time your games change their rating.</p>
             </div>
 
             <C.Games>
                 {userInfo.favoriteGames.length > 0 ? (
                     <ul>
                         {userInfo.favoriteGames.map((item, key) => (
-                            <li key={key} className='game'>
+                            <C.MapGame key={key} className='game' item={item}>
                                 <Link to={`/game/${item.slug}`}><img src={`${item.cover}`} alt={`${item.name} Cover`} /></Link>
                                 <div className='game-name'>
                                     <Link to={`/game/${item.slug}`}><h3>{item.name}</h3></Link>
                                     <Link to={`/game/${item.slug}`}>Go to Page</Link>
                                 </div>
                                 <div className='game-rating'>
-                                    <div style={Number(item.rating) >= 75 ? {
-                                        border: '4px solid green'
-                                    } : {}}>
+                                    <div>
                                         <p>{Number(item.rating).toFixed(1)}</p>
                                     </div>
                                     <p>{item.totalVotes} voted</p>
                                 </div>
-                            </li>
+                            </C.MapGame>
                         ))}
                     </ul>
                 ) : (
                     <div className='alert-no-games'>
                         <h3>OMG &#128561;</h3>
-                        <h4>You don't have a favorite game???</h4>
+                        <h4>You don't have a favorite game?</h4>
                         <h5>Search for a game and mark the one you like to be displayed here.</h5>
                     </div>
                 )
