@@ -14,6 +14,7 @@ import Genres from './Pages/Genres';
 import ReleasingGames from './Pages/GameNav/ReleasingGames';
 import GamesRating from './Pages/GameNav/GamesRating';
 import NotificationPage from './Pages/User/NotificationPage';
+import PlatformSearch from './Pages/Search/PlatformSearch';
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
 
           <Routes>
             {/* <Route path='/genre' element={<GenreHome />} /> */}
+            <Route path='/platforms/search' element={<PlatformSearch />} />
             <Route path='/genre/:slug' element={<Genres />} />
             <Route path='/user/notifications' element={<NotificationPage />} />
             <Route path='/games/releases' element={<ReleasingGames />} />

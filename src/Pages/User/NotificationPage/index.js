@@ -28,7 +28,7 @@ export default function NotificationPage() {
     const handleEmptyNotifications = () => {
 
         dispatch(updateFavoriteGames(newGames, userInfo))
-
+        localStorage.removeItem('gamesNotifications')
     }
 
     console.log(newGames)
@@ -59,7 +59,9 @@ export default function NotificationPage() {
 
                             <p>There is {gamesNotifications.length} update{gamesNotifications.length > 1 && 's'}.</p>
 
-                            <button type='button' onClick={() => { handleEmptyNotifications() }}>
+                            <button type='button' onClick={() => {
+                                handleEmptyNotifications()
+                            }}>
                                 Clear Notifications
                             </button>
                             {error && <p>{error}</p>}

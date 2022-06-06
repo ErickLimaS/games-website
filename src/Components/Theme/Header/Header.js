@@ -155,7 +155,7 @@ export default function Header() {
 
       <div className='mobile-menu-dropdown'>
         <button type='button' className={mobileClickMenu === true ? 'active' : ''} onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
-          <ListSvg className='list-button'/>
+          <ListSvg className='list-button' />
         </button>
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
           <nav>
@@ -213,7 +213,7 @@ export default function Header() {
               )}
             </C.UserMobile>
             <h2>
-              <ArcadeSvg fill='#5c16c5' className='icons8'/> Platform
+              <ArcadeSvg fill='#5c16c5' className='icons8' /> Platform
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -241,9 +241,9 @@ export default function Header() {
                   </li>
                 </Link>
                 <hr />
-                <Link to={`/platforms/others`}>
+                <Link to={`/platforms/search`}>
                   <li>
-                    <DotsSvg fill='#000' /> <span>Others</span>
+                    <DotsSvg fill='#000' /> <span>Search</span>
                   </li>
                 </Link>
               </ul>
@@ -251,7 +251,7 @@ export default function Header() {
           </nav>
           <nav>
             <h2>
-              <MarioSvg fill='#5c16c5' className='icons8'/>  Games
+              <MarioSvg fill='#5c16c5' className='icons8' />  Games
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
@@ -300,12 +300,6 @@ export default function Header() {
                     <i></i>Racing
                   </li>
                 </Link>
-                <hr />
-                <Link to={'/genre/'}>
-                  <li>
-                    <i></i>More...
-                  </li>
-                </Link>
               </ul>
             </div>
           </nav>
@@ -349,9 +343,9 @@ export default function Header() {
                 </li>
               </Link>
               <hr />
-              <Link to={`/platforms/others`}>
+              <Link to={`/platforms/search`}>
                 <li>
-                  <DotsSvg fill='#000' /> <span>Others</span>
+                  <DotsSvg fill='#000' /> <span>Search</span>
                 </li>
               </Link>
             </ul>
@@ -359,7 +353,7 @@ export default function Header() {
         </nav>
         <nav>
           <h2>
-            <MarioSvg fill='#5c16c5' className='icons8'/>  Games
+            <MarioSvg fill='#5c16c5' className='icons8' />  Games
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
@@ -408,12 +402,6 @@ export default function Header() {
                   <i></i>Racing
                 </li>
               </Link>
-              <hr />
-              <Link to={'/genre/'}>
-                <li>
-                  <i></i>More...
-                </li>
-              </Link>
             </ul>
           </div>
         </nav>
@@ -429,7 +417,7 @@ export default function Header() {
               setShowResults(false)
             }}
           >
-            <SearchSvg /> Search 
+            <SearchSvg /> Search
           </button>
 
           <div className='input' style={mobileClickSearch === true ? { display: 'flex' } : { display: 'none' }}>

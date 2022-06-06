@@ -203,7 +203,7 @@ export default {
                             switch (item.rating) {
                                 case 13:
                                     return (filter.rating = 'CERO_A') && (filter.category = 'CERO') && (filter)
-                                case 14: 
+                                case 14:
                                     return (filter.rating = 'CERO_B') && (filter.category = 'CERO') && (filter)
                                 case 15:
                                     return (filter.rating = 'CERO_C') && (filter.category = 'CERO') && (filter)
@@ -222,7 +222,7 @@ export default {
                                     return (filter.rating = 'USK_6') && (filter.category = 'USK') && (filter)
                                 case 20:
                                     return (filter.rating = 'USK_12') && (filter.category = 'USK') && (filter)
-                                case 21: 
+                                case 21:
                                     return (filter.rating = 'USK_18') && (filter.category = 'USK') && (filter)
                                 default:
                                     return ''
@@ -601,6 +601,35 @@ export default {
 
         return data[0].result;
 
+    },
+
+    //search for console
+    searchPlatform: async (search) => {
+
+        try {
+
+            const { data } = await Axios({
+                url: `${CORS_ANYWHERE}${API_BASE}/platforms/`,
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Client-ID': `${CLIENT_ID}`,
+                    'Authorization': `Bearer ${AUTHORIZATION}`,
+                },
+                data: `
+                    fields *, platform_logo.*, versions.*, platform_family.* ;
+                    search "${search}";
+                    `
+            })
+
+            console.log(data)
+
+            return { data };
+
+        }
+        catch (error) {
+
+        }
     }
 
 }
