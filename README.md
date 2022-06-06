@@ -24,4 +24,4 @@ Crie sua conta para salvar seus jogos favoritos.
   - [Dotenv](https://www.npmjs.com/package/dotenv).
   - [Express](https://expressjs.com/pt-br/).
   - [MongoDB](mongodb.com).
-  - [Mongoose]([mongodb.com](https://mongoosejs.com/)).
+  - [Mongoose](https://mongoosejs.com/)).
