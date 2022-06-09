@@ -1,16 +1,16 @@
-# (Em Desenvolvimento) My Next Game - Video Games e Informações de Jogos
+# My Next Game - Video Games e Informações de Jogos
 
-Esse é um site onde possui grande parte de todos os jogos e consoles já lançados desde da época de 70. 
+Esse é um site onde possui grande parte de todos os jogos e consoles já lançados desde da época de 70 até atualmente. 
 
-Usando a API disponibilizada pela Twitch, pude fazer todas as requisições possiveis para a criação do site. E junto disso, criei um back-end para o cadastro e login de usuários, que poderam favoritar o jogo que desejarem e receber notificações quando a classificação (score) deles mudarem.
+Usando a API disponibilizada pela Twitch, pude fazer todas as requisições possiveis para a criação do site. E junto disso, criei um back-end com MongoDB, onde é salvo os dados dos usuários, que poderão favoritar o jogo que desejarem e receber notificações quando a classificação de um jogo mudar.
 
 ## Procure o seu próximo jogo
 
-Use nosso sistema de busca e ache o jogo que tem em mente. Salve para ver mais tarde ou para ver mudanças de jogos que serão lançadas.
+Use nosso sistema de busca suportado pela API da Twitch e ache o jogo que quiser. Salve para ver mais tarde ou para ficar informado com mudanças da pontuação.
 
-## Veja os lançamentos do mês
+## Esteja sempre informado com atualizações dos seus jogos favoritos
 
-Fique atualizado com os jogos recem-lançados e novos lançamentos através da página Lançamentos.
+Crie sua conta para salvar seus jogos favoritos.
 
 ### Dependecies: 
 
@@ -19,7 +19,9 @@ Fique atualizado com os jogos recem-lançados e novos lançamentos através da p
   - [Styled Components](https://styled-components.com/).
   - [Redux](https://redux.js.org/).
   - [Axios](https://axios-http.com/).
-  - [Express](https://expressjs.com/pt-br/).
   - [React Router](https://reactrouter.com/).
   - [bcrypt](https://www.npmjs.com/package/bcrypt).
-  - [Axios](https://axios-http.com/).
+  - [Dotenv](https://www.npmjs.com/package/dotenv).
+  - [Express](https://expressjs.com/pt-br/).
+  - [MongoDB](mongodb.com).
+  - [Mongoose](https://mongoosejs.com/).
