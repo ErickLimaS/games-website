@@ -31,6 +31,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+div.swal2-popup.swal2-modal{
+  font-size: initial!important;
+}
+/* 
 div.swal2-popup.swal2-modal.swal2-icon-info.swal2-show h2{
   font-size: 2.4rem!important;
 }
@@ -39,4 +44,4 @@ div.swal2-popup.swal2-modal.swal2-icon-info.swal2-show *{
 }
 div.swal2-icon-content{
   font-size: 5rem!important;
-}
+} */
