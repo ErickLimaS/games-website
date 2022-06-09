@@ -109,7 +109,7 @@ export const MoreDetails = styled.div`
             }
 
             .version{
-                width: 33.3%;
+                width: ${props => (props.platformInfo.result[0].versions).length > 1 ? '33.3%' : 'initial'};
                 padding: 1rem;
                 margin: 1rem 2rem;
 

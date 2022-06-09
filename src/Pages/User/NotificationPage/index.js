@@ -7,7 +7,7 @@ import * as C from './styles'
 export default function NotificationPage() {
 
     const userLogin = useSelector((state) => state.userLogin)
-    const { userInfo, gamesNotifications, error } = userLogin
+    const { userInfo, gamesNotifications, error, loading } = userLogin
 
     let newGames
     // to be dispatch to server
@@ -29,7 +29,6 @@ export default function NotificationPage() {
 
         dispatch(updateFavoriteGames(newGames, userInfo))
         localStorage.removeItem('gamesNotifications')
-        document.location.reload()
     }
 
     if (gamesNotifications) {
@@ -63,6 +62,7 @@ export default function NotificationPage() {
                             }}>
                                 Clear Notifications
                             </button>
+                            {loading && <p>loading...</p>}
                             {error && <p>{error}</p>}
                         </div>
                         <C.Notifications>

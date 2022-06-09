@@ -267,6 +267,9 @@ export const updateFavoriteGames = (newGames, userInfo) => async (dispatch) => {
 
             dispatch({ type: USER_UPDATE_SUCCESS_FAVORITE_GAMES, action: newUserInfo })
 
+            
+            document.location.reload()
+
         })
 
     }

@@ -145,7 +145,7 @@ export default function GamePage() {
                                 {item.company.logo && (
                                   <img src={`https://images.igdb.com/igdb/image/upload/t_original/${item.company.logo.image_id}.jpg`} alt={item.name} style={{ height: 'auto', width: '40px' }} />
                                 )}
-                                <Link to={`/companies/${item.company.slug}`} key={key}>{item.company.name}</Link>
+                                <p>{item.company.name}</p>
                               </li>
                             ))}
                           </ul>
@@ -381,7 +381,7 @@ export default function GamePage() {
                           <ul>
                             {gameInfo.game_modes.map((item, key) => (
                               <li key={key}>
-                                <Link to={`/game-modes/${item.slug}`}>{item.name}</Link>
+                                {item.name}
                               </li>
                             ))}
                           </ul>
@@ -394,7 +394,7 @@ export default function GamePage() {
                           <ul>
                             {gameInfo.player_perspectives.map((item, key) => (
                               <li key={key}>
-                                <Link to={`/player-perspective/${item.slug}`}>{item.name}</Link>
+                                {item.name}
                               </li>
                             ))}
                           </ul>

@@ -49,7 +49,7 @@ export default function Platforms() {
             </div>
           </C.HeadingContent>
 
-          <C.MoreDetails>
+          <C.MoreDetails platformInfo={platformInfo[0]}>
 
             <div className='console-info'>
 
@@ -62,6 +62,7 @@ export default function Platforms() {
                 <>
                   <h2>{platformInfo[0].result[0].name} Versions</h2>
                   <div className='console-versions'>
+
                     {platformInfo[0].result[0].versions.map((item, key) => (
                       <div key={key} className='version'>
                         <h3>{item.name}</h3>
