@@ -41,7 +41,8 @@ export default function Header() {
   const [showResults, setShowResults] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const [searchInput, setSearchInput] = useState('')
+  const inputSearchMobile = useRef('')
+  const inputSearchDesktop = useRef('')
 
   const dispatch = useDispatch()
 
@@ -115,17 +116,14 @@ export default function Header() {
   }, [gamesToObserveRating])
 
   // search feature
-  const searchForGames = async () => {
+  const searchForGames = async (item) => {
     setLoading(true)
     let data
 
     setTimeout(async function () {
-      data = await API.getSearchResults(searchInput)
+      data = await API.getSearchResults(item)
       setGamesSearched(data)
     }, 1500)
-
-
-    console.log(searchInput)
 
     setTimeout(function () {
 
@@ -426,14 +424,14 @@ export default function Header() {
             <input type='text'
               id='input-search-text'
               placeholder='Ex: Tomb Raider'
+              ref={inputSearchDesktop}
               onChange={(e) => {
-                setSearchInput(e.target.value)
                 if (e.target.value.length >= 5) {
-                  searchForGames()
+                  searchForGames(inputSearchDesktop.current.value)
                 }
               }}
             ></input>
-            <button type='button' onClick={() => { searchForGames() && setShowResults(false) }}><SearchSvg /></button>
+            <button type='button' onClick={() => { searchForGames(inputSearchDesktop.current.value) && setShowResults(false) }}><SearchSvg /></button>
 
           </div>
 
@@ -472,15 +470,15 @@ export default function Header() {
             <input type='text'
               id='mobile-search-text'
               placeholder='Ex: Tomb Raider'
+              ref={inputSearchMobile}
               onChange={(e) => {
-                setSearchInput(e)
                 if (e.target.value.length >= 5) {
-                  searchForGames()
+                  searchForGames(inputSearchMobile.current.value)
                 }
               }}
             ></input>
             <button type='button' onClick={() => {
-              searchForGames() && setMobileCLickMenu(false)
+              searchForGames(inputSearchMobile.current.value) && setMobileCLickMenu(false)
             }}><SearchSvg /></button>
           </div>
           <div className='search-results-mobile-2'>
