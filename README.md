@@ -1,4 +1,5 @@
-# My Next Game - Video Games e Informações de Jogos
+# My Next Game - Video Games e Informações de Jogos - (Passando por problemas com a autenticação)
+
 
 Esse é um site onde possui grande parte de todos os jogos e consoles já lançados desde da época de 70 até atualmente. 
 
