@@ -15,11 +15,24 @@ import ReleasingGames from './Pages/GameNav/ReleasingGames';
 import GamesRating from './Pages/GameNav/GamesRating';
 import NotificationPage from './Pages/User/NotificationPage';
 import PlatformSearch from './Pages/Search/PlatformSearch';
+import API from './API/IGDB'
+import { Axios } from 'axios';
+import { useEffect } from 'react';
 
 function App() {
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
+
+  useEffect(() => {
+
+    //gets a new Token to perform requests
+    const getValidation = async () => {
+      await API.tokenValidation()
+    }
+    getValidation()
+
+  }, [])
 
   return (
     <BrowserRouter>

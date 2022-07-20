@@ -2,14 +2,27 @@ import Axios from 'axios'
 import axiosRetry from 'axios-retry'
 import Swal from 'sweetalert2'
 
-
 const API_BASE = 'https://api.igdb.com/v4'
 const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
-const AUTHORIZATION = 'mab75j9dznfoin00g89z34x7offpqo'
-const CLIENT_ID = 'iabefriibnfuksd1j23hqr2qm1cdez'
+const AUTHORIZATION = localStorage.getItem('token')
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
+
+    //gets a new token every time a page is loaded
+    tokenValidation: async () => {
+
+        const { data } = await Axios({
+            method: 'POST',
+            url: `https://id.twitch.tv/oauth2/token?client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}&grant_type=client_credentials`,
+            headers: {
+                'Accept': 'application/json',
+            },
+        })
+        localStorage.setItem('token', data.access_token)
+
+    },
 
 
     getGameInfo: async (gameId) => {
@@ -82,8 +95,6 @@ export default {
             `
 
         }).then(async (response) => { //all data here
-
-            console.log(response)
 
             //get name
             gameInfo[0].name = response.data[0].result[0].name;
@@ -293,10 +304,6 @@ export default {
             gameInfo[0].first_release_date = response.data[0].result[0].release_dates[0].human
 
 
-            // console.log(response.data);
-            console.log(gameInfo[0]);
-
-
         }).catch(err => {
             console.error(err);
             if (err.response.status === 403) {
@@ -470,7 +477,6 @@ export default {
             };`
 
         }).then(res => {
-            console.log(res)
             return res;
 
         }).catch(err => {
@@ -621,8 +627,6 @@ export default {
                     search "${search}";
                     `
             })
-
-            console.log(data)
 
             return { data };
 

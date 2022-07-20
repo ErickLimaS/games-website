@@ -30,7 +30,6 @@ export default function Home() {
     const load1 = async () => {
 
       window.scrollTo(0, 0);
-
       const data1 = await API.getMonthRelease();
       const data2 = await API.getLastMonthHighestRatings();
       setReleasingThisMonth(data1)
@@ -129,38 +128,39 @@ export default function Home() {
                 </p>
 
               </div>
-              <div className='ratings-games'>
-                <ul>
-                  <li>
-                    <div className='background-image' style={highestRatings[0].game.artworks[0] ? {
-                      backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${highestRatings[0].game.artworks[0].image_id}.jpg)`,
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat'
-                    } : {}}>
-                      <div>
-                        <Link to={`/game/${highestRatings[0].game.slug}`}>
-                          <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`} alt={highestRatings[0].game.name}></img>
-                          <div className='rating' style={highestRatings[0].game.rating >= 70 ? {
-                            border: '4px solid green'
-                          } : {
-                            border: '40x solid #fc3'
-                          }}>
-                            {(highestRatings[0].game.rating).toFixed(1)}
-                          </div>
-                        </Link>
+
+              {highestRatings.length !== 0 && (
+                <div className='ratings-games'>
+                  <ul>
+                    <li>
+                      <div className='background-image' style={highestRatings[0].game.artworks[0] ? {
+                        backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${highestRatings[0].game.artworks[0].image_id}.jpg)`,
+                        backgroundSize: 'cover',
+                        backgroundRepeat: 'no-repeat'
+                      } : {}}>
+                        <div>
+                          <Link to={`/game/${highestRatings[0].game.slug}`}>
+                            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`} alt={highestRatings[0].game.name}></img>
+                            <div className='rating' style={highestRatings[0].game.rating >= 70 ? {
+                              border: '4px solid green'
+                            } : {
+                              border: '40x solid #fc3'
+                            }}>
+                              {(highestRatings[0].game.rating).toFixed(1)}
+                            </div>
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                    <Link to={`/game/${highestRatings[0].game.slug}`}>
-                      <h4>{highestRatings[0].game.name}</h4>
-                    </Link>
-                  </li>
-                </ul>
+                      <Link to={`/game/${highestRatings[0].game.slug}`}>
+                        <h4>{highestRatings[0].game.name}</h4>
+                      </Link>
+                    </li>
+                  </ul>
 
-              </div>
+                </div>
+              )}
+
             </div>
-
-
-
           </C.HighestRatingsLastMonth>
 
         </>
