@@ -1,8 +1,9 @@
-# My Next Game - Video Games e Informações de Jogos
+# My Next Game - Video Games e Informações de Jogos - (Passando por problemas com a autenticação)
+
 
 Esse é um site onde possui grande parte de todos os jogos e consoles já lançados desde da época de 70 até atualmente. 
 
-Usando a API disponibilizada pela Twitch, pude fazer todas as requisições possiveis para a criação do site. E junto disso, criei um back-end com MongoDB, onde é feita operações CRUD para salvar, atualizar e apagar os dados dos usuários, que poderão favoritar o jogo que desejarem e receber notificações quando a classificação de um jogo mudar.
+Usando a API disponibilizada pela Twitch, pude fazer todas as requisições possiveis para a criação do site. E junto disso, criei um back-end com MongoDB, onde é feita operações CRUD para salvar, atualizar e apagar os dados dos usuários, que poderão favoritar o jogo que desejarem e receber notificações quando a classificação de um jogo mudar. 
 
 ## Procure o seu próximo jogo
 
