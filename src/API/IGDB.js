@@ -7,10 +7,23 @@ const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
 const AUTHORIZATION = localStorage.getItem('token')
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
 
+//retrys when it catchs a error on requests with status 401 = authorization
+axiosRetry(Axios, {
+    retries: 2,
+    retryDelay: (retryCount) => {
+        console.log(`retry attempt: ${retryCount}`);
+        window.location.reload()
+        return retryCount * 2000; // time interval between retries
+    },
+    retryCondition: (error) => {
+        return error.response.status === 401;
+    },
+});
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
 
-    //gets a new token every time a page is loaded
+    //gets a new token for authorization
     tokenValidation: async () => {
 
         const { data } = await Axios({
@@ -21,12 +34,12 @@ export default {
             },
         })
         localStorage.setItem('token', data.access_token)
+        localStorage.setItem('token_date_inserted', new Date())
+        localStorage.setItem('token_expiration', data.expires_in)
 
     },
 
-
     getGameInfo: async (gameId) => {
-        axiosRetry(Axios, { retries: 100 });
 
         let gameInfo = [
             {

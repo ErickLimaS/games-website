@@ -26,11 +26,33 @@ function App() {
 
   useEffect(() => {
 
-    //gets a new Token to perform requests
+    //request a new token for the user
     const getValidation = async () => {
       await API.tokenValidation()
     }
-    getValidation()
+
+    //checks if theres a token on browser and if is still valid
+    if (localStorage.getItem('token') == null || undefined) {
+
+      getValidation()
+
+    } else {
+
+      const dateRightNow = new Date()
+      const tokenInsertedDate = new Date(localStorage.getItem('token_date_inserted'))
+
+      const differenceInTime = dateRightNow.getTime() - tokenInsertedDate.getTime()
+      const differenceInDays = differenceInTime / (1000 * 3600 * 24)
+
+      const daysToExpiration = Math.floor(localStorage.getItem('token_expiration') / (3600 * 24))
+
+      if (differenceInDays >= daysToExpiration) {
+
+        getValidation()
+
+      }
+
+    }
 
   }, [])
 
