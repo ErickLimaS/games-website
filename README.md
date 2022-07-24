@@ -1,28 +1,32 @@
-# My Next Game - Video Games e Informações de Jogos - (Passando por problemas com a autenticação)
+<h1 align="center">My Next Game - Site de Video Games</h1>
 
+<p align="center">
+<img  width="35%" src="https://user-images.githubusercontent.com/69987890/180659584-2e8cdf69-1285-4a47-a0a3-0bae656b94e9.png" alt="logo do site My Next Game "></img>
+</p>
+Esse é um site onde possui grande parte de todos os jogos e consoles já lançados desde da época de 70 até atualmente. Usando a API disponibilizada pela Twitch, pude fazer todas as requisições possiveis para a criação do site. E junto disso, criei um back-end com MongoDB, onde é feita operações CRUD para salvar, atualizar e apagar os dados dos usuários, que poderão favoritar o jogo que desejarem e receber notificações quando a classificação de um jogo mudar. 
 
-Esse é um site onde possui grande parte de todos os jogos e consoles já lançados desde da época de 70 até atualmente. 
+## :hammer: Funcionalidades
 
-Usando a API disponibilizada pela Twitch, pude fazer todas as requisições possiveis para a criação do site. E junto disso, criei um back-end com MongoDB, onde é feita operações CRUD para salvar, atualizar e apagar os dados dos usuários, que poderão favoritar o jogo que desejarem e receber notificações quando a classificação de um jogo mudar. 
+- [x] `Procure o seu próximo jogo`: Use o sistema de busca suportado pela API da Twitch e ache o jogo que quiser. Salve para ver mais tarde ou para ficar informado com mudanças da pontuação.
+- [x] `Crie sua conta para salvar seus jogos favoritos`
+- [x] `Fique informado com atualizações dos jogos favoritados`: Quando ouver mudanças na nota dos seus jogos, você será notificado!
 
-## Procure o seu próximo jogo
+## :pushpin: Em Planejamento
 
-Use nosso sistema de busca suportado pela API da Twitch e ache o jogo que quiser. Salve para ver mais tarde ou para ficar informado com mudanças da pontuação.
+- [ ] `Consulte e Compare Preços dos Jogos`: Sem Previsção
+- [ ] `Modo Noturno`: Sem Previsção
 
-## Esteja sempre informado com atualizações dos seus jogos favoritos
+## :heavy_check_mark: Tecnologias Utilizadas
 
-Crie sua conta para salvar seus jogos favoritos.
+- ``React``
+- ``React Router``
+- ``SweetAlert2``
+- ``Styled Components``
+- ``Redux``
+- ``Axios``
+- ``bcrypt``
+- ``Dotenv``
+- ``Express``
+- ``MongoDB``
+- ``Mongoose``
 
-### Dependecies: 
-
-  - [React](https://pt-br.reactjs.org/).
-  - [SweetAlert2](https://sweetalert2.github.io/).
-  - [Styled Components](https://styled-components.com/).
-  - [Redux](https://redux.js.org/).
-  - [Axios](https://axios-http.com/).
-  - [React Router](https://reactrouter.com/).
-  - [bcrypt](https://www.npmjs.com/package/bcrypt).
-  - [Dotenv](https://www.npmjs.com/package/dotenv).
-  - [Express](https://expressjs.com/pt-br/).
-  - [MongoDB](mongodb.com).
-  - [Mongoose](https://mongoosejs.com/).
