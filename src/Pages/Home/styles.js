@@ -31,7 +31,7 @@ export const Container = styled.div`
                 display: flex;
                 margin: 5vh 0;
                 margin-top: 10vh;
-                font-size: 6.6rem;
+                font-size: 4.6rem;
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -40,7 +40,7 @@ export const Container = styled.div`
         }
         h2{
             color: #000;
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: 400;
             width: 70%;
 
@@ -133,6 +133,10 @@ export const HeadingContent = styled.div`
             width: -webkit-fill-available;
             background-image: initial;
             background-color: rgba(0,0,0,.5);
+
+            a, h3{
+                width: fit-content!important;
+            }
         }
 
         *{
@@ -152,11 +156,16 @@ export const HeadingContent = styled.div`
             justify-content: center;
         }
 
-        div{
+        >div{
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
+            @media(max-width: 620px){
+                width: 100vw;
+            }
+
         }
 
         a{            
@@ -179,6 +188,7 @@ export const HeadingContent = styled.div`
         ul{
             display: flex;
             flex-direction: row;
+            flex-wrap: wrap;
 
             li{
                 font-size: 1.8rem;
@@ -222,11 +232,12 @@ export const HighestRatingsLastMonth = styled.section`
     align-items: center;
     margin: 2rem;
 
-    h2:first-child{
+    >h1{
         border-bottom: 4px solid #5c16c5;
         width: max-content;
         font-size: 3rem;
         font-weight: 600;
+        width: inherit;
 
         @media(max-width: 470px){
             font-size: 2.2rem;
@@ -235,49 +246,141 @@ export const HighestRatingsLastMonth = styled.section`
 
     .ratings-section{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         margin: 1rem 0;
-        justify-content: space-around;
+        justify-content: center;
+        align-items: center;
 
-        @media(max-width: 898px){
-            flex-direction: column;
+        /* @media(max-width: 898px){
             flex-wrap: wrap;
 
             >div{
                 width: initial!important;
             }
-        }
+        } */
 
         >div{
-            width: 40%;
-            margin: 2rem 0;
+            margin: 1.5rem 0;
         }
 
-        .ratings-text{
+        div.game-highest-rated{
 
+            /* background-image: ${props => props.highestRatings[0].game.artworks ? `url(//images.igdb.com/igdb/image/upload/t_original/${props.highestRatings[0].game.artworks[0].image_id}.jpg)` : ``}; */
+            background-position: center;
+            background-size: cover;
+
+            width: 70vw;
+            
+            @media(max-width: 898px){
+
+                width: 90vw;
+            }
+
+            background-color: rgba(0,0,0,.1);
 
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: stretch;
 
-            h3{ 
-                color: #5c16c5;
-                font-size: 4.8rem;
-                font-weight: 600;
-                margin: 2rem 0;
+            @media(max-width: 768px){
+
+                justify-content: center;
+                flex-wrap: wrap;
+
             }
-            p{
-                font-size: 2.6rem;
-                font-weight: 400;
-                width: 90%;
+
+            border-radius: 2px;
+
+            img{
+                height: initial;
+                border-radius: 2px;
+
+                @media(max-width: 898px){
+
+                    height: fit-content;
+                }
+                @media(max-width: 768px){
+
+                    height: auto;
+                    width: 280px;
+                }   
             }
-            
+                
+            .game-info{
+
+                height: inherit;
+                width: max-content;
+
+                margin: 0 2rem;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                >*{
+                    margin: 1rem 0;
+                }
+
+                div.name-and-score{
+
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    flex-wrap: wrap;
+
+                    a{
+                        color: #5c16c5;
+                        :hover{
+                            opacity: 0.9;
+                        }
+                    }
+                    h2{
+                        font-size: 3rem;
+                    }
+                }
+                p{
+                    font-size: 2rem;
+                    font-weight: 400;
+
+                    @media(max-width: 768px){
+                        width: 100%;
+                    }
+                }
+                span{
+                    font-size: 1.6rem;
+                    font-weight: 400;
+                }
+                div.themes{
+                    ul{
+                        display: flex;
+                        flex-direction: row;
+                    }
+                    li{
+                        font-size: 1.4rem;
+                        font-weight: 600;
+                    }
+                    li:after{
+                        content: ', ';
+                        white-space: pre;
+                    }
+                    li:last-child:after{
+                        content: '';
+                    }
+                }
+
+            }
+
         }
 
         .ratings-games{
             overflow: auto;
+
+            width: 90vw;
+
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
 
             @media(max-width: 898px){
 
@@ -285,89 +388,22 @@ export const HighestRatingsLastMonth = styled.section`
                 justify-content: center;
                 
             }
+            
+            >h2{
+                font-size: 2rem;
+                font-weight: 400;
+            }
 
             ul{
                 display: flex;
                 flex-direction: row;
                 align-items: center;
 
+                width: inherit;
+
                 li{
-                    a{
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        color: unset;
-                    }
-                    h4{
-                        font-size: 1.6rem;
-                        font-weight: 400;
-                        :hover{
-                            text-decoration: underline;
-                        }
-                    }
-                    div{
-                        margin: 0.5rem 0;
-                    }
-                    div.background-image{
-                        height: 250px;
-                        width: 340px;
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
-                        justify-content: center;
-                        border-radius: 10px;
-
-                        @media(max-width: 470px){
-                            
-                            height: 220px;
-                            width: 300px;
-                        }
-
-                        >div{
-                            margin: 0;
-                            width: 100%;
-                            height: 100%;
-                            background-color: rgba(0,0,0,.3);
-                            border-radius: 10px;
-
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-
-                            div.rating{
-                                display: flex;
-                                flex-direction: column;
-                                align-items: center;
-                                justify-content: center;
-
-                                width: 40px!important;
-                                height: 40px!important;
-
-                                border-radius: 8px;
-                                background-color: green;
-
-                                color: #fff;
-                                font-size: 1.6rem;
-                                font-weight: 600;
-                                position: relative;
-                            }
-
-                            img{
-                                height: auto;
-                                width: 100px;
-                                
-                            }
-                            
-                            :hover > div.background-image{
-                                background-image: linear-gradient(to right,rgba(0,0,0,.85) 70%,rgba(0,0,0,.4) 95%,rgba(0,0,0,.02) 100%);
-
-                            }
-                        }
-
-                        
-                    }
                     
+                    margin: 0 0.5rem;
 
                 }
             }

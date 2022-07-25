@@ -21,7 +21,7 @@ export default function Footer() {
           </nav>
         </div>
         <div className='disclaimer'>
-          <h5>Site usando a IGDB API, operada pela <a href='https://www.twitch.tv/' target='_blank' rel='noreferrer'><span>Twitch</span></a>.</h5>
+          <h5>Site usando a API <a href='https://api-docs.igdb.com/' target='_blank' rel='noreferrer'><span>IGDB</span></a>.</h5>
         </div>
       </div>
       <div>

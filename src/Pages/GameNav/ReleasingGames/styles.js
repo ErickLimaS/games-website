@@ -343,27 +343,7 @@ export const GamesReleased = styled.div`
                     margin: 5rem 7rem 0 7rem;
                     border: 1px solid transparent;
                 }
-                div.rating{
-                    margin-bottom: 5rem;
-                    margin: 1rem 0;
-
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    
-                    p{
-                        border-radius: 8px;
-                        background-color: #FFF;
-
-                        width: min-content;
-                        padding: 1.2rem 1rem;
-
-                        font-size: 1.4rem;
-                        font-weight: 600;
-                        color: #fff;
-                    }
-                }
+                
         }
     }
 

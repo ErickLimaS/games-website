@@ -7,11 +7,10 @@ const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
 const AUTHORIZATION = localStorage.getItem('token')
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID
 
-//retrys when it catchs a error on requests with status 401 = authorization
+//retrys when it catchs a error on requests with status 401 = not authorized
 axiosRetry(Axios, {
     retries: 2,
     retryDelay: (retryCount) => {
-        console.log(`retry attempt: ${retryCount}`);
         window.location.reload()
         return retryCount * 2000; // time interval between retries
     },
@@ -452,10 +451,10 @@ export default {
             },
             data: `
                 query release_dates "Highest Ratings"{
-                    fields game.*, game.screenshots.*, game.artworks.*, game.cover.*;
+                    fields game.*, game.screenshots.*, game.artworks.*, game.cover.*, game.rating, game.release_dates.*, game.themes.*;
                     sort game.rating desc;
-                    where game.rating >= 90 & m = ${new Date().getMonth() - 1} & y = ${new Date().getFullYear()} ;
-                    limit 10;
+                    where game.rating != null & m = ${new Date().getMonth() - 1} & y = ${new Date().getFullYear()} ;
+                    limit 15;
                 };
             `
         }).catch(err => {

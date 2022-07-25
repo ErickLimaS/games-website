@@ -4,6 +4,7 @@ import API from '../../../API/IGDB'
 import { Link } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
 import { ReactComponent as ChevronSvg } from '../../../img/svg/chevron-caretsvg.svg'
+import ScoreRating from '../../../Components/ScoreRating/ScoreRating'
 
 export default function ReleasingGames() {
 
@@ -198,17 +199,9 @@ export default function ReleasingGames() {
 
                         <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${item.cover.image_id}.jpg`} alt={`${item.name}`}></img>
 
-                        <div className='rating'>
-                          <p style={(item.rating >= 75 && {
-                              backgroundColor: 'green'
-                            }) || (item.rating < 75 && item.rating > 50 && {
-                              backgroundColor: '#fc3'
-                            }) || (item.rating < 50 && {
-                              backgroundColor: 'red'
-                            })}>
-                            {(item.rating).toFixed(1)}</p>
-                        </div>
+                        <ScoreRating data={item} />
                         <h3>{item.name}</h3>
+                        
                       </Link>
                     </li>
                   </>

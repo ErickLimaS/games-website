@@ -6,6 +6,8 @@ import { ReactComponent as SpinnerSvg } from '../../img/svg/Spinner-1s-200px.svg
 import { useDispatch, useSelector } from 'react-redux'
 import { userNotificationsReducer } from '../../redux/reducers/userReducers'
 import { getNotifications } from '../../redux/actions/userActions'
+import HighestRatingsLastMonth from '../../Components/HighestRatingsLastMonth/HighestRatingsLastMonth'
+import ScoreRating from '../../Components/ScoreRating/ScoreRating'
 
 export default function Home() {
 
@@ -26,15 +28,14 @@ export default function Home() {
 
     document.title = 'Home | My Next Game'
 
+    window.scrollTo(0, 0);
 
     const load1 = async () => {
 
-      window.scrollTo(0, 0);
       const data1 = await API.getMonthRelease();
       const data2 = await API.getLastMonthHighestRatings();
       setReleasingThisMonth(data1)
       setHighestRatings(data2)
-
 
       const loadInside = () => {
         if (data1[headingGameChose] && data2) {
@@ -109,59 +110,78 @@ export default function Home() {
               </div>
             </div>
 
-            {/* <button onClick={() => {
-            console.log(releasingThisMonth[0].game.artworks[0])
-
-          }}>Console</button> */}
-
           </C.HeadingContent>
 
-          <C.HighestRatingsLastMonth>
+          {highestRatings.length !== 0 && (
+            <C.HighestRatingsLastMonth highestRatings={highestRatings}>
 
-            <h2>Highest Rating From Last Month</h2>
+              <h1>Highest Rating From Last Month</h1>
 
-            <div className='ratings-section'>
-              <div className='ratings-text'>
-                <h3>The Most Best Rated!</h3>
-                <p>
-                  According with the users, this is the best game of the last month!
-                </p>
+              <div className='ratings-section'>
 
-              </div>
+                <div className='game-highest-rated'>
 
-              {highestRatings.length !== 0 && (
-                <div className='ratings-games'>
-                  <ul>
-                    <li>
-                      <div className='background-image' style={highestRatings[0].game.artworks[0] ? {
-                        backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_original/${highestRatings[0].game.artworks[0].image_id}.jpg)`,
-                        backgroundSize: 'cover',
-                        backgroundRepeat: 'no-repeat'
-                      } : {}}>
-                        <div>
-                          <Link to={`/game/${highestRatings[0].game.slug}`}>
-                            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`} alt={highestRatings[0].game.name}></img>
-                            <div className='rating' style={highestRatings[0].game.rating >= 70 ? {
-                              border: '4px solid green'
-                            } : {
-                              border: '40x solid #fc3'
-                            }}>
-                              {(highestRatings[0].game.rating).toFixed(1)}
-                            </div>
-                          </Link>
-                        </div>
-                      </div>
+
+                  <img
+                    src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`}
+                    alt={highestRatings[0].game.name + `Cover Art`}>
+                  </img>
+
+                  <div className='game-info'>
+
+                    <div className='name-and-score'>
                       <Link to={`/game/${highestRatings[0].game.slug}`}>
-                        <h4>{highestRatings[0].game.name}</h4>
+                        <h2>{highestRatings[0].game.name}</h2>
                       </Link>
-                    </li>
+                      <ScoreRating data={highestRatings[0].game} />
+                    </div>
+
+                    {highestRatings[0].game.summary && (
+
+                      <p>{highestRatings[0].game.summary.slice(0, 420)}</p>
+
+                    )}
+
+                    {highestRatings[0].game.release_dates && (
+
+                      <span>{highestRatings[0].game.release_dates[0].human}</span>
+
+                    )}
+                    <div className='themes'>
+                      <ul>
+                        {highestRatings[0].game.themes && (
+
+                          highestRatings[0].game.themes.slice(0, 6).map((item, key) => (
+                            <li key={item.id}>{item.name}</li>
+                          ))
+
+                        )}
+                      </ul>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div className='ratings-games'>
+                  <h2>Other With High Ratings</h2>
+                  <ul>
+                    {highestRatings.slice(1, highestRatings.length).map((item, key) => (
+
+                      <li key={item.game.id}>
+
+                        <HighestRatingsLastMonth data={item} />
+
+                      </li>
+
+                    ))}
                   </ul>
 
                 </div>
-              )}
 
-            </div>
-          </C.HighestRatingsLastMonth>
+              </div>
+            </C.HighestRatingsLastMonth>
+          )}
 
         </>
       )
