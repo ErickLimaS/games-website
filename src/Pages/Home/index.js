@@ -3,9 +3,7 @@ import * as C from './styles'
 import API from '../../API/IGDB'
 import { Link } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../img/svg/Spinner-1s-200px.svg'
-import { useDispatch, useSelector } from 'react-redux'
-import { userNotificationsReducer } from '../../redux/reducers/userReducers'
-import { getNotifications } from '../../redux/actions/userActions'
+import { useSelector } from 'react-redux'
 import HighestRatingsLastMonth from '../../Components/HighestRatingsLastMonth/HighestRatingsLastMonth'
 import ScoreRating from '../../Components/ScoreRating/ScoreRating'
 
@@ -13,16 +11,12 @@ export default function Home() {
 
   const [releasingThisMonth, setReleasingThisMonth] = useState([])
   const [highestRatings, setHighestRatings] = useState([])
+  const [gamesFromVariousGenres, setGamesFromVariousGenres] = useState([])
   const [loading, setLoading] = useState(true)
-  const [headingGameChose, setHeadingGameChose] = useState(Math.floor(Math.random() * 9))
-  const [auxClickGamesLastMonth, setAuxClickGamesLastMonth] = useState(0)
-
-  const dispatch = useDispatch()
+  const [headingGameChose] = useState(Math.floor(Math.random() * 9))
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
-
-  // console.log(userInfo)
 
   useEffect(() => {
 
@@ -30,25 +24,24 @@ export default function Home() {
 
     window.scrollTo(0, 0);
 
-    const load1 = async () => {
+    const load = async () => {
 
       const data1 = await API.getMonthRelease();
       const data2 = await API.getLastMonthHighestRatings();
+      const data3 = await API.getGamesFromTheseGenres();
       setReleasingThisMonth(data1)
       setHighestRatings(data2)
+      setGamesFromVariousGenres(data3)
 
+      //wait data to be fetched to turn off loading
       const loadInside = () => {
         if (data1[headingGameChose] && data2) {
           setLoading(false)
         }
-
-        else {
-          alert('api')
-        }
       }
       loadInside()
     }
-    load1()
+    load()
 
   }, [])
 
@@ -152,7 +145,7 @@ export default function Home() {
                         {highestRatings[0].game.themes && (
 
                           highestRatings[0].game.themes.slice(0, 6).map((item, key) => (
-                            <li key={item.id}>{item.name}</li>
+                            <li key={key}>{item.name}</li>
                           ))
 
                         )}
@@ -165,19 +158,71 @@ export default function Home() {
 
                 <div className='ratings-games'>
                   <h2>Other With High Ratings</h2>
+
                   <ul>
                     {highestRatings.slice(1, highestRatings.length).map((item, key) => (
 
-                      <li key={item.game.id}>
+                      <li key={key}>
 
-                        <HighestRatingsLastMonth data={item} />
+                        <HighestRatingsLastMonth data={item.game} />
 
                       </li>
 
                     ))}
                   </ul>
-
                 </div>
+
+                {gamesFromVariousGenres != null && (
+                  <>
+                    <div className='games-from-genre'>
+                      <h2>{gamesFromVariousGenres[0].name}</h2>
+
+                      <ul>
+                        {gamesFromVariousGenres[0].result.map((item, key) => (
+
+                          <li key={key}>
+
+                            <HighestRatingsLastMonth data={item} />
+
+                          </li>
+
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className='games-from-genre'>
+                      <h2>{gamesFromVariousGenres[1].name}</h2>
+
+                      <ul>
+                        {gamesFromVariousGenres[1].result.map((item, key) => (
+
+                          <li key={key}>
+
+                            <HighestRatingsLastMonth data={item} />
+
+                          </li>
+
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className='games-from-genre'>
+                      <h2>{gamesFromVariousGenres[2].name}</h2>
+
+                      <ul>
+                        {gamesFromVariousGenres[2].result.map((item, key) => (
+
+                          <li key={key}>
+
+                            <HighestRatingsLastMonth data={item} />
+
+                          </li>
+
+                        ))}
+                      </ul>
+                    </div>
+                  </>
+                )}
 
               </div>
             </C.HighestRatingsLastMonth>

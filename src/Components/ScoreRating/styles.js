@@ -12,7 +12,7 @@ export const Container = styled.div`
                     
                     span{
                         border-radius: 8px;
-                        background-color: #FFF;
+                        background-color: ${props => props.data.rating >= 75 && "green"} ${props => props.data.rating < 75 && props.data.rating > 50 && "#fc3"}  ${props => props.data.rating < 50  && "red"};
 
                         width: min-content;
                         padding: 1.2rem 1rem;

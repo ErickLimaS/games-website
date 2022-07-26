@@ -367,7 +367,7 @@ export default {
                     title: 'Ops!',
                     text: 'A API usada tem um limite de teste que é renovada diariamente. Para usar o site entre no link descrito abaixo.',
                     icon: 'info',
-                    footer: 'Esse link: https://cors-anywhere.herokuapp.com/corsdemo',
+                    footer: 'https://cors-anywhere.herokuapp.com/corsdemo',
                     confirmButtonText: 'Já Ativei a API',
                     showConfirmButton: 'true',
                     confirmButtonColor: '#5c16c5',
@@ -536,6 +536,49 @@ export default {
             })
 
             return data[0].result
+
+        } catch (err) {
+            console.log(err)
+        }
+
+    },
+
+    //list of games from selected genres to show on home
+    getGamesFromTheseGenres: async () => {
+
+        try {
+
+            const { data } = await Axios({
+                url: `${CORS_ANYWHERE}${API_BASE}/multiquery`,
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Client-ID': `${CLIENT_ID}`,
+                    'Authorization': `Bearer ${AUTHORIZATION}`,
+                },
+                data: `
+                    query games "Adventure" {
+                        fields *, genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
+                        sort rating desc;
+                        where genres.slug = "adventure" & rating != null;
+                        limit 20;
+                    };
+                    query games "Sport" {
+                        fields *, genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
+                        sort rating desc;
+                        where genres.slug = "sport" & rating != null;
+                        limit 20;
+                    };
+                    query games "Shooter" {
+                        fields *, genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*,similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
+                        sort rating desc;
+                        where genres.slug = "shooter" & rating != null;
+                        limit 20;
+                    };
+                `
+            })
+
+            return data
 
         } catch (err) {
             console.log(err)

@@ -9,16 +9,16 @@ export default function HighestRatingsLastMonth({ data }) {
     <C.Container data={data}>
       <>
         <div>
-          <Link to={`/game/${data.game.slug}`}>
-            <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${data.game.cover.image_id}.jpg`} alt={data.game.name + ` Cover Art`}></img>
+          <Link to={`/game/${data.slug}`}>
+            {data.cover && (<img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${data.cover.image_id}.jpg`} alt={data.name + ` Cover Art`}></img>)}
             <div className='rating'>
-              <ScoreRating data={data.game} />
+              <ScoreRating data={data} />
             </div>
           </Link>
         </div>
-        <Link className='link' to={`/game/${data.game.slug}`}>
+        {/* <Link className='link' to={`/game/${data.game.slug}`}>
           {data.game.name}
-        </Link>
+        </Link> */}
       </>
     </C.Container >
   )

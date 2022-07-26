@@ -57,6 +57,65 @@ export const Container = styled.div`
         }
     }
 
+    div.games-from-genre{
+
+        width: 90vw;
+        display: flex;
+        flex-direction: column;
+
+        @media(max-width: 898px){
+
+                align-items: center;
+                justify-content: center;
+                
+        }
+            
+        >h2{
+                font-size: 2rem;
+                font-weight: 400;
+
+                margin: 2rem 0;
+        }
+
+        ul{
+                overflow: auto;
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+
+                width: inherit;
+
+                /* width */
+                ::-webkit-scrollbar {
+                    height: 7px;
+                }
+
+                /* Track */
+                ::-webkit-scrollbar-track {
+                    background: #f1f1f1; 
+                }
+                
+                /* Handle */
+                ::-webkit-scrollbar-thumb {
+                    background: #c0c0c0; 
+                    border-radius: 4px;
+                }
+
+                /* Handle on hover */
+                ::-webkit-scrollbar-thumb:hover {
+                    background: #555; 
+                }
+
+                li{
+                    
+                    margin: 0 0.5rem;
+
+                }
+            }
+
+        }
+
 `
 
 export const HeadingContent = styled.div`
@@ -157,6 +216,10 @@ export const HeadingContent = styled.div`
         }
 
         >div{
+            
+            >*{
+            }
+
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -175,11 +238,17 @@ export const HeadingContent = styled.div`
             font-weight: 400;
         }
         h3{
-            width: max-content;
+            width: -webkit-fill-available!important;
             color: #FFF;
             font-size: 1.8rem;
             font-weight: 400;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             a{
+                margin: 0;
                 color: #FFF;
                 border-bottom: 2px solid #5c16c5;
             }
@@ -374,8 +443,7 @@ export const HighestRatingsLastMonth = styled.section`
 
         }
 
-        .ratings-games{
-            overflow: auto;
+        .ratings-games, .games-from-genre{
 
             width: 90vw;
 
@@ -392,14 +460,39 @@ export const HighestRatingsLastMonth = styled.section`
             >h2{
                 font-size: 2rem;
                 font-weight: 400;
+
+                margin: 2rem 0;
             }
 
             ul{
+                overflow: auto;
+
                 display: flex;
                 flex-direction: row;
                 align-items: center;
 
                 width: inherit;
+
+                /* width */
+                ::-webkit-scrollbar {
+                    height: 7px;
+                }
+
+                /* Track */
+                ::-webkit-scrollbar-track {
+                    background: #f1f1f1; 
+                }
+                
+                /* Handle */
+                ::-webkit-scrollbar-thumb {
+                    background: #c0c0c0; 
+                    border-radius: 4px;
+                }
+
+                /* Handle on hover */
+                ::-webkit-scrollbar-thumb:hover {
+                    background: #555; 
+                }
 
                 li{
                     
@@ -408,7 +501,6 @@ export const HighestRatingsLastMonth = styled.section`
                 }
             }
         }
-
         
     }
 
