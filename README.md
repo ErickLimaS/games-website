@@ -30,4 +30,3 @@ Esse é um site onde possui grande parte de todos os jogos e consoles já lança
 - ``Express``
 - ``MongoDB``
 - ``Mongoose``
-
