@@ -11,13 +11,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import MyFavoriteGames from './Pages/User/MyFavoriteGames';
 import Profile from './Pages/User/Profile';
 import Genres from './Pages/Genres';
-import ReleasingGames from './Pages/GameNav/ReleasingGames';
 import GamesRating from './Pages/GameNav/GamesRating';
 import NotificationPage from './Pages/User/NotificationPage';
 import PlatformSearch from './Pages/Search/PlatformSearch';
 import API from './API/IGDB'
 import { Axios } from 'axios';
 import { useEffect } from 'react';
+import ReleasingThisYear from './Pages/GameNav/ReleasingThisYear';
+import ReleasingThisMonth from './Pages/GameNav/ReleasingThisMonth';
 
 function App() {
 
@@ -68,8 +69,8 @@ function App() {
             <Route path='/platforms/search' element={<PlatformSearch />} />
             <Route path='/genre/:slug' element={<Genres />} />
             <Route path='/user/notifications' element={<NotificationPage />} />
-            <Route path='/games/releasing-this-year' element={<ReleasingGames />} />
-            <Route path='/games/releasing-this-month' element={<ReleasingGames />} />
+            <Route path='/games/releasing-this-year' element={<ReleasingThisYear/>} />
+            <Route path='/games/releasing-this-month' element={<ReleasingThisMonth />} />
             <Route path='/games/games-ratings' element={<GamesRating />} />
             <Route path='/user/profile' element={<Profile />} />
             <Route path='/user/my-favorite-games' element={<MyFavoriteGames />} />

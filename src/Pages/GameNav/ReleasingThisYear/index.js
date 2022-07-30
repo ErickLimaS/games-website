@@ -6,7 +6,7 @@ import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.
 import { ReactComponent as ChevronSvg } from '../../../img/svg/chevron-caretsvg.svg'
 import ScoreRating from '../../../Components/ScoreRating/ScoreRating'
 
-export default function ReleasingGames() {
+export default function ReleasingThisYear() {
 
   const [games, setGames] = useState([])
   const [loading, setLoading] = useState(true)
@@ -16,13 +16,13 @@ export default function ReleasingGames() {
 
   const [releasingIndex, setReleasingIndex] = useState(0) //Array index to aux witch image shows next
 
-  document.title = "Releases | My Next Game"
+  document.title = "Releasing This Year | My Next Game"
 
   useEffect(() => {
 
     const load1 = async () => {
 
-      const data = await API.getReleasingGames();
+      const data = await API.getReleasingGames('YEAR');
 
       setGames(data)
 
@@ -36,9 +36,6 @@ export default function ReleasingGames() {
 
   }, [])
 
-  console.log(games)
-  console.log(releasingIndex)
-
   return (
     <C.Container>
       {loading ? (
@@ -49,11 +46,9 @@ export default function ReleasingGames() {
         :
         (
           <>
-            <div className='title-section'>
-              <h1>Releasing This Year</h1>
-            </div>
 
-            <div className='dots-lenght-array'>
+            {/* dots array length */}
+            {/* <div className='dots-lenght-array'>
               {games[0].result.map((item, key) => (
                 <span className='dot'
                   style={releasingGameId === item.id ? { backgroundColor: '#5c16c5' } : {}}
@@ -63,20 +58,21 @@ export default function ReleasingGames() {
                     setReleasingGameId(item.id)
                   }}>{" "}</span>
               ))}
-            </div>
+            </div> */}
 
-            <C.GamesThisYear>
+            <C.HighlightedGame>
 
               <button type='button' onClick={() => {
-                setReleasingGameId(games[0].result[releasingIndex].id)
                 if (releasingIndex <= 0) {
                   setReleasingIndex(releasingLength)
+                  setReleasingGameId(games[0].result[releasingIndex].id)
                   if (releasingGameId === undefined) {
                     setReleasingGameId(games[0].result[releasingIndex].id)
                   }
                 }
                 else {
-                  setReleasingIndex(releasingIndex - 1)
+                  setReleasingIndex(currIndex => currIndex - 1)
+                  setReleasingGameId(games[0].result[releasingIndex].id)
                   if (releasingGameId === undefined) {
                     setReleasingGameId(games[0].result[releasingIndex].id)
                   }
@@ -89,28 +85,12 @@ export default function ReleasingGames() {
                 {games[0].result.map((item, key) => (
                   <li
                     key={key}
-                    id={item.id} style={item.id === releasingGameId ? { display: 'block' }
-                      : { display: 'none' }}
+                    id={item.id} style={item.id === releasingGameId ?
+                      { display: 'block' } : { display: 'none' }}
                   >
                     <Link to={`/game/${item.slug}`} className={'showing-game-now'}>
 
-                      <div className='bgc-img' style={
-                        (item.artwork &&
-                          (
-                            {
-                              backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.artwork[0].image_id}.jpg)`
-                            }
-                          ))
-
-                        || (item.screenshots && (
-                          {
-                            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.screenshots[0].image_id}.jpg)`
-                          }
-                        ))
-                        || {
-                          backgroundColor: `#c0c0c0`
-                        }}
-                      >
+                      <C.GameMapItem data={item}>
 
                         <div className='all-info'>
 
@@ -119,12 +99,22 @@ export default function ReleasingGames() {
                           </div>
 
                           <div className='game-release'>
+
+                            {item.storyline || item.summary ?
+                              (
+                                <p>{item.storyline || item.summary}</p>
+                              ) : (
+                                <p>No Description Available</p>
+                              )
+                            }
+
                             {item.release_dates ?
                               (<h3>Releasing on {item.release_dates[0].human}</h3>)
                               :
                               (<h3>No Releasing Date</h3>)
                             }
                             {item.platforms && (
+
                               <div className='game-platforms'>
                                 {item.platforms.slice(0, 3).map((item, key) => (
                                   <Link to={`/platforms/${item.slug}`}>
@@ -132,6 +122,7 @@ export default function ReleasingGames() {
                                   </Link>
                                 ))}
                               </div>
+
                             )}
 
                             {item.themes && (
@@ -143,18 +134,21 @@ export default function ReleasingGames() {
                                 ))}
                               </div>
                             )}
+
                           </div>
                         </div>
-                      </div>
+
+                      </C.GameMapItem>
+
                     </Link>
                   </li>
                 ))}
               </ul>
 
               <button type='button' onClick={() => {
-                setReleasingGameId(games[0].result[releasingIndex].id)
                 if (releasingIndex >= 0 && releasingIndex < releasingLength) {
-                  setReleasingIndex(releasingIndex + 1)
+                  setReleasingIndex(currIndex => currIndex + 1)
+                  setReleasingGameId(games[0].result[releasingIndex].id)
                   if (releasingLength === undefined) {
                     setReleasingGameId(games[0].result[releasingIndex].id)
                   }
@@ -170,39 +164,33 @@ export default function ReleasingGames() {
                 <ChevronSvg />
               </button>
 
-            </C.GamesThisYear>
+            </C.HighlightedGame>
 
             <C.GamesReleased>
 
-              {/* <div>
-                <ul>
-                  {games[1].result.map((item, key) => (
-                    <p>{item.name}</p>
-                  ))}
-                </ul>
-              </div> */}
+              <h1 className='second-title'>Released This Year</h1>
 
-              <div>
-                <h2>Released This Year</h2>
-              </div>
               <ul>
                 {games[1].result.map((item, key) => (
                   <>
-                    <li key={key} style={item.artworks ? {
-                      backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.artworks[0].image_id}.jpg)`
-                    } : item.screenshots ? {
-                      backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.screenshots[0].image_id}.jpg)`
-                    } : {
-                      backgroundColor: '#c0c0c0'
-                    }}>
-                      <Link to={`/game/${item.slug}`}>
+                    <li key={key}>
 
-                        <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${item.cover.image_id}.jpg`} alt={`${item.name}`}></img>
+                      <img src={`//images.igdb.com/igdb/image/upload/t_cover_small/${item.cover.image_id}.png`} alt={item.name}></img>
 
-                        <ScoreRating data={item} />
-                        <h3>{item.name}</h3>
+                      <div>
                         
-                      </Link>
+                        <Link to={`/game/${item.slug}`}>
+                          <h1>
+                            {item.name.length > 34 ? item.name.slice(0, 34) + '...' : item.name}
+                          </h1>
+                        </Link>
+
+                        <h2>{item.release_dates[0] && item.release_dates[0].human}</h2>
+
+                      </div>
+
+                      <h2><ScoreRating data={item} /></h2>
+
                     </li>
                   </>
                 ))}

@@ -587,7 +587,7 @@ export default {
 
     },
 
-    getReleasingGames: async () => {
+    getReleasingGames: async (chosedTimestamp) => {
 
         const date = new Date()
         const mm = date.getMonth()
@@ -604,12 +604,13 @@ export default {
             data: `
                 query games "Releasing"{
                     fields *,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*, hypes, similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
-                    where status != 0 & release_dates.y > ${yyyy} & release_dates.m > ${mm};
+                    sort hypes desc;
+                    where hypes != null & status != 0 & release_dates.y > ${yyyy} ${chosedTimestamp === 'YEAR' ? '' : ` & release_dates.m > ${mm}`};
                     limit 15;
                 };
                 query games "Released"{
                     fields *,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*, hypes, similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
-                    where release_dates.y = 2022;
+                    where release_dates.y = ${yyyy};
                     limit 15;
                 };
             `
