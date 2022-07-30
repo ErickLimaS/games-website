@@ -68,8 +68,9 @@ function App() {
             <Route path='/platforms/search' element={<PlatformSearch />} />
             <Route path='/genre/:slug' element={<Genres />} />
             <Route path='/user/notifications' element={<NotificationPage />} />
-            <Route path='/games/releases' element={<ReleasingGames />} />
-            <Route path='/games/ratings' element={<GamesRating />} />
+            <Route path='/games/releasing-this-year' element={<ReleasingGames />} />
+            <Route path='/games/releasing-this-month' element={<ReleasingGames />} />
+            <Route path='/games/games-ratings' element={<GamesRating />} />
             <Route path='/user/profile' element={<Profile />} />
             <Route path='/user/my-favorite-games' element={<MyFavoriteGames />} />
             <Route path='/user/register' element={<Register />} />

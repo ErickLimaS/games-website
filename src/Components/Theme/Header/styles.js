@@ -110,15 +110,19 @@ export const Container = styled.header`
 
         >nav, >div{
             height: 100%;
+
             margin: 0 2rem;
+
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             z-index: 1;
+
             border-top: 4px solid transparent;
             transition: all ease 200ms;
-
+    
             h2, button{
                 cursor: default;
                 font-size: 2rem;
@@ -176,6 +180,14 @@ export const Container = styled.header`
                 }
 
                 li{
+                    border-bottom: 1px solid #fff;
+
+                    :last-child{
+                        border-bottom: 0;
+                    }
+                }
+
+                a{
                     width: 100%;
                     margin: 1rem 0;
                     color: #FFF;
@@ -192,10 +204,11 @@ export const Container = styled.header`
                     }
 
                     :hover{
-                        font-weight: 600;
+                        transition: all ease-in-out 70ms;
+                        transform: scale(1.04);
                     }
-                }
 
+                }
 
                 font-size: 1.6rem;
 
@@ -323,7 +336,7 @@ export const Container = styled.header`
         justify-content: center;
         z-index: 1;
 
-        margin-top: 4px;
+        /* margin-top: 4px; */
 
         @media(max-width: 842px){
             display: none;

@@ -116,8 +116,8 @@ export default function Home() {
 
 
                   <img
-                    src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.jpg`}
-                    alt={highestRatings[0].game.name + `Cover Art`}>
+                    src={`//images.igdb.com/igdb/image/upload/t_cover_big/${highestRatings[0].game.cover.image_id}.png`}
+                    alt={highestRatings[0].game.name + ` Cover Art`}>
                   </img>
 
                   <div className='game-info'>

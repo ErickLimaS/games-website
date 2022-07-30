@@ -152,12 +152,13 @@ export default function Header() {
   return (
     <C.Container>
 
+      {/* MOBILE */}
       <div className='mobile-menu-dropdown'>
         <button type='button' className={mobileClickMenu === true ? 'active' : ''} onClick={() => { setMobileCLickMenu(!mobileClickMenu) }}>
           <ListSvg className='list-button' />
         </button>
         <div className={mobileClickMenu === true ? 'dropdown-active' : 'dropdown-not-active'}>
-          <nav>
+          <nav className='consoles'>
             <C.UserMobile>
               {userInfo ? (
                 <>
@@ -248,7 +249,7 @@ export default function Header() {
               </ul>
             </div>
           </nav>
-          <nav>
+          <nav className='games'>
             <h2>
               <MarioSvg fill='#5c16c5' className='icons8' />  Games
             </h2>
@@ -270,7 +271,7 @@ export default function Header() {
               </ul>
             </div>
           </nav>
-          <nav>
+          <nav className='genres'>
             <h2>
               <SwordSvg fill='#5c16c5' className='icons8 icons-2' /> Genres
             </h2>
@@ -305,6 +306,8 @@ export default function Header() {
         </div>
       </div>
 
+
+      {/* DESKTOP */}
       <div className='header-company-name'>
         <a href='/'>
           <img src={logo} alt='My Next Game Logo'></img>
@@ -312,98 +315,100 @@ export default function Header() {
       </div>
 
       <div className='nav-and-hover-list'>
-        <nav>
+
+        <nav className='consoles'>
           <h2>
             <ArcadeSvg fill='#5c16c5' className='icons8' /> Platform
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
-              <Link to={`/platforms/ps4--1`}>
-                <li>
+              <li>
+                <Link to={`/platforms/ps4--1`}>
                   <PlaystationSvg fill='#00439C' /> <span>Playstation 4</span>
-                </li>
-              </Link>
-              <hr />
-              <Link to={`/platforms/xboxone`}>
-                <li>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/platforms/xboxone`}>
                   <XboxSvg fill='#107C10' /> <span>Xbox One</span>
-                </li>
-              </Link>
-              <hr />
-              <Link to={`/platforms/switch`}>
-                <li>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/platforms/switch`}>
                   <NintendoSvg fill='#E70009' /> <span>Nin. Switch</span>
-                </li>
-              </Link>
-              <hr />
-              <Link to={`/platforms/win`}>
-                <li>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/platforms/win`}>
                   <PcSvg fill='#000' /> <span>PC</span>
-                </li>
-              </Link>
-              <hr />
-              <Link to={`/platforms/search`}>
-                <li>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/platforms/search`}>
                   <DotsSvg fill='#000' /> <span>Search</span>
-                </li>
-              </Link>
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>
-        <nav>
+
+        <nav className='games'>
           <h2>
             <MarioSvg fill='#5c16c5' className='icons8' />  Games
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
-              <Link to={`/games/releases`}>
-                <li>
-                  Releases
+              <li>
+                <Link to={`/games/releasing-this-year`}>
+                  Releasing This Year
                   {/* <PlusSvg /> New Releases */}
-                </li>
-              </Link>
-              <hr />
-              <Link to={`/games/ratings`}>
-                <li>
+                </Link>
+              </li>
+              <li>
+                <Link to={`/games/releasing-this-month`}>
+                  Releasing This Month
+                  {/* <PlusSvg /> New Releases */}
+                </Link>
+              </li>
+              <li>
+                <Link to={`/games/games-ratings`}>
                   Games Rating
                   {/* <StarSvg /> Games Rating */}
-                </li>
-              </Link>
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>
-        <nav>
+
+        <nav className='genres'>
           <h2>
             <SwordSvg fill='#5c16c5' className='icons8 icons-2' /> Genres
           </h2>
           <div className='desktop-ul-hover'>
             <ul>
-              <Link to={'/genre/adventure'}>
-                <li>
+              <li>
+                <Link to={'/genre/adventure'}>
                   <i></i>Adventure
-                </li>
-              </Link>
-              <hr />
-              <Link to={'/genre/shooter'}>
-                <li>
+                </Link>
+              </li>
+              <li>
+                <Link to={'/genre/shooter'}>
                   <i></i>Shooter
-                </li>
-              </Link>
-              <hr />
-              <Link to={'/genre/sport'}>
-                <li>
+                </Link>
+              </li>
+              <li>
+                <Link to={'/genre/sport'}>
                   <i></i>Sports
-                </li>
-              </Link>
-              <hr />
-              <Link to={'/genre/racing'}>
-                <li>
+                </Link>
+              </li>
+              <li>
+                <Link to={'/genre/racing'}>
                   <i></i>Racing
-                </li>
-              </Link>
+                </Link>
+              </li>
             </ul>
           </div>
         </nav>
+
         <div className='search-input'
           style={mobileClickSearch === true ? {
             borderTop: '4px solid #7a30e8'
@@ -425,11 +430,6 @@ export default function Header() {
               id='input-search-text'
               placeholder='Ex: Tomb Raider'
               ref={inputSearchDesktop}
-              onChange={(e) => {
-                if (e.target.value.length >= 5) {
-                  searchForGames(inputSearchDesktop.current.value)
-                }
-              }}
             ></input>
             <button type='button' onClick={() => { searchForGames(inputSearchDesktop.current.value) && setShowResults(false) }}><SearchSvg /></button>
 
@@ -456,6 +456,7 @@ export default function Header() {
             </div>
           </div>
         </div>
+
       </div>
 
       <div className='mobile-search'>
@@ -471,11 +472,6 @@ export default function Header() {
               id='mobile-search-text'
               placeholder='Ex: Tomb Raider'
               ref={inputSearchMobile}
-              onChange={(e) => {
-                if (e.target.value.length >= 5) {
-                  searchForGames(inputSearchMobile.current.value)
-                }
-              }}
             ></input>
             <button type='button' onClick={() => {
               searchForGames(inputSearchMobile.current.value) && setMobileCLickMenu(false)
