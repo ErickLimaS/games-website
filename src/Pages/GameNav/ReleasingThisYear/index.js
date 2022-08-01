@@ -60,6 +60,10 @@ export default function ReleasingThisYear() {
               ))}
             </div> */}
 
+            <div className='page-title'>
+              <h1>Games Releasing This Year</h1>
+            </div>
+
             <C.HighlightedGame>
 
               <button type='button' onClick={() => {
@@ -88,59 +92,56 @@ export default function ReleasingThisYear() {
                     id={item.id} style={item.id === releasingGameId ?
                       { display: 'block' } : { display: 'none' }}
                   >
-                    <Link to={`/game/${item.slug}`} className={'showing-game-now'}>
+                    <div>
 
                       <C.GameMapItem data={item}>
 
                         <div className='all-info'>
 
-                          <div className='game-name'>
+                          <Link to={`/game/${item.slug}`} className='game-name'>
                             <h2>{item.name}</h2>
-                          </div>
+                          </Link>
+                          {item.release_dates ?
+                            (<h3>Releasing on {item.release_dates[0].human}</h3>)
+                            :
+                            (<h3>No Releasing Date</h3>)
+                          }
+                          {item.platforms && (
 
-                          <div className='game-release'>
+                            <div className='game-platforms'>
+                              {item.platforms.slice(0, 3).map((item, key) => (
+                                <Link to={`/platforms/${item.slug}`}>
+                                  <p key={key}>{item.name}</p>
+                                </Link>
+                              ))}
+                            </div>
 
-                            {item.storyline || item.summary ?
-                              (
-                                <p>{item.storyline || item.summary}</p>
-                              ) : (
-                                <p>No Description Available</p>
-                              )
-                            }
+                          )}
 
-                            {item.release_dates ?
-                              (<h3>Releasing on {item.release_dates[0].human}</h3>)
-                              :
-                              (<h3>No Releasing Date</h3>)
-                            }
-                            {item.platforms && (
-
-                              <div className='game-platforms'>
-                                {item.platforms.slice(0, 3).map((item, key) => (
-                                  <Link to={`/platforms/${item.slug}`}>
-                                    <p key={key}>{item.name}</p>
-                                  </Link>
-                                ))}
-                              </div>
-
-                            )}
-
-                            {item.themes && (
-                              <div className='game-themes'>
-                                {item.themes.map((item, key) => (
-                                  <Link to={`/genre/${item.slug}`}>
-                                    <small key={key}>{item.name}</small>
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
-
-                          </div>
+                          {item.themes && (
+                            <div className='game-themes'>
+                              {item.themes.map((item, key) => (
+                                <Link to={`/genre/${item.slug}`}>
+                                  <small key={key}>{item.name}</small>
+                                </Link>
+                              ))}
+                            </div>
+                          )}
                         </div>
 
                       </C.GameMapItem>
 
-                    </Link>
+                      <div className='game-description'>
+                        {item.storyline || item.summary ?
+                          (
+                            <p>{item.storyline || item.summary}</p>
+                          ) : (
+                            <p>No Description Available</p>
+                          )
+                        }
+                      </div>
+
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -178,7 +179,7 @@ export default function ReleasingThisYear() {
                       <img src={`//images.igdb.com/igdb/image/upload/t_cover_small/${item.cover.image_id}.png`} alt={item.name}></img>
 
                       <div>
-                        
+
                         <Link to={`/game/${item.slug}`}>
                           <h1>
                             {item.name.length > 34 ? item.name.slice(0, 34) + '...' : item.name}

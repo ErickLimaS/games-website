@@ -57,6 +57,28 @@ export const Container = styled.div`
 
     }
 
+    .page-title{
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin: 2rem 0;
+
+        h1{
+            color: #fff;
+            font-size: 4rem;
+            font-weight: 600;
+
+            border-bottom: 4px solid blueviolet;
+
+            @media(max-width: 620px){
+                font-size: 2.8rem;
+            }
+        }
+    }
+
 `
 
 export const HighlightedGame = styled.div`
@@ -64,8 +86,18 @@ export const HighlightedGame = styled.div`
     display: flex;
     flex-direction: row;
     
-    width: 100%;
-    height: 91vh;
+    width: 70%;
+    height: 50vh;
+
+    margin: 1rem 0;
+
+    @media(max-width: 842px){
+        width: inherit;
+    }
+
+    @media(max-width: 620px){
+        height: initial;
+    }
 
     button{
         background-color: #181818;
@@ -112,9 +144,6 @@ export const HighlightedGame = styled.div`
         }
     }
 
-    /* border-top: 2px solid #5c16c5; */
-    /* border-bottom: 2px solid #5c16c5; */
-
     ul{
         width: 100%;
 
@@ -122,87 +151,31 @@ export const HighlightedGame = styled.div`
             width: 100%;
             height: 100%;
 
-            > a{
-                width: 100%;
-            }
+            > div{
+                height: inherit;
 
-        }
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
 
-    }
-`
-
-export const GameMapItem = styled.div`
-
-                background-image: ${props => props.data.screenshots && `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${props.data.screenshots[0].image_id}.jpg)`};
-
-                background-image: ${props => props.data.artwork ? `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${props.data.artwork[0].image_id}.jpg)` : `#c0c0c0`};
-
-
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                background-image: rgba(0,0,0,.5);
-
-                width: 100%;
-                height: 100%;
-
-                div.all-info{
-                    height: 100%;
-                    width: 50%;
-
-                    background-image: linear-gradient(to right,rgb(0 0 0 / 75%) 30%,rgb(255 255 255 / 0%));
-
-                    display: flex;
+                @media(max-width: 620px){
                     flex-direction: column;
-                    justify-content: space-between;
+                }
 
-                    :hover{
+                .game-description{
+                    width: 40%;
+                    height: 80%;
 
-                        >div.game-name h2{
-                            text-decoration: underline;
-                        }
+                    @media(max-width: 620px){
+                        width: 80%;
+                        height: 100%;
                     }
 
-                    *{
-                        color: #fff;
-                    }
-                    >*{
-                        padding-left: 1rem;
-                    }
+                    margin: 1rem;
 
-                    div.game-name{
-
-                        height: 40%;
-
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: center;
-                        
-                        h2{
-                            font-size: 4rem;
-                            font-weight: 600;
-                        }
-                    }
-
-                    div.game-release{
-
-                        height: 60%;
-                        
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: flex-end;
-                        
-                        *{
-                            color: #c0c0c0;
-                        }
-
-                        >p{ 
-                            font-size: 1.6rem;
-                            font-weight: 400;
-
-                            height: 80%;
-
-                            overflow: auto;
+                    overflow: auto;
+                    overflow: auto;
 
                             ::-webkit-scrollbar {
                                 width: 10px;
@@ -219,18 +192,90 @@ export const GameMapItem = styled.div`
                             ::-webkit-scrollbar-thumb:hover {
                                 background: #555; 
                             }
+
+                        p{
+                            color: #c0c0c0;
+                            font-size: 1.4rem;
+                            font-weight: 400;
+
+
                         }
+                    }
+                }
+            }
+
+        }
+
+`
+
+export const GameMapItem = styled.div`
+
+                background-image: ${props => props.data.screenshots && `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${props.data.screenshots[0].image_id}.jpg)`};
+
+                background-image: ${props => props.data.artwork ? `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${props.data.artwork[0].image_id}.jpg)` : `#c0c0c0`};
+
+
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-image: rgba(0,0,0,.5);
+
+                width: 60%;
+                height: 100%;
+
+                @media(max-width: 620px){
+                    width: 90%;
+
+                    border-radius: 4px;
+                }
+
+                div.all-info{
+                    height: 100%;
+                    width: 50%;
+
+                    background-image: linear-gradient(to right,rgb(0 0 0 / 75%) 30%,rgb(255 255 255 / 0%));
+
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+
+                    :hover{
+
+                        >div.game-name h2{
+                            text-decoration: underline;
+                        }
+                    }
+
+                    >*{
+                        padding-left: 1rem;
+                    }
+
+                    .game-name{
+
+
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        
+                        h2, a{
+                            color: #fff;
+                            font-size: 3rem;
+                            font-weight: 600;
+                        }
+                    }
 
                         a {
 
                             :hover{
+                                color: #fff;
                                 text-decoration: underline;
                             }
                         }
 
                         h3{
+                            color: #c0c0c0;
                             padding: 2rem 1rem;
-                            font-size: 2.2rem;
+                            font-size: 1.8rem;
                             font-weight: 400;
                         }
                         div.game-platforms{
@@ -245,6 +290,7 @@ export const GameMapItem = styled.div`
                                 flex-direction: row;
                                 width: max-content;
 
+                                color: #c0c0c0;
                                 font-size: 1.8rem;
                                 font-weight: 400;
 
@@ -265,6 +311,7 @@ export const GameMapItem = styled.div`
                             padding: 2rem 1rem;
 
                             a{
+                                color: #c0c0c0;
                                 font-size: 1.6rem;
                                 font-weight: 400;
 
@@ -282,6 +329,15 @@ export const GameMapItem = styled.div`
 
                             }
                         }
+
+                    div.game-release{
+
+                        
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-end;
+                        
+                        
                     }
             }
 
@@ -346,7 +402,7 @@ export const GamesReleased = styled.div`
             }
 
             a{
-                font-size: 1.4rem;
+                font-size: 1rem;
                 font-weight: 400;
 
                 @media(max-width: 460px){
