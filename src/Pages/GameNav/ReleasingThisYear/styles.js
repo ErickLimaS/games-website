@@ -37,26 +37,6 @@ export const Container = styled.div`
         }
     }
 
-    .dots-lenght-array{
-        display: flex;
-
-        margin: 1rem;
-
-        span.dot{
-            background-color: #fff;
-            border-radius: 4000px;
-            content: " ";
-
-            cursor: pointer;
-            
-            margin: 0 5px;
-
-            width: 10px;
-            height: 10px;
-        }
-
-    }
-
     .page-title{
         width: 100%;
 
@@ -74,7 +54,7 @@ export const Container = styled.div`
             border-bottom: 4px solid blueviolet;
 
             @media(max-width: 620px){
-                font-size: 2.8rem;
+                font-size: 2.4rem;
             }
         }
     }
@@ -86,7 +66,7 @@ export const HighlightedGame = styled.div`
     display: flex;
     flex-direction: row;
     
-    width: 70%;
+    width: 90%;
     height: 50vh;
 
     margin: 1rem 0;
@@ -96,7 +76,7 @@ export const HighlightedGame = styled.div`
     }
 
     @media(max-width: 620px){
-        height: initial;
+        height: 80vh;
     }
 
     button{
@@ -114,9 +94,8 @@ export const HighlightedGame = styled.div`
         
         width: 5%;
 
-        @media(max-width: 426px){
-
-            width: 15%;
+        @media(max-width: 620px){
+            display: none;
 
         }
 
@@ -149,10 +128,16 @@ export const HighlightedGame = styled.div`
 
         li{
             width: 100%;
-            height: 100%;
+
+            @media(min-width: 620px){
+                height: 100%;
+            }
 
             > div{
-                height: inherit;
+                
+                @media(min-width: 620px){
+                    height: inherit;
+                }
 
                 display: flex;
                 flex-direction: row;
@@ -170,6 +155,12 @@ export const HighlightedGame = styled.div`
                     @media(max-width: 620px){
                         width: 80%;
                         height: 100%;
+
+                        
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
                     }
 
                     margin: 1rem;
@@ -204,7 +195,132 @@ export const HighlightedGame = styled.div`
                 }
             }
 
+    }
+
+    .desktop--heading{
+        display: flex;
+
+        @media(max-width: 620px){
+            display: none;
         }
+    }
+
+    .mobile--heading{
+        display: none;
+
+        @media(max-width: 620px){
+            display: flex;
+            width: 90vw;
+        }
+
+        div.slide-inner{
+                    padding: 0!important;
+        }
+
+        .item{
+
+            *{
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                                sans-serif;
+            }
+                padding: 0;
+            
+                height: inherit;
+                width: 100vw;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+
+                div{
+                    padding: 0;
+                }
+
+                .all-info{
+
+                    h2{
+                        background-color: #00000078;
+                        padding: 1rem;
+                        border-radius: 4px;
+                    }
+                    
+                    > *{
+                        padding-left: 0;
+                    }
+                }
+
+                h3.release-date{
+                    margin: 2rem 0;
+
+                    color: #fff;
+                    font-weight: 400;
+                }
+
+                .game-description{
+                    width: 95%;
+                    height: 100%;
+                        
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: flex-start;
+
+                    overflow: auto;
+                    overflow: auto;
+
+                            ::-webkit-scrollbar {
+                                width: 8px;
+
+                                margin-left: 1rem;
+                            }
+
+                            ::-webkit-scrollbar-track {
+                                background: #555;
+                            }
+                            
+                            ::-webkit-scrollbar-thumb {
+                                background: #888; 
+                            }
+                            
+                            ::-webkit-scrollbar-thumb:hover {
+                                background: #555; 
+                            }
+
+                        p{
+                            color: #c0c0c0;
+                            font-size: 1.4rem;
+                            font-weight: 400;
+                        }
+                }
+
+                .game-platforms{
+
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: center;
+                    align-items: center;
+                    flex-wrap: wrap;
+
+                    a{
+                        color: #f2f2f2;
+                        font-weight: 400;
+                        text-decoration: underline;
+                        
+
+                        :after{
+                            content: ', ';
+                            white-space: pre;
+                        }
+
+                        :last-child:after{
+                            content: '';
+                        }
+                    }
+
+                }
+    }
+}
 
 `
 
@@ -220,13 +336,32 @@ export const GameMapItem = styled.div`
                 background-size: cover;
                 background-image: rgba(0,0,0,.5);
 
-                width: 60%;
-                height: 100%;
+                
+                @media(min-width: 620px){
+                    width: 60%;
+                    height: 100%;
+                }
+
+                box-shadow: 0px 0px 9px 5px #00000045;
+
+                border-radius: 4px;
+                overflow: hidden;
 
                 @media(max-width: 620px){
-                    width: 90%;
+                    padding: 0!important;
+/* 
+                    height: 320px!important;
+                    width: 260px!important; */
+                                    
+                    /* width: auto!important; */
+                    min-height: 260px!important;
 
                     border-radius: 4px;
+                }
+
+                *{
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+                                sans-serif;
                 }
 
                 div.all-info{
@@ -234,6 +369,11 @@ export const GameMapItem = styled.div`
                     width: 50%;
 
                     background-image: linear-gradient(to right,rgb(0 0 0 / 75%) 30%,rgb(255 255 255 / 0%));
+
+                    @media(max-width: 620px){
+                        width: 80%;
+                        background-image: none;
+                    }
 
                     display: flex;
                     flex-direction: column;
@@ -250,6 +390,10 @@ export const GameMapItem = styled.div`
                         padding-left: 1rem;
                     }
 
+                    @media(max-width: 620px){
+                        padding-left: 0;
+                    }
+
                     .game-name{
 
 
@@ -261,6 +405,7 @@ export const GameMapItem = styled.div`
                             color: #fff;
                             font-size: 3rem;
                             font-weight: 600;
+
                         }
                     }
 
@@ -364,6 +509,10 @@ export const GamesReleased = styled.div`
 
         border-bottom: 4px solid blueviolet;
         color: #fff;
+
+        @media(max-width: 620px){
+            font-size: 2.4rem;
+        }
     }
     
     ul{

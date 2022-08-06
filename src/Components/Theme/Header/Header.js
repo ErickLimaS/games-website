@@ -255,14 +255,14 @@ export default function Header() {
             </h2>
             <div className='desktop-ul-hover'>
               <ul>
-                <Link to={`/games/releases`}>
+                <Link to={`/games/releasing-this-year`}>
                   <li>
                     Releases
                     {/* <PlusSvg /> New Releases */}
                   </li>
                 </Link>
                 <hr />
-                <Link to={`/games/ratings`}>
+                <Link to={`/games/releasing-this-month`}>
                   <li>
                     Games Rating
                     {/* <StarSvg /> Games Rating */}

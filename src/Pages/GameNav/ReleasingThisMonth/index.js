@@ -20,6 +20,8 @@ export default function ReleasingThisMonth() {
 
   useEffect(() => {
 
+    window.scrollTo(0, 0);
+    
     const load1 = async () => {
 
       const data = await API.getReleasingGames();

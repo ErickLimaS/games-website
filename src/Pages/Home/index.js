@@ -55,7 +55,7 @@ export default function Home() {
 
         <>
           <div className='mobile-website-heading'>
-            <h1>What will be your Next Game?</h1>
+            <h1>Which will be your Next Game?</h1>
             <h2>See the new releases and pick the one who will entertain you the most!</h2>
           </div >
           <C.HeadingContent style={(releasingThisMonth[headingGameChose].game.artworks && {
@@ -67,7 +67,7 @@ export default function Home() {
           }}>
 
             <div className='desktop-website-heading'>
-              <h1>What will be your Next Game?</h1>
+              <h1>Which will be your Next Game?</h1>
               <h2>See the new releases and pick the one who will entertain you the most!</h2>
             </div>
 

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
 import { ReactComponent as ChevronSvg } from '../../../img/svg/chevron-caretsvg.svg'
 import ScoreRating from '../../../Components/ScoreRating/ScoreRating'
+import Slider from 'react-touch-drag-slider'
 
 export default function ReleasingThisYear() {
 
@@ -20,6 +21,8 @@ export default function ReleasingThisYear() {
 
   useEffect(() => {
 
+    window.scrollTo(0, 0);
+    
     const load1 = async () => {
 
       const data = await API.getReleasingGames('YEAR');
@@ -47,19 +50,6 @@ export default function ReleasingThisYear() {
         (
           <>
 
-            {/* dots array length */}
-            {/* <div className='dots-lenght-array'>
-              {games[0].result.map((item, key) => (
-                <span className='dot'
-                  style={releasingGameId === item.id ? { backgroundColor: '#5c16c5' } : {}}
-                  key={key}
-                  id={item.id}
-                  onClick={() => {
-                    setReleasingGameId(item.id)
-                  }}>{" "}</span>
-              ))}
-            </div> */}
-
             <div className='page-title'>
               <h1>Games Releasing This Year</h1>
             </div>
@@ -85,7 +75,7 @@ export default function ReleasingThisYear() {
                 <ChevronSvg style={{ transform: 'rotate(180deg)' }} />
               </button>
 
-              <ul>
+              <ul className='desktop--heading'>
                 {games[0].result.map((item, key) => (
                   <li
                     key={key}
@@ -165,6 +155,68 @@ export default function ReleasingThisYear() {
                 <ChevronSvg />
               </button>
 
+              <ul className='mobile--heading'>
+                <Slider
+                  onSlideComplete={(i) => {
+                    console.log('finished dragging, current slide is', i)
+                  }}
+                  onSlideStart={(i) => {
+                    console.log('started dragging on slide', i)
+                  }}
+                  activeIndex={0}
+                  threshHold={100}
+                  transition={0.5}
+                  scaleOnDrag={true}
+                >
+
+                  {games[0].result.map((item, key) => (
+                    <div className='item'>
+
+                      <C.GameMapItem data={item}>
+
+                        <div className='all-info'>
+
+                          <Link to={`/game/${item.slug}`} className='game-name'>
+                            <h2>{item.name}</h2>
+                          </Link>
+
+                        </div>
+
+                      </C.GameMapItem>
+
+                      {item.release_dates ?
+                        (<h3 className='release-date'>Releasing on {item.release_dates[0].human}</h3>)
+                        :
+                        (<h3 className='release-date'>No Releasing Date</h3>)
+                      }
+
+                      <div className='game-description'>
+                        {item.storyline || item.summary ?
+                          (
+                            <p>{item.storyline || item.summary}</p>
+                          ) : (
+                            <p>No Description Available</p>
+                          )
+                        }
+                      </div>
+
+                      {item.platforms && (
+
+                        <div className='game-platforms'>
+                          {item.platforms.slice(0, 3).map((item, key) => (
+                            <Link key={key} to={`/platforms/${item.slug}`}>
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+
+                      )}
+
+                    </div>
+                  ))}
+
+                </Slider>
+              </ul>
             </C.HighlightedGame>
 
             <C.GamesReleased>
