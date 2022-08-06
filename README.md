@@ -14,8 +14,8 @@ Esse é um site onde possui grande parte de todos os jogos e consoles já lança
 ## :pushpin: Em Planejamento
 
 - [ ] `Refazer Layouts Problematicos`: Em Andamento...
-- [ ] `Consulte e Compare Preços dos Jogos`: Sem Previsção
-- [ ] `Modo Noturno`: Sem Previsção
+- [ ] `Consulte e Compare Preços dos Jogos`: Sem Previsão
+- [ ] `Modo Noturno`: Sem Previsão
 
 ## :heavy_check_mark: Tecnologias Utilizadas
 
