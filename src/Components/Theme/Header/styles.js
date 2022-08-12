@@ -742,9 +742,9 @@ export const UserDesktop = styled.div`
     }
 
     font-size: 2rem;
-    border-left: 1px solid #c0c0c0;
-    border-right: 1px solid #c0c0c0;
-    padding: 1rem 0.5rem;
+    /* padding: 1rem 0.5rem; */
+
+    height: inherit;
 
     display: flex;
     flex-direction: column;
@@ -1010,6 +1010,22 @@ export const UserDesktop = styled.div`
         }
     }
 
+    a.login--button{
+        height: inherit;
 
+        color: rgb(92, 22, 197);
+
+        svg{
+            height: 2.5rem;
+            width: auto;
+
+            margin-right: 1rem;
+        }
+
+        :hover{
+
+        }
+
+    }
 
 `

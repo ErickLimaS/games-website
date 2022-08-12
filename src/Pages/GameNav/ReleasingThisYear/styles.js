@@ -490,7 +490,7 @@ export const GameMapItem = styled.div`
 
 export const GamesReleased = styled.div`
 
-    background-image: linear-gradient(rgba(0,0,0,.95), rgba(0,0,0,.25));
+    background-color: #181818;
     width: 100%;
 
     padding: 2rem 0;

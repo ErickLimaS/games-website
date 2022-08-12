@@ -5,8 +5,9 @@ import { Link } from 'react-router-dom'
 import { ReactComponent as SpinnerSvg } from '../../../img/svg/Spinner-1s-200px.svg'
 import { ReactComponent as ChevronSvg } from '../../../img/svg/chevron-caretsvg.svg'
 import ScoreRating from '../../../Components/ScoreRating/ScoreRating'
+import Slider from 'react-touch-drag-slider'
 
-export default function ReleasingThisMonth() {
+export default function ReleasingThisYear() {
 
   const [games, setGames] = useState([])
   const [loading, setLoading] = useState(true)
@@ -16,12 +17,12 @@ export default function ReleasingThisMonth() {
 
   const [releasingIndex, setReleasingIndex] = useState(0) //Array index to aux witch image shows next
 
-  document.title = "Releases | My Next Game"
+  document.title = "Releasing This Month | My Next Game"
 
   useEffect(() => {
 
     window.scrollTo(0, 0);
-    
+
     const load1 = async () => {
 
       const data = await API.getReleasingGames();
@@ -38,9 +39,6 @@ export default function ReleasingThisMonth() {
 
   }, [])
 
-  console.log(games)
-  console.log(releasingIndex)
-
   return (
     <C.Container>
       {loading ? (
@@ -51,34 +49,24 @@ export default function ReleasingThisMonth() {
         :
         (
           <>
-            <div className='title-section'>
-              <h1>Releasing This Year</h1>
+
+            <div className='page-title'>
+              <h1>Games Releasing This Month</h1>
             </div>
 
-            <div className='dots-lenght-array'>
-              {games[0].result.map((item, key) => (
-                <span className='dot'
-                  style={releasingGameId === item.id ? { backgroundColor: '#5c16c5' } : {}}
-                  key={key}
-                  id={item.id}
-                  onClick={() => {
-                    setReleasingGameId(item.id)
-                  }}>{" "}</span>
-              ))}
-            </div>
-
-            <C.GamesThisYear>
+            <C.HighlightedGame>
 
               <button type='button' onClick={() => {
-                setReleasingGameId(games[0].result[releasingIndex].id)
                 if (releasingIndex <= 0) {
                   setReleasingIndex(releasingLength)
+                  setReleasingGameId(games[0].result[releasingIndex].id)
                   if (releasingGameId === undefined) {
                     setReleasingGameId(games[0].result[releasingIndex].id)
                   }
                 }
                 else {
-                  setReleasingIndex(releasingIndex - 1)
+                  setReleasingIndex(currIndex => currIndex - 1)
+                  setReleasingGameId(games[0].result[releasingIndex].id)
                   if (releasingGameId === undefined) {
                     setReleasingGameId(games[0].result[releasingIndex].id)
                   }
@@ -87,76 +75,71 @@ export default function ReleasingThisMonth() {
                 <ChevronSvg style={{ transform: 'rotate(180deg)' }} />
               </button>
 
-              <ul>
+              <ul className='desktop--heading'>
                 {games[0].result.map((item, key) => (
                   <li
                     key={key}
-                    id={item.id} style={item.id === releasingGameId ? { display: 'block' }
-                      : { display: 'none' }}
+                    id={item.id} style={item.id === releasingGameId ?
+                      { display: 'block' } : { display: 'none' }}
                   >
-                    <Link to={`/game/${item.slug}`} className={'showing-game-now'}>
+                    <div>
 
-                      <div className='bgc-img' style={
-                        (item.artwork &&
-                          (
-                            {
-                              backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.artwork[0].image_id}.jpg)`
-                            }
-                          ))
-
-                        || (item.screenshots && (
-                          {
-                            backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.screenshots[0].image_id}.jpg)`
-                          }
-                        ))
-                        || {
-                          backgroundColor: `#c0c0c0`
-                        }}
-                      >
+                      <C.GameMapItem data={item}>
 
                         <div className='all-info'>
 
-                          <div className='game-name'>
+                          <Link to={`/game/${item.slug}`} className='game-name'>
                             <h2>{item.name}</h2>
-                          </div>
+                          </Link>
+                          {item.release_dates ?
+                            (<h3>Releasing on {item.release_dates[0].human}</h3>)
+                            :
+                            (<h3>No Releasing Date</h3>)
+                          }
+                          {item.platforms && (
 
-                          <div className='game-release'>
-                            {item.release_dates ?
-                              (<h3>Releasing on {item.release_dates[0].human}</h3>)
-                              :
-                              (<h3>No Releasing Date</h3>)
-                            }
-                            {item.platforms && (
-                              <div className='game-platforms'>
-                                {item.platforms.slice(0, 3).map((item, key) => (
-                                  <Link to={`/platforms/${item.slug}`}>
-                                    <p key={key}>{item.name}</p>
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
+                            <div className='game-platforms'>
+                              {item.platforms.slice(0, 3).map((item, key) => (
+                                <Link to={`/platforms/${item.slug}`}>
+                                  <p key={key}>{item.name}</p>
+                                </Link>
+                              ))}
+                            </div>
 
-                            {item.themes && (
-                              <div className='game-themes'>
-                                {item.themes.map((item, key) => (
-                                  <Link to={`/genre/${item.slug}`}>
-                                    <small key={key}>{item.name}</small>
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
-                          </div>
+                          )}
+
+                          {item.themes && (
+                            <div className='game-themes'>
+                              {item.themes.map((item, key) => (
+                                <Link to={`/genre/${item.slug}`}>
+                                  <small key={key}>{item.name}</small>
+                                </Link>
+                              ))}
+                            </div>
+                          )}
                         </div>
+
+                      </C.GameMapItem>
+
+                      <div className='game-description'>
+                        {item.storyline || item.summary ?
+                          (
+                            <p>{item.storyline || item.summary}</p>
+                          ) : (
+                            <p>No Description Available</p>
+                          )
+                        }
                       </div>
-                    </Link>
+
+                    </div>
                   </li>
                 ))}
               </ul>
 
               <button type='button' onClick={() => {
-                setReleasingGameId(games[0].result[releasingIndex].id)
                 if (releasingIndex >= 0 && releasingIndex < releasingLength) {
-                  setReleasingIndex(releasingIndex + 1)
+                  setReleasingIndex(currIndex => currIndex + 1)
+                  setReleasingGameId(games[0].result[releasingIndex].id)
                   if (releasingLength === undefined) {
                     setReleasingGameId(games[0].result[releasingIndex].id)
                   }
@@ -172,45 +155,108 @@ export default function ReleasingThisMonth() {
                 <ChevronSvg />
               </button>
 
-            </C.GamesThisYear>
+              <ul className='mobile--heading'>
+                <Slider
+                  onSlideComplete={(i) => {
+                    console.log('finished dragging, current slide is', i)
+                  }}
+                  onSlideStart={(i) => {
+                    console.log('started dragging on slide', i)
+                  }}
+                  activeIndex={0}
+                  threshHold={100}
+                  transition={0.5}
+                  scaleOnDrag={true}
+                >
 
-            <C.GamesReleased>
+                  {games[0].result.map((item, key) => (
+                    <div className='item'>
 
-              {/* <div>
+                      <C.GameMapItem data={item}>
+
+                        <div className='all-info'>
+
+                          <Link to={`/game/${item.slug}`} className='game-name'>
+                            <h2>{item.name}</h2>
+                          </Link>
+
+                        </div>
+
+                      </C.GameMapItem>
+
+                      {item.release_dates ?
+                        (<h3 className='release-date'>Releasing on {item.release_dates[0].human}</h3>)
+                        :
+                        (<h3 className='release-date'>No Releasing Date</h3>)
+                      }
+
+                      <div className='game-description'>
+                        {item.storyline || item.summary ?
+                          (
+                            <p>{item.storyline || item.summary}</p>
+                          ) : (
+                            <p>No Description Available</p>
+                          )
+                        }
+                      </div>
+
+                      {item.platforms && (
+
+                        <div className='game-platforms'>
+                          {item.platforms.slice(0, 3).map((item, key) => (
+                            <Link key={key} to={`/platforms/${item.slug}`}>
+                              {item.name}
+                            </Link>
+                          ))}
+                        </div>
+
+                      )}
+
+                    </div>
+                  ))}
+
+                </Slider>
+              </ul>
+            </C.HighlightedGame>
+
+            {games[1].result.length > 0 ? (
+              <C.GamesReleased>
+
+                <h1 className='second-title'>Released This Month</h1>
+
                 <ul>
                   {games[1].result.map((item, key) => (
-                    <p>{item.name}</p>
+                    <>
+                      <li key={key}>
+
+                        <img src={`//images.igdb.com/igdb/image/upload/t_cover_small/${item.cover.image_id}.png`} alt={item.name}></img>
+
+                        <div>
+
+                          <Link to={`/game/${item.slug}`}>
+                            <h1>
+                              {item.name.length > 34 ? item.name.slice(0, 34) + '...' : item.name}
+                            </h1>
+                          </Link>
+
+                          <h2>{item.release_dates[0] && item.release_dates[0].human}</h2>
+
+                        </div>
+
+                        <h2><ScoreRating data={item} /></h2>
+
+                      </li>
+                    </>
                   ))}
                 </ul>
-              </div> */}
 
-              <div>
-                <h2>Released This Year</h2>
-              </div>
-              <ul>
-                {games[1].result.map((item, key) => (
-                  <>
-                    <li key={key} style={item.artworks ? {
-                      backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.artworks[0].image_id}.jpg)`
-                    } : item.screenshots ? {
-                      backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_screenshot_big/${item.screenshots[0].image_id}.jpg)`
-                    } : {
-                      backgroundColor: '#c0c0c0'
-                    }}>
-                      <Link to={`/game/${item.slug}`}>
+              </C.GamesReleased>
+            ) : (
 
-                        <img src={`//images.igdb.com/igdb/image/upload/t_cover_big/${item.cover.image_id}.jpg`} alt={`${item.name}`}></img>
+              <h2>No games were released this month.</h2>
 
-                        <ScoreRating data={item} />
-                        <h3>{item.name}</h3>
-                        
-                      </Link>
-                    </li>
-                  </>
-                ))}
-              </ul>
+            )}
 
-            </C.GamesReleased>
           </>
         )
       }

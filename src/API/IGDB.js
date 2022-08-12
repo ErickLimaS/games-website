@@ -587,10 +587,10 @@ export default {
 
     },
 
-    getReleasingGames: async (chosedTimestamp) => {
+    getReleasingGames: async (chosedTime) => {
 
         const date = new Date()
-        const mm = date.getMonth()
+        const mm = date.getMonth() + 1
         const yyyy = date.getFullYear()
 
         const { data } = await Axios({
@@ -605,12 +605,12 @@ export default {
                 query games "Releasing"{
                     fields *,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*, hypes, similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
                     sort hypes desc;
-                    where hypes != null & status != 0 & release_dates.y > ${yyyy} ${chosedTimestamp === 'YEAR' ? '' : ` & release_dates.m > ${mm}`};
+                    where hypes != null & status != 0 & release_dates.y = ${yyyy} ${chosedTime === 'YEAR' ? '' : ` & release_dates.m = ${mm}`};
                     limit 15;
                 };
                 query games "Released"{
                     fields *,genres.*,screenshots.*,videos.*,summary,artworks.*,platforms.*,themes.*,similar_games.*, hypes, similar_games.cover.*,player_perspectives.*,multiplayer_modes.*,multiplayer_modes.platform.*,game_modes.*,franchises.*,involved_companies.company.*,involved_companies.company.logo.*,release_dates.*,cover.*;
-                    where release_dates.y = ${yyyy};
+                    where hypes != null & status != (5,6,7) & release_dates.y = ${yyyy} ${chosedTime === 'YEAR' ? '' : ` & release_dates.m = ${mm}`};
                     limit 15;
                 };
             `

@@ -369,12 +369,6 @@ export default function Header() {
                   {/* <PlusSvg /> New Releases */}
                 </Link>
               </li>
-              <li>
-                <Link to={`/games/games-ratings`}>
-                  Games Rating
-                  {/* <StarSvg /> Games Rating */}
-                </Link>
-              </li>
             </ul>
           </div>
         </nav>
@@ -542,7 +536,7 @@ export default function Header() {
             </div>
           </>
         ) : (
-          <Link to={`/user/login`}>Login</Link>
+          <Link to={`/user/login`} className='login--button'><PersonCircleSvg/> Login</Link>
         )}
       </C.UserDesktop>
 
