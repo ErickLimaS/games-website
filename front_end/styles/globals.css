@@ -1,0 +1,93 @@
+:root {
+
+  --background-color: #14171e;
+
+  --white: rgba(250, 250, 250);
+  --white-75: rgba(250, 250, 250, 0.75);
+  --white-50: rgba(250, 250, 250, 0.50);
+  --white-25: rgba(250, 250, 250, 0.25);
+  --white-10: rgba(250, 250, 250, 0.10);
+
+  --black: rgb(5, 9, 20);
+  --black-75: rgba(5, 9, 20, 0.75);
+  --black-50: rgba(5, 9, 20, 0.50);
+  --black-25: rgba(5, 9, 20, 0.25);
+  --black-10: rgba(5, 9, 20, 0.10);
+
+  --green: #7cd57b;
+  --red: #ad3632;
+
+
+  /* fs = 18px -> 22px, 1.25 scale */
+  --fs-minus-2: clamp(0.72rem, calc(0.67rem + 0.23vw), 0.88rem);
+  --fs-minus-1: clamp(0.90rem, calc(0.84rem + 0.29vw), 1.10rem);
+  --fs-p: clamp(1.13rem, calc(1.05rem + 0.36vw), 1.38rem);
+  --fs-h5: clamp(1.41rem, calc(1.32rem + 0.45vw), 1.72rem);
+  --fs-h4: clamp(1.76rem, calc(1.65rem + 0.56vw), 2.15rem);
+  --fs-h3: clamp(2.20rem, calc(2.06rem + 0.70vw), 2.69rem);
+  --fs-h2: clamp(2.75rem, calc(2.57rem + 0.87vw), 3.36rem);
+  --fs-h1: clamp(3.43rem, calc(3.22rem + 1.09vw), 4.20rem);
+
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html, * {
+
+  font-family: Poppins;
+
+}
+
+button{
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+}
+
+small {
+  font-size: var(--fs-minus-1);
+}
+
+p, button, a, input, li, ol, button {
+  font-size: var(--fs-p);
+  color: var(--white);
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  color: var(--white);
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  color: var(--white);
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  color: var(--white);
+}
+
+h4 {
+  font-size: var(--fs-h4);
+  color: var(--white);
+}
+
+h5 {
+  font-size: var(--fs-h5);
+  color: var(--white);
+}
+
+body {
+  background: var(--background-color);
+}
+
+a {
+  text-decoration: none;
+}
