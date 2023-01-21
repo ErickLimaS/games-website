@@ -6,13 +6,21 @@ interface Props {
 
 }
 
-export const SectionContainer = styled.section<Props>`
+export const DivContainer = styled.div<Props>`
 
-    padding: 48px 0;
+    position: absolute;
+    top: 0; 
+    left: 0;
 
-    background-image: ${props => `url(https://images.igdb.com/igdb/image/upload/t_1080p/${props.image_id}.jpg)`};
-    height: auto;
-    width: inherit;
+    height: 90vh;
+    width: 100%;
+
+    background-image: linear-gradient(
+          rgba(0, 0, 0, 0.3), 
+          rgba(0, 0, 0, 0.5)), 
+        ${props => `url(https://images.igdb.com/igdb/image/upload/t_1080p/${props.image_id}.jpg)`}
+    ;
+
     background-repeat: no-repeat;
     background-size: auto 75%;
     background-position: bottom;
@@ -34,7 +42,11 @@ export const SectionContainer = styled.section<Props>`
 
     @media(min-width: 1440px) {
 
-        background-image: ${props => `url(https://images.igdb.com/igdb/image/upload/t_1080p/${props.image_id}.jpg)`};
+        background-image: linear-gradient(
+            rgba(0, 0, 0, 0.3), 
+            rgba(0, 0, 0, 0.5)), 
+            ${props => `url(https://images.igdb.com/igdb/image/upload/t_1080p/${props.image_id}.jpg)`}
+        ;
 
     }
 

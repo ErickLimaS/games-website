@@ -1,0 +1,116 @@
+li.card_container {
+
+    flex: 1;
+    height: inherit;
+
+    min-width: 85vw;
+
+}
+
+@media(min-width: 620px) {
+
+    li.card_container {
+
+        min-width: initial;
+
+    }
+}
+
+.card_container>a {
+
+    display: inline-flex;
+
+}
+
+.card_container img {
+
+    border-radius: 4px;
+
+    width: 800px !important;
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 55vh !important;
+
+}
+
+
+.item_info {
+
+    padding: 12px 8px;
+
+    background-color: var(--white-10);
+    border-radius: 4px;
+
+}
+
+
+.item_info h5 {
+
+    font-size: var(--fs-h5);
+    font-weight: 400;
+
+}
+
+.game_genres {
+
+    margin-top: 8px;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+
+}
+
+.general_info {
+
+    margin: 8px 0;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    gap: 0 16px;
+
+}
+
+.game_companies ul {
+
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+
+}
+
+.game_companies li a {
+
+    color: var(--white-75);
+    font-size: var(--fs-minus-2);
+    font-weight: 300;
+
+}
+
+.game_companies li a:hover {
+
+    color: var(--white);
+
+}
+
+.game_companies li:not(:last-child):after {
+
+    content: ', ';
+    color: var(--white-50);
+    white-space: break-spaces;
+
+}
+
+.game_genres small a {
+
+    padding: 4px;
+
+    font-size: calc(var(--fs-minus-2) - 2px);
+    font-weight: 300;
+
+    background-color: var(--primary);
+    border-radius: 4px;
+
+}

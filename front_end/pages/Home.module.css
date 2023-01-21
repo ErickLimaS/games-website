@@ -1,6 +1,7 @@
 #container {
 
-    padding-top: 135.8px;
+    /* padding-top: 135.8px; */
+    padding-top: 0;
 
 }
 
@@ -10,39 +11,56 @@
 
 }
 
-@media(min-width: 780px) {
-    #container {
+section.section_margin {
 
+    padding: 0 16px;
 
-        padding-top: 149.8px;
+}
+
+@media(min-width: 1020px) {
+    section.section_margin {
+
+        padding: 0 5vw;
 
     }
 }
 
-@media(min-width: 1120px) {
-    #container {
+section.position_top {
 
+    position: relative;
+    top: -5vh;
 
-        padding-top: 102.8px;
+}
+
+@media(min-width: 768px) {
+
+    section.position_top {
+
+        top: -20vh;
 
     }
 }
 
 #hero_game_info {
 
-    position: relative;
-    top: 20%;
-
     max-width: 85%;
+    padding: 0 5vw;
+    padding-top: 80px;
+
+    position: relative;
+
+    height: 90vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 
 }
 
 @media(min-width: 620px) {
 
     #hero_game_info {
-
-        position: relative;
-        top: 20%;
+        padding: 0 5vw;
+        padding-top: 80px;
 
         max-width: 60%;
 
@@ -53,8 +71,9 @@
 
     #hero_game_info {
 
-        position: relative;
-        top: 20%;
+        padding-top: 0;
+        padding-left: 5vw;
+        padding-right: 0;
 
         max-width: 45%;
 
@@ -134,7 +153,8 @@
 
     padding-top: 16px;
 
-    background: linear-gradient(to bottom, #14171ee0, var(--background-color) 40%);
+    background: linear-gradient(to bottom, #14171e99, var(--background-color) 25%);
+
     min-height: 25vh;
 
     position: relative;
@@ -146,7 +166,7 @@
     #carrousel {
 
         padding-top: 0;
-
+        background: linear-gradient(to bottom, transparent, var(--background-color) 25%);
         margin: 40px 0;
 
         top: -15vh;
@@ -164,7 +184,7 @@
     }
 }
 
-#carrousel .section_heading {
+.section_heading {
 
     padding: 0 16px;
     margin-bottom: 8px;
@@ -177,7 +197,7 @@
 
 @media(min-width: 1020px) {
 
-    #carrousel .section_heading {
+    .section_heading {
 
         padding: 0;
 
@@ -187,7 +207,7 @@
 
 @media(min-width: 1440px) {
 
-    #carrousel .section_heading {
+    .section_heading {
 
         max-width: 85vw;
 
@@ -206,7 +226,7 @@
 }
 
 
-.section_heading .buttons_container {
+.buttons_container {
 
     display: none;
 
@@ -214,7 +234,7 @@
 
 @media(min-width: 480px) {
 
-    .section_heading .buttons_container {
+    .buttons_container {
 
         display: flex;
         gap: 0 32px;
@@ -222,7 +242,7 @@
 
 }
 
-.section_heading .buttons_container button {
+.buttons_container button {
     padding: 0 8px;
 
     border: none;
@@ -232,13 +252,13 @@
 
 }
 
-.section_heading .buttons_container button svg {
+.buttons_container button svg {
 
     transform: scale(1.6);
 
 }
 
-.section_heading .buttons_container button[disabled] {
+.buttons_container button[disabled] {
 
     cursor: default;
 
@@ -367,4 +387,87 @@
 
     background-color: var(--white);
 
+}
+
+/* Genre Games Container */
+#genre_games {
+
+    margin-top: 32px;
+
+}
+
+@media(min-width: 768px) {
+    #genre_games {
+
+        margin-top: 0;
+        padding: 0 5vw;
+
+    }
+}
+
+#genre_games .section_heading h2 {
+
+    font-size: var(--fs-h3);
+    font-weight: 600;
+
+}
+
+#genre_games .section_heading a {
+
+    font-size: var(--fs-minus-2);
+    font-weight: 500;
+
+    color: var(--green);
+
+}
+
+.genre_game_cards_container>ul {
+
+    padding: 0 16px;
+    overflow: auto;
+
+    display: flex;
+    gap: 0 16px;
+
+}
+
+@media(min-width: 768px) {
+
+    .genre_game_cards_container>ul {
+
+        padding: 0;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 0 16px;
+        justify-items: stretch;
+        align-items: baseline;
+
+    }
+
+}
+
+.genre_game_cards_container>ul::-webkit-scrollbar {
+
+    display: none;
+
+}                                                                                                                              
+.genre_game_cards_container .buttons_container {
+
+    display: none;
+
+}
+
+@media(min-width: 768px) {
+    .genre_game_cards_container .buttons_container {
+
+        margin-top: 24px;
+
+        display: flex;
+        justify-content: center;
+
+    }
 }

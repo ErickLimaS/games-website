@@ -1,8 +1,7 @@
 import  Axios from 'axios'
-import Swal from 'sweetalert2'
 
-const API_BASE = 'http://localhost:9000/api'
-const CORS_ANYWHERE = 'https://cors-anywhere.herokuapp.com/'
+// const API_BASE = 'http://localhost:9000/api'
+const API_BASE = 'https://my-next-game.onrender.com/api'
 
 function reqConfig(body?: object){
 
@@ -40,7 +39,7 @@ function reqConfig(body?: object){
                 method: 'POST',
                 url: `${API_BASE}/data`,
                 headers,
-                data: body || null
+                data: body|| null
         
             }
 
@@ -61,14 +60,17 @@ function setToken(data: {result: object[], success: boolean, token?: {access_tok
 
 }
 
+// standardizes all data fetched from API
+const queryAllFields = 'fields *, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, themes.*;'
+
 export async function homePageGames() {
 
     try{
         const {data} = await Axios(reqConfig(
 
             {query: 
-                `fields *, artworks.*, age_ratings.*, cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, themes.*; 
-                where rating > 80 & release_dates.m = ${new Date().getMonth() + 1} & release_dates.y = ${new Date().getFullYear() };
+                `${queryAllFields}
+                where artworks != null & rating > 80 & release_dates.m = ${new Date().getMonth() + 1} & release_dates.y = ${new Date().getFullYear() };
                 sort release_dates.date desc;
                 limit 20;`
             }
@@ -93,7 +95,7 @@ export async function searchGame(gameName: string) {
     try{
         const {data} = await Axios(reqConfig(
             {query: 
-                `fields *, cover.*; search "${gameName}"; limit 5;`
+                `${queryAllFields} search "${gameName}"; limit 5;`
             }
             ))
 
@@ -111,7 +113,7 @@ export async function searchGame(gameName: string) {
 export async function fetchGameInfo(gameUrlSlug: string) {
 
     try{
-        const {data} = await Axios(reqConfig({query: `fields *; where slug = "${gameUrlSlug}";`}))
+        const {data} = await Axios(reqConfig({query: `${queryAllFields} where slug = "${gameUrlSlug}";`}))
 
         return data.result
         
@@ -127,7 +129,11 @@ export async function fetchGameInfo(gameUrlSlug: string) {
 export async function fetchGamesForGenre(genreSlug: string) {
 
     try{
-        const {data} = await Axios(reqConfig({query: `fields *; where genres.slug = "${genreSlug}";`}))
+        const {data} = await Axios(reqConfig(
+            {
+                query: `${queryAllFields} where artworks != null & themes.name ~ "${genreSlug}";`
+            }
+            ))
 
         return data.result
         

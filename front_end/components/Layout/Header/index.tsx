@@ -42,20 +42,64 @@ function Header() {
 
   // sets new color on header's background
   function scrollEvent() {
-    if (window.scrollY > 140) {
+
+    const screenWidth = screen.width
+
+    // width 300px
+    if (screenWidth > 300 && screenWidth <= 560) {
+      if (window.scrollY > 20) {
+
+        const element: HTMLElement = document.getElementsByTagName('header')[0]
+
+        element.style = "background: #14171e"
+
+        return
+      }
 
       const element: HTMLElement = document.getElementsByTagName('header')[0]
 
-      element.style = "background: #14171e"
+      element.style = "background: transparent"
 
       return
+
+    }
+    // width 560px
+    if (screenWidth > 560 && screenWidth <= 1020) {
+      if (window.scrollY > 20) {
+
+        const element: HTMLElement = document.getElementsByTagName('header')[0]
+
+        element.style = "background: #14171e"
+
+        return
+      }
+
+      const element: HTMLElement = document.getElementsByTagName('header')[0]
+
+      element.style = "background: transparent"
+
+      return
+
+    }
+    // width 1020px
+    if (screenWidth > 1020) {
+      if (window.scrollY > 140) {
+
+        const element: HTMLElement = document.getElementsByTagName('header')[0]
+
+        element.style = "background: #14171e"
+
+        return
+      }
+
+      const element: HTMLElement = document.getElementsByTagName('header')[0]
+
+      element.style = "background: transparent"
+
+      return
+
     }
 
-    const element: HTMLElement = document.getElementsByTagName('header')[0]
-
-    element.style = "background: transparent"
-
-    return
 
   }
 
@@ -147,7 +191,7 @@ function Header() {
           <form role='search' onSubmit={(e) => { handleSearchForm(e) }} className={Styles.search_form}>
             <div>
               <label>
-                <input type='text' ref={searchRefDesktop} onChange={(e) => { handleSearchForm(e) }} placeholder='Procurar' defaultValue='zelda'></input>
+                <input type='text' ref={searchRefDesktop} onChange={(e) => { handleSearchForm(e) }} placeholder='Procurar'></input>
               </label>
             </div>
 

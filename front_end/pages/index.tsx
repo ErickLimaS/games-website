@@ -1,6 +1,6 @@
 import Styles from './Home.module.css'
-import { SectionContainer } from './HomeStyles'
-import { homePageGames } from './api/IGDB'
+import { DivContainer } from './HomeStyles'
+import { fetchGamesForGenre, homePageGames } from './api/IGDB'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -9,18 +9,25 @@ import NextArrow from '../public/img/icons/NextArrow'
 import CarouselItem from '@/components/CarouselItem'
 import Head from '@/components/DocumentHead/Head'
 import PageLoading from '@/components/PageLoading'
+import GameGenreCard from '@/components/GameGenreCard'
 
 export default function Home({ results }: any) {
 
   const [heroSectionGames, setHeroSectionGames] = useState<GameInfo[]>([])
+  const [genreGames, setGenreGames] = useState<GameInfo[]>([])
+
   const [heroGameInfoIndex, setHeroGameInfoIndex] = useState<number>(0)
   const [carouselRowNumber, setCarouselRowNumber] = useState<number>(0)
+  const [genreContainerRowNumber, setGenreContainerRowNumber] = useState<number>(0)
 
   async function getData() {
 
-    const data = await homePageGames()
+    const homeGames = await homePageGames()
+    const genreGames = await fetchGamesForGenre('horror')
 
-    setHeroSectionGames(data)
+    setHeroSectionGames(homeGames)
+
+    setGenreGames(genreGames)
 
   }
 
@@ -49,84 +56,125 @@ export default function Home({ results }: any) {
   }, [])
 
   return (
-    <>
-      {heroSectionGames.length > 0 ? (
-        <>
-          <SectionContainer {...heroSectionGames[heroGameInfoIndex].artworks[0]} id={Styles.container}>
+    heroSectionGames.length > 0 ? (
+      <>
+        <DivContainer
+          {...heroSectionGames[heroGameInfoIndex].artworks[0]}
+          id={Styles.container}
+        />
 
-            <div id={Styles.hero_game_info}>
+        <section id={Styles.hero_game_info} className={Styles.section_margin}>
 
-              <h1><Link href={`/game/${heroSectionGames[heroGameInfoIndex].slug}`}>{heroSectionGames[heroGameInfoIndex].name}</Link></h1>
+          <div>
 
-              {heroSectionGames[heroGameInfoIndex].game_modes.length > 0 && (
-                <ul>
-                  {heroSectionGames[heroGameInfoIndex].game_modes.slice(0, 3).map((item: { name: string, slug: string }, key: any) => (
-                    <li key={key}><Link href={`/genre/${item.slug}`}>{item.name}</Link></li>
-                  ))}
-                  {heroSectionGames[heroGameInfoIndex].game_modes.length > 3 && (
-                    <li>e mais.</li>
-                  )}
-                </ul>
-              )}
+            <h1><Link href={`/game/${heroSectionGames[heroGameInfoIndex].slug}`}>{heroSectionGames[heroGameInfoIndex].name}</Link></h1>
 
-              <button role='link' onClick={() => router.push(`/game/${heroSectionGames[2].slug}`)}>
-                <Plus /> Saber Mais
+            {heroSectionGames[heroGameInfoIndex].game_modes.length > 0 && (
+              <ul>
+                {heroSectionGames[heroGameInfoIndex].game_modes.slice(0, 3).map((item: { name: string, slug: string }, key: any) => (
+                  <li key={key}><Link href={`/genre/${item.slug}`}>{item.name}</Link></li>
+                ))}
+                {heroSectionGames[heroGameInfoIndex].game_modes.length > 3 && (
+                  <li>e mais.</li>
+                )}
+              </ul>
+            )}
+
+            <button role='link' onClick={() => router.push(`/game/${heroSectionGames[2].slug}`)}>
+              <Plus /> Saber Mais
+            </button>
+
+          </div>
+        </section>
+
+        <section id={Styles.carrousel}>
+
+          <div className={Styles.section_heading}>
+
+            <h2>Lançamentos</h2>
+
+            <div className={Styles.buttons_container}>
+              <button disabled={carouselRowNumber === 0 ? true : false} onClick={() => setCarouselRowNumber((curr) => curr - 1)}>
+                <NextArrow />
               </button>
 
+              <button disabled={carouselRowNumber === heroSectionGames.length ? true : false} onClick={() => setCarouselRowNumber((curr) => curr + 1)}>
+                <NextArrow style={{ rotate: '180deg' }} />
+              </button>
             </div>
 
-          </SectionContainer>
+          </div>
 
-          <section id={Styles.carrousel}>
-
-            <div className={Styles.section_heading}>
-
-              <h2>Lançamentos</h2>
-
-              <div className={Styles.buttons_container}>
-                <button disabled={carouselRowNumber === 0 ? true : false} onClick={() => setCarouselRowNumber((curr) => curr - 1)}>
-                  <NextArrow />
-                </button>
-
-                <button disabled={carouselRowNumber === heroSectionGames.length ? true : false} onClick={() => setCarouselRowNumber((curr) => curr + 1)}>
-                  <NextArrow style={{ rotate: '180deg' }} />
-                </button>
-              </div>
-
-            </div>
-
-            {screen.width >= 480 && (
-              <ul aria-live="polite">
-                {heroSectionGames.slice(sliceFilterRange(carouselRowNumber)[0], sliceFilterRange(carouselRowNumber)[1]).map((item: GameInfo) => (
-                  <CarouselItem key={item.id} props={item} />
-                ))}
-              </ul>
-            )}
-
-            {screen.width <= 479 && (
-              <ul aria-live="polite">
-                {heroSectionGames.map((item: GameInfo) => (
-                  <CarouselItem key={item.id} props={item} />
-                ))}
-              </ul>
-            )}
-
-            <div id={Styles.carousel_indicators}>
-              {heroSectionGames.map((item: GameInfo, key: number) => (
-                <span key={key}
-                  data-active-row={carouselRowNumber === key ? true : false}
-                  onClick={() => setCarouselRowNumber(key)}
-                ></span>
+          {screen.width >= 480 && (
+            <ul aria-live="polite">
+              {heroSectionGames.slice(sliceFilterRange(carouselRowNumber)[0], sliceFilterRange(carouselRowNumber)[1]).map((item: GameInfo) => (
+                <CarouselItem key={item.id} props={item} />
               ))}
+            </ul>
+          )}
+
+          {screen.width <= 479 && (
+            <ul aria-live="polite">
+              {heroSectionGames.map((item: GameInfo) => (
+                <CarouselItem key={item.id} props={item} />
+              ))}
+            </ul>
+          )}
+
+          <div id={Styles.carousel_indicators}>
+            {heroSectionGames.map((item: GameInfo, key: number) => (
+              <span key={key}
+                data-active-row={carouselRowNumber === key ? true : false}
+                onClick={() => setCarouselRowNumber(key)}
+              ></span>
+            ))}
+          </div>
+
+        </section>
+
+        <section id={Styles.genre_games} className={` ${Styles.position_top}`}>
+
+          <div className={Styles.section_heading}>
+            <h2>Terror +18</h2>
+
+            <Link href={`/genre/`}>
+              Ver Todos
+            </Link>
+
+          </div>
+
+          <div className={Styles.genre_game_cards_container}>
+
+            {screen.width < 560 ? (
+              <ul>
+                {genreGames.map((item: GameInfo) => (
+                  <GameGenreCard key={item.id} props={item} />
+                ))}
+              </ul>
+            ) : (<ul>
+              {genreGames.slice(genreContainerRowNumber * 3, (genreContainerRowNumber + 1) * 3).map((item: GameInfo) => (
+                <GameGenreCard key={item.id} props={item} />
+              ))}
+            </ul>)}
+
+            <div className={Styles.buttons_container}>
+              <button disabled={genreContainerRowNumber === 0 ? true : false} onClick={() => setGenreContainerRowNumber((curr) => curr - 1)}>
+                <NextArrow />
+              </button>
+
+              <button disabled={genreContainerRowNumber === heroSectionGames.length ? true : false} onClick={() => setGenreContainerRowNumber((curr) => curr + 1)}>
+                <NextArrow style={{ rotate: '180deg' }} />
+              </button>
             </div>
 
-          </section>
+          </div>
 
-        </>
-      ) : (
-        <PageLoading />
-      )}
-    </>
+        </section>
+
+      </>
+    ) : (
+      <PageLoading />
+    )
   )
 }
 

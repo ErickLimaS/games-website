@@ -10,14 +10,12 @@ const API_BASE = 'https://api.igdb.com/v4'
 dotenv.config()
 
 // config to axios
-function reqConfig(query, authorization) {
-
-    console.log(query)
+function reqConfig(query, authorization, alternativeRoute) {
 
     return {
 
         method: 'POST',
-        url: `${API_BASE}/games`,
+        url: `${API_BASE}${alternativeRoute ? alternativeRoute : '/games'}`,
         headers:
         {
             'Authorization': authorization,
@@ -52,8 +50,6 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
 
         const authorization = await checkTokenIsValid(req.headers.authorization)
 
-        console.log(authorization)
-
         if (!req.body.query) {
 
             return res.status(500).json({
@@ -67,7 +63,8 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
 
         await axios(reqConfig(
             req.body.query,
-            `Bearer ${authorization.access_token}`
+            `Bearer ${authorization.access_token}`,
+            req.body.route
         )).then(res =>
             response = res.data
         )
