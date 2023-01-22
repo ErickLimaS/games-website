@@ -1,9 +1,11 @@
 li.card_container {
 
-    flex: 1;
     height: inherit;
 
     min-width: 85vw;
+
+    display: flex;
+    flex-direction: column;
 
 }
 
@@ -17,6 +19,8 @@ li.card_container {
 }
 
 .card_container>a {
+
+    margin-bottom: 4px;
 
     display: inline-flex;
 

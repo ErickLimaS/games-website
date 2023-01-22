@@ -51,14 +51,14 @@ function Header() {
 
         const element: HTMLElement = document.getElementsByTagName('header')[0]
 
-        element.style = "background: #14171e"
+        element.setAttribute('style', "background: #14171e;")
 
         return
       }
 
       const element: HTMLElement = document.getElementsByTagName('header')[0]
 
-      element.style = "background: transparent"
+      element.setAttribute('style', "background: transparent;")
 
       return
 
@@ -69,14 +69,14 @@ function Header() {
 
         const element: HTMLElement = document.getElementsByTagName('header')[0]
 
-        element.style = "background: #14171e"
+        element.setAttribute('style', "background: #14171e;")
 
         return
       }
 
       const element: HTMLElement = document.getElementsByTagName('header')[0]
 
-      element.style = "background: transparent"
+      element.setAttribute('style', "background: transparent;")
 
       return
 
@@ -87,14 +87,14 @@ function Header() {
 
         const element: HTMLElement = document.getElementsByTagName('header')[0]
 
-        element.style = "background: #14171e"
+        element.setAttribute('style', "background: #14171e;")
 
         return
       }
 
       const element: HTMLElement = document.getElementsByTagName('header')[0]
 
-      element.style = "background: transparent"
+      element.setAttribute('style', "background: transparent;")
 
       return
 
