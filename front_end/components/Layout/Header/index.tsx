@@ -5,7 +5,7 @@ import BrandImg from '../../../public/img/logo/logo.png'
 import Image from 'next/image'
 import List from '../../../public/img/icons/List'
 import Search from '../../../public/img/icons/Search'
-import { searchGame } from '@/pages/api/IGDB'
+import { searchGame } from '@/api/IGDB'
 import SearchResult from '@/components/SearchResult'
 
 function Header() {

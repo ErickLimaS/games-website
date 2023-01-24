@@ -1,6 +1,6 @@
 import Styles from './Home.module.css'
-import { BackgroundImage } from './HomeStyles'
-import { fetchGamesByGenre, fetchGamesByPlatform, homePageGames } from './api/IGDB'
+import { BackgroundImage } from '../styles/HomeStyles'
+import { fetchGamesByGenre, fetchGamesByPlatform, homePageGames } from '../api/IGDB'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -10,7 +10,7 @@ import CarouselItem from '@/components/CarouselItem'
 import PageLoading from '@/components/PageLoading'
 import GameGenreCard from '@/components/GameGenreCard'
 
-export default function Home({ results }: any) {
+export default function Home() {
 
   const [heroSectionGames, setHeroSectionGames] = useState<GameInfo[]>([])
   const [genreGames, setGenreGames] = useState<GameInfo[]>([])
