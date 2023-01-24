@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 interface Props {
 
-    image_id: string,
+    image_id: string | undefined,
 
 }
 
@@ -25,14 +25,15 @@ export const BackgroundImage = styled.div<Props>`
 
     background-repeat: no-repeat;
     background-size: auto 75%;
-    background-position: bottom;
+    background-position: top;
 
     
     @media(min-width: 425px) {
 
         height: 90vh;
-        background-size: auto 75%;
-        background-position: bottom;
+        /* background-size: auto 75%; */
+        background-size: cover;
+        background-position: top;
 
     }
     

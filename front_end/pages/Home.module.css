@@ -41,7 +41,7 @@ section.position_top {
     }
 }
 
-#hero_game_info {
+#hero_game_info, .fix_position_absolute {
 
     max-width: 85%;
     padding: 0 5vw;
@@ -454,7 +454,8 @@ section.position_top {
 
     display: none;
 
-}                                                                                                                              
+}
+
 .genre_game_cards_container .buttons_container {
 
     display: none;
@@ -470,4 +471,53 @@ section.position_top {
         justify-content: center;
 
     }
+}
+
+/* Section Platform Games */
+#popular_platform_game {
+
+    margin-top: 40px;
+
+    position: relative;
+
+}
+
+#popular_platform_game #info_wrapper {
+
+    /* removes padding from another class */
+    padding: 0;
+
+    max-width: initial;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+
+#popular_platform_game .focused_game_container {
+
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+#popular_platform_game .focused_game_container #carousel_container {
+
+    width: 100%;
+    overflow: auto;
+
+}
+
+#popular_platform_game .focused_game_container #carousel_container ul {
+
+    overflow: auto;
+
+    display: flex;
+    flex-direction: row;
+
 }

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import ErrorImg from '../../public/img/logo/logo.png'
 import GameRating from '../GameRating'
 
-function GameGenreCard({ props }: { props: GameInfo }) {
+function GameGenreCard({ props }: { props: GameInfo | SimilarGames }) {
 
     const imageSrc: any = props.cover != undefined ? `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover.image_id}.jpg` : ErrorImg
 
@@ -29,18 +29,21 @@ function GameGenreCard({ props }: { props: GameInfo }) {
 
                 <div className={Styles.general_info}>
 
-                    <GameRating props={props.rating}/>
+                    {props.rating && <GameRating props={props.rating} />}
 
                     <div className={Styles.game_companies}>
-                        <ul>
-                            {props.involved_companies.slice(0, 4).map((item: { company: { slug: string, name: string } }) => (
-                                <li key={item.company.slug}>
-                                    <Link href={`/companie/${item.company.slug}`}>
-                                        {item.company.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
+
+                        {props.involved_companies != undefined && (
+                            <ul>
+                                {props.involved_companies.slice(0, 1).map((item: { company: { slug: string, name: string } }) => (
+                                    <li key={item.company.slug}>
+                                        <Link href={`/companie/${item.company.slug}`}>
+                                            {item.company.name}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
 
                         <small>
                             {`${new Date(props.first_release_date * 1000).toLocaleString('default', { month: 'long' })} 

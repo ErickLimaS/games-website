@@ -1,13 +1,12 @@
 import Styles from './Home.module.css'
-import { DivContainer } from './HomeStyles'
-import { fetchGamesForGenre, homePageGames } from './api/IGDB'
+import { BackgroundImage } from './HomeStyles'
+import { fetchGamesByGenre, fetchGamesByPlatform, homePageGames } from './api/IGDB'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Plus from '../public/img/icons/PlusSolid'
 import NextArrow from '../public/img/icons/NextArrow'
 import CarouselItem from '@/components/CarouselItem'
-import Head from '@/components/DocumentHead/Head'
 import PageLoading from '@/components/PageLoading'
 import GameGenreCard from '@/components/GameGenreCard'
 
@@ -15,19 +14,24 @@ export default function Home({ results }: any) {
 
   const [heroSectionGames, setHeroSectionGames] = useState<GameInfo[]>([])
   const [genreGames, setGenreGames] = useState<GameInfo[]>([])
+  const [platformGames, setPlatformGames] = useState<GameInfo[]>([])
 
   const [heroGameInfoIndex, setHeroGameInfoIndex] = useState<number>(0)
   const [carouselRowNumber, setCarouselRowNumber] = useState<number>(0)
+  const [platformCarouselRowNumber, setPlatformCarouselRowNumber] = useState<number>(0)
   const [genreContainerRowNumber, setGenreContainerRowNumber] = useState<number>(0)
 
   async function getData() {
 
     const homeGames = await homePageGames()
-    const genreGames = await fetchGamesForGenre('horror')
+    const genreGames = await fetchGamesByGenre('horror')
+    const platformGames = await fetchGamesByPlatform('48')
 
     setHeroSectionGames(homeGames)
-
     setGenreGames(genreGames)
+    setPlatformGames(platformGames)
+
+    setPlatformCarouselRowNumber(platformGames[0].id)
 
   }
 
@@ -58,12 +62,10 @@ export default function Home({ results }: any) {
   return (
     heroSectionGames.length > 0 ? (
       <>
-        <DivContainer
-          {...heroSectionGames[heroGameInfoIndex].artworks[0]}
-          id={Styles.container}
+        <BackgroundImage {...heroSectionGames[heroGameInfoIndex].artworks[0]} id={Styles.container}
         />
 
-        <section id={Styles.hero_game_info} className={Styles.section_margin}>
+        <section id={Styles.hero_game_info} className={`${Styles.section_margin} ${Styles.fix_position_absolute}`}>
 
           <div>
 
@@ -80,7 +82,7 @@ export default function Home({ results }: any) {
               </ul>
             )}
 
-            <button role='link' onClick={() => router.push(`/game/${heroSectionGames[2].slug}`)}>
+            <button role='link' onClick={() => router.push(`/game/${heroSectionGames[0].slug}`)}>
               <Plus /> Saber Mais
             </button>
 
@@ -170,6 +172,46 @@ export default function Home({ results }: any) {
           </div>
 
         </section>
+
+        {/* <section id={Styles.popular_platform_game} className={` ${Styles.position_top}`}>
+
+          <DivContainer
+            {...platformGames[heroGameInfoIndex + 1].artworks[0]}
+          />
+
+          <div id={Styles.info_wrapper} className={Styles.fix_position_absolute}>
+
+            <h2>Popular Playstation Games</h2>
+
+            <h3>Game name</h3>
+
+            <p>genre theme</p>
+
+            <div className={Styles.focused_game_container}>
+
+              <div id={Styles.carousel_container}>
+                <ul aria-live="polite">
+                  {platformGames.map((item: GameInfo) => (
+                    <CarouselItem key={item.id} props={item} data-focused={platformCarouselRowNumber == item.id ? true : false} />
+                  ))}
+                </ul>
+
+                <div className={Styles.buttons_container}>
+                  <button disabled={carouselRowNumber === 0 ? true : false} onClick={() => setCarouselRowNumber((curr) => curr - 1)}>
+                    <NextArrow />
+                  </button>
+
+                  <button disabled={carouselRowNumber === platformGames.length ? true : false} onClick={() => setCarouselRowNumber((curr) => curr + 1)}>
+                    <NextArrow style={{ rotate: '180deg' }} />
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section> */}
 
       </>
     ) : (

@@ -61,7 +61,7 @@ function setToken(data: {result: object[], success: boolean, token?: {access_tok
 }
 
 // standardizes all data fetched from API
-const queryAllFields = 'fields *, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, themes.*;'
+const queryAllFields = 'fields *, expansions.*, similar_games.*, similar_games.cover.*, similar_games.themes.*, similar_games.cover, similar_games.involved_companies, similar_games.involved_companies.company.*, videos.*, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, age_ratings.category, age_ratings.rating_cover_url,  cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, themes.*;'
 
 export async function homePageGames() {
 
@@ -115,7 +115,7 @@ export async function fetchGameInfo(gameUrlSlug: string) {
     try{
         const {data} = await Axios(reqConfig({query: `${queryAllFields} where slug = "${gameUrlSlug}";`}))
 
-        return data.result
+        return data.result[0]
         
     }catch(err){
 
@@ -126,12 +126,33 @@ export async function fetchGameInfo(gameUrlSlug: string) {
 
 }
 
-export async function fetchGamesForGenre(genreSlug: string) {
+export async function fetchGamesByGenre(genreSlug: string) {
 
     try{
         const {data} = await Axios(reqConfig(
             {
                 query: `${queryAllFields} where artworks != null & themes.name ~ "${genreSlug}";`
+            }
+            ))
+
+        return data.result
+        
+    }catch(err){
+
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('expires_in')
+
+    }
+        
+
+}
+
+export async function fetchGamesByPlatform(platform: string) {
+
+    try{
+        const {data} = await Axios(reqConfig(
+            {
+                query: `${queryAllFields} where artworks != null & platforms.id = (${platform});`
             }
             ))
 
