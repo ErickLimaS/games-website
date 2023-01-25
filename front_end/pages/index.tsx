@@ -9,6 +9,8 @@ import NextArrow from '../public/img/icons/NextArrow'
 import CarouselItem from '@/components/CarouselItem'
 import PageLoading from '@/components/PageLoading'
 import GameGenreCard from '@/components/GameGenreCard'
+import CustomHead from '@/components/CustomDocumentHead'
+import CustomDocumentHead from '@/components/CustomDocumentHead'
 
 export default function Home() {
 
@@ -62,6 +64,7 @@ export default function Home() {
   return (
     heroSectionGames.length > 0 ? (
       <>
+        <CustomDocumentHead title='Home'/>
         <BackgroundImage {...heroSectionGames[heroGameInfoIndex].artworks[0]} id={Styles.container}
         />
 

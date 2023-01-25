@@ -1,3 +1,6 @@
+/* Helvetica Now Display Fonts */
+@import url("/fonts/HelveticaNowDisplay/stylesheet.css");
+
 :root {
 
   --background-color: #14171e;
@@ -40,11 +43,11 @@
 
 html, * {
 
-  font-family: Poppins;
+  font-family: Helvetica Now Display, Poppins, Helvetica, Arial, sans-serif;
 
 }
 
-button{
+button {
   cursor: pointer;
 }
 
@@ -59,6 +62,10 @@ small {
 p, button, a, input, li, ol, button {
   font-size: var(--fs-p);
   color: var(--white);
+}
+
+p {
+  line-height: 1.5;
 }
 
 h1 {

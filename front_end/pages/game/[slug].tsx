@@ -6,6 +6,7 @@ import Image from 'next/image'
 import ErrorImg from '../../public/img/logo/logo.png'
 import Link from 'next/link'
 import GameGenreCard from '@/components/GameGenreCard'
+import CustomDocumentHead from '@/components/CustomDocumentHead'
 
 export default function GamePage({ game }: { game: GameInfo }) {
 
@@ -39,6 +40,8 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
     return (
         <>
+
+            <CustomDocumentHead title={game.name} />
             <BackgroundImage {...game.artworks != undefined ? game.artworks[backgroundImgIndex] : { image_id: undefined }} />
 
             <div className={Styles.container}>
