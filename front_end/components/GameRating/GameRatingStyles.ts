@@ -36,7 +36,7 @@ export const ParagraphContainer = styled.p<Props>`
 
     font-weight: 500;
 
-    background-color: ${props => bcgColor(props.rating)};
+    background-color: ${props => props.rating ? bcgColor(props.rating) : 'var(--black-25)'};
     
     border-radius: 16px;
 

@@ -18,7 +18,7 @@
 
     .position_relative {
 
-        top: 124px;
+        top: 128px;
 
     }
 
@@ -39,17 +39,26 @@
     }
 }
 
-.padding {
+@media(max-width: 1580px) {
+    .padding {
 
-    padding-left: 5vw !important;
-    padding-right: 5vw !important;
+        padding-left: 5vw !important;
+        padding-right: 5vw !important;
 
+    }
 }
 
 .flex_row {
 
     display: flex;
     flex-direction: row;
+
+}
+
+#game_presentation {
+
+    margin: 0 auto;
+    max-width: 1440px;
 
 }
 
@@ -100,6 +109,16 @@ section#game_presentation #game_name_cover {
     section#game_presentation #game_name_cover {
 
         top: 124px;
+
+    }
+
+}
+
+@media(min-width: 1580px) {
+
+    section#game_presentation #game_name_cover {
+
+        padding: 0;
 
     }
 
@@ -243,7 +262,9 @@ section#game_presentation #game_name_cover {
 }
 
 /* All Content, except for heading info */
-#game_details {
+#game_details>div.game_details_wrapper {
+
+    max-width: 1440px;
 
     padding-top: 32px;
     margin-top: 32px;
@@ -269,7 +290,7 @@ section#game_presentation #game_name_cover {
 
 @media(min-width: 680px) {
 
-    #game_details {
+    #game_details>div.game_details_wrapper {
 
         display: grid;
         gap: 80px;
@@ -279,6 +300,15 @@ section#game_presentation #game_name_cover {
 
 }
 
+@media(min-width: 1440px) {
+
+    #game_details>div.game_details_wrapper {
+
+        margin: 0 auto;
+
+    }
+
+}
 
 #game_details h2 {
 
@@ -366,6 +396,7 @@ section#game_presentation #game_name_cover {
     #game_photos_videos {
 
         width: 40vw;
+        max-width: 600px;
 
     }
 }
@@ -486,13 +517,112 @@ section#game_presentation #game_name_cover {
 
 }
 
+#img_select_buttons_container {
+
+    width: 100%;
+    height: calc(100% - 4px);
+
+    z-index: 1;
+
+    display: flex;
+    justify-content: space-between;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+
+}
+
+#img_select_buttons_container button {
+
+    padding: 0 24px;
+
+    border: none;
+
+}
+
+#img_select_buttons_container button svg {
+
+    transform: scale(1.2);
+    fill: var(--white);
+
+}
+
+#img_select_buttons_container button:hover svg {
+
+    fill: var(--white-75);
+
+}
+
+@media(min-width: 768px) {
+
+    #img_select_buttons_container button {
+
+        padding: 0 20px;
+        opacity: 0;
+
+    }
+
+}
+
+
+@media(min-width: 768px) {
+    #img_container:hover #img_select_buttons_container button {
+
+        transition: all ease-in-out 150ms;
+
+        opacity: 1;
+
+    }
+}
+
+#img_select_buttons_container button:first-child {
+
+    background: linear-gradient(to left, #14171e00 25%, var(--black-50));
+
+}
+
+#img_select_buttons_container button:last-child {
+
+    background: linear-gradient(to right, #14171e00 25%, var(--black-50));
+
+}
+
+#img_select_buttons_container button[disabled] {
+
+    cursor: default;
+
+    opacity: 0 !important;
+
+}
+
+/* Images Index Dots */
 #img_array_length_dots {
+
+    width: 100%;
 
     z-index: 1;
 
     position: absolute;
     bottom: 32px;
-    left: calc(50% - 40px);
+
+    justify-content: center;
+
+    gap: 0 10px;
+
+}
+
+/* Videos Index Dots */
+#videos_array_length_dots {
+
+    width: 100%;
+
+    z-index: 1;
+
+    position: absolute;
+    bottom: 0px;
+
+    justify-content: center;
 
     gap: 0 10px;
 
@@ -532,27 +662,36 @@ section#game_presentation #game_name_cover {
 
 }
 
-/* Videos Index Dots */
-#videos_array_length_dots {
+/* Similar Games */
+#similar_games {
 
-    z-index: 1;
-
-    position: absolute;
-    bottom: 0px;
-    left: calc(50% - 40px);
-
-    gap: 0 10px;
+    background-color: var(--background-color);
 
 }
 
-/* Similar Games */
-#similar_games {
+@media(min-width: 1600px) {
+
+    #similar_games {
+        margin-bottom: 40px;
+    }
+
+}
+
+.similar_games_wrapper {
 
     margin-right: 5vw;
     padding-left: 5vw;
 
-    overflow: auto;
+}
 
+@media(min-width: 1580px) {
+    .similar_games_wrapper {
+
+        max-width: 1440px;
+        margin: 0 auto;
+        padding-left: 0;
+
+    }
 }
 
 #similar_games h2 {
@@ -565,13 +704,15 @@ section#game_presentation #game_name_cover {
 
 }
 
-#similar_games>ul {
+.similar_games_wrapper>ul {
+
+    overflow: auto;
     gap: 16px 8px;
 }
 
 @media(min-width: 768px) {
 
-    #similar_games>ul {
+    .similar_games_wrapper>ul {
 
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -581,33 +722,12 @@ section#game_presentation #game_name_cover {
 
 }
 
-@media(min-width: 420px) {
-    #similar_games>ul>li {
+@media(min-width: 1020px) {
 
-        max-width: 40vw;
-        min-width: 40vw;
+    .similar_games_wrapper>ul {
 
-    }
-}
-
-@media(min-width: 768px) {
-    #similar_games>ul>li {
-
-        max-width: 20vw;
-        min-width: auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
     }
-}
-
-#similar_games>ul>li h5 {
-
-    font-size: var(--fs-p);
-
-}
-
-
-#similar_games>ul>li p {
-
-    padding: 8px 12px;
 
 }

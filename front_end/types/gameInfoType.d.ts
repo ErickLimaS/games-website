@@ -11,10 +11,7 @@ interface GameInfo {
         first_release_date: number,
         rating: number
     }]
-    age_ratings: [{
-        category: number,
-        rating: number,
-    }],
+    age_ratings: [AgeRating],
     game_modes: [
         {
             name: string,
@@ -55,6 +52,11 @@ interface GameInfo {
     platforms: [Platforms]
     similar_games: [SimilarGames]
 
+}
+
+interface AgeRating {
+    category: number,
+    rating: number
 }
 
 interface Videos {

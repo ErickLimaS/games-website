@@ -9,7 +9,6 @@ import NextArrow from '../public/img/icons/NextArrow'
 import CarouselItem from '@/components/CarouselItem'
 import PageLoading from '@/components/PageLoading'
 import GameGenreCard from '@/components/GameGenreCard'
-import CustomHead from '@/components/CustomDocumentHead'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
 
 export default function Home() {

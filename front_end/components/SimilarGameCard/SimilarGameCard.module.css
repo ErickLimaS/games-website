@@ -1,0 +1,51 @@
+li.card_container {
+
+    position: relative;
+    top: 0;
+
+    height: inherit;
+
+    min-width: max-content;
+
+    display: flex;
+    flex-direction: column;
+
+}
+
+.card_container>a {
+
+    margin-bottom: 4px;
+
+    display: inline-flex;
+
+}
+
+.card_container img {
+
+    border-radius: 4px;
+
+    max-width: 100% !important;
+    height: auto !important;
+    max-height: 55vh !important;
+
+}
+
+span#rating{
+
+    z-index: 1;
+
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+}
+
+span#rating >*{
+
+    padding: 8px 12px;
+    border-radius: 8px;
+
+    font-size: var(--fs-minus-1);
+    font-weight: 600;
+
+}
