@@ -234,7 +234,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                                 onClick={() => setImgSliderIndex(curr => curr - 1)}
                                                 aria-label='Mostrar Foto Anterior'
                                             >
-                                                <NextArrow style={{ rotate: '180deg;' }} />
+                                                <NextArrow />
                                             </button>
 
                                             <button

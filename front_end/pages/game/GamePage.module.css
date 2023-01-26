@@ -67,7 +67,7 @@
     padding: 16px;
 
     width: 100%;
-    background: linear-gradient(to bottom, #14171e00, var(--background-color) 25%);
+    background: linear-gradient(to bottom, #14171e00, var(--background-color) 20%);
 
 }
 
@@ -267,18 +267,27 @@ section#game_presentation #game_name_cover {
     max-width: 1440px;
 
     padding-top: 32px;
-    margin-top: 32px;
 
     display: grid;
     gap: 32px;
     grid-template-areas:
-        'info'
         'imgs-videos'
+        'info'
     ;
 
 }
 
 @media(max-width: 680px) {
+
+    #game_details {
+
+        background: linear-gradient(to bottom, #14171e00, var(--background-color) 15%);
+
+    }
+
+}
+
+@media((min-width: 425px) and (max-width: 568px)) {
 
     #game_details {
 
@@ -292,6 +301,7 @@ section#game_presentation #game_name_cover {
 
     #game_details>div.game_details_wrapper {
 
+        margin-top: 32px;
         display: grid;
         gap: 80px;
         grid-template-areas: 'info imgs-videos';
@@ -543,8 +553,14 @@ section#game_presentation #game_name_cover {
 
 #img_select_buttons_container button svg {
 
-    transform: scale(1.2);
+    transform: scale(1.4);
     fill: var(--white);
+
+}
+
+#img_select_buttons_container button:first-child svg {
+
+    rotate: 180deg;
 
 }
 
@@ -666,6 +682,7 @@ section#game_presentation #game_name_cover {
 #similar_games {
 
     background-color: var(--background-color);
+    margin-bottom: 40px;
 
 }
 

@@ -8,25 +8,25 @@ interface Props {
 
 function bcgColor(rating: number) {
 
-    if (rating > 80) {
+    if (rating >= 80) {
 
-        return '#57e32c'
-
-    }
-    else if (rating > 50) {
-
-        return '#ffe234'
+        return '#78dc16'
 
     }
+    else if (rating >= 0) {
 
-    return '#ff4545'
+        return '#ffee0c'
+
+    }
+
+    return '#e8311b'
 
 
 }
 
 export const ParagraphContainer = styled.p<Props>`
 
-    padding: 12px;
+    padding: 12px
 
     @media(min-width: 1020px){
 
@@ -36,12 +36,11 @@ export const ParagraphContainer = styled.p<Props>`
 
     font-weight: 500;
 
-    background-color: ${props => props.rating ? bcgColor(props.rating) : 'var(--black-25)'};
+    background-color: ${props => props.rating ? bcgColor(props.rating) : 'var(--black-75)'};
     
     border-radius: 16px;
 
    
-
 `
 
 export default ParagraphContainer
