@@ -3,6 +3,8 @@ import Styles from './SearchResult.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import ErrorImg from '../../public/img/logo/logo.png'
+import GameRating from '../GameRating'
+import DateHumanReadable from '../DateHumanReadable'
 
 function SearchResult({ props }: { props: GameInfo }) {
 
@@ -23,9 +25,12 @@ function SearchResult({ props }: { props: GameInfo }) {
 
                     <h5>{props.name}</h5>
 
+                    {props.rating && (
+                        <GameRating props={props.rating} />
+                    )}
+
                     <small>
-                        {`${new Date(props.first_release_date * 1000).toLocaleString('default', { month: 'long' })} 
-                        ${new Date(props.first_release_date * 1000).getFullYear()}`}
+                        <DateHumanReadable date={props.first_release_date} />
                     </small>
 
                 </div>

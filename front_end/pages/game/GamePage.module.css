@@ -395,6 +395,8 @@ section#game_presentation #game_name_cover {
 
 #game_photos_videos {
 
+    z-index: 0;
+
     grid-area: imgs-videos;
 
     width: auto;

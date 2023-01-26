@@ -4,6 +4,7 @@ import Styles from './Header.module.css'
 import BrandImg from '../../../public/img/logo/logo.png'
 import Image from 'next/image'
 import List from '../../../public/img/icons/List'
+import Spinner from '../../../public/img/icons/Spinner1S200Px'
 import Search from '../../../public/img/icons/Search'
 import { searchGame } from '@/api/IGDB'
 import SearchResult from '@/components/SearchResult'
@@ -13,6 +14,8 @@ function Header() {
   const searchRefDesktop = React.useRef<HTMLInputElement>(null)
   const searchRefMobile = React.useRef<HTMLInputElement>(null)
 
+  const [loading, setLoading] = useState<boolean>(false)
+
   const [menuVisibility, setMenuVisibility] = useState<boolean>(false)
   const [searchResults, setSearchResults] = useState<GameInfo[]>([])
 
@@ -21,20 +24,17 @@ function Header() {
 
     e.preventDefault()
 
+    setLoading(true)
+
     // uses the right useRef either on mobile or desktop
     const query = screen.width >= 679 ?
       searchRefDesktop.current!.value : searchRefMobile.current!.value;
 
-    // only fetch data when theres more than 4 chars typed
-    if (query.length <= 4) {
-
-      return
-
-    }
-
     const data = await searchGame(query);
 
     setSearchResults(data)
+
+    setLoading(false)
 
     return
 
@@ -47,7 +47,7 @@ function Header() {
 
     // width 300px
     if (screenWidth > 300 && screenWidth <= 560) {
-      if (window.scrollY > 20) {
+      if (window.scrollY > 40) {
 
         const element: HTMLElement = document.getElementsByTagName('header')[0]
 
@@ -152,11 +152,15 @@ function Header() {
         <form role='search' onSubmit={(e) => { handleSearchForm(e) }} id={Styles.search_form_mobile} className={Styles.search_form}>
           <div>
             <label>
-              <input type='text' ref={searchRefMobile} onChange={(e) => { handleSearchForm(e) }} placeholder='Procurar'></input>
+              <input type='text' ref={searchRefMobile} placeholder='Procurar'></input>
             </label>
           </div>
-          <button type='submit' aria-label='Procurar'>
-            <Search alt='Ícone de Lupa' style={{ margin: '0 8px' }} />
+          <button type='submit' aria-label='Procurar' disabled={loading}>
+            {loading ? (
+              <Spinner alt='Ícone de Carregando Resultados' style={{ width: '30px', height: 'auto', marginRight: '2px' }} />
+            ) : (
+              <Search alt='Ícone de Lupa' style={{ margin: '0 8px' }} />
+            )}
           </button>
 
           {searchResults.length > 0 && (
@@ -191,12 +195,16 @@ function Header() {
           <form role='search' onSubmit={(e) => { handleSearchForm(e) }} className={Styles.search_form}>
             <div>
               <label>
-                <input type='text' ref={searchRefDesktop} onChange={(e) => { handleSearchForm(e) }} placeholder='Procurar'></input>
+                <input type='text' ref={searchRefDesktop} placeholder='Procurar'></input>
               </label>
             </div>
 
-            <button type='submit' aria-label='Procurar'>
-              <Search alt='Ícone de Lupa' style={{ margin: '0 8px' }} />
+            <button type='submit' aria-label='Procurar' disabled={loading}>
+              {loading ? (
+                <Spinner alt='Ícone de Carregando Resultados' style={{ width: '30px', height: 'auto', marginRight: '2px' }} />
+              ) : (
+                <Search alt='Ícone de Lupa' style={{ margin: '0 8px' }} />
+              )}
             </button>
 
             {searchResults.length > 0 && (
