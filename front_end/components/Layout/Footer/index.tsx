@@ -12,8 +12,8 @@ function Footer() {
           <h5>GitHub</h5>
 
           <ul>
-            <li><a href='' target='_blank' rel='noreferrer'>Meu Perfil</a></li>
-            <li><a href='' target='_blank' rel='noreferrer'>Projeto</a></li>
+            <li><a href='https://github.com/ErickLimaS/games-website' target='_blank' rel='noreferrer'>Projeto</a></li>
+            <li><a href='https://github.com/ErickLimaS' target='_blank' rel='noreferrer'>Meu Perfil</a></li>
           </ul>
         </div>
 

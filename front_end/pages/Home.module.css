@@ -56,6 +56,14 @@ section.position_top {
 
 }
 
+
+#hero_game_info {
+
+    padding-top: 120px;
+    height: 80vh;
+
+}
+
 @media(min-width: 620px) {
 
     #hero_game_info {
@@ -91,16 +99,25 @@ section.position_top {
 
     margin-top: 16px;
 
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
 
 }
 
 #hero_game_info li, #hero_game_info li a {
 
+    width: max-content;
     font-size: var(--fs-minus-2);
     font-weight: 600;
     color: var(--white-75);
+
+}
+
+
+#hero_game_info li:not(:last-child):after{
+
+    content: ', ';
+    white-space: pre;
 
 }
 
@@ -153,7 +170,8 @@ section.position_top {
 
     padding-top: 16px;
 
-    background: linear-gradient(to bottom, #14171e99, var(--background-color) 25%);
+    background: linear-gradient(to bottom, transparent, var(--background-color) 60%);
+    /* background: transparent; */
 
     min-height: 25vh;
 
@@ -224,7 +242,6 @@ section.position_top {
     font-weight: 400;
 
 }
-
 
 .buttons_container {
 
@@ -407,7 +424,7 @@ section.position_top {
 
 #genre_games .section_heading h2 {
 
-    font-size: var(--fs-h3);
+    font-size: var(--fs-h4);
     font-weight: 600;
 
 }

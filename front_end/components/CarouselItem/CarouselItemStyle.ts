@@ -54,7 +54,7 @@ export const CarouselItem = styled.li<Props[]>`
         min-height:inherit;
 
         font-size: var(--fs-minus-2);
-        font-weight: 300;
+        font-weight: 500;
 
     }
     >a span{
@@ -65,22 +65,30 @@ export const CarouselItem = styled.li<Props[]>`
     
     >a:hover span{
 
+        animation: fade-in forwards 500ms;
+
         width: inherit;
         height: inherit;
 
         border-radius: 4px 4px 0 0;
         background: var(--black-50);
 
+        padding: 8px 0;
+
         display: block;
 
     }
 
-    @media((min-width: 0px) and (max-width: 768px)){
-        :hover{
-            
-            transform: scale(1.02);
+    @keyframes fade-in {
 
-        } 
+        0%{
+            opacity: 0;
+        }
+        100%{
+            opacity: 1;
+        }
+
     }
+
 
 `

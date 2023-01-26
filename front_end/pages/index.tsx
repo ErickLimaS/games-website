@@ -17,22 +17,37 @@ export default function Home() {
   const [genreGames, setGenreGames] = useState<GameInfo[]>([])
   const [platformGames, setPlatformGames] = useState<GameInfo[]>([])
 
+  // randomize the game from hero section  
   const [heroGameInfoIndex, setHeroGameInfoIndex] = useState<number>(0)
+  const [backgroundHeroIndex, setBackgroundHeroIndex] = useState<number>(0)
+
   const [carouselRowNumber, setCarouselRowNumber] = useState<number>(0)
-  const [platformCarouselRowNumber, setPlatformCarouselRowNumber] = useState<number>(0)
   const [genreContainerRowNumber, setGenreContainerRowNumber] = useState<number>(0)
+  // const [platformCarouselRowNumber, setPlatformCarouselRowNumber] = useState<number>(0)
+
+  function randomizeIndex(array: any) {
+
+    return Math.floor(Math.random() * array.length)
+
+  }
 
   async function getData() {
 
     const homeGames = await homePageGames()
     const genreGames = await fetchGamesByGenre('horror')
-    const platformGames = await fetchGamesByPlatform('48')
+    // const platformGames = await fetchGamesByPlatform('48')
 
     setHeroSectionGames(homeGames)
     setGenreGames(genreGames)
-    setPlatformGames(platformGames)
+    // setPlatformGames(platformGames)
 
-    setPlatformCarouselRowNumber(platformGames[0].id)
+    // setPlatformCarouselRowNumber(platformGames[0].id)
+
+    setHeroGameInfoIndex(randomizeIndex(homeGames))
+    setBackgroundHeroIndex(
+      randomizeIndex(homeGames[heroGameInfoIndex].artworks ?
+        homeGames[heroGameInfoIndex].artworks : homeGames[heroGameInfoIndex].screenshots)
+    )
 
   }
 
@@ -60,11 +75,27 @@ export default function Home() {
     getData()
   }, [])
 
+  function hoverEvent(gameHovered: GameInfo) {
+
+    setHeroGameInfoIndex(heroSectionGames.indexOf(gameHovered))
+    setBackgroundHeroIndex(
+      randomizeIndex(heroSectionGames[heroSectionGames.indexOf(gameHovered)].artworks ?
+        heroSectionGames[heroSectionGames.indexOf(gameHovered)].artworks : heroSectionGames[heroSectionGames.indexOf(gameHovered)].screenshots)
+    )
+
+  }
+
   return (
     heroSectionGames.length > 0 ? (
       <>
-        <CustomDocumentHead title='Home'/>
-        <BackgroundImage {...heroSectionGames[heroGameInfoIndex].artworks[0]} id={Styles.container}
+        <CustomDocumentHead title='Home' />
+
+        <BackgroundImage
+          {...heroSectionGames[heroGameInfoIndex].artworks ?
+            heroSectionGames[heroGameInfoIndex].artworks[backgroundHeroIndex] :
+            heroSectionGames[heroGameInfoIndex].screenshots[backgroundHeroIndex]
+          }
+          id={Styles.container}
         />
 
         <section id={Styles.hero_game_info} className={`${Styles.section_margin} ${Styles.fix_position_absolute}`}>
@@ -112,7 +143,9 @@ export default function Home() {
           {screen.width >= 480 && (
             <ul aria-live="polite">
               {heroSectionGames.slice(sliceFilterRange(carouselRowNumber)[0], sliceFilterRange(carouselRowNumber)[1]).map((item: GameInfo) => (
-                <CarouselItem key={item.id} props={item} />
+                <span key={item.id} onMouseEnter={() => hoverEvent(item)}>
+                  <CarouselItem props={item} />
+                </span>
               ))}
             </ul>
           )}
@@ -126,7 +159,7 @@ export default function Home() {
           )}
 
           <div id={Styles.carousel_indicators}>
-            {heroSectionGames.map((item: GameInfo, key: number) => (
+            {heroSectionGames.slice(0, 2).map((item: GameInfo, key: number) => (
               <span key={key}
                 data-active-row={carouselRowNumber === key ? true : false}
                 onClick={() => setCarouselRowNumber(key)}

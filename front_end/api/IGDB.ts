@@ -76,7 +76,6 @@ export async function homePageGames() {
             }
             ))
 
-        // search "Counter Strike";
         setToken(data)
 
         return data.result
