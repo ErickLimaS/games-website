@@ -59,15 +59,25 @@ li.result_item_container .item_info h5 {
 /* rating */
 li.result_item_container .item_info p {
 
+    padding-top: 6px;
+
     width: 30px;
     height: 30px;
-    padding: 4px;
 
     text-align: center;
 
     border-radius: 8px;
 
     font-size: var(--fs-minus-2);
+
+}
+
+@media(min-width: 1140px) {
+
+    li.result_item_container .item_info p {
+
+        padding-top: 4px;
+    }
 
 }
 

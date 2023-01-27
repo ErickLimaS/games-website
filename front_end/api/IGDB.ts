@@ -186,6 +186,23 @@ export async function fetchUpcomingGamesRelease() {
     }
 }
 
+export async function fetchThemes() {
+
+    try{
+
+    const {data} = await Axios(reqConfig({query: `fields *; limit 18;`, route: '/themes'}))
+
+    return data.result
+
+    }
+    catch(err){
+
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('expires_in')
+
+    }
+
+}
 
 //     getMonthRelease: async () => {
 

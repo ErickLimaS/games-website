@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ErrorImg from '../../public/img/logo/logo.png'
 import GameRating from '../GameRating'
+import DateHumanReadable from '../DateHumanReadable'
 
 function GameGenreCard({ props }: { props: GameInfo | SimilarGames }) {
 
@@ -31,24 +32,25 @@ function GameGenreCard({ props }: { props: GameInfo | SimilarGames }) {
 
                     {props.rating && <GameRating props={props.rating} />}
 
-                    <div className={Styles.game_companies}>
+                    <div className={Styles.details}>
+
+                        <p>Mais de <span>{props.rating_count}</span> avaliações</p>
+
+                        <small>
+                            <DateHumanReadable date={props.first_release_date} />
+                        </small>
 
                         {props.involved_companies != undefined && (
                             <ul>
                                 {props.involved_companies.slice(0, 1).map((item: { company: { slug: string, name: string } }) => (
                                     <li key={item.company.slug}>
-                                        <Link href={`/companie/${item.company.slug}`}>
+                                        <Link href={`/company/${item.company.slug}`}>
                                             {item.company.name}
                                         </Link>
                                     </li>
                                 ))}
                             </ul>
                         )}
-
-                        <small>
-                            {`${new Date(props.first_release_date * 1000).toLocaleString('default', { month: 'long' })} 
-                        ${new Date(props.first_release_date * 1000).getFullYear()}`}
-                        </small>
 
                     </div>
 

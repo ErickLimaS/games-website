@@ -48,7 +48,13 @@ li.card_container {
 }
 
 
-.item_info h5 {
+.item_info a>h5, .item_info>a {
+
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 
     font-size: var(--fs-h5);
     font-weight: 400;
@@ -77,7 +83,7 @@ li.card_container {
 
 }
 
-.game_companies ul {
+.details ul {
 
     display: flex;
     flex-wrap: wrap;
@@ -85,7 +91,9 @@ li.card_container {
 
 }
 
-.game_companies li a {
+.details li a {
+
+    display: block;
 
     color: var(--white-75);
     font-size: var(--fs-minus-2);
@@ -93,13 +101,34 @@ li.card_container {
 
 }
 
-.game_companies li a:hover {
+.details>small {
+
+    display: block;
+    margin: 8px 0;
+
+}
+
+.details>p {
+
+    color: var(--white);
+    font-size: var(--fs-minus-1);
+    font-weight: 300;
+
+}
+
+.details>p span{
+
+    font-weight: 400;
+
+}
+
+.details li a:hover {
 
     color: var(--white);
 
 }
 
-.game_companies li:not(:last-child):after {
+.details li:not(:last-child):after {
 
     content: ', ';
     color: var(--white-50);

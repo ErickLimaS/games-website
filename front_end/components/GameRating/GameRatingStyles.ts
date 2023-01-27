@@ -26,11 +26,17 @@ function bcgColor(rating: number) {
 
 export const ParagraphContainer = styled.p<Props>`
 
-    padding: 12px
+    text-align: center;
+
+    padding-top: 8px;
+    
+    width: 45px;
+    height: 45px;
 
     @media(min-width: 1020px){
 
-        padding: 16px;
+        width: 50px;
+        height: 50px;
 
     }
 

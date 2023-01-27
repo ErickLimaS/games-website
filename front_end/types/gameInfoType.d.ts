@@ -5,6 +5,7 @@ interface GameInfo {
     rating: number,
     storyline: string,
     summary: string,
+    rating_count: number,
     expansions: [{
         name: string,
         slug: string,
@@ -42,15 +43,25 @@ interface GameInfo {
     ]
     slug: string,
     first_release_date: number,
-    themes: [
-        {
-            name: string,
-            slug: string
-        }
-    ],
+    genres: [Genres],
+    themes: [Themes],
     videos: [Videos],
     platforms: [Platforms]
     similar_games: [SimilarGames]
+
+}
+
+interface Themes {
+
+    name: string,
+    slug: string
+
+}
+
+interface Genres {
+
+    name: string,
+    slug: string
 
 }
 
@@ -74,7 +85,7 @@ interface Platforms {
 
 }
 
-interface SimilarGames {
+interface SimilarGames extends GameInfo {
     slug: string,
     cover: {
         url: string | undefined,
