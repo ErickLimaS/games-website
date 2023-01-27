@@ -8,19 +8,16 @@ Esse é um site onde possui grande parte de todos os jogos e consoles já lança
 ## :hammer: Funcionalidades
 
 - [x] `Procure o seu próximo jogo`: Use o sistema de busca suportado pela API da Twitch e ache o jogo que quiser. Salve para ver mais tarde ou para ficar informado com mudanças da pontuação.
-- [x] `Crie sua conta para salvar seus jogos favoritos`
-- [x] `Fique informado com atualizações dos jogos favoritados`: Quando ouver mudanças na nota dos seus jogos, você será notificado!
 
 ## :pushpin: Em Planejamento
 
-- [ ] `Refazer Layouts Problematicos`: Em Andamento...
-- [ ] `Consulte e Compare Preços dos Jogos`: Sem Previsão
-- [ ] `Modo Noturno`: Sem Previsão
+- [ ] `Crie sua conta para salvar seus jogos favoritos`
+- [ ] `Fique informado com atualizações dos jogos favoritados`: Quando ouver mudanças na nota dos seus jogos, você será notificado!
+- [ ] `Consulte e Compare Preços dos Jogos`
 
 ## :heavy_check_mark: Tecnologias Utilizadas
 
-- ``React``
-- ``React Router``
+- ``Next``
 - ``SweetAlert2``
 - ``Styled Components``
 - ``Redux``
