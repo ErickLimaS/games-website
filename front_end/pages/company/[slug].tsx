@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { fetchCompany } from '../../api/IGDB'
 import Styles from './CompanyPage.module.css'
 import NextArrow from '../../public/img/icons/NextArrow'
@@ -9,28 +9,74 @@ import SimilarGameCard from '@/components/SimilarGameCard'
 import DateHumanReadable from '@/components/DateHumanReadable'
 import SearchResult from '@/components/SearchResult'
 import CarouselItem from '@/components/CarouselItem'
+import PageLoading from '@/components/PageLoading'
 
-interface PageTypes {
+interface Games {
 
-    company: Company,
-    games: {
-        highestRatings: GameInfo[] | null,
-        latestReleases: GameInfo[] | null
-        moreGames: GameInfo[] | null
-    }
+
+    highestRatings: GameInfo[],
+    latestReleases: GameInfo[],
+    moreGames: GameInfo[]
+
 
 }
 
-export default function CompanyPage({ company, games }: PageTypes) {
+export default function CompanyPage({ companySlug }: { companySlug: string }) {
 
-    console.log(company, games)
-
-    const companyLogoImgSrc: string | any = company.logo != undefined ? `https://images.igdb.com/igdb/image/upload/t_logo_med/${company.logo.image_id}.png` : ErrorImg
-
+    // pagination index 
     const [latestGamesBtnIndex, setLatestGamesBtnIndex] = useState<number>(0)
     const [moreGamesBtnIndex, setMoreGamesBtnIndex] = useState<number>(0)
 
+    const [loading, setLoading] = useState<boolean>(true)
+
+    // content data
+    const [company, setCompany] = useState<any>([])
+    const [games, setGames] = useState<Games>()
+
+    let companyLogoImgSrc: string | any
+
+    // fetchs data to this page
+    async function fetchData() {
+        setLoading(true)
+
+        const res = await fetchCompany(companySlug, {
+            latestReleasePag: latestGamesBtnIndex
+        })
+
+        setCompany(res[0].result[0])
+        setGames(
+            {
+                highestRatings: res[1] ? res[1].result : null,
+                latestReleases: res[2] ? res[2].result : null,
+                moreGames: res[2] ? res[2].result : null,
+            }
+        )
+
+
+        companyLogoImgSrc = res[0].result[0].logo != undefined ? `https://images.igdb.com/igdb/image/upload/t_logo_med/${res[0].result[0].logo.image_id}.png` : ErrorImg
+
+        setLoading(false)
+    }
+
+    useEffect(() => {
+
+        fetchData()
+
+    }, [companySlug, moreGamesBtnIndex, latestGamesBtnIndex])
+
+    if (loading === true) {
+        return (
+
+            <>
+                <CustomDocumentHead title={company.name || companySlug} />
+                <PageLoading />
+            </>
+
+        )
+    }
+
     return (
+
         <>
             <CustomDocumentHead title={company.name} />
 
@@ -39,12 +85,17 @@ export default function CompanyPage({ company, games }: PageTypes) {
                 <section id={Styles.page_heading}>
 
                     <div id={Styles.img_container}>
-                        <Image
+                        {/* <Image
                             loader={() => companyLogoImgSrc}
-                            src={companyLogoImgSrc}
+                            src={`https://images.igdb.com/igdb/image/upload/t_logo_med/${company.logo.image_id}.png`}
                             alt={company.name}
                             fill
-                        ></Image>
+                        ></Image> */}
+                        <img
+                            alt={company.name}
+                            alt={company.name}
+                            src={`https://images.igdb.com/igdb/image/upload/t_logo_med/${company.logo.image_id}.png`} width={500} height={500}
+                        />
                     </div>
 
                     <div>
@@ -62,7 +113,7 @@ export default function CompanyPage({ company, games }: PageTypes) {
                 <div className={Styles.content_grid}>
                     <div className={Styles.content_container}>
 
-                        {games.latestReleases && (
+                        {games!.latestReleases && (
 
                             <section id={Styles.latest_releases}>
 
@@ -79,7 +130,7 @@ export default function CompanyPage({ company, games }: PageTypes) {
                                             <NextArrow />
                                         </button>
                                         <button
-                                            disabled={latestGamesBtnIndex === games.latestReleases!.length}
+                                            disabled={latestGamesBtnIndex === games!.latestReleases!.length}
                                             onClick={() => setLatestGamesBtnIndex(curr => curr + 1)}
                                             aria-label='Próximo'
                                         >
@@ -89,7 +140,7 @@ export default function CompanyPage({ company, games }: PageTypes) {
                                 </div>
 
                                 <ul>
-                                    {games.latestReleases!.map((item: GameInfo) => (
+                                    {games!.latestReleases!.map((item: GameInfo) => (
                                         <CarouselItem key={item.id} props={item} />
                                     ))}
                                 </ul>
@@ -98,7 +149,7 @@ export default function CompanyPage({ company, games }: PageTypes) {
 
                         )}
 
-                        {games.moreGames && (
+                        {games!.moreGames && (
                             <section id={Styles.more_games}>
 
                                 <div className={Styles.section_heading_container}>
@@ -114,7 +165,7 @@ export default function CompanyPage({ company, games }: PageTypes) {
                                             <NextArrow />
                                         </button>
                                         <button
-                                            disabled={moreGamesBtnIndex === games.moreGames!.length}
+                                            disabled={moreGamesBtnIndex === games!.moreGames!.length}
                                             onClick={() => setMoreGamesBtnIndex(curr => curr + 1)}
                                             aria-label='Próximo'
                                         >
@@ -125,7 +176,7 @@ export default function CompanyPage({ company, games }: PageTypes) {
 
                                 <ul>
 
-                                    {games.moreGames!.map((item: GameInfo) => (
+                                    {games!.moreGames!.map((item: GameInfo) => (
                                         <CarouselItem key={item.id} props={item} />
                                     ))}
 
@@ -136,13 +187,13 @@ export default function CompanyPage({ company, games }: PageTypes) {
 
                     </div>
 
-                    {games.highestRatings && (
+                    {games!.highestRatings && (
                         <aside id={Styles.aside_content}>
 
                             <h3>Mais bem avaliados</h3>
 
                             <ul>
-                                {games.highestRatings!.map((item: GameInfo) => (
+                                {games!.highestRatings!.map((item: GameInfo) => (
 
                                     <SearchResult key={item.id} props={item} />
 
@@ -161,16 +212,9 @@ export default function CompanyPage({ company, games }: PageTypes) {
 
 export async function getServerSideProps({ query }: any) {
 
-    const res = await fetchCompany(query.slug)
-
     return {
         props: {
-            company: res[0].result[0],
-            games: {
-                highestRatings: res[1] ? res[1].result : null,
-                latestReleases: res[1] ? res[1].result : null,
-                moreGames: res[1] ? res[1].result : null,
-            }
+            companySlug: query.slug
         }
     }
 

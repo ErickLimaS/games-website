@@ -98,6 +98,11 @@
 
 #img_container img {
 
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    inset: 0px;
+
     background: transparent;
 
 }
@@ -249,7 +254,7 @@
 
 #aside_content>h3 {
 
-    font-size: var(--fs-p);
+    font-size: calc(var(--fs-p) - 3px);
     font-weight: 400;
 
 }

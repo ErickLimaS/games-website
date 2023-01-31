@@ -12,8 +12,6 @@ import DateHumanReadable from '@/components/DateHumanReadable'
 
 export default function GamePage({ game }: { game: GameInfo }) {
 
-    console.log(game)
-
     // gets a random number on array range of artworks, to show a random img when page is loaded
     const [backgroundImgIndex, setBackgroundImgIndex] = useState<number>(0)
 
@@ -25,6 +23,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
     const [tabIndex, setTabIndex] = useState<number>(0)
 
     const gameCoverImgSrc: string | any = game.cover != undefined ? `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover.image_id}.jpg` : ErrorImg
+    console.log(gameCoverImgSrc)
 
     // returns the img source with the new array index when next and previous button is clicked
     function screenshotSrc(index: number) {

@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 // const API_BASE = 'http://localhost:9000/api'
-const API_BASE = 'https://my-next-game.onrender.com/api'
+const API_BASE = 'https://my-next-game.onren2der.com/api'
 
 function reqConfig(body?: object) {
 
@@ -193,7 +193,11 @@ export async function fetchThemes() {
 
 }
 
-export async function fetchCompany(companySlug: string) {
+export async function fetchCompany(
+    companySlug: string,
+    pagination?: {
+        latestReleasePag: number
+    }) {
 
     try {
 
@@ -203,7 +207,7 @@ export async function fetchCompany(companySlug: string) {
                     query companies "Company ${companySlug}" {
                         fields *, description, developed.*, published.*, logo.*;
                         where slug = "${companySlug}"; 
-                        limit 18;
+                        limit 1;
                     };
 
                     query games "Highest Rating games from ${companySlug}" {
@@ -212,11 +216,21 @@ export async function fetchCompany(companySlug: string) {
                         sort rating desc;
                         limit 6;
                     };
-            
+
+                    query games "Latest Release games from ${companySlug}" {
+                        ${queryAllFields}
+                        where artworks != null & involved_companies.company.slug = "${companySlug}";
+                        sort release_dates.human desc;
+                        limit 8;
+                        offset ${pagination ? (pagination?.latestReleasePag * 8) : 0};
+                    };
+
                      `,
                 route: '/multiquery'
             }
         ))
+
+        console.log(data)
 
         return data.result
 
