@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { fetchCompany } from '../../api/IGDB'
 import Styles from './CompanyPage.module.css'
@@ -92,7 +93,6 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
                             fill
                         ></Image> */}
                         <img
-                            alt={company.name}
                             alt={company.name}
                             src={`https://images.igdb.com/igdb/image/upload/t_logo_med/${company.logo.image_id}.png`} width={500} height={500}
                         />

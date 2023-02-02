@@ -1,7 +1,7 @@
 import Axios from 'axios'
 
 // const API_BASE = 'http://localhost:9000/api'
-const API_BASE = 'https://my-next-game.onren2der.com/api'
+const API_BASE = process.env.API_RENDER_URL || `http://localhost:9000/api`
 
 function reqConfig(body?: object) {
 
@@ -47,7 +47,7 @@ function setToken(data: { result: object[], success: boolean, token?: { access_t
 
 }
 
-// standardizes all data fetched from API
+// standardizes all important data fetched from API
 const queryAllFields = 'fields *, expansions.*, similar_games.*, similar_games.cover.*, similar_games.themes.*, similar_games.cover, similar_games.involved_companies, similar_games.involved_companies.company.*, videos.*, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, age_ratings.category, age_ratings.rating_cover_url,  cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, themes.*;'
 
 export async function homePageGames() {
@@ -119,7 +119,29 @@ export async function fetchGamesByGenre(genreSlug: string) {
     try {
         const { data } = await Axios(reqConfig(
             {
-                query: `${queryAllFields} where artworks != null & themes.name ~ "${genreSlug}";`
+                query: `
+                query themes "Genre ${genreSlug}" {
+                    fields *;
+                    where slug = "${genreSlug}";
+                };
+                query games "Game Ratings on ${genreSlug} genre" {
+                    ${queryAllFields} 
+                    where themes.slug = "${genreSlug}" & rating != null;
+                    sort rating desc;
+                    limit 15;
+                };
+                query games "Latest Releases on ${genreSlug} genre" {
+                    ${queryAllFields} 
+                    where themes.slug = "${genreSlug}";
+                    sort first_release_date.date desc;
+                    limit 15;
+                };
+                query games "More Games on ${genreSlug} genre" {
+                    ${queryAllFields} 
+                    where themes.slug = "${genreSlug}";
+                    limit 15;
+                };`,
+                route: '/multiquery'
             }
         ))
 
@@ -223,22 +245,71 @@ export async function fetchCompany(
                         sort release_dates.human desc;
                         limit 8;
                         offset ${pagination ? (pagination?.latestReleasePag * 8) : 0};
-                    };
-
-                     `,
+                    };`,
                 route: '/multiquery'
             }
         ))
-
-        console.log(data)
 
         return data.result
 
     }
     catch (err) {
 
-        // localStorage.removeItem('access_token')
-        // localStorage.removeItem('expires_in')
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('expires_in')
+
+    }
+
+}
+
+export async function fetchGameMode(
+    gameModeSlug: string,
+    pagination?: {
+        latestReleasePag: number
+    }) {
+
+    try {
+
+        const { data } = await Axios(reqConfig(
+            {
+                query: `
+                    query game_modes "Game Mode ${gameModeSlug}" {
+                        fields *;
+                        where slug = "${gameModeSlug}"; 
+                        limit 1;
+                    };
+
+                    query games "Highest Rating games from ${gameModeSlug} mode" {
+                        ${queryAllFields}
+                        where artworks != null & game_modes.slug = "${gameModeSlug}" & rating != null;
+                        sort rating desc;
+                        limit 6;
+                    };
+
+                    query games "Latest Release games from ${gameModeSlug} mode" {
+                        ${queryAllFields}
+                        where artworks != null & game_modes.slug = "${gameModeSlug}";
+                        sort release_dates.human desc;
+                        limit 8;
+                        offset ${pagination ? (pagination?.latestReleasePag * 8) : 0};
+                    };
+                    
+                    query games "More Games on ${gameModeSlug} mode" {
+                        ${queryAllFields} 
+                        where game_modes.slug = "${gameModeSlug}";
+                        limit 15;
+                    };`,
+                route: '/multiquery'
+            }
+        ))
+
+        return data.result
+
+    }
+    catch (err) {
+
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('expires_in')
 
     }
 

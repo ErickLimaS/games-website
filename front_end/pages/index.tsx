@@ -28,7 +28,7 @@ export default function Home() {
 
   function randomizeIndex(array: any) {
 
-    return Math.floor(Math.random() * array.length)
+    return Math.floor(Math.random() * array.length) || 0
 
   }
 
@@ -92,7 +92,16 @@ export default function Home() {
 
   }
 
-  return (heroSectionGames.length > 0 ? (
+  if (heroSectionGames.length === 0) {
+    return (
+      <>
+        <CustomDocumentHead title='Carregando' />
+        <PageLoading />
+      </>
+    )
+  }
+
+  return (
     <>
       <CustomDocumentHead title='Home' />
 
@@ -287,9 +296,7 @@ export default function Home() {
       )}
 
     </>
-  ) : (
-    <PageLoading />
-  ))
+  )
 }
 
 // export async function getServerSideProps(props: any) {

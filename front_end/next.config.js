@@ -5,6 +5,9 @@ const nextConfig = {
 
 module.exports = {
   reactStrictMode: true,
+  env: {
+    API_RENDER_URL: process.env.API_RENDER_URL
+  },
   images: {
     remotePatterns: [
       {

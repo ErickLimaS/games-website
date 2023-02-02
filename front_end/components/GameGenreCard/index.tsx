@@ -56,15 +56,17 @@ function GameGenreCard({ props }: { props: GameInfo | SimilarGames }) {
 
                 </div>
 
-                <div className={Styles.game_genres}>
-                    {props.themes.slice(0, 5).map((item: { name: string, slug: string }) => (
-                        <small key={item.slug}>
-                            <Link href={`/genre/${item.slug}`}>{item.name}</Link>
-                        </small>
-                    ))}
+                {props.themes && (
+                    <div className={Styles.game_genres}>
+                        {props.themes.slice(0, 5).map((item: { name: string, slug: string }) => (
+                            <small key={item.slug}>
+                                <Link href={`/genre/${item.slug}`}>{item.name}</Link>
+                            </small>
+                        ))}
 
-                </div>
-
+                    </div>
+                )}
+                
             </div>
         </li>
     )
