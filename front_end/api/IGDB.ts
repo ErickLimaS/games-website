@@ -50,17 +50,33 @@ function setToken(data: { result: object[], success: boolean, token?: { access_t
 // standardizes all important data fetched from API
 const queryAllFields = 'fields *, expansions.*, similar_games.*, similar_games.cover.*, similar_games.themes.*, similar_games.cover, similar_games.involved_companies, similar_games.involved_companies.company.*, videos.*, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, age_ratings.category, age_ratings.rating_cover_url,  cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, themes.*;'
 
-export async function homePageGames() {
+export async function fetchHomePageData(genre?: string, platform?: string) {
 
     try {
         const { data } = await Axios(reqConfig(
 
             {
                 query:
-                    `${queryAllFields}
-                where artworks != null & rating > 80 & release_dates.m = ${new Date().getMonth() + 1} & release_dates.y = ${new Date().getFullYear()};
-                sort release_dates.date desc;
-                limit 20;`
+                    `query games "This Month Releases" {
+                        ${queryAllFields}
+                        where artworks != null & rating > 80 & release_dates.m = ${new Date().getMonth() + 1} & release_dates.y = ${new Date().getFullYear()};
+                        sort release_dates.date desc;
+                        limit 20;
+                    };
+                    query games "${genre || `horror`} Genre" {
+                        ${queryAllFields}
+                        where artworks != null & themes.slug = "${genre || `horror`}";
+                        limit 20;
+                    };
+                    query games "Games to Platform ${platform || `48`}" {
+                        where artworks != null & platforms.id = (${platform || `48`});
+                    };
+                    query themes "Themes Limited To 18" {
+                        fields *; 
+                        limit 18;
+                    };
+                    `,
+                route: '/multiquery'
             }
         ))
 
@@ -162,7 +178,10 @@ export async function fetchGamesByPlatform(platform: string) {
     try {
         const { data } = await Axios(reqConfig(
             {
-                query: `${queryAllFields} where artworks != null & platforms.id = (${platform});`
+                query: `
+                    ${queryAllFields} 
+                    where artworks != null & platforms.id = (${platform});
+                `
             }
         ))
 
@@ -174,7 +193,6 @@ export async function fetchGamesByPlatform(platform: string) {
         localStorage.removeItem('expires_in')
 
     }
-
 
 }
 
@@ -195,24 +213,6 @@ export async function fetchUpcomingGamesRelease() {
         localStorage.removeItem('expires_in')
 
     }
-}
-
-export async function fetchThemes() {
-
-    try {
-
-        const { data } = await Axios(reqConfig({ query: `fields *; limit 18;`, route: '/themes' }))
-
-        return data.result
-
-    }
-    catch (err) {
-
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
-
-    }
-
 }
 
 export async function fetchCompany(

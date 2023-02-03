@@ -62,18 +62,44 @@ export const CarouselItem = styled.li<Props[]>`
         display: none;
         
     }
+
+    .carousel_item_container{
+
+        height: 100%;
+        padding: 16px;
+
+        display: flex;
+        gap: 0 16px;
+        align-items: flex-start;
+
+    }
+    
+    .carousel_item_container img{
+
+        margin: auto 0;
+        border-radius: 4px;
+
+    }
+
+    .carousel_item_container h5{
+
+        margin-top: 8px;
+
+        font-size: var(--fs-minus-1);
+        font-weight: 500;
+
+    }
     
     >a:hover span{
 
         animation: fade-in forwards 500ms;
 
         width: inherit;
-        height: inherit;
+        height: 160px;
 
         border-radius: 4px 4px 0 0;
         background: var(--black-50);
 
-        padding: 8px 0;
 
         display: block;
 

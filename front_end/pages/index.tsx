@@ -1,6 +1,6 @@
 import Styles from './Home.module.css'
 import { BackgroundImage } from '../styles/HomeStyles'
-import { fetchGamesByGenre, fetchGamesByPlatform, fetchThemes, homePageGames } from '../api/IGDB'
+import { fetchHomePageData } from '../api/IGDB'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -11,21 +11,29 @@ import PageLoading from '@/components/PageLoading'
 import GameGenreCard from '@/components/GameGenreCard'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
 
+interface HomePage {
+
+  heroSection: GameInfo[],
+  genreSection: GameInfo[],
+  platformSection: GameInfo[],
+  themeSection: Themes[]
+
+}
+
 export default function Home() {
 
-  const [heroSectionGames, setHeroSectionGames] = useState<GameInfo[]>([])
-  const [genreGames, setGenreGames] = useState<GameInfo[]>([])
-  const [themes, setThemes] = useState<Themes[]>([])
-  // const [platformGames, setPlatformGames] = useState<GameInfo[]>([])
+  const [homePageData, setHomePageData] = useState<HomePage>()
 
-  // randomize the game from hero section  
+  // indicates the index game from hero section  
   const [heroGameInfoIndex, setHeroGameInfoIndex] = useState<number>(0)
   const [backgroundHeroIndex, setBackgroundHeroIndex] = useState<number>(0)
 
+  // index for the carousel buttons on each section
   const [carouselRowNumber, setCarouselRowNumber] = useState<number>(0)
   const [genreContainerRowNumber, setGenreContainerRowNumber] = useState<number>(0)
-  const [platformCarouselRowNumber, setPlatformCarouselRowNumber] = useState<number>(0)
+  // const [platformCarouselRowNumber, setPlatformCarouselRowNumber] = useState<number>(0)
 
+  // randomize the index for background image or any other component that needs a random numb
   function randomizeIndex(array: any) {
 
     return Math.floor(Math.random() * array.length) || 0
@@ -34,31 +42,32 @@ export default function Home() {
 
   async function getData() {
 
-    const homeGames = await homePageGames()
-    const genreGames = await fetchGamesByGenre('horror')
-    // const platformGames = await fetchGamesByPlatform('48')
-    const themesAvailable = await fetchThemes();
+    const pageData = await fetchHomePageData('horror', '48')
 
-    setGenreGames(genreGames)
-    // setPlatformGames(genreGames)
+    const heroSectionData = pageData[0].result
 
-    // setPlatformCarouselRowNumber(genreGames.length / 2)
-
-    setHeroGameInfoIndex(randomizeIndex(homeGames))
+    setHeroGameInfoIndex(randomizeIndex(heroSectionData))
 
     setBackgroundHeroIndex(
-      randomizeIndex(homeGames[heroGameInfoIndex].artworks ?
-        homeGames[heroGameInfoIndex].artworks : homeGames[heroGameInfoIndex].screenshots)
+      randomizeIndex(heroSectionData[heroGameInfoIndex].artworks ?
+        heroSectionData[heroGameInfoIndex].artworks : heroSectionData[heroGameInfoIndex].screenshots)
     )
-
-    setThemes(themesAvailable)
+    
+    // setPlatformCarouselRowNumber(genreGames.length / 2)
 
     // defines when page load is done
-    setHeroSectionGames(homeGames)
+    setHomePageData(
+      {
+        heroSection: pageData[0].result,
+        genreSection: pageData[1].result,
+        platformSection: pageData[2].result,
+        themeSection: pageData[3].result
+      }
+    )
 
   }
 
-  // return array with the exact ammout of how many results should be shown on carousel 
+  // returns array with the range that should be shown on carousel 
   function sliceFilterRange(currentCarouselRow: number) {
 
     if (screen.width > 480 && screen.width < 660) {
@@ -84,18 +93,19 @@ export default function Home() {
 
   function hoverEvent(gameHovered: GameInfo) {
 
-    setHeroGameInfoIndex(heroSectionGames.indexOf(gameHovered))
+    setHeroGameInfoIndex(homePageData!.heroSection.indexOf(gameHovered))
+
     setBackgroundHeroIndex(
-      randomizeIndex(heroSectionGames[heroSectionGames.indexOf(gameHovered)].artworks ?
-        heroSectionGames[heroSectionGames.indexOf(gameHovered)].artworks : heroSectionGames[heroSectionGames.indexOf(gameHovered)].screenshots)
-    )
+      randomizeIndex(
+        homePageData!.heroSection[homePageData!.heroSection.indexOf(gameHovered)].artworks ?
+          homePageData!.heroSection[homePageData!.heroSection.indexOf(gameHovered)].artworks : homePageData!.heroSection[homePageData!.heroSection.indexOf(gameHovered)].screenshots
+      ))
 
   }
 
-  if (heroSectionGames.length === 0) {
+  if (!homePageData) {
     return (
       <>
-        <CustomDocumentHead title='Carregando' />
         <PageLoading />
       </>
     )
@@ -106,9 +116,9 @@ export default function Home() {
       <CustomDocumentHead title='Home' />
 
       <BackgroundImage
-        {...heroSectionGames[heroGameInfoIndex].artworks ?
-          heroSectionGames[heroGameInfoIndex].artworks[backgroundHeroIndex] :
-          heroSectionGames[heroGameInfoIndex].screenshots[backgroundHeroIndex]
+        {...homePageData!.heroSection[heroGameInfoIndex].artworks ?
+          homePageData!.heroSection[heroGameInfoIndex].artworks[backgroundHeroIndex] :
+          homePageData!.heroSection[heroGameInfoIndex].screenshots[backgroundHeroIndex]
         }
         id={Styles.container}
       />
@@ -117,20 +127,21 @@ export default function Home() {
 
         <div>
 
-          <h1><Link href={`/game/${heroSectionGames[heroGameInfoIndex].slug}`}>{heroSectionGames[heroGameInfoIndex].name}</Link></h1>
+          <h1><Link href={`/game/${homePageData!.heroSection[heroGameInfoIndex].slug}`}>{homePageData!.heroSection[heroGameInfoIndex].name}</Link></h1>
 
-          {heroSectionGames[heroGameInfoIndex].game_modes.length > 0 && (
+          {homePageData!.heroSection[heroGameInfoIndex].game_modes.length > 0 && (
             <ul>
-              {heroSectionGames[heroGameInfoIndex].game_modes.slice(0, 3).map((item: { name: string, slug: string }, key: any) => (
-                <li key={key}><Link href={`/genre/${item.slug}`}>{item.name}</Link></li>
+              {homePageData!.heroSection[heroGameInfoIndex].game_modes.slice(0, 3).map((item: { name: string, slug: string }, key: any) => (
+                <li key={key}><Link href={`/game-mode/${item.slug}`}>{item.name}</Link></li>
               ))}
-              {heroSectionGames[heroGameInfoIndex].game_modes.length > 3 && (
+              {homePageData!.heroSection[heroGameInfoIndex].game_modes.length > 3 && (
                 <li>e mais.</li>
               )}
             </ul>
           )}
 
-          <button role='link' onClick={() => router.push(`/game/${heroSectionGames[0].slug}`)}>
+          <button role='link'
+            onClick={() => router.push(`/game/${homePageData!.heroSection[0].slug}`)}>
             <Plus /> Saber Mais
           </button>
 
@@ -148,7 +159,8 @@ export default function Home() {
               <NextArrow />
             </button>
 
-            <button disabled={carouselRowNumber === heroSectionGames.length ? true : false} onClick={() => setCarouselRowNumber((curr) => curr + 1)}>
+            <button
+              disabled={carouselRowNumber === homePageData!.heroSection.length ? true : false} onClick={() => setCarouselRowNumber((curr) => curr + 1)}>
               <NextArrow style={{ rotate: '180deg' }} />
             </button>
           </div>
@@ -157,7 +169,7 @@ export default function Home() {
 
         {screen.width >= 480 && (
           <ul aria-live="polite">
-            {heroSectionGames.slice(sliceFilterRange(carouselRowNumber)[0], sliceFilterRange(carouselRowNumber)[1]).map((item: GameInfo) => (
+            {homePageData!.heroSection.slice(sliceFilterRange(carouselRowNumber)[0], sliceFilterRange(carouselRowNumber)[1]).map((item: GameInfo) => (
               <span key={item.id} onMouseEnter={() => hoverEvent(item)}>
                 <CarouselItem props={item} />
               </span>
@@ -167,14 +179,14 @@ export default function Home() {
 
         {screen.width <= 479 && (
           <ul aria-live="polite">
-            {heroSectionGames.map((item: GameInfo) => (
+            {homePageData!.heroSection.map((item: GameInfo) => (
               <CarouselItem key={item.id} props={item} />
             ))}
           </ul>
         )}
 
         <div id={Styles.carousel_indicators}>
-          {heroSectionGames.slice(0, 2).map((item: GameInfo, key: number) => (
+          {homePageData!.heroSection.slice(0, 2).map((item: GameInfo, key: number) => (
             <span key={key}
               data-active-row={carouselRowNumber === key ? true : false}
               onClick={() => setCarouselRowNumber(key)}
@@ -199,22 +211,26 @@ export default function Home() {
 
           {screen.width < 560 ? (
             <ul>
-              {genreGames.map((item: GameInfo) => (
+              {homePageData?.genreSection.map((item: GameInfo) => (
                 <GameGenreCard key={item.id} props={item} />
               ))}
             </ul>
           ) : (<ul>
-            {genreGames.slice(genreContainerRowNumber * 3, (genreContainerRowNumber + 1) * 3).map((item: GameInfo) => (
+            {homePageData?.genreSection.slice(genreContainerRowNumber * 3, (genreContainerRowNumber + 1) * 3).map((item: GameInfo) => (
               <GameGenreCard key={item.id} props={item} />
             ))}
           </ul>)}
 
           <div className={Styles.buttons_container}>
-            <button disabled={genreContainerRowNumber === 0 ? true : false} onClick={() => setGenreContainerRowNumber((curr) => curr - 1)}>
+            <button
+              disabled={genreContainerRowNumber === 0 ? true : false}
+              onClick={() => setGenreContainerRowNumber((curr) => curr - 1)}>
               <NextArrow />
             </button>
 
-            <button disabled={genreContainerRowNumber === heroSectionGames.length ? true : false} onClick={() => setGenreContainerRowNumber((curr) => curr + 1)}>
+            <button
+              disabled={genreContainerRowNumber === homePageData?.heroSection.length ? true : false}
+              onClick={() => setGenreContainerRowNumber((curr) => curr + 1)}>
               <NextArrow style={{ rotate: '180deg' }} />
             </button>
           </div>
@@ -226,21 +242,22 @@ export default function Home() {
       {/* <section id={Styles.popular_platform_game} className={` ${Styles.position_top}`}>
 
         <BackgroundImage
-          {...platformGames[platformCarouselRowNumber].artworks[0]}
+          {...homePageData?.platformSection[platformCarouselRowNumber].artworks[0]}
         />
 
         <div id={Styles.info_wrapper} className={Styles.fix_position_absolute}>
 
-
           <h2>Popular Playstation Games</h2>
 
-          <h3>{platformGames[platformCarouselRowNumber].name}</h3>
+          <h3>{homePageData?.platformSection[platformCarouselRowNumber].name}</h3>
 
-          {platformGames[platformCarouselRowNumber].genres && (
+          {homePageData?.platformSection[platformCarouselRowNumber].genres && (
             <ul id={Styles.genres_list}>
-              {platformGames[platformCarouselRowNumber].genres.map((item: Genres) => (
-                <li key={item.slug}>{(item.name).toUpperCase()}</li>
-              ))}
+              {homePageData?.platformSection[platformCarouselRowNumber].genres.map(
+                (item: Genres) => (
+                  <li key={item.slug}>{(item.name).toUpperCase()}</li>
+                )
+              )}
             </ul>
           )}
 
@@ -248,7 +265,7 @@ export default function Home() {
 
             <div id={Styles.carousel_container}>
               <ul aria-live="polite">
-                {platformGames.map((item: GameInfo, key: any) => (
+                {homePageData?.platformSection.map((item: GameInfo, key: any) => (
                   <span key={item.id} data-focused={platformCarouselRowNumber == key}>
                     <CarouselItem props={item} />
                   </span>
@@ -264,7 +281,7 @@ export default function Home() {
                 </button>
 
                 <button
-                  disabled={platformCarouselRowNumber === (platformGames.length - 1) ? true : false}
+                  disabled={platformCarouselRowNumber === (homePageData?.platformSection.length - 1) ? true : false}
                   onClick={() => setPlatformCarouselRowNumber((curr) => curr + 1)}
                 >
                   <NextArrow style={{ rotate: '180deg' }} />
@@ -278,15 +295,15 @@ export default function Home() {
 
       </section> */}
 
-      {themes && (
+      {homePageData?.themeSection && (
         <section id={Styles.themes_category} className={`${Styles.max_width} ${Styles.position_top}`}>
 
           <h2>Categorias</h2>
 
           <ul>
-            {themes.map((item: Themes) => (
+            {homePageData!.themeSection.map((item: Themes) => (
               <li key={item.id}>
-                <Link href={`/themes/${item.slug}`}>{item.name}</Link>
+                <Link href={`/genre/${item.slug}`}>{item.name}</Link>
               </li>
             ))}
           </ul>
@@ -298,15 +315,3 @@ export default function Home() {
     </>
   )
 }
-
-// export async function getServerSideProps(props: any) {
-
-//   const res = await homePageGames()
-
-//   return {
-//     props: {
-//       results: [res]
-//     }
-//   }
-
-// }
