@@ -83,47 +83,51 @@ export default function GamePage({ game }: { game: GameInfo }) {
                             <h1>{game.name}</h1>
 
                             <div id={Styles.game_heading_info} className={Styles.flex_row}>
-                                <p>
-                                    <Link href={`/company/${game.involved_companies[0].company.slug}`}>
-                                        {game.involved_companies[0].company.name}
-                                    </Link>
-                                </p>
+                                {game.involved_companies && (
+                                    <>
+                                        <p>
+                                            <Link href={`/company/${game.involved_companies[0].company.slug}`}>
+                                                {game.involved_companies[0].company.name}
+                                            </Link>
+                                        </p>
+                                        <span></span>
+                                    </>
+                                )}
                                 {game.age_ratings && (
                                     <>
-                                        <span></span>
                                         <p>
                                             ESRB{' '}
                                             <b>
                                                 {rating(game.age_ratings.find((item: AgeRating) => item.category === 1))}
                                             </b>
                                         </p>
+                                        <span></span>
                                     </>
                                 )}
                                 {game.first_release_date && (
-                                    <>
-                                        <span></span>
-                                        <p>
-                                            Lançamento em <DateHumanReadable date={game.first_release_date} />
-                                        </p>
-                                    </>
+                                    <p>
+                                        Lançamento em <DateHumanReadable date={game.first_release_date} />
+                                    </p>
                                 )}
                             </div>
 
                             <ul id={Styles.platforms_list} className={Styles.flex_row}>
                                 {game.platforms.map((item: Platforms) => (
                                     <li key={item.slug}>
-                                        <Link href={`/platforms/${item.slug}`}>{item.name}</Link>
+                                        <Link href={`/platforms/${item.id}`}>{item.name}</Link>
                                     </li>
                                 ))}
                             </ul>
 
-                            <ul id={Styles.genre_list} className={Styles.flex_row}>
-                                {game.themes.map((item: any) => (
-                                    <li key={item.slug}>
-                                        <Link href={`/genre/${item.slug}`}>{item.name}</Link>
-                                    </li>
-                                ))}
-                            </ul>
+                            {game.themes && (
+                                <ul id={Styles.genre_list} className={Styles.flex_row}>
+                                    {game.themes.map((item: any) => (
+                                        <li key={item.slug}>
+                                            <Link href={`/genre/${item.slug}`}>{item.name}</Link>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
                     </div>
 
@@ -156,7 +160,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 <ul className={Styles.flex_row}>
                                     {game.game_modes.map((item: any) => (
                                         <li key={item.slug}>
-                                            <Link href={`/game-modes/${item.slug}`}>
+                                            <Link href={`/game-mode/${item.slug}`}>
                                                 {item.name}
                                             </Link>
                                         </li>
@@ -293,20 +297,18 @@ export default function GamePage({ game }: { game: GameInfo }) {
                     </div>
                 </div>
 
-                {
-                    game.similar_games.length > 0 && (
-                        <section id={Styles.similar_games}>
-                            <div className={Styles.similar_games_wrapper}>
-                                <h2>Jogos Semelhantes</h2>
-                                <ul className={Styles.flex_row}>
-                                    {game.similar_games.map((item: SimilarGames) => (
-                                        <SimilarGameCard key={item.id} props={item} />
-                                    ))}
-                                </ul>
-                            </div>
-                        </section>
-                    )
-                }
+                {game.similar_games && (
+                    <section id={Styles.similar_games}>
+                        <div className={Styles.similar_games_wrapper}>
+                            <h2>Jogos Semelhantes</h2>
+                            <ul className={Styles.flex_row}>
+                                {game.similar_games.map((item: SimilarGames) => (
+                                    <SimilarGameCard key={item.id} props={item} />
+                                ))}
+                            </ul>
+                        </div>
+                    </section>
+                )}
             </div >
         </>
     )

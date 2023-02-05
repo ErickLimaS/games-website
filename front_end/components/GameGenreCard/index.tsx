@@ -30,15 +30,21 @@ function GameGenreCard({ props }: { props: GameInfo | SimilarGames }) {
 
                 <div className={Styles.general_info}>
 
-                    {props.rating && <GameRating props={props.rating} />}
+                    {props.rating && (<GameRating props={props.rating} />)}
 
                     <div className={Styles.details}>
 
-                        <p>Mais de <span>{props.rating_count}</span> avaliações</p>
+                        {props.rating_count ? (
+                            <p>Mais de <span>{props.rating_count}</span> avaliações</p>
+                        ) : (
+                            <p>Sem avaliações de usuários</p>
+                        )}
 
-                        <small>
-                            <DateHumanReadable date={props.first_release_date} />
-                        </small>
+                        {props.first_release_date && (
+                            <small>
+                                <DateHumanReadable date={props.first_release_date} />
+                            </small>
+                        )}
 
                         {props.involved_companies != undefined && (
                             <ul>
@@ -66,7 +72,7 @@ function GameGenreCard({ props }: { props: GameInfo | SimilarGames }) {
 
                     </div>
                 )}
-                
+
             </div>
         </li>
     )

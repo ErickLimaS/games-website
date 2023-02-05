@@ -1,5 +1,7 @@
 li.card_container {
 
+    animation: pop-in forwards 150ms;
+
     height: inherit;
 
     min-width: 85vw;
@@ -8,6 +10,22 @@ li.card_container {
     flex-direction: column;
 
 }
+
+/* @keyframes pop-in {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.01);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+} */
 
 @media(min-width: 620px) {
 
@@ -32,7 +50,7 @@ li.card_container {
 
     width: 800px !important;
     max-width: 100% !important;
-    height: auto !important;
+    /* height: auto !important; */
     max-height: 55vh !important;
 
 }
@@ -40,6 +58,7 @@ li.card_container {
 
 .item_info {
 
+    height: 100%;
     padding: 12px 8px;
 
     background-color: var(--white-10);
@@ -116,7 +135,7 @@ li.card_container {
 
 }
 
-.details>p span{
+.details>p span {
 
     font-weight: 400;
 

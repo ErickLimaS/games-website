@@ -1,5 +1,14 @@
 import Axios from 'axios'
 
+interface ServerResult {
+    result: object[] | null,
+    success: boolean,
+    token?: {
+        access_token: string,
+        expires_in: string
+    } | null
+}
+
 // const API_BASE = 'http://localhost:9000/api'
 const API_BASE = process.env.API_RENDER_URL || `http://localhost:9000/api`
 
@@ -35,7 +44,7 @@ function reqConfig(body?: object) {
 }
 
 // if client browser doesnt have a valid token, it stores a new working token
-function setToken(data: { result: object[], success: boolean, token?: { access_token: string, expires_in: string } | null }) {
+function setToken(data: ServerResult) {
 
     if (data.token) {
 
@@ -44,6 +53,20 @@ function setToken(data: { result: object[], success: boolean, token?: { access_t
 
     }
     return
+
+}
+
+// will run when theres a fetch error
+function errorHandling(error: any) {
+
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('expires_in')
+
+    return {
+        success: error.response.data.success || false,
+        status: error.response.request.status,
+        message: error.response.data.message
+    }
 
 }
 
@@ -86,8 +109,7 @@ export async function fetchHomePageData(genre?: string, platform?: string) {
 
     } catch (err) {
 
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
+        return errorHandling(err)
 
     }
 
@@ -99,7 +121,10 @@ export async function searchGame(gameName: string) {
         const { data } = await Axios(reqConfig(
             {
                 query:
-                    `${queryAllFields} search "${gameName}"; limit 5;`
+                    `${queryAllFields}
+                    search "${gameName}"; 
+                    limit 5;
+                    `
             }
         ))
 
@@ -107,8 +132,7 @@ export async function searchGame(gameName: string) {
 
     } catch (err) {
 
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
+        return errorHandling(err)
 
     }
 
@@ -117,14 +141,18 @@ export async function searchGame(gameName: string) {
 export async function fetchGameInfo(gameUrlSlug: string) {
 
     try {
-        const { data } = await Axios(reqConfig({ query: `${queryAllFields} where slug = "${gameUrlSlug}";` }))
+        const { data } = await Axios(reqConfig(
+            {
+                query: `${queryAllFields}
+                where slug = "${gameUrlSlug}";
+             ` }
+        ))
 
         return data.result[0]
 
     } catch (err) {
 
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
+        return errorHandling(err)
 
     }
 
@@ -165,23 +193,51 @@ export async function fetchGamesByGenre(genreSlug: string) {
 
     } catch (err) {
 
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
+        return errorHandling(err)
 
     }
 
 
 }
 
-export async function fetchGamesByPlatform(platform: string) {
+export async function fetchPlatform(
+    platformId: string,
+    pagination?: {
+        latestReleasePag: number
+    }) {
 
     try {
         const { data } = await Axios(reqConfig(
             {
                 query: `
-                    ${queryAllFields} 
-                    where artworks != null & platforms.id = (${platform});
-                `
+                    query platforms "Platform ${platformId}" {
+                        fields *, platform_logo.*, versions.*, versions.platform_version_release_dates.*;
+                        where id = ${platformId}; 
+                        limit 1;
+                    };
+
+                    query games "Exclusives on Platform ${platformId}" {
+                        ${queryAllFields}
+                        where artworks != null & platforms = ${platformId} & rating > 80;
+                        sort release_dates desc;
+                        limit 20;
+                    };
+
+                    query games "Highest Rating games from ${platformId}" {
+                        ${queryAllFields}
+                        where artworks != null & platforms = ${platformId} & rating != null;
+                        sort rating desc;
+                        limit 60;
+                    };
+
+                    query games "Latest Release games from ${platformId}" {
+                        ${queryAllFields}
+                        where artworks != null & release_dates != null & platforms = ${platformId} & rating != null;
+                        sort release_dates desc;
+                        limit 8;
+                        offset ${pagination ? (pagination?.latestReleasePag * 8) : 0};
+                    };`,
+                route: '/multiquery'
             }
         ))
 
@@ -189,8 +245,7 @@ export async function fetchGamesByPlatform(platform: string) {
 
     } catch (err) {
 
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
+        return errorHandling(err)
 
     }
 
@@ -209,8 +264,7 @@ export async function fetchUpcomingGamesRelease() {
 
     } catch (err) {
 
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
+        return errorHandling(err)
 
     }
 }
@@ -255,8 +309,7 @@ export async function fetchCompany(
     }
     catch (err) {
 
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
+        return errorHandling(err)
 
     }
 
@@ -308,8 +361,7 @@ export async function fetchGameMode(
     }
     catch (err) {
 
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('expires_in')
+        return errorHandling(err)
 
     }
 
