@@ -52,9 +52,9 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
 
         if (!req.body.query) {
 
-            return res.status(500).json({
+            return res.status(406).json({
                 success: false,
-                message: 'Não tem query nesse request.'
+                message: 'No query was found on request.'
             })
 
         }
@@ -78,7 +78,13 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
     }
     catch (error) {
 
-        return res.status(500).json({ success: false, message: `${error}` })
+        // status and message comes from the IGDB API itself
+        return res.status(error.response.data[0].status).json(
+            {
+                success: false,
+                message: `SERVER: ${error}. API: ${error.response.data[0].title}.`
+            }
+        )
 
     }
 
