@@ -1,12 +1,12 @@
 import React from 'react'
-import ParagraphContainer from './GameRatingStyles'
+import RatingContainer from './GameRatingStyles'
 
 function GameRating({ props }: { props: number }) {
 
     return (
-        <ParagraphContainer rating={props}>
-            {props.toFixed(0)}
-        </ParagraphContainer>
+        <RatingContainer rating={props}>
+            <p>{props?.toFixed(0) || '?'}</p>
+        </RatingContainer>
     )
 }
 

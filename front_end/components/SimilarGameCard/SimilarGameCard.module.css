@@ -30,7 +30,7 @@ li.card_container {
 
 }
 
-span#rating{
+span#rating {
 
     z-index: 1;
 
@@ -40,10 +40,14 @@ span#rating{
 
 }
 
-span#rating >*{
+span#rating>div {
 
-    padding: 8px 12px;
-    border-radius: 8px;
+    width: 45px;
+    height: 45px;
+
+}
+
+span#rating p {
 
     font-size: var(--fs-minus-1);
     font-weight: 600;

@@ -6,32 +6,42 @@ interface Props {
 
 }
 
+// changes bcg color depending on rating
 function bcgColor(rating: number) {
 
     if (rating >= 80) {
 
+        // green
         return '#78dc16'
 
     }
-    else if (rating >= 0) {
+    else if (rating >= 50) {
 
-        return '#ffee0c'
+        // yellow
+        return '#ebdb08'
 
     }
 
+    // red
     return '#e8311b'
 
 
 }
 
-export const ParagraphContainer = styled.p<Props>`
+export const RatingContainer = styled.div<Props>`
 
-    text-align: center;
+    background-color: ${props => props.rating ? bcgColor(props.rating) : 'var(--black-75)'};
 
-    padding-top: 8px;
-    
     width: 45px;
     height: 45px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid var(--white-75);
+
+    border-radius: 8px;
 
     @media(min-width: 1020px){
 
@@ -40,13 +50,12 @@ export const ParagraphContainer = styled.p<Props>`
 
     }
 
-    font-weight: 500;
+    >p{
 
-    background-color: ${props => props.rating ? bcgColor(props.rating) : 'var(--black-75)'};
-    
-    border-radius: 16px;
-
+        font-weight: 500;
+        
+    }
    
 `
 
-export default ParagraphContainer
+export default RatingContainer

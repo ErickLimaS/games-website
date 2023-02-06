@@ -2,13 +2,12 @@ import React from 'react'
 import Styles from './GameGenreCard.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
-import ErrorImg from '../../public/img/logo/logo.png'
 import GameRating from '../GameRating'
 import DateHumanReadable from '../DateHumanReadable'
 
 function GameGenreCard({ props }: { props: GameInfo | SimilarGames }) {
 
-    const imageSrc: any = props.cover != undefined ? `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover.image_id}.jpg` : ErrorImg
+    let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover.image_id}.jpg`
 
     return (
         <li className={Styles.card_container}>
@@ -19,6 +18,9 @@ function GameGenreCard({ props }: { props: GameInfo | SimilarGames }) {
                     src={imageSrc}
                     alt={props.name}
                     width={264} height={340}
+                    onError={() => {
+                        imageSrc = 'https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=264'
+                    }}
                 />
 
             </Link>
