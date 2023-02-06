@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { fetchGameInfo } from '../../api/IGDB'
-import Styles from './GamePage.module.css'
+import Styles from './ExpansionPage.module.css'
 import { BackgroundImage } from '../../styles/DynamicBcgImg'
 import NextArrow from '../../public/img/icons/ChevronCaretsvg'
 import Image from 'next/image'
@@ -57,17 +57,23 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
     useLayoutEffect(() => {
 
-        if (game.artworks != undefined) {
+        if (game.artworks && !game.screenshots) {
             setBackgroundImgIndex(Math.floor(Math.random() * game.artworks.length))
         }
-    }, [game.artworks, game.id])
+        else if (!game.artworks && game.screenshots) {
+            setBackgroundImgIndex(Math.floor(Math.random() * game.screenshots.length))
+        }
+    }, [game.screenshots, game.id])
 
     return (
         <>
 
             <CustomDocumentHead title={game.name} />
 
-            <BackgroundImage {...game.artworks != undefined ? game.artworks[backgroundImgIndex] : { image_id: undefined }} />
+            <BackgroundImage {...game.artworks ?
+                game.artworks[backgroundImgIndex] :
+                (game.screenshots[backgroundImgIndex] || { image_id: undefined })}
+            />
 
             <div className={Styles.container}>
 
@@ -81,6 +87,12 @@ export default function GamePage({ game }: { game: GameInfo }) {
                         <div className={`${Styles.background_fade}`}>
 
                             <h1>{game.name}</h1>
+
+                            <p id={Styles.dlc_paragraph}>
+                                Expanção de <Link href={`/game/${game.parent_game.slug}`}>
+                                    {game.parent_game.name}
+                                </Link>
+                            </p>
 
                             <div id={Styles.game_heading_info} className={Styles.flex_row}>
                                 {game.involved_companies && (
@@ -120,7 +132,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                     ))}
                                 </ul>
                             )}
-
+                            
                             {game.themes && (
                                 <ul id={Styles.genre_list} className={Styles.flex_row}>
                                     {game.themes.map((item: Themes) => (
@@ -173,20 +185,20 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 </div>
                             )}
 
-                            {(game.expansions || game.dlcs) && (
+                            {(game.parent_game.expansions || game.parent_game.dlcs) && (
                                 <div id={Styles.game_dlcs}>
 
-                                    <h2>DLCs Lançadas</h2>
+                                    <h2>Outras DLCs de {game.parent_game.name}</h2>
 
                                     <ul>
-                                        {game.expansions?.map((item: ExpansionsAndDlcs) => (
+                                        {game.parent_game.expansions?.filter(item => item.slug != game.slug).map((item: ExpansionsAndDlcs) => (
                                             <li key={item.slug}>
                                                 <Link href={`/expansions/${item.slug}`}>
                                                     {item.name}
                                                 </Link>
                                             </li>
                                         ))}
-                                        {game.dlcs?.map((item: ExpansionsAndDlcs) => (
+                                        {game.parent_game.dlcs?.filter(item => item.slug != game.slug).map((item: ExpansionsAndDlcs) => (
                                             <li key={item.slug}>
                                                 <Link href={`/expansions/${item.slug}`}>
                                                     {item.name}
@@ -207,22 +219,27 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 role='tablist'
                                 aria-label='Tabela de Screenshots e Vídeos.'
                             >
-                                <button
-                                    role='tab'
-                                    id={Styles.screenshots_tab}
-                                    onClick={() => setTabIndex(0)}
-                                    aria-selected={tabIndex === 0} aria-controls={Styles.img_container}
-                                >
-                                    Screenshots
-                                </button>
-                                <button
-                                    role='tab'
-                                    onClick={() => setTabIndex(1)}
-                                    id={Styles.videos_tab}
-                                    aria-selected={tabIndex === 1} aria-controls={Styles.videos_container}
-                                >
-                                    Vídeos
-                                </button>
+
+                                {game.screenshots && (
+                                    <button
+                                        role='tab'
+                                        id={Styles.screenshots_tab}
+                                        onClick={() => setTabIndex(0)}
+                                        aria-selected={tabIndex === 0} aria-controls={Styles.img_container}
+                                    >
+                                        Screenshots
+                                    </button>
+                                )}
+                                {game.videos && (
+                                    <button
+                                        role='tab'
+                                        onClick={() => setTabIndex(1)}
+                                        id={Styles.videos_tab}
+                                        aria-selected={tabIndex === 1} aria-controls={Styles.videos_container}
+                                    >
+                                        Vídeos
+                                    </button>
+                                )}
                             </div>
 
                             {game.screenshots && (

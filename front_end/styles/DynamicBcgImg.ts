@@ -10,6 +10,8 @@ export const BackgroundImage = styled.div<Props>`
 
     z-index: -1;
 
+    animation: fade-in forwards 300ms;
+
     position: absolute;
     top: 0; 
     left: 0;
@@ -26,6 +28,17 @@ export const BackgroundImage = styled.div<Props>`
     background-repeat: no-repeat;
     background-size: auto 75%;
     background-position: top;
+
+    @keyframes fade-in {
+
+        0%{
+            opacity: 0;
+        }
+        100%{
+            opacity: 1;
+        }
+
+    }
 
     
     @media(min-width: 425px) {

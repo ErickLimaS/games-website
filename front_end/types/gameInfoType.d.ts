@@ -6,41 +6,20 @@ interface GameInfo {
     storyline: string,
     summary: string,
     rating_count: number,
-    expansions: [{
-        name: string,
-        slug: string,
-        first_release_date: number,
-        rating: number
-    }]
+    expansions: ExpansionsAndDlcs[],
+    dlcs: ExpansionsAndDlcs[],
     age_ratings: [AgeRating],
-    game_modes: [
-        {
-            name: string,
-            slug: string
-        }
-    ],
+    game_modes: GameModes[],
     involved_companies: [{
-        company: {
-            name: string,
-            slug: string
-        }
+        company: Company
     }],
     cover: {
         url: string | undefined,
         image_id: string | undefined
     },
-    screenshots: [
-        {
-            image_id: string,
-            url: string | undefined
-        }
-    ]
-    artworks: [
-        {
-            image_id: string,
-            url: string | undefined
-        }
-    ]
+    screenshots: ArtworksAndScreenshots[],
+    artworks: ArtworksAndScreenshots[],
+    parent_game: GameInfo,
     slug: string,
     first_release_date: number,
     genres: [Genres],
@@ -48,6 +27,25 @@ interface GameInfo {
     videos: [Videos],
     platforms: [Platforms]
     similar_games: [SimilarGames]
+
+}
+
+interface Company {
+    name: string,
+    slug: string
+}
+
+interface GameModes {
+    name: string,
+    slug: string
+}
+
+interface ExpansionsAndDlcs {
+
+    name: string,
+    slug: string,
+    first_release_date: number,
+    rating: number | null
 
 }
 
@@ -74,6 +72,11 @@ interface Videos {
     id: number,
     video_id: string,
     name: string,
+    url: string | undefined
+}
+
+interface ArtworksAndScreenshots {
+    image_id: string,
     url: string | undefined
 }
 

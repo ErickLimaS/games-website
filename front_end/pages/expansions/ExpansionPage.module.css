@@ -152,11 +152,36 @@ section#game_presentation #game_name_cover {
 @media(min-width:568px) {
 
     #game_presentation #game_name_cover h1 {
-
-        margin-bottom: 16px;
-
         text-align: initial;
     }
+}
+
+#game_presentation #game_name_cover p#dlc_paragraph {
+
+    margin: 24px 0;
+
+    text-align: center;
+    color: var(--white);
+    font-size: var(--fs-minus-1);
+    font-weight: 500;
+
+}
+
+@media(min-width:568px) {
+    #game_presentation #game_name_cover p#dlc_paragraph {
+
+        margin-top: 8px;
+        margin-bottom: 14px;
+
+        text-align: start;
+
+    }
+}
+
+#game_presentation #game_name_cover p#dlc_paragraph>a {
+
+    border-bottom: 1px solid var(--white);
+
 }
 
 #game_heading_info {
@@ -656,6 +681,7 @@ section#game_presentation #game_name_cover {
 
 }
 
+
 .select_video_buttons_container {
 
     margin-top: 16px;
@@ -664,7 +690,6 @@ section#game_presentation #game_name_cover {
     align-items: center;
 
 }
-
 
 .select_video_buttons_container button {
 

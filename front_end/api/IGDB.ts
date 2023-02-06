@@ -71,7 +71,7 @@ function errorHandling(error: any) {
 }
 
 // standardizes all important data fetched from API
-const queryAllFields = 'fields *, expansions.*, similar_games.*, similar_games.cover.*, similar_games.themes.*, similar_games.cover, similar_games.involved_companies, similar_games.involved_companies.company.*, videos.*, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, age_ratings.category, age_ratings.rating_cover_url,  cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, themes.*;'
+const queryAllFields = 'fields *, expansions.*, dlcs.*, similar_games.*, similar_games.cover.*, similar_games.themes.*, similar_games.cover, similar_games.involved_companies, similar_games.involved_companies.company.*, videos.*, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, age_ratings.category, age_ratings.rating_cover_url, cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, parent_game.*, parent_game.dlcs.*, parent_game.expansions.*, themes.*;'
 
 export async function fetchHomePageData(genre?: string, platform?: string) {
 
@@ -138,6 +138,7 @@ export async function searchGame(gameName: string) {
 
 }
 
+// either on Game Page and Expansion Page
 export async function fetchGameInfo(gameUrlSlug: string) {
 
     try {
