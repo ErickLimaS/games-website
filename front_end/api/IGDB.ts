@@ -59,10 +59,10 @@ function setToken(data: ServerResult) {
 // will run when theres a fetch error
 function errorHandling(error: any) {
 
-    localStorage.removeItem('access_token')
-    localStorage.removeItem('expires_in')
+    localStorage.getItem('access_token') && localStorage.removeItem('access_token')
+    localStorage.getItem('expires_in') && localStorage.removeItem('expires_in')
 
-    return {
+    return console.log(error), {
         success: error.response.data.success || false,
         status: error.response.request.status,
         message: error.response.data.message
@@ -178,7 +178,7 @@ export async function fetchGamesByGenre(genreSlug: string) {
                 query games "Latest Releases on ${genreSlug} genre" {
                     ${queryAllFields} 
                     where themes.slug = "${genreSlug}";
-                    sort first_release_date.date desc;
+                    sort first_release_date desc;
                     limit 15;
                 };
                 query games "More Games on ${genreSlug} genre" {
@@ -220,7 +220,7 @@ export async function fetchPlatform(
                     query games "Exclusives on Platform ${platformId}" {
                         ${queryAllFields}
                         where artworks != null & platforms = ${platformId} & rating > 80;
-                        sort release_dates desc;
+                        sort first_release_date desc;
                         limit 20;
                     };
 
@@ -289,17 +289,20 @@ export async function fetchCompany(
 
                     query games "Highest Rating games from ${companySlug}" {
                         ${queryAllFields}
-                        where artworks != null & involved_companies.company.slug = "${companySlug}" & rating != null;
+                        where artworks != null & involved_companies.company.slug = "${companySlug}" & rating > 80;
+                        limit 7;
                         sort rating desc;
-                        limit 6;
                     };
 
                     query games "Latest Release games from ${companySlug}" {
                         ${queryAllFields}
-                        where artworks != null & involved_companies.company.slug = "${companySlug}";
-                        sort release_dates.human desc;
-                        limit 8;
-                        offset ${pagination ? (pagination?.latestReleasePag * 8) : 0};
+                        where artworks != null & involved_companies.company.slug = "${companySlug}" & rating != null & release_dates != null;
+                        sort first_release_date desc;
+                    };
+
+                    query games "More games from ${companySlug}" {
+                        ${queryAllFields}
+                        where artworks != null & involved_companies.company.slug = "${companySlug}" & rating != null;
                     };`,
                 route: '/multiquery'
             }
@@ -343,7 +346,7 @@ export async function fetchGameMode(
                     query games "Latest Release games from ${gameModeSlug} mode" {
                         ${queryAllFields}
                         where artworks != null & game_modes.slug = "${gameModeSlug}";
-                        sort release_dates.human desc;
+                        sort first_release_date desc;
                         limit 8;
                         offset ${pagination ? (pagination?.latestReleasePag * 8) : 0};
                     };

@@ -4,9 +4,7 @@ import { fetchCompany } from '../../api/IGDB'
 import Styles from './CompanyPage.module.css'
 import NextArrow from '../../public/img/icons/NextArrow'
 import Image from 'next/image'
-import ErrorImg from '../../public/img/logo/logo.png'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
-import SimilarGameCard from '@/components/SimilarGameCard'
 import DateHumanReadable from '@/components/DateHumanReadable'
 import SearchResult from '@/components/SearchResult'
 import CarouselItem from '@/components/CarouselItem'
@@ -14,11 +12,9 @@ import PageLoading from '@/components/PageLoading'
 
 interface Games {
 
-
     highestRatings: GameInfo[],
     latestReleases: GameInfo[],
     moreGames: GameInfo[]
-
 
 }
 
@@ -34,42 +30,44 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
     const [company, setCompany] = useState<any>([])
     const [games, setGames] = useState<Games>()
 
-    let companyLogoImgSrc: string | any
+    // calculate range by index number times 8
+    function sliceRange(index: number) {
+
+        return [index * 8, index === 0 ? (1 * 8) : ((index + 1) * 8)]
+
+    }
 
     // fetchs data to this page
     async function fetchData() {
         setLoading(true)
 
-        const res = await fetchCompany(companySlug, {
-            latestReleasePag: latestGamesBtnIndex
-        })
+        const res = await fetchCompany(companySlug, { latestReleasePag: latestGamesBtnIndex })
 
         setCompany(res[0].result[0])
+        console.log(res[0].result[0])
         setGames(
             {
                 highestRatings: res[1] ? res[1].result : null,
                 latestReleases: res[2] ? res[2].result : null,
-                moreGames: res[2] ? res[2].result : null,
+                moreGames: res[3] ? res[3].result : null,
             }
         )
 
-
-        companyLogoImgSrc = res[0].result[0].logo != undefined ? `https://images.igdb.com/igdb/image/upload/t_logo_med/${res[0].result[0].logo.image_id}.png` : ErrorImg
-
         setLoading(false)
     }
+
+    let companyLogoImgSrc: string = `https://images.igdb.com/igdb/image/upload/t_720p/${company.logo?.image_id}.png`
 
     useEffect(() => {
 
         fetchData()
 
-    }, [companySlug, moreGamesBtnIndex, latestGamesBtnIndex])
+    }, [companySlug])
 
     if (loading === true) {
         return (
 
             <>
-                <CustomDocumentHead title={company.name || companySlug} />
                 <PageLoading />
             </>
 
@@ -77,7 +75,6 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
     }
 
     return (
-
         <>
             <CustomDocumentHead title={company.name} />
 
@@ -86,16 +83,15 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
                 <section id={Styles.page_heading}>
 
                     <div id={Styles.img_container}>
-                        {/* <Image
+                        <Image
                             loader={() => companyLogoImgSrc}
-                            src={`https://images.igdb.com/igdb/image/upload/t_logo_med/${company.logo.image_id}.png`}
+                            src={companyLogoImgSrc}
                             alt={company.name}
                             fill
-                        ></Image> */}
-                        <img
-                            alt={company.name}
-                            src={`https://images.igdb.com/igdb/image/upload/t_logo_med/${company.logo.image_id}.png`} width={500} height={500}
-                        />
+                            onError={() => {
+                                companyLogoImgSrc = 'https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=60'
+                            }}
+                        ></Image>
                     </div>
 
                     <div>
@@ -130,7 +126,7 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
                                             <NextArrow />
                                         </button>
                                         <button
-                                            disabled={latestGamesBtnIndex === games!.latestReleases!.length}
+                                            disabled={latestGamesBtnIndex  == (Math.ceil(games!.latestReleases!.length / 8) - 1)}
                                             onClick={() => setLatestGamesBtnIndex(curr => curr + 1)}
                                             aria-label='Próximo'
                                         >
@@ -140,7 +136,7 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
                                 </div>
 
                                 <ul>
-                                    {games!.latestReleases!.map((item: GameInfo) => (
+                                    {games!.latestReleases!.slice(sliceRange(latestGamesBtnIndex)[0], sliceRange(latestGamesBtnIndex)[1]).map((item: GameInfo) => (
                                         <CarouselItem key={item.id} props={item} />
                                     ))}
                                 </ul>
@@ -165,7 +161,7 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
                                             <NextArrow />
                                         </button>
                                         <button
-                                            disabled={moreGamesBtnIndex === games!.moreGames!.length}
+                                            disabled={moreGamesBtnIndex == (Math.ceil(games!.moreGames!.length / 8) - 1)}
                                             onClick={() => setMoreGamesBtnIndex(curr => curr + 1)}
                                             aria-label='Próximo'
                                         >
@@ -176,7 +172,7 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
 
                                 <ul>
 
-                                    {games!.moreGames!.map((item: GameInfo) => (
+                                    {games!.moreGames!.slice(sliceRange(moreGamesBtnIndex)[0], sliceRange(moreGamesBtnIndex)[1]).map((item: GameInfo) => (
                                         <CarouselItem key={item.id} props={item} />
                                     ))}
 
@@ -194,9 +190,7 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
 
                             <ul>
                                 {games!.highestRatings!.map((item: GameInfo) => (
-
                                     <SearchResult key={item.id} props={item} />
-
                                 ))}
                             </ul>
 
