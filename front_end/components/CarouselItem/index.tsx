@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 function CarouselItem({ props }: { props: GameInfo }) {
 
-    let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover.image_id}.jpg`
+    let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover && props.cover.image_id}.jpg`
 
     return (
         <C.CarouselItem {...props.artworks}>

@@ -138,14 +138,14 @@ section.position_top {
 
 }
 
-#hero_game_info button {
+#hero_game_info a#game_page_link {
 
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 
-    min-width: 220px;
+    width: 220px;
 
     margin-top: 24px;
     padding: 8px;
@@ -159,13 +159,13 @@ section.position_top {
     font-weight: 400;
 }
 
-#hero_game_info button:hover {
+#hero_game_info a#game_page_link:hover {
 
     border: 2px solid var(--white);
 
 }
 
-#hero_game_info button svg {
+#hero_game_info a#game_page_link svg {
 
     margin-right: 16px;
 
@@ -401,6 +401,8 @@ section.position_top {
 
 #carousel_indicators span {
 
+    cursor: pointer;
+
     display: block;
 
     width: 6px;
@@ -414,6 +416,11 @@ section.position_top {
 #carousel_indicators span[data-active-row='true'] {
 
     background-color: var(--white);
+
+}
+#carousel_indicators span:hover {
+
+    transform: scale(1.5);
 
 }
 
@@ -504,18 +511,18 @@ section.position_top {
 }
 
 /* Section Platform Games */
-/* #popular_platform_game {
+#popular_platform_game {
 
     margin-top: 40px;
 
     position: relative;
 
-} */
-
-/* #popular_platform_game #info_wrapper { */
+}
 
 /* removes padding from another class */
-/* padding: 0;
+ #popular_platform_game #info_wrapper {
+
+    padding: 0;
 
     max-width: initial;
 
@@ -523,9 +530,9 @@ section.position_top {
     flex-direction: column;
     justify-content: space-around;
 
-} */
+} 
 
-/* #popular_platform_game #info_wrapper>h2 {
+ #popular_platform_game #info_wrapper>h2 {
 
 
     font-size: var(--fs-h4);
@@ -581,7 +588,6 @@ section.position_top {
 #popular_platform_game .game_list_container #carousel_container {
 
     width: 100%;
-    overflow: auto;
 
 }
 
@@ -593,8 +599,27 @@ section.position_top {
     gap: 0 8px;
     flex-direction: row;
 
-    overflow: hidden;
 
+}
+
+@media(max-width: 540px){
+
+    #popular_platform_game .game_list_container #carousel_container ul  {
+
+        overflow: auto;
+
+        padding: 0 16px;
+        
+        left: 0!important;
+        
+    }
+
+}
+
+#popular_platform_game .game_list_container #carousel_container::-webkit-scrollbar,
+#popular_platform_game .game_list_container #carousel_container ul::-webkit-scrollbar  {
+    height: 0;
+    display: none;
 }
 
 #popular_platform_game #carousel_container li {
@@ -610,11 +635,17 @@ section.position_top {
 
     margin: 0 8px;
 
-    transform: scale(1.1);
+    transform: scale(1.05);
 
     border: 2px solid var(--green);
 
-} */
+} 
+
+#popular_platform_game #carousel_container .buttons_container{
+
+    justify-content: center;
+
+}
 
 section#themes_category {
 

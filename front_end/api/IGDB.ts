@@ -62,7 +62,9 @@ function errorHandling(error: any) {
     localStorage.getItem('access_token') && localStorage.removeItem('access_token')
     localStorage.getItem('expires_in') && localStorage.removeItem('expires_in')
 
-    return console.log(error), {
+    console.error(error)
+
+    return {
         success: error.response.data.success || false,
         status: error.response.request.status,
         message: error.response.data.message
@@ -82,8 +84,8 @@ export async function fetchHomePageData(genre?: string, platform?: string) {
                 query:
                     `query games "This Month Releases" {
                         ${queryAllFields}
-                        where artworks != null & rating > 80 & release_dates.m = ${new Date().getMonth() + 1} & release_dates.y = ${new Date().getFullYear()};
-                        sort release_dates.date desc;
+                        where artworks != null & rating > 70 & first_release_date != null;
+                        sort first_release_date desc;
                         limit 20;
                     };
                     query games "${genre || `horror`} Genre" {
@@ -92,6 +94,7 @@ export async function fetchHomePageData(genre?: string, platform?: string) {
                         limit 20;
                     };
                     query games "Games to Platform ${platform || `48`}" {
+                        ${queryAllFields}
                         where artworks != null & platforms.id = (${platform || `48`});
                     };
                     query themes "Themes Limited To 18" {
@@ -127,6 +130,8 @@ export async function searchGame(gameName: string) {
                     `
             }
         ))
+
+        setToken(data)
 
         return data.result
 
