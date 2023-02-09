@@ -52,7 +52,8 @@ section.position_top {
     }
 }
 
-#hero_game_info, .fix_position_absolute {
+#hero_game_info,
+.fix_position_absolute {
 
     max-width: 85%;
     padding: 0 5vw;
@@ -99,7 +100,8 @@ section.position_top {
     }
 }
 
-#hero_game_info h1, #hero_game_info h1 a {
+#hero_game_info h1,
+#hero_game_info h1 a {
 
     font-size: var(--fs-h3);
     font-weight: 500;
@@ -115,7 +117,8 @@ section.position_top {
 
 }
 
-#hero_game_info li, #hero_game_info li a {
+#hero_game_info li,
+#hero_game_info li a {
 
     width: max-content;
     font-size: var(--fs-minus-2);
@@ -418,6 +421,7 @@ section.position_top {
     background-color: var(--white);
 
 }
+
 #carousel_indicators span:hover {
 
     transform: scale(1.5);
@@ -513,6 +517,8 @@ section.position_top {
 /* Section Platform Games */
 #popular_platform_game {
 
+    background: linear-gradient(var(--background-color) 8%, transparent, var(--background-color) 85%);
+
     margin-top: 40px;
 
     position: relative;
@@ -520,50 +526,78 @@ section.position_top {
 }
 
 /* removes padding from another class */
- #popular_platform_game #info_wrapper {
+#popular_platform_game #info_wrapper {
 
-    padding: 0;
+    padding: 24px 0;
 
     max-width: initial;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
 
-} 
+}
 
- #popular_platform_game #info_wrapper>h2 {
+#popular_platform_game #info_wrapper>h2 {
 
+    text-align: center;
 
     font-size: var(--fs-h4);
     font-weight: 800;
 
 }
 
-#popular_platform_game #info_wrapper>h3 {
-
-    max-width: 75vw;
-
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+#popular_platform_game #platform_content_container {
 
     overflow: hidden;
 
-    font-size: var(--fs-h1);
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+#popular_platform_game #platform_content_container>h3 {
+
+    max-width: 75vw;
+
+    margin-bottom: 24px;
+
+    text-align: center;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+
+    overflow: hidden;
+
+    font-size: var(--fs-h4);
     font-weight: 900;
 
+}
+
+@media(min-width: 560px) {
+    
+    #popular_platform_game #platform_content_container>h3 {
+
+        font-size: var(--fs-h1);
+
+    }
 }
 
 #popular_platform_game #genres_list {
 
     display: flex;
+    margin-bottom: 24px;
 
 }
 
 #popular_platform_game #genres_list li {
 
-    font-weight: 700;
+    font-size: var(--fs-h5);
+    font-weight: 800;
 
 }
 
@@ -599,33 +633,33 @@ section.position_top {
     gap: 0 8px;
     flex-direction: row;
 
-
 }
 
-@media(max-width: 540px){
+@media(max-width: 1019px) {
 
-    #popular_platform_game .game_list_container #carousel_container ul  {
+    #popular_platform_game .game_list_container #carousel_container ul {
 
         overflow: auto;
 
         padding: 0 16px;
-        
-        left: 0!important;
-        
+
+        left: 0 !important;
+
     }
 
 }
 
 #popular_platform_game .game_list_container #carousel_container::-webkit-scrollbar,
-#popular_platform_game .game_list_container #carousel_container ul::-webkit-scrollbar  {
+#popular_platform_game .game_list_container #carousel_container ul::-webkit-scrollbar {
     height: 0;
     display: none;
 }
 
-#popular_platform_game #carousel_container li {
+#popular_platform_game #carousel_container span li {
+
+    min-height: 160px !important;
 
     border: 2px solid transparent;
-
 
     width: 20vw;
 
@@ -635,15 +669,31 @@ section.position_top {
 
     margin: 0 8px;
 
-    transform: scale(1.05);
+    transform: scale(1.15);
+    margin: 0 24px;
 
-    border: 2px solid var(--green);
+    border: 3px solid var(--green);
 
-} 
+}
 
-#popular_platform_game #carousel_container .buttons_container{
+#popular_platform_game #carousel_container .buttons_container {
+
+    display: none !important;
+
+    margin-top: 8px;
 
     justify-content: center;
+
+}
+
+@media(min-width: 1020px) {
+
+    #popular_platform_game #carousel_container .buttons_container {
+
+
+        display: flex !important;
+
+    }
 
 }
 

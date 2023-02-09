@@ -93,9 +93,10 @@ export async function fetchHomePageData(genre?: string, platform?: string) {
                         where artworks != null & themes.slug = "${genre || `horror`}";
                         limit 20;
                     };
-                    query games "Games to Platform ${platform || `48`}" {
+                    query games "Games to Platform ${platform || `130`}" {
                         ${queryAllFields}
-                        where artworks != null & platforms.id = (${platform || `48`});
+                        where rating > 70 & artworks != null & platforms = ${platform || `130`};
+                        sort rating desc;
                     };
                     query themes "Themes Limited To 18" {
                         fields *; 

@@ -10,6 +10,7 @@ import CarouselItem from "@/components/CarouselItem";
 import PageLoading from "@/components/PageLoading";
 import GameGenreCard from "@/components/GameGenreCard";
 import CustomDocumentHead from "@/components/CustomDocumentHead";
+import { PlatformBackgroundImage } from "@/styles/DynamicBcgImg";
 
 interface HomePage {
   heroSection: GameInfo[];
@@ -37,8 +38,27 @@ export default function Home() {
     return Math.floor(Math.random() * array.length) || 0;
   }
 
+  // sets style to UL tag on platform section
+  function inlineStylePlatformSection() {
+
+    if (screen.width >= 1440) {
+
+      return { position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 20.2}vw)` }
+
+    }
+
+    else if (screen.width >= 1020) {
+
+      return { position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 20.6}vw)` }
+
+    }
+
+    return
+
+  }
+
   async function getData() {
-    const pageData = await fetchHomePageData("horror", "48");
+    const pageData = await fetchHomePageData("horror", "130");
 
     const heroSectionData = pageData[0].result;
 
@@ -67,7 +87,8 @@ export default function Home() {
   function sliceFilterRange(currentCarouselRow: number) {
     if (screen.width > 480 && screen.width < 660) {
       return [currentCarouselRow * 2, (currentCarouselRow + 1) * 2];
-    } else if (screen.width >= 660 && screen.width < 860) {
+    }
+    else if (screen.width >= 660 && screen.width < 860) {
       return [currentCarouselRow * 3, (currentCarouselRow + 1) * 3];
     }
 
@@ -158,7 +179,7 @@ export default function Home() {
           )}
 
           <Link
-            href={`/game/${homePageData!.heroSection[0].slug}`}
+            href={`/game/${homePageData!.heroSection[heroGameInfoIndex].slug}`}
             id={Styles.game_page_link}
           >
             <Plus /> Saber Mais
@@ -282,73 +303,82 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PLATFORM SECTION */}
       <section
         id={Styles.popular_platform_game}
         className={` ${Styles.position_top}`}
       >
 
-        <BackgroundImage {...homePageData?.platformSection[0].artworks[0]} />
+        <PlatformBackgroundImage {...homePageData?.platformSection[platformCarouselRowNumber].artworks ?
+          homePageData?.platformSection[platformCarouselRowNumber].artworks[0] :
+          homePageData?.platformSection[platformCarouselRowNumber].screenshots[0]} />
 
         <div id={Styles.info_wrapper} className={Styles.fix_position_absolute}>
 
-          <h2>Popular Playstation Games</h2>
+          <h2>Jogos Populares do Nintendo Switch</h2>
 
-          <h3>
-            {homePageData?.platformSection[platformCarouselRowNumber].name}
-          </h3>
+          <div id={Styles.platform_content_container}>
+            <h3>
+              {homePageData?.platformSection[platformCarouselRowNumber].name}
+            </h3>
 
-          {homePageData?.platformSection[platformCarouselRowNumber].genres ? (
-            <ul id={Styles.genres_list}>
-              {homePageData?.platformSection[
-                platformCarouselRowNumber
-              ].genres.map((item: Genres) => (
-                <li key={item.slug}>{item.name.toUpperCase()}</li>
-              ))}
-            </ul>
-          ) :
-            (
-              <p>Sem Gênero</p>)
-          }
-
-          <div className={Styles.game_list_container}>
-            <div id={Styles.carousel_container}>
-
-              <ul
-                aria-live="polite"
-                // style={{ position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 280}px)` }}
-              >
-                {homePageData.platformSection.map((item: GameInfo, key: any) => (
-                  <span key={item.id} data-focused={platformCarouselRowNumber == key}>
-                    <CarouselItem props={item} />
-                  </span>
+            {homePageData?.platformSection[platformCarouselRowNumber].genres ? (
+              <ul id={Styles.genres_list}>
+                {homePageData?.platformSection[
+                  platformCarouselRowNumber
+                ].genres.map((item: Genres) => (
+                  <li key={item.slug}>{item.name.toUpperCase()}</li>
                 ))}
               </ul>
+            ) :
+              (
+                <ul id={Styles.genres_list}>
+                  <li>SEM GÊNERO</li>
+                </ul>
+              )
+            }
 
-              <div className={Styles.buttons_container}>
-                <button
-                  disabled={platformCarouselRowNumber === 0 ? true : false}
-                  onClick={() =>
-                    setPlatformCarouselRowNumber((curr) => curr - 1)
-                  }
-                >
-                  <NextArrow />
-                </button>
+            <div className={Styles.game_list_container}>
+              <div id={Styles.carousel_container}>
 
-                <button
-                  disabled={
-                    platformCarouselRowNumber ===
-                      homePageData?.platformSection.length - 1
-                      ? true
-                      : false
-                  }
-                  onClick={() =>
-                    setPlatformCarouselRowNumber((curr) => curr + 1)
-                  }
+                <ul
+                  aria-live="polite"
+                  style={inlineStylePlatformSection() as any}
                 >
-                  <NextArrow style={{ rotate: "180deg" }} />
-                </button>
+                  {homePageData.platformSection.map((item: GameInfo, key: any) => (
+                    <span key={item.id} data-focused={platformCarouselRowNumber == key}>
+                      <CarouselItem props={item} />
+                    </span>
+                  ))}
+                </ul>
+
+                <div className={Styles.buttons_container}>
+                  <button
+                    disabled={platformCarouselRowNumber === 0 ? true : false}
+                    onClick={() =>
+                      setPlatformCarouselRowNumber((curr) => curr - 1)
+                    }
+                  >
+                    <NextArrow />
+                  </button>
+
+                  <button
+                    disabled={
+                      platformCarouselRowNumber ===
+                        homePageData?.platformSection.length - 1
+                        ? true
+                        : false
+                    }
+                    onClick={() =>
+                      setPlatformCarouselRowNumber((curr) => curr + 1)
+                    }
+                  >
+                    <NextArrow style={{ rotate: "180deg" }} />
+                  </button>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </section>

@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "Front and Back end for a website that uses Twitch API.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ErickLimaS/games-website.git"
