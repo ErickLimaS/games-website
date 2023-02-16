@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true},
     birthDate: {
         date: { type: Number, required: true, min: 01, max: 31 },
-        month: { type: Number, required: true, min: 01, max: 12 },
+        month: { type: Number, required: true, min: 0, max: 11 },
         year: { type: Number, required: true, min: 1900, max: 2023 }
     },
     createdAt: {type: Date, default: () => Date.now(), immutable: true}

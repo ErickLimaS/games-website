@@ -40,7 +40,7 @@ userRouter.post('/signup', expressAsyncHandler(async (req, res) => {
         return res.status(202).json({
             success: true,
             message: 'User Created Successfully',
-            token: newToken(newUser.email)
+            token: newToken(newUser.id)
         })
 
     }
@@ -82,7 +82,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
         return res.status(200).json({
             success: true,
             message: 'Logged in Successlfully',
-            token: newToken(user.email)
+            token: newToken(user.id)
         })
         
     }

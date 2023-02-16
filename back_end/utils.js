@@ -5,7 +5,7 @@ dotenv.config()
 
 function newToken(data) {
 
-    const token = jwt.sign(data, process.env.JWT_SECRET, { expires_in: '6h' })
+    const token = jwt.sign({ id: data }, process.env.JWT_SECRET, { expiresIn: "6h" })
 
     return token
 
