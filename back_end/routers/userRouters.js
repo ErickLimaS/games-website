@@ -27,7 +27,8 @@ userRouter.post('/signup', expressAsyncHandler(async (req, res) => {
         if (userExist) {
             return res.status(409).json({
                 success: false,
-                message: 'User Already Registered'
+                message: 'Usuário Já Cadastrado Previamente.',
+                status: 409
             })
         }
 
@@ -39,7 +40,7 @@ userRouter.post('/signup', expressAsyncHandler(async (req, res) => {
 
         return res.status(202).json({
             success: true,
-            message: 'User Created Successfully',
+            message: 'Usuário Criado com Sucesso.',
             token: newToken(newUser.id)
         })
 
@@ -47,7 +48,8 @@ userRouter.post('/signup', expressAsyncHandler(async (req, res) => {
     catch (err) {
         return res.status(500).json({
             success: false,
-            message: `${err}`
+            message: `${err.message}`,
+            status: 500
         })
     }
 
@@ -63,33 +65,36 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
 
             return res.status(404).json({
                 success: false,
-                message: 'Incorrect Email or Password or User Not Registered'
+                message: 'Email ou Senha Incorretos ou Usuário Não Cadastrado. Por favor, tente novamente.',
+                status: 404
             })
 
         }
 
-        const passwordMatch = bcrypt.compare(req.body.password, user.password)
+        const passwordMatch = await bcrypt.compare(req.body.password, user.password)
 
         if (!passwordMatch) {
 
             return res.status(404).json({
-                success: false,
-                message: 'Incorrect Email or Password or User Not Registered'
+                success: false, 
+                message: 'Email ou Senha Incorretos ou Usuário Não Cadastrado. Por favor, tente novamente.',
+                status: 404
             })
 
         }
 
         return res.status(200).json({
             success: true,
-            message: 'Logged in Successlfully',
+            message: 'Login Feito com Sucesso.',
             token: newToken(user.id)
         })
-        
+
     }
     catch (err) {
         return res.status(500).json({
             success: false,
-            message: `${err}`
+            message: `${err.message}`,
+            status: 500
         })
     }
 
