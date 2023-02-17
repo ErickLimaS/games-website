@@ -22,22 +22,43 @@ function isAuth(req, res, next) {
         //gets token after BEARER ******
         const token = authorization.slice(7, authorization.length);
 
-        jwt.verify(
-
-            token, process.env.SECRET, (err, decode) => {
-
-                if (err) {
-                    return res.status(401).send({ Message: 'Invalid Token' })
-                }
-                else {
-                    req.user = decode;
-                    next()
-                }
-
+        jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
+            if (err) {
+                return res.status(401).send({ Message: 'Invalid Token' })
             }
-
-        )
+            else {
+                req.user = decode;
+                next()
+            }
+        })
     }
 }
 
-module.exports = newToken
+function logInThroughToken(req, res, next) {
+
+    const authorization = req.headers.authorization
+
+    if (!authorization) {
+
+        return next()
+
+    }
+
+    //gets token after BEARER ******
+    const token = authorization.slice(7, authorization.length)
+
+    jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
+
+        if (err) {
+            next()
+        }
+        else {
+            req.body.id = decode.id
+            next()
+        }
+
+    })
+
+}
+
+module.exports = { newToken, isAuth, logInThroughToken }

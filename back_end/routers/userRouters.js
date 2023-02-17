@@ -4,7 +4,8 @@ const expressAsyncHandler = require('express-async-handler')
 const { connect } = require('mongoose')
 const bcrypt = require('bcrypt')
 const User = require('../models/userModel.js')
-const newToken = require('../utils.js')
+const { newToken } = require('../utils.js')
+const { logInThroughToken } = require('../utils.js')
 
 const userRouter = express.Router()
 
@@ -55,11 +56,39 @@ userRouter.post('/signup', expressAsyncHandler(async (req, res) => {
 
 }))
 
-userRouter.post('/login', expressAsyncHandler(async (req, res) => {
+userRouter.post('/login', logInThroughToken, expressAsyncHandler(async (req, res) => {
 
     try {
 
+        // If user was already logged, the function receives his token and returns his data
+        if (req.body.id) {
+
+            const user = await User.findById(
+                req.body.id,
+                '-password -createdAt -birthDate -_id -__v'
+            )
+
+            if (!user) {
+
+                return res.status(404).json({
+                    success: false,
+                    message: 'Token contem uma ID incorreta.',
+                    status: 404
+                })
+
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: 'Login Feito com Sucesso.',
+                status: 200,
+                user: user
+            })
+
+        }
+
         const user = await User.findOne({ email: req.body.email })
+
 
         if (!user) {
 
@@ -76,7 +105,7 @@ userRouter.post('/login', expressAsyncHandler(async (req, res) => {
         if (!passwordMatch) {
 
             return res.status(404).json({
-                success: false, 
+                success: false,
                 message: 'Email ou Senha Incorretos ou Usuário Não Cadastrado. Por favor, tente novamente.',
                 status: 404
             })
