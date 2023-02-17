@@ -41,10 +41,19 @@
   margin: 0;
 }
 
-html, * {
+html,
+* {
 
-  font-family: Helvetica Now Display, Poppins, Helvetica, Arial, sans-serif;
+  font-family: Helvetica Now Display, Helvetica, Arial, sans-serif;
 
+}
+
+*:focus-visible {
+  outline: 2px solid var(--white-50);
+}
+
+input:focus {
+  outline: 2px solid var(--primary);
 }
 
 button {
@@ -59,7 +68,13 @@ small {
   font-size: var(--fs-minus-1);
 }
 
-p, button, a, input, li, ol, button {
+p,
+button,
+a,
+input,
+li,
+ol,
+button {
   font-size: var(--fs-p);
   color: var(--white);
 }

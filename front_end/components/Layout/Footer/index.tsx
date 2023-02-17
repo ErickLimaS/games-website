@@ -35,6 +35,11 @@ function Footer() {
               </a>
             </li>
             <li>
+              <a href='https://www.shutterstock.com/pt/image-vector/user-interface-template-web-elements-ux-1298537821' target='_blank' rel='noreferrer'>
+                Sign Up Page By Kosmidma
+              </a>
+            </li>
+            <li>
               <a href='https://dribbble.com/shots/2355968-Steam-Redesign-Game-Store-Page#' target='_blank' rel='noreferrer'>
                 Game Page By Matt Preston
               </a>
