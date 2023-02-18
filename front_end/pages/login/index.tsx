@@ -7,6 +7,7 @@ import Styles from './LoginStyles.module.css'
 import Logo from '../../public/img/logo/logo.png'
 import Image from 'next/image'
 import Spinner from '../../public/img/icons/Spinner1S200Px'
+import store from '@/store'
 
 function Login() {
 
@@ -25,7 +26,7 @@ function Login() {
             password: form.password.value
         }
 
-        const res = await logInUser(user)
+        const res = await store.dispatch(logInUser(user))
 
         if (res) {
 

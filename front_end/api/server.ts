@@ -1,4 +1,10 @@
+import {
+    USER_LOGIN_ERROR, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS,
+    USER_SIGNUP_ERROR, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS
+} from "@/redux/constants/userConstants"
 import Axios from "axios"
+import { Dispatch } from "react"
+import { AnyAction } from "redux"
 
 const MONGODB_URL_BASE = process.env.DB_RENDER_URL || `http://localhost:9000/user`
 
@@ -19,33 +25,90 @@ function reqConfig(route?: string, body?: object) {
     }
 }
 
-export async function signUpUser(user: SignUp) {
+export const signUpUser = (user: SignUp) => async (dispatch: Dispatch<AnyAction>) => {
 
     try {
+
+        dispatch({ type: USER_SIGNUP_REQUEST, payload: user })
+
         const { data } = await Axios(reqConfig("/signup", user))
 
         localStorage.setItem("server_token", data.token)
 
+        if (!data.success) {
+            dispatch({ type: USER_SIGNUP_ERROR, payload: data })
+        }
+
+        dispatch({ type: USER_SIGNUP_SUCCESS, payload: data })
+
         return data
     }
     catch (err: any) {
+
+        dispatch({ type: USER_SIGNUP_ERROR, payload: err })
         console.error(err)
+
         return err
     }
 
 }
 
-export async function logInUser(user: LogIn) {
+// log in through LogIn Page
+export const logInUser = (user: LogIn) => async (dispatch: Dispatch<AnyAction>) => {
 
     try {
+
+        dispatch({ type: USER_LOGIN_REQUEST, payload: user })
+
         const { data } = await Axios(reqConfig("/login", user))
 
-        localStorage.setItem("server_token", data.token)
+        data.token && localStorage.setItem("server_token", data.token)
+
+        if (!data.success) {
+            dispatch({ type: USER_LOGIN_ERROR, payload: data })
+        }
+
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: data })
 
         return data
     }
     catch (err: any) {
+
+        dispatch({ type: USER_LOGIN_ERROR, payload: err })
         console.error(err)
+
+        return err
+    }
+
+}
+
+// logs user when he as previously loggedin, through its token on local storage
+export const logInUserThroughToken = () => async (dispatch: Dispatch<AnyAction>) => {
+
+    try {
+
+        dispatch({ type: USER_LOGIN_REQUEST })
+
+        const { data } = await Axios(reqConfig("/login"))
+
+        data.token && localStorage.setItem("server_token", data.token)
+
+        if (!data.success) {
+            dispatch({ type: USER_LOGIN_ERROR, payload: data })
+            localStorage.removeItem("server_token")
+        }
+
+        dispatch({ type: USER_LOGIN_SUCCESS, payload: data.user })
+
+        return data
+    }
+    catch (err: any) {
+
+        dispatch({ type: USER_LOGIN_ERROR, payload: err })
+        localStorage.removeItem("server_token")
+
+        console.error(err)
+
         return err
     }
 
@@ -57,7 +120,9 @@ export async function logOutUser() {
 
         localStorage.removeItem("server_token")
 
-        return 
+        window.location.reload()
+
+        return
     }
     catch (err: any) {
         console.error(err)

@@ -4,31 +4,45 @@ import Styles from './Header.module.css'
 import BrandImg from '../../../public/img/logo/logo.png'
 import Image from 'next/image'
 import List from '../../../public/img/icons/List'
-import Spinner from '../../../public/img/icons/Spinner1S200Px'
-import Search from '../../../public/img/icons/Search'
+import * as SVG from '../../../public/img/icons'
 import { searchGame } from '@/api/IGDB'
 import SearchResult from '@/components/SearchResult'
+import { logInUserThroughToken, logOutUser } from '@/api/server'
+import store from '@/store'
 
 function Header() {
 
+  const [loading, setLoading] = useState<boolean>(false)
+  const [loadingUser, setLoadingUser] = useState<boolean>(false)
+
+  // USER
+  const [user, setUser] = useState<any>(null)
+  const [openUserMenu, setOpenUserMenu] = useState<boolean>(false)
+  const [userProfileImg, setUserProfileImg] = useState<string>('')
+
+
+  // NAVIGATION MENU
+  const [menuVisibility, setMenuVisibility] = useState<boolean>(false)
+
+  // SEARCH
+  const [searchResults, setSearchResults] = useState<GameInfo[]>([])
   const searchRefDesktop = React.useRef<HTMLInputElement>(null)
   const searchRefMobile = React.useRef<HTMLInputElement>(null)
-
-  const [loading, setLoading] = useState<boolean>(false)
-
-  const [menuVisibility, setMenuVisibility] = useState<boolean>(false)
-  const [searchResults, setSearchResults] = useState<GameInfo[]>([])
 
   // fetch any results that match what user typed on form input
   async function handleSearchForm(e: FormEvent) {
 
     e.preventDefault()
 
-    setLoading(true)
-
     // uses the right useRef either on mobile or desktop
     const query = screen.width >= 679 ?
       searchRefDesktop.current!.value : searchRefMobile.current!.value;
+
+    if (query.length == 0) {
+      return
+    }
+
+    setLoading(true)
 
     const data = await searchGame(query);
 
@@ -103,6 +117,31 @@ function Header() {
 
   }
 
+  // if token is stored on local storage, it tries to log user in
+  useEffect(() => {
+
+    async function logUser() {
+      setLoadingUser(true)
+
+      await store.dispatch(logInUserThroughToken())
+
+      // if token is still valid
+      if (store.getState().user.success) {
+
+        setUser(store.getState().user)
+        setUserProfileImg(store.getState().user.profileImg)
+
+      }
+
+      setLoadingUser(false)
+    }
+
+    if (localStorage.getItem('server_token')) {
+      logUser()
+    }
+
+  }, [])
+
   useEffect(() => {
     window.addEventListener('scroll', scrollEvent)
   }, [])
@@ -117,33 +156,139 @@ function Header() {
         </Link>
 
         <div id={Styles.mobile_menu}>
+          {loadingUser ? (
 
-          <Link href=''>
-            Login
-          </Link>
+            <div>
+              <SVG.Spinner1S200Px style={{ width: '30px', height: 'auto' }} />
+            </div>
+          ) : (
+            user ? (
+              <>
+                <h6 className={Styles.user_mobile_name}>
+                  <Image
+                    src={userProfileImg}
+                    alt={`Foto de perfil de ${user.name.first}`}
+                    width={22} height={22}
+                    onError={() => setUserProfileImg('https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png')}
+                  />
+                </h6>
 
-          <button data-clicked={menuVisibility}
+              </>
+            ) : (
+              <Link href='/login'>
+                Login
+              </Link>
+            )
+          )}
+
+          <button
+            data-clicked={menuVisibility}
             onClick={() => setMenuVisibility(!menuVisibility)}
-            aria-label={menuVisibility ? 'Fechar Menu' : 'Abrir Menu'}
+            aria-haspopup={menuVisibility}
+            aria-controls={Styles.links_container}
+            aria-label={!menuVisibility ? 'Fechar Menu' : 'Abrir Menu'}
           >
             <List alt='Ícone de Menu' />
           </button>
 
         </div>
 
-        <nav id={Styles.links_container} data-visible={menuVisibility}>
+        <nav
+          id={Styles.links_container}
+          data-visible={menuVisibility}
+          role='menu'
+          aria-labelledby='open_menu_btn'
+          data-expanded={menuVisibility}
+          data-visibility={menuVisibility ? true : false}
+        // hidden={!menuVisibility ? true : false}
+        >
+
+          {user ? (
+            <div className={`${Styles.user_mobile_section} ${Styles.mobile_only}`}>
+
+              <Image
+                src={userProfileImg}
+                alt={`Foto de perfil de ${user.name.first}`}
+                width={80} height={80}
+                onError={() => setUserProfileImg('https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png')}
+              />
+
+              <div>
+                <h6>{user.name.first} {user.name.last}</h6>
+                <p>{user.email}</p>
+              </div>
+
+            </div>
+          ) : (
+            <h3 className={`${Styles.mobile_only}`}>Menu</h3>
+          )}
+
           <ul>
+            {user && (
+              <li className={Styles.mobile_only}><Link href='/bookmarks'><SVG.BookmarksFill /> Marcados</Link></li>
+            )}
             <li><Link href='/'>Lançamentos</Link></li>
             <li><Link href='/'>Mais Esperados</Link></li>
             <li><Link href='/'>Gêneros</Link></li>
             <li><Link href='/'>Plataformas</Link></li>
+            {user && (
+              <li className={Styles.mobile_only}>
+                <button onClick={() => logOutUser()}>
+                  <SVG.BoxArrowLeft />Sair da Conta
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
 
-        <div className={Styles.user_account_container}>
-          <Link href=''>
-            Login
-          </Link>
+        <div className={Styles.user_account_container} data-has-user={user ? true : false}>
+
+          {loadingUser ? (
+
+            <div>
+              <SVG.Spinner1S200Px style={{ width: '30px', height: 'auto' }} />
+            </div>
+          ) : (
+            user ? (
+              <>
+                <button
+                  id='open_menu_btn'
+                  aria-label={`Menu da Conta de ${user.name.first} ${user.name.last}`}
+                  aria-haspopup={openUserMenu}
+                  aria-controls='user_menu'
+                  onClick={() => setOpenUserMenu(!openUserMenu)}
+                >
+                  <Image
+                    src={userProfileImg}
+                    alt={`Foto de perfil de ${user.name.first}`}
+                    width={22} height={22}
+                    onError={() => setUserProfileImg('https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png')}
+                  />
+                  {user.name.first} {user.name.last}
+                </button>
+
+                <div
+                  role='menu'
+                  id='user_menu'
+                  aria-labelledby='open_menu_btn'
+                  data-expanded={openUserMenu}
+                  hidden={openUserMenu ? false : true}
+                >
+
+                  <ul>
+                    <li><Link href='/bookmarks'><SVG.BookmarksFill /> Marcados</Link></li>
+                    <li><button onClick={() => logOutUser()}><SVG.BoxArrowLeft />Sair da Conta</button></li>
+                  </ul>
+
+                </div>
+              </>
+            ) : (
+              <Link href='/login'>
+                Login
+              </Link>
+            )
+          )}
+
         </div>
 
       </div>
@@ -157,9 +302,9 @@ function Header() {
           </div>
           <button type='submit' aria-label='Procurar' disabled={loading}>
             {loading ? (
-              <Spinner alt='Ícone de Carregando Resultados' style={{ width: '30px', height: 'auto', marginRight: '2px' }} />
+              <SVG.Spinner1S200Px alt='Ícone de Carregando Resultados' style={{ width: '30px', height: 'auto', marginRight: '2px' }} />
             ) : (
-              <Search alt='Ícone de Lupa' style={{ margin: '0 8px' }} />
+              <SVG.Search alt='Ícone de Lupa' style={{ margin: '0 8px' }} />
             )}
           </button>
 
@@ -201,9 +346,9 @@ function Header() {
 
             <button type='submit' aria-label='Procurar' disabled={loading}>
               {loading ? (
-                <Spinner alt='Ícone de Carregando Resultados' style={{ width: '30px', height: 'auto', marginRight: '2px' }} />
+                <SVG.Spinner1S200Px alt='Ícone de Carregando Resultados' style={{ width: '30px', height: 'auto', marginRight: '2px' }} />
               ) : (
-                <Search alt='Ícone de Lupa' style={{ margin: '0 8px' }} />
+                <SVG.Search alt='Ícone de Lupa' style={{ margin: '0 8px' }} />
               )}
             </button>
 
@@ -234,13 +379,57 @@ function Header() {
 
         </div>
 
-        <div className={Styles.user_account_container}>
-          <Link href=''>
-            Login
-          </Link>
+        <div className={Styles.user_account_container} data-has-user={user ? true : false}>
+
+          {loadingUser ? (
+
+            <div>
+              <SVG.Spinner1S200Px style={{ width: '30px', height: 'auto' }} />
+            </div>
+          ) : (
+            user ? (
+              <>
+                <button
+                  id='open_menu_btn'
+                  aria-label={`Menu da Conta de ${user.name.first} ${user.name.last}`}
+                  aria-haspopup={openUserMenu}
+                  aria-controls='user_menu'
+                  onClick={() => setOpenUserMenu(!openUserMenu)}
+                >
+                  <Image
+                    src={userProfileImg}
+                    alt={`Foto de perfil de ${user.name.first}`}
+                    width={22} height={22}
+                    onError={() => setUserProfileImg('https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png')}
+                  />
+                  {user.name.first} {user.name.last}
+                </button>
+
+                <div
+                  role='menu'
+                  id='user_menu'
+                  aria-labelledby='open_menu_btn'
+                  data-expanded={openUserMenu}
+                  hidden={openUserMenu ? false : true}
+                >
+
+                  <ul>
+                    <li><Link href='/bookmarks'><SVG.BookmarksFill /> Marcados</Link></li>
+                    <li><button onClick={() => logOutUser()}><SVG.BoxArrowLeft />Sair da Conta</button></li>
+                  </ul>
+
+                </div>
+              </>
+            ) : (
+              <Link href='/login'>
+                Login
+              </Link>
+            )
+          )}
+
         </div>
       </div>
-    </header>
+    </header >
   )
 }
 

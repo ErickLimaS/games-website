@@ -2,6 +2,7 @@ export { default as Spinner1S200Px } from "./Spinner1S200Px";
 export { default as Arcade } from "./Arcade";
 export { default as BellFill } from "./BellFill";
 export { default as Bell } from "./Bell";
+export { default as BookmarksFill } from "./BookmarksFill";
 export { default as BoxArrowInRight } from "./BoxArrowInRight";
 export { default as BoxArrowLeft } from "./BoxArrowLeft";
 export { default as CaretDownFill } from "./CaretDownFill";
