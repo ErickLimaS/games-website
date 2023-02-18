@@ -26,7 +26,7 @@ function Login() {
             password: form.password.value
         }
 
-        const res = await store.dispatch(logInUser(user))
+        const res: ServerResponse = await store.dispatch(logInUser(user))
 
         if (res) {
 

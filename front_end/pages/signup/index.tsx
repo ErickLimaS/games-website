@@ -5,6 +5,7 @@ import React, { ButtonHTMLAttributes, FormEvent, InputHTMLAttributes, useRef, us
 import Styles from './SignupStyles.module.css'
 import Spinner from '../../public/img/icons/Spinner1S200Px'
 import Link from 'next/link'
+import store from '@/store'
 
 function Signup() {
 
@@ -63,7 +64,7 @@ function Signup() {
             }
         }
 
-        const res = await signUpUser(user)
+        const res: ServerResponse = await store.dispatch(signUpUser(user))
 
         if (res) {
 
