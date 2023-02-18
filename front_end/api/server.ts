@@ -45,10 +45,10 @@ export const signUpUser = (user: SignUp) => async (dispatch: Dispatch<AnyAction>
     }
     catch (err: any) {
 
-        dispatch({ type: USER_SIGNUP_ERROR, payload: err })
-        console.error(err)
+        dispatch({ type: USER_SIGNUP_ERROR, payload: err.response.data })
+        console.error(err.response.data)
 
-        return err
+        return err.response.data 
     }
 
 }
@@ -74,10 +74,10 @@ export const logInUser = (user: LogIn) => async (dispatch: Dispatch<AnyAction>) 
     }
     catch (err: any) {
 
-        dispatch({ type: USER_LOGIN_ERROR, payload: err })
-        console.error(err)
+        dispatch({ type: USER_LOGIN_ERROR, payload: err.response.data })
+        console.error(err.response.data)
 
-        return err
+        return err.response.data
     }
 
 }
@@ -104,12 +104,12 @@ export const logInUserThroughToken = () => async (dispatch: Dispatch<AnyAction>)
     }
     catch (err: any) {
 
-        dispatch({ type: USER_LOGIN_ERROR, payload: err })
+        dispatch({ type: USER_LOGIN_ERROR, payload: err.response.data })
         localStorage.removeItem("server_token")
 
-        console.error(err)
+        console.error(err.response.data)
 
-        return err
+        return err.response.data
     }
 
 }

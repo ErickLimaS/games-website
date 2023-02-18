@@ -21,8 +21,11 @@ function AlertMessage(res: ServerResponse) {
     const divAlertMessage = document.createElement("div");
     divAlertMessage.className = Styles.container
     divAlertMessage.role = 'alert'
+    divAlertMessage.setAttribute('data-success', `${res.success}`)
     divAlertMessage.innerHTML = `
-        <h1>${res.success ? 'Sucesso' : `Erro ${res?.status ? res?.status : ''}`}</h1>
+        <h1>
+            ${res.success ? 'Sucesso' : `Erro ${res?.status ? res?.status : ''}`}
+        </h1>
 
         <p>${res.message}</p>
 

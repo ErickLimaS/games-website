@@ -43,6 +43,10 @@ function Login() {
             const pageContainer = document.getElementById(`conxtainer`);
             document.body.insertBefore(message, pageContainer);
 
+            setLoading(false)
+
+            return
+
         }
 
 

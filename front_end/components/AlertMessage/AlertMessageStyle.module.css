@@ -2,11 +2,14 @@
 
     overflow: hidden;
 
+    animation: pop-in forwards 380ms;
+
+    box-shadow: 12px 12px 14px 0px var(--black-50);
+
     margin: auto;
-    
-    min-width: 300px;
-    width: 40vw;
-    max-width: 35vw;
+
+    min-width: 90vw;
+    max-width: 90vw;
 
     min-height: 360px;
 
@@ -27,12 +30,30 @@
 
 }
 
-@media(min-width: 420px) {
+@media((min-width: 420px) and (max-width: 768px)) {
 
     .container {
-        min-width: 360px;
+        min-width: 420px !important;
+        max-width: 420px !important;
     }
 
+}
+
+@media(min-width: 768px) {
+
+    .container {
+        min-width: calc(460px + 10vw);
+        max-width: calc(460px + 10vw);
+    }
+
+}
+
+.container[data-success=true] {
+    border-color: var(--green);
+}
+
+.container[data-success=false] {
+    border-color: var(--red);
 }
 
 .container h1 {
@@ -53,7 +74,17 @@
 
 }
 
+.container[data-success=true] h1 {
+    color: #4ebb4d;
+}
+
+.container[data-success=false] h1 {
+    color: var(--red);
+}
+
 .container p {
+
+    text-align: center;
 
     padding: 24px;
 
@@ -76,10 +107,34 @@
 
 }
 
+.container[data-success=true] button {
+    background: #4ebb4d;
+    color: var(--white);
+}
+
+.container[data-success=false] button {
+    background: var(--black-10);
+    color: var(--red);
+}
+
 .container button:hover {
 
     transition: all ease 200ms;
 
     opacity: 0.85;
 
+}
+
+@keyframes pop-in {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
