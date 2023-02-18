@@ -22,7 +22,7 @@ function Header() {
 
 
   // NAVIGATION MENU
-  const [menuVisibility, setMenuVisibility] = useState<boolean>(false)
+  const [menuVisibility, setMenuVisibility] = useState<boolean | null>(null)
 
   // SEARCH
   const [searchResults, setSearchResults] = useState<GameInfo[]>([])
@@ -182,9 +182,9 @@ function Header() {
           )}
 
           <button
-            data-clicked={menuVisibility}
-            onClick={() => setMenuVisibility(!menuVisibility)}
-            aria-haspopup={menuVisibility}
+            data-clicked={menuVisibility == null ? false : menuVisibility}
+            onClick={() => setMenuVisibility(menuVisibility == null ? true : !menuVisibility)}
+            aria-haspopup={menuVisibility == null ? false : menuVisibility}
             aria-controls={Styles.links_container}
             aria-label={!menuVisibility ? 'Fechar Menu' : 'Abrir Menu'}
           >
@@ -195,9 +195,11 @@ function Header() {
 
         <nav
           id={Styles.links_container}
+          className={Styles.sidebar_menu_mobile}
           data-visible={menuVisibility}
           role='menu'
           aria-labelledby='open_menu_btn'
+          data-initial-close-state={menuVisibility == null ? true : false}
           data-expanded={menuVisibility}
           data-visibility={menuVisibility ? true : false}
         // hidden={!menuVisibility ? true : false}

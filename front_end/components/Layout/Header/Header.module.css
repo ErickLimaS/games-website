@@ -218,8 +218,11 @@
     }
 }
 
+/* MOBILE SIDEBAR MENU */
 @media(max-width: 424px) {
     #links_container[data-visibility=true] {
+
+        animation: appear-left forwards 200ms;
 
         z-index: 10;
 
@@ -240,8 +243,12 @@
     }
 }
 
+/* MOBILE SIDEBAR MENU */
 @media((min-width: 425px) and (max-width: 779px)) {
+
     #links_container[data-visibility=true] {
+
+        animation: appear-left forwards 200ms;
 
         z-index: 10;
 
@@ -262,23 +269,77 @@
     }
 }
 
+@keyframes appear-left {
+    0% {
+        left: -80vw;
+    }
+
+    100% {
+        left: 0;
+    }
+}
+
 @media(max-width: 779px) {
 
-    #links_container[data-visibility=false] {
-
+    /* INITIAL STATE */
+    #links_container.sidebar_menu_mobile[data-visibility=false][data-initial-close-state=true] {
         display: none;
+    }
+
+    /* AFTER FIRST OPEN MENU CLICK*/
+    #links_container.sidebar_menu_mobile[data-visibility=false] {
+
+        transition: all ease 2000ms;
+
+        animation: disapear forwards 800ms;
 
     }
 
+    @keyframes disapear {
 
-    #links_container[data-visibility=true] li:not(:last-child) {
+        0% {
+            z-index: 10;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            min-height: 100vh;
+            min-width: 75vw;
+
+            padding: 16px;
+
+            background: var(--background-color);
+        }
+
+        100% {
+
+            z-index: 10;
+
+            position: absolute;
+            top: 0;
+            left: -75vw;
+
+            min-height: 100vh;
+            min-width: 0;
+
+            padding: 16px;
+
+            background: var(--background-color);
+
+            display: none;
+        }
+    }
+
+
+    #links_container.sidebar_menu_mobile li:not(:last-child) {
 
         border-bottom: 1px solid var(--white-25);
 
     }
 
-    #links_container[data-visibility=true] li a,
-    #links_container[data-visibility=true] li button {
+    #links_container.sidebar_menu_mobile li a,
+    #links_container.sidebar_menu_mobile li button {
 
         width: 100%;
 
@@ -296,7 +357,7 @@
     }
 
 
-    #links_container[data-visibility=true] li svg {
+    #links_container.sidebar_menu_mobile li svg {
 
         margin-right: 8px;
 
@@ -311,7 +372,7 @@
 
 }
 
-#links_container > h3{
+#links_container>h3 {
 
     margin-bottom: 32px;
 
