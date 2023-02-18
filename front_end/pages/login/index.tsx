@@ -2,14 +2,21 @@ import { logInUser } from '@/api/server'
 import AlertMessage from '@/components/AlertMessage'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
 import Link from 'next/link'
-import React, { FormEvent, useState } from 'react'
+import React, { FormEvent, useEffect, useState } from 'react'
 import Styles from './LoginStyles.module.css'
 import Logo from '../../public/img/logo/logo.png'
 import Image from 'next/image'
 import Spinner from '../../public/img/icons/Spinner1S200Px'
 import store from '@/store'
+import { useRouter } from 'next/router'
 
 function Login() {
+
+    const navigate = useRouter()
+
+    const navigateReady: Boolean = navigate.query != undefined && navigate.query.redirect != undefined
+
+    const [user] = useState(store.getState().user)
 
     const [loading, setLoading] = useState<Boolean>(false)
 
@@ -28,9 +35,9 @@ function Login() {
 
         const res: ServerResponse = await store.dispatch(logInUser(user))
 
-        if (res) {
+        if (!res.success) {
 
-            // gets the html to server response, then shows on screen
+            // shows up a message about the server response
             const message = AlertMessage(res)
 
             const pageContainer = document.getElementById(`conxtainer`);
@@ -38,9 +45,37 @@ function Login() {
 
         }
 
+
+        if (navigateReady && navigate.query.redirect) {
+            window.location.href = `/${navigate.query.redirect}`
+        }
+
+        window.location.href = '/'
+
         setLoading(false)
 
     }
+
+    // verify if user has a still valid token, if true, he will be redirect to home or any other page
+    useEffect(() => {
+
+        if (localStorage.getItem('server_token')) {
+
+            setLoading(true)
+
+            if (navigateReady && navigate.query.redirect) {
+
+                navigate.push(`/${navigate.query.redirect}`)
+
+            }
+
+            navigate.push(`/`)
+
+            setLoading(false)
+
+        }
+
+    }, [navigate, navigate.query, navigateReady, user.loading])
 
     return (
 
