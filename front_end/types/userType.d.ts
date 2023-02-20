@@ -1,3 +1,15 @@
+interface User {
+
+    loading?: Boolean,
+    error?: Object,
+    name: {
+        first: String,
+        last: String
+    },
+    email: String,
+
+}
+
 interface SignUp {
 
     user: {

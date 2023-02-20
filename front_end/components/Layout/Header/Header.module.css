@@ -450,6 +450,7 @@
 
 }
 
+
 @media(max-width: 679px) {
 
     #user_interests {
@@ -473,6 +474,8 @@
 @media(min-width: 1119px) {
 
     #user_interests {
+        margin-top: auto;
+        margin-bottom: auto;
 
         padding-top: 24px;
         padding-bottom: 24px;
@@ -639,6 +642,15 @@
 
 }
 
+@media((min-width: 580px) and (max-width: 780px)) {
+
+    .form_and_results_container {
+
+        padding-bottom: 12px;
+
+    }
+}
+
 @media(max-width: 580px) {
 
     .form_and_results_container {
@@ -654,7 +666,7 @@
 #search_results {
 
     position: absolute;
-    top: 6vh;
+    top: 7.2vh;
     right: 0;
     left: 0;
 
@@ -663,6 +675,7 @@
 @media((min-width: 520px) and (max-width: 1118px)) {
 
     #search_results {
+        top: 7.3vh;
         left: -0%;
     }
 }
@@ -682,6 +695,10 @@
 
 #search_results ul {
 
+    overflow: auto;
+
+    max-height: 70vh;
+
     margin-top: 8px;
 
     padding: 8px;
@@ -692,8 +709,57 @@
 
     background-color: var(--black-75);
 
-    border-radius: 4px;
+    border-radius: 0 0 4px 4px;
 
+}
+
+@media(min-width: 580px) {
+    #search_results ul {
+        max-height: 60vh;
+        border-radius: 4px;
+    }
+}
+
+@media(min-width: 1180px) {
+    #search_results ul {
+        max-height: auto;
+    }
+}
+
+#search_results ul::-webkit-scrollbar {
+    width: 4px;
+    background-color: var(--white-50);
+}
+
+#search_results ul::-webkit-scrollbar-thumb {
+    background-color: var(--black-50);
+}
+
+#search_results div.no_results {
+
+    margin: 12.6px 0;
+    padding: 24px 0;
+    text-align: center;
+
+    min-height: 60px;
+
+    border-radius: 4px;
+    background-color: var(--black-75);
+
+}
+
+@media(min-width: 880px) {
+    #search_results div.no_results {
+
+        margin: 0;
+        padding: 12px 0;
+        text-align: center;
+
+        min-height: 60px;
+
+        background-color: var(--black-75);
+
+    }
 }
 
 /* USER MENU DESKTOP */
@@ -747,20 +813,6 @@
     border: 1px solid var(--primary);
 
 }
-
-/* .user_account_container[data-has-user=true]>button svg {
-
-    margin-left: 8px;
-
-    color: var(--white);
-
-}
-
-.user_account_container[data-has-user=true]>button[aria-haspopup=true] svg {
-
-    fill: var(--primary);
-
-} */
 
 .user_account_container[data-has-user=true] div[role='menu'] {
 

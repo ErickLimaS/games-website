@@ -16,7 +16,7 @@ function Header() {
   const [loadingUser, setLoadingUser] = useState<boolean>(false)
 
   // USER
-  const [user, setUser] = useState<any>(null)
+  const [user, setUser] = useState<User | null>(null)
   const [openUserMenu, setOpenUserMenu] = useState<boolean>(false)
   const [userProfileImg, setUserProfileImg] = useState<string>('')
 
@@ -25,7 +25,7 @@ function Header() {
   const [menuVisibility, setMenuVisibility] = useState<boolean | null>(null)
 
   // SEARCH
-  const [searchResults, setSearchResults] = useState<GameInfo[]>([])
+  const [searchResults, setSearchResults] = useState<GameInfo[] | null>(null)
   const searchRefDesktop = React.useRef<HTMLInputElement>(null)
   const searchRefMobile = React.useRef<HTMLInputElement>(null)
 
@@ -310,25 +310,39 @@ function Header() {
             )}
           </button>
 
-          {searchResults.length > 0 && (
+          {searchResults && (
             <button type='button' aria-label='Limpar Pesquisa' title='Limpar Pesquisa'
-              onClick={() => setSearchResults([])}
+              onClick={() => setSearchResults(null)}
             >
               X
             </button>
           )}
         </form>
 
-        {searchResults.length > 0 && (
+        {searchResults && (
           <div aria-live="polite" id={Styles.search_results}>
 
-            <ul>
+            {searchResults.length > 0 ? (
 
-              {searchResults.map((item: GameInfo) => (
-                <SearchResult key={item.id} props={item} />
-              ))}
+              <ul>
 
-            </ul>
+                {searchResults.map((item: GameInfo) => (
+
+                  <SearchResult key={item.id} props={item} />
+
+                ))}
+
+              </ul>
+            ) : (
+
+
+              <div className={Styles.no_results}>
+
+                <p>Sem resultados para essa pesquisa.</p>
+
+              </div>
+
+            )}
 
           </div>
         )}
@@ -354,27 +368,37 @@ function Header() {
               )}
             </button>
 
-            {searchResults.length > 0 && (
+            {searchResults && (
               <button type='button' aria-label='Limpar Pesquisa' title='Limpar Pesquisa'
-                onClick={() => setSearchResults([])}
+                onClick={() => setSearchResults(null)}
               >
                 X
               </button>
             )}
           </form>
 
-          {searchResults.length > 0 && (
+          {searchResults && (
             <div aria-live="polite" id={Styles.search_results}>
 
-              <ul>
+              {searchResults.length > 0 ? (
 
-                {searchResults.map((item: GameInfo) => (
+                <ul>
 
-                  <SearchResult key={item.id} props={item} />
+                  {searchResults.map((item: GameInfo) => (
 
-                ))}
+                    <SearchResult key={item.id} props={item} />
 
-              </ul>
+                  ))}
+
+                </ul>
+              ) : (
+
+                <div className={Styles.no_results}>
+
+                  <p>Sem resultados para essa pesquisa.</p>
+
+                </div>
+              )}
 
             </div>
           )}
@@ -400,7 +424,7 @@ function Header() {
                 >
                   <Image
                     src={userProfileImg}
-                    alt={`Foto de perfil de ${user.name.first}`}
+                    alt={`Perfil de ${user.name.first}`}
                     width={22} height={22}
                     onError={() => setUserProfileImg('https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png')}
                   />

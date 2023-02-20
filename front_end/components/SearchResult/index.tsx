@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Styles from './SearchResult.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -7,7 +7,7 @@ import DateHumanReadable from '../DateHumanReadable'
 
 function SearchResult({ props }: { props: GameInfo }) {
 
-    let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_small/${props.cover.image_id}.jpg`
+    const [imageSrc, setImageSrc] = useState<string>(`https://images.igdb.com/igdb/image/upload/t_cover_small/${props.cover ? props.cover.image_id : 'undefined'}.jpg`)
 
     return (
         <li className={Styles.result_item_container}>
@@ -19,7 +19,7 @@ function SearchResult({ props }: { props: GameInfo }) {
                     alt={props.name}
                     width={60} height={80}
                     onError={() => {
-                        imageSrc = 'https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=60'
+                        setImageSrc('https://img.freepik.com/free-vector/oops-404-error-with-broken-robot-concept-illustration_114360-5529.jpg?w=60')
                     }}
                 />
 
@@ -31,8 +31,14 @@ function SearchResult({ props }: { props: GameInfo }) {
                         <GameRating props={props.rating} />
                     )}
 
+
                     <small>
-                        <DateHumanReadable date={props.first_release_date} />
+                        {props.first_release_date ? (
+                            <DateHumanReadable date={props.first_release_date} />
+                        ) :
+                            (
+                                'Sem Data Informada'
+                            )}
                     </small>
 
                 </div>
