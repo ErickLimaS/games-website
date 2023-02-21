@@ -192,7 +192,7 @@ section#game_presentation #game_name_cover {
 
 }
 
-#game_name_cover .name_button_container button:hover {
+#game_name_cover .name_button_container button:not(:disabled):hover {
 
     transition: all ease 150ms;
 

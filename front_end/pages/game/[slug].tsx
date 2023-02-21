@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { fetchGameInfo } from '../../api/IGDB'
 import Styles from './GamePage.module.css'
 import { BackgroundImage } from '../../styles/DynamicBcgImg'
@@ -13,12 +13,16 @@ import GameRating from '@/components/GameRating'
 import store, { RootState } from '@/store'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
+import { addToBookmark } from '@/api/server'
 
 export default function GamePage({ game }: { game: GameInfo }) {
 
     const navigate = useRouter()
 
     const user: User = useSelector(state => (state as RootState).user)
+
+    const [gameBookmarked, setGameBookmarked] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
 
     // gets a random number on array range of artworks, to show a random img when page is loaded
     const [backgroundImgIndex, setBackgroundImgIndex] = useState<number>(0)
@@ -76,9 +80,10 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
     }
 
-    function addToBookmarks() {
+    async function addToBookmarksBtnHandler() {
 
         if (!store.getState().user.email) {
+
 
             navigate.push(`/login?redirect=game/${navigate.query.slug}`)
 
@@ -86,7 +91,28 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
         }
 
-        // set game on db
+        setLoading(true)
+
+
+        const reqBody = {
+            bookmarkThisGame: gameBookmarked ? false : true, // true = adds game, false = removes
+            game: {
+                name: game.name,
+                slug: game.slug,
+                rating: game.rating,
+                releaseDate: game.first_release_date
+            }
+        }
+
+        const res: ServerResponse = await store.dispatch(addToBookmark(reqBody))
+
+        if (res.success) {
+            setGameBookmarked(!gameBookmarked)
+        }
+
+        setLoading(false)
+
+        return
 
     }
 
@@ -100,6 +126,14 @@ export default function GamePage({ game }: { game: GameInfo }) {
         }
 
     }, [game.artworks, game.id])
+
+    useEffect(() => {
+
+        setGameBookmarked(user?.bookmarks?.find(
+            (item: BookmarkedGame) => item.slug === game.slug) ? true : false
+        )
+
+    }, [user])
 
     return (
         <>
@@ -124,11 +158,11 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 <h1>{game.name}</h1>
 
                                 <button id={Styles.add_game_to_bookmarks}
-                                    onClick={() => addToBookmarks()}
-                                    disabled={user?.loading}
-                                    data-bookmarked={user?.bookmarks?.find((item: BookmarkedGame) => item.slug === game.slug) ? true : false}
+                                    onClick={() => addToBookmarksBtnHandler()}
+                                    disabled={loading || user?.loading}
+                                    data-bookmarked={gameBookmarked}
                                 >
-                                    {user?.bookmarks?.find((item: BookmarkedGame) => item.slug === game.slug) ? (
+                                    {gameBookmarked ? (
                                         <SVG.StarFill
                                             aria-label='Remover dos Marcados' />
                                     ) : (

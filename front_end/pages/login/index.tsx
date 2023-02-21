@@ -49,9 +49,8 @@ function Login() {
 
         }
 
-
         if (navigateReady && navigate.query.redirect) {
-            window.location.href = `/${navigate.query.redirect}`
+            return window.location.href = `/${navigate.query.redirect}`
         }
 
         window.location.href = '/'
