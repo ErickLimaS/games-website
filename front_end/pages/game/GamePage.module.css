@@ -14,7 +14,7 @@
 
 }
 
-@media(min-width: 768px) {
+@media(min-width: 1120px) {
 
     .position_relative {
 
@@ -142,7 +142,27 @@ section#game_presentation #game_name_cover {
 
 }
 
-#game_presentation #game_name_cover h1 {
+#game_name_cover .name_button_container {
+
+    margin: auto;
+
+    justify-content: center;
+    flex-wrap: wrap;
+
+    margin-bottom: 16px;
+
+}
+
+@media(min-width:568px) {
+
+    #game_name_cover .name_button_container {
+
+        justify-content: flex-start;
+
+    }
+}
+
+#game_presentation #game_name_cover .name_button_container h1 {
 
     text-align: center;
     font-size: var(--fs-h4);
@@ -151,12 +171,53 @@ section#game_presentation #game_name_cover {
 
 @media(min-width:568px) {
 
-    #game_presentation #game_name_cover h1 {
-
-        margin-bottom: 16px;
-
+    #game_presentation #game_name_cover .name_button_container h1 {
         text-align: initial;
     }
+}
+
+#game_name_cover .name_button_container button {
+
+    height: min-content;
+
+    margin: auto 0;
+
+    margin-left: 16px;
+
+    padding: 6px 10px;
+
+    border-radius: 4px;
+    background-color: var(--black-50);
+    border: 2px solid var(--white-25);
+
+}
+
+#game_name_cover .name_button_container button:hover {
+
+    transition: all ease 150ms;
+
+    transform: scale(1.05);
+
+}
+
+#game_name_cover .name_button_container button:disabled {
+
+    cursor: default;
+    opacity: 0.5;
+
+}
+
+#game_name_cover .name_button_container button[data-bookmarked=true] {
+
+    background-color: var(--black-75);
+    border: 2px solid var(--primary);
+
+}
+
+#game_name_cover .name_button_container button svg{
+
+    fill: #F2C74C;
+
 }
 
 #game_heading_info {
@@ -189,22 +250,29 @@ section#game_presentation #game_name_cover {
 
 #game_heading_info>span {
 
+    margin: auto 0;
+
     display: block;
     width: 2px;
-    height: inherit;
+    height: 24px;
 
     background-color: var(--white-50);
 
 }
 
-#game_heading_info p, #game_heading_info a {
+#game_heading_info p,
+#game_heading_info a {
+
+    height: min-content;
+    margin: auto 0;
 
     font-size: var(--fs-minus-2);
     color: var(--white);
 
 }
 
-#genre_list, #platforms_list {
+#genre_list,
+#platforms_list {
 
     margin-top: 24px;
 
@@ -217,7 +285,8 @@ section#game_presentation #game_name_cover {
 
 @media(min-width:568px) {
 
-    #genre_list, #platforms_list {
+    #genre_list,
+    #platforms_list {
 
         justify-content: initial;
 
@@ -229,13 +298,15 @@ section#game_presentation #game_name_cover {
 
 }
 
-#genre_list li, #platforms_list li {
+#genre_list li,
+#platforms_list li {
 
     width: max-content;
 
 }
 
-#genre_list li a, #platforms_list li a {
+#genre_list li a,
+#platforms_list li a {
 
     padding: 4px;
 
@@ -382,12 +453,15 @@ section#game_presentation #game_name_cover {
 
 #game_dlcs li:not(:last-child) {
 
-    padding-bottom: 8px;
     border-bottom: 1px solid var(--white-25);
 
 }
 
 #game_dlcs li a {
+
+    display: block;
+    margin: 8px 0;
+    padding: 4px 0;
 
     font-size: var(--fs-minus-1);
     font-weight: 300;
@@ -454,7 +528,8 @@ section#game_presentation #game_name_cover {
 
 }
 
-#img_container, #videos_container {
+#img_container,
+#videos_container {
 
     position: relative;
     top: 0;
@@ -564,8 +639,8 @@ section#game_presentation #game_name_cover {
 
 }
 
-.select_img_buttons_container button:first-child svg,
-.select_video_buttons_container button:first-child svg {
+.select_img_buttons_container button:last-child svg,
+.select_video_buttons_container button:last-child svg {
 
     rotate: 180deg;
 

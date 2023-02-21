@@ -1,12 +1,24 @@
 interface User {
 
-    loading?: Boolean,
-    error?: Object,
+    loading?: boolean,
+    error?: object,
+    success?: boolean,
     name: {
         first: String,
         last: String
     },
     email: String,
+    bookmarks: [BookmarkedGame]
+
+}
+
+interface BookmarkedGame {
+
+    name: String,
+    slug: String,
+    releaseDate: String,
+    rating: Number,
+    dateAdded: Date
 
 }
 

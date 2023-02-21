@@ -2,7 +2,8 @@ import styled from "styled-components";
 
 interface Props {
 
-    rating: number
+    rating: number,
+    size: number | null
 
 }
 
@@ -32,8 +33,8 @@ export const RatingContainer = styled.div<Props>`
 
     background-color: ${props => props.rating ? bcgColor(props.rating) : 'var(--black-75)'};
 
-    width: 45px;
-    height: 45px;
+    width: ${props => props.size ? `${props.size}px` : '45px'};
+    height: ${props => props.size ? `${props.size}px` : '45px'};
 
     display: flex;
     justify-content: center;
@@ -45,8 +46,8 @@ export const RatingContainer = styled.div<Props>`
 
     @media(min-width: 1020px){
 
-        width: 50px;
-        height: 50px;
+    width: ${props => props.size ? `${props.size}px` : '50px'};
+    height: ${props => props.size ? `${props.size}px` : '50px'};
 
     }
 

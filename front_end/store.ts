@@ -9,7 +9,7 @@ const initialState = {
             first: null,
             last: null,
         },
-        email: null,
+        email: null
     }
 
 }

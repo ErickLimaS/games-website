@@ -2,15 +2,23 @@ import React, { useLayoutEffect, useState } from 'react'
 import { fetchGameInfo } from '../../api/IGDB'
 import Styles from './GamePage.module.css'
 import { BackgroundImage } from '../../styles/DynamicBcgImg'
-import NextArrow from '../../public/img/icons/ChevronCaretsvg'
+import * as SVG from '../../public/img/icons'
 import Image from 'next/image'
 import ErrorImg from '../../public/img/logo/logo.png'
 import Link from 'next/link'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
 import SimilarGameCard from '@/components/SimilarGameCard'
 import DateHumanReadable from '@/components/DateHumanReadable'
+import GameRating from '@/components/GameRating'
+import store, { RootState } from '@/store'
+import { useRouter } from 'next/router'
+import { useSelector } from 'react-redux'
 
 export default function GamePage({ game }: { game: GameInfo }) {
+
+    const navigate = useRouter()
+
+    const user: User = useSelector(state => (state as RootState).user)
 
     // gets a random number on array range of artworks, to show a random img when page is loaded
     const [backgroundImgIndex, setBackgroundImgIndex] = useState<number>(0)
@@ -23,7 +31,6 @@ export default function GamePage({ game }: { game: GameInfo }) {
     const [tabIndex, setTabIndex] = useState<number>(0)
 
     const gameCoverImgSrc: string | any = game.cover != undefined ? `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover.image_id}.jpg` : ErrorImg
-    console.log(gameCoverImgSrc)
 
     // returns the img source with the new array index when next and previous button is clicked
     function screenshotSrc(index: number) {
@@ -55,11 +62,43 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
     }
 
+    function setBackgroundToPage() {
+
+        if (game.artworks) {
+            return game.artworks[backgroundImgIndex]
+        }
+
+        else if (game.screenshots) {
+            return game.screenshots[0]
+        }
+
+        return { image_id: undefined }
+
+    }
+
+    function addToBookmarks() {
+
+        if (!store.getState().user.email) {
+
+            navigate.push(`/login?redirect=game/${navigate.query.slug}`)
+
+            return
+
+        }
+
+        // set game on db
+
+    }
+
     useLayoutEffect(() => {
 
-        if (game.artworks != undefined) {
+        setImgSliderIndex(0)
+        setVideoSliderIndex(0)
+
+        if (game.artworks) {
             setBackgroundImgIndex(Math.floor(Math.random() * game.artworks.length))
         }
+
     }, [game.artworks, game.id])
 
     return (
@@ -67,7 +106,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
             <CustomDocumentHead title={game.name} />
 
-            <BackgroundImage {...game.artworks != undefined ? game.artworks[backgroundImgIndex] : { image_id: undefined }} />
+            <BackgroundImage {...setBackgroundToPage()} />
 
             <div className={Styles.container}>
 
@@ -80,9 +119,30 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
                         <div className={`${Styles.background_fade}`}>
 
-                            <h1>{game.name}</h1>
+                            <div className={`${Styles.flex_row} ${Styles.name_button_container}`}>
+
+                                <h1>{game.name}</h1>
+
+                                <button id={Styles.add_game_to_bookmarks}
+                                    onClick={() => addToBookmarks()}
+                                    disabled={user?.loading}
+                                    data-bookmarked={user?.bookmarks?.find((item: BookmarkedGame) => item.slug === game.slug) ? true : false}
+                                >
+                                    {user?.bookmarks?.find((item: BookmarkedGame) => item.slug === game.slug) ? (
+                                        <SVG.StarFill
+                                            aria-label='Remover dos Marcados' />
+                                    ) : (
+                                        <SVG.Star
+                                            aria-label='Adicionar aos Marcados' />
+                                    )}
+                                </button>
+
+                            </div>
 
                             <div id={Styles.game_heading_info} className={Styles.flex_row}>
+
+                                <GameRating props={game.rating} size={36} />
+
                                 {game.involved_companies && (
                                     <>
                                         <p>
@@ -93,7 +153,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                         <span></span>
                                     </>
                                 )}
-                                {game.age_ratings && (
+                                {game.age_ratings.find((item: AgeRating) => item.category === 1) && (
                                     <>
                                         <p>
                                             ESRB{' '}
@@ -130,6 +190,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                     ))}
                                 </ul>
                             )}
+
                         </div>
                     </div>
 
@@ -246,7 +307,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                                 onClick={() => setImgSliderIndex(curr => curr - 1)}
                                                 aria-label='Mostrar Foto Anterior'
                                             >
-                                                <NextArrow />
+                                                <SVG.NextArrow />
                                             </button>
 
                                             <button
@@ -254,7 +315,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                                 onClick={() => setImgSliderIndex(curr => curr + 1)}
                                                 aria-label='Mostrar Próxima Foto'
                                             >
-                                                <NextArrow />
+                                                <SVG.NextArrow />
                                             </button>
 
                                         </div>
@@ -296,7 +357,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                                 onClick={() => setVideoSliderIndex(curr => curr - 1)}
                                                 aria-label='Mostrar Vídeo Anterior'
                                             >
-                                                <NextArrow />
+                                                <SVG.NextArrow />
                                             </button>
 
                                             <div id={Styles.videos_array_length_dots} className={Styles.flex_row}>
@@ -315,7 +376,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                                 onClick={() => setVideoSliderIndex(curr => curr + 1)}
                                                 aria-label='Mostrar Próxima Vídeo'
                                             >
-                                                <NextArrow />
+                                                <SVG.NextArrow />
                                             </button>
 
                                         </div>
