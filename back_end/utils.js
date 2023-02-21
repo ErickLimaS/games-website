@@ -27,7 +27,7 @@ function isAuth(req, res, next) {
                 return res.status(401).send({ Message: 'Invalid Token' })
             }
             else {
-                req.user = decode;
+                req.body.id = decode.id;
                 next()
             }
         })

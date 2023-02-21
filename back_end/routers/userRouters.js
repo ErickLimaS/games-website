@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 const expressAsyncHandler = require('express-async-handler')
 const { connect } = require('mongoose')
 const bcrypt = require('bcrypt')
-const User = require('../models/userModel.js')
+const User  = require('../models/userModel.js')
 const { newToken } = require('../utils.js')
 const { logInThroughToken } = require('../utils.js')
 
@@ -39,7 +39,7 @@ userRouter.post('/signup', expressAsyncHandler(async (req, res) => {
 
         newUser.save()
 
-        return res.status(202).json({
+        return res.status(201).json({
             success: true,
             message: 'Usuário Criado com Sucesso.',
             token: newToken(newUser.id)
