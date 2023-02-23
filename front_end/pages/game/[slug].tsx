@@ -34,7 +34,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
     // index for the Screenshots and Videos section tab
     const [tabIndex, setTabIndex] = useState<number>(0)
 
-    const gameCoverImgSrc: string | any = game.cover != undefined ? `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover.image_id}.jpg` : ErrorImg
+    const gameCoverImgSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover ? game.cover.image_id : undefined}.jpg`
 
     // returns the img source with the new array index when next and previous button is clicked
     function screenshotSrc(index: number) {
@@ -116,6 +116,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
     }
 
+    // resets img and video index; sets a background to this page  
     useLayoutEffect(() => {
 
         setImgSliderIndex(0)
@@ -127,13 +128,14 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
     }, [game.artworks, game.id])
 
+    // sets btn as clicked when game is already bookmarked
     useEffect(() => {
 
         setGameBookmarked(user?.bookmarks?.find(
             (item: BookmarkedGame) => item.slug === game.slug) ? true : false
         )
 
-    }, [user])
+    }, [game.slug, user])
 
     return (
         <>
@@ -180,8 +182,12 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 {game.involved_companies && (
                                     <>
                                         <p>
-                                            <Link href={`/company/${game.involved_companies[0].company.slug}`}>
-                                                {game.involved_companies[0].company.name}
+                                            <Link
+                                                href={`/company/${game.involved_companies.find((item: InvolvedCompanies) =>
+                                                    item.publisher == true)!.company.slug}`}
+                                            >
+                                                {game.involved_companies.find((item: InvolvedCompanies) =>
+                                                    item.publisher == true)!.company.name}
                                             </Link>
                                         </p>
                                         <span></span>
@@ -203,6 +209,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                         Lançamento em <DateHumanReadable date={game.first_release_date} />
                                     </p>
                                 )}
+
                             </div>
 
                             {game.platforms && (
@@ -225,6 +232,41 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 </ul>
                             )}
 
+                            {game.hltb && (
+
+                                <ul id={Styles.how_long_list} className={Styles.flex_row}>
+
+                                    <li>
+                                        <div>
+                                            <span>Campanha</span>
+                                            {game.hltb.main} Horas
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <span>Campanha + Extras</span>
+                                            {game.hltb.mainExtra} Horas
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <span>100%</span>
+                                            {game.hltb.completionist} Horas
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <span>Todos</span>
+                                            {((game.hltb.main +
+                                                game.hltb.mainExtra +
+                                                game.hltb.completionist as any
+                                            ) / 3).toFixed(1)
+                                            } Horas
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            )}
                         </div>
                     </div>
 
@@ -418,6 +460,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                     </div>
                                 </>
                             )}
+
                         </section>
                     </div>
                 </div>

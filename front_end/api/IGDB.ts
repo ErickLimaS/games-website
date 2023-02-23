@@ -1,14 +1,5 @@
 import Axios from 'axios'
 
-interface ServerResult {
-    result: object[] | null,
-    success: boolean,
-    token?: {
-        access_token: string,
-        expires_in: string
-    } | null
-}
-
 // const API_BASE = 'http://localhost:9000/api'
 const API_BASE = process.env.API_RENDER_URL || `http://localhost:9000/api`
 
@@ -150,9 +141,12 @@ export async function fetchGameInfo(gameUrlSlug: string) {
     try {
         const { data } = await Axios(reqConfig(
             {
-                query: `${queryAllFields}
-                where slug = "${gameUrlSlug}";
-             ` }
+                query:
+                    `${queryAllFields}
+                    where slug = "${gameUrlSlug}";
+                    `,
+                hltbData: true
+            }
         ))
 
         return data.result[0]

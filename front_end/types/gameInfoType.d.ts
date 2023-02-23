@@ -1,5 +1,4 @@
 interface GameInfo {
-
     id: number,
     name: string,
     rating: number,
@@ -10,9 +9,7 @@ interface GameInfo {
     dlcs: ExpansionsAndDlcs[],
     age_ratings: [AgeRating],
     game_modes: GameModes[],
-    involved_companies: [{
-        company: Company
-    }],
+    involved_companies: [InvolvedCompanies],
     cover: {
         url: string | undefined,
         image_id: string | undefined
@@ -26,13 +23,18 @@ interface GameInfo {
     themes: [Themes],
     videos: [Videos],
     platforms: [Platforms]
-    similar_games: [SimilarGames]
+    similar_games: [SimilarGames],
+    hltb: {
+        main: string,
+        mainExtra: string,
+        completionist: string
+    }
 
 }
 
-interface Company {
-    name: string,
-    slug: string
+interface InvolvedCompanies {
+    publisher: boolean,
+    company: Company
 }
 
 interface GameModes {

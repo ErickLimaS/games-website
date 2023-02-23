@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const axios = require('axios')
 const expressAsyncHandler = require('express-async-handler')
+const hltb = require('howlongtobeat')
 
 const apiRouter = express.Router()
 
@@ -68,6 +69,27 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
         )).then(res =>
             response = res.data
         )
+
+        // gets how how long the req game takes to be finished from site howlongtobeat.com
+        if (req.body.hltbData == true) {
+
+            let hltbService = new hltb.HowLongToBeatService()
+
+            let gameRequested
+
+            await hltbService.search(response[0].name).then(res =>
+                res.length > 0 && (gameRequested = res.find(item => item.name === response[0].name))
+            )
+            
+            if (gameRequested) {
+                response[0].hltb = {
+                    main: gameRequested.gameplayMain,
+                    mainExtra: gameRequested.gameplayMainExtra,
+                    completionist: gameRequested.gameplayCompletionist
+                }
+            }
+
+        }
 
         return res.status(200).json({
             success: true,

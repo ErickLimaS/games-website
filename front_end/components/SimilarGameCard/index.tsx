@@ -6,7 +6,7 @@ import GameRating from '../GameRating'
 
 function SimilarGameCard({ props }: { props: GameInfo | SimilarGames }) {
 
-    let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover.image_id}.jpg`
+    let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover ? props.cover.image_id : undefined}.jpg`
 
     return (
         <li className={Styles.card_container}>
