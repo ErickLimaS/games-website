@@ -230,7 +230,8 @@ section#game_presentation #game_name_cover {
     margin-left: auto;
     margin-right: auto;
 
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 
     background-color: var(--black-50);
 
@@ -256,7 +257,7 @@ section#game_presentation #game_name_cover {
     align-items: center;
 }
 
-#game_name_cover #how_long_list li:not(:last-child)::after {
+#game_name_cover #how_long_list li:first-child::after {
 
     content: '';
 
@@ -268,7 +269,22 @@ section#game_presentation #game_name_cover {
 
 }
 
-#game_name_cover #how_long_list li div {
+#game_name_cover #how_long_list li:last-child::before {
+
+    content: '';
+
+    margin: 0 8px;
+
+    border-left: 2px solid var(--white-25);
+
+    height: 28px;
+
+}
+
+#game_name_cover #how_long_list li>div {
+
+    width: 100%;
+    height: 100%;
 
     text-align: center;
 
@@ -277,14 +293,14 @@ section#game_presentation #game_name_cover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 
     font-size: calc(var(--fs-minus-1) - 2px);
     font-weight: 600;
 
 }
 
-
-#game_name_cover #how_long_list li div>span {
+#game_name_cover #how_long_list li>div>span {
 
     margin-bottom: 4px;
 
@@ -293,6 +309,15 @@ section#game_presentation #game_name_cover {
 
     color: var(--white-75);
 
+}
+
+@media(max-width:567px) {
+    #game_name_cover #how_long_list li>div>div {
+
+        display: flex;
+        flex-direction: column;
+
+    }
 }
 
 #game_heading_info {
@@ -344,6 +369,14 @@ section#game_presentation #game_name_cover {
     font-size: var(--fs-minus-2);
     color: var(--white);
 
+}
+
+@media(max-width:600px) {
+    #game_heading_info p span {
+
+        display: none;
+
+    }
 }
 
 #genre_list,
@@ -910,6 +943,7 @@ section#game_presentation #game_name_cover {
     gap: 16px 8px;
 
 }
+
 .similar_games_wrapper>ul::-webkit-scrollbar {
 
     display: none;

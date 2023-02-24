@@ -184,10 +184,10 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                         <p>
                                             <Link
                                                 href={`/company/${game.involved_companies.find((item: InvolvedCompanies) =>
-                                                    item.publisher == true)!.company.slug}`}
+                                                    item.developer == true)?.company.slug || game.involved_companies[0].company.slug}`}
                                             >
                                                 {game.involved_companies.find((item: InvolvedCompanies) =>
-                                                    item.publisher == true)!.company.name}
+                                                    item.developer == true)?.company.name || game.involved_companies[0].company.name}
                                             </Link>
                                         </p>
                                         <span></span>
@@ -206,7 +206,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 )}
                                 {game.first_release_date && (
                                     <p>
-                                        Lançamento em <DateHumanReadable date={game.first_release_date} />
+                                        <span>Lançamento em </span><DateHumanReadable date={game.first_release_date} />
                                     </p>
                                 )}
 
@@ -234,34 +234,33 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
                             {game.hltb && (
 
-                                <ul id={Styles.how_long_list} className={Styles.flex_row}>
+                                <ul id={Styles.how_long_list} >
 
                                     <li>
                                         <div>
                                             <span>Campanha</span>
-                                            {game.hltb.main} Horas
+                                            <div>
+                                                {game.hltb.main}
+                                                <span> Horas</span>
+                                            </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div>
                                             <span>Campanha + Extras</span>
-                                            {game.hltb.mainExtra} Horas
+                                            <div>
+                                                {game.hltb.mainExtra}
+                                                <span> Horas</span>
+                                            </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div>
                                             <span>100%</span>
-                                            {game.hltb.completionist} Horas
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div>
-                                            <span>Todos</span>
-                                            {((game.hltb.main +
-                                                game.hltb.mainExtra +
-                                                game.hltb.completionist as any
-                                            ) / 3).toFixed(1)
-                                            } Horas
+                                            <div>
+                                                {game.hltb.completionist}
+                                                <span> Horas</span>
+                                            </div>
                                         </div>
                                     </li>
 

@@ -78,9 +78,9 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
             let gameRequested
 
             await hltbService.search(response[0].name).then(res =>
-                res.length > 0 && (gameRequested = res.find(item => item.name === response[0].name))
+                res.length > 0 && (gameRequested = res.find(item => item.name === response[0].name || item.similarity == 1))
             )
-            
+
             if (gameRequested) {
                 response[0].hltb = {
                     main: gameRequested.gameplayMain,

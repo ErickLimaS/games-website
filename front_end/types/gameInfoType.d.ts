@@ -34,6 +34,7 @@ interface GameInfo {
 
 interface InvolvedCompanies {
     publisher: boolean,
+    developer: boolean,
     company: Company
 }
 
