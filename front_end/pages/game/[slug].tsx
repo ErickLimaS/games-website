@@ -84,7 +84,6 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
         if (!store.getState().user.email) {
 
-
             navigate.push(`/login?redirect=game/${navigate.query.slug}`)
 
             return
@@ -93,12 +92,15 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
         setLoading(true)
 
-
         const reqBody = {
-            bookmarkThisGame: gameBookmarked ? false : true, // true = adds game, false = removes
+            // true = adds game, false = removes
+            bookmarkThisGame: gameBookmarked ? false : true,
             game: {
                 name: game.name,
                 slug: game.slug,
+                cover: {
+                    image_id: game.cover ? game.cover.image_id : undefined,
+                },
                 rating: game.rating,
                 releaseDate: game.first_release_date
             }

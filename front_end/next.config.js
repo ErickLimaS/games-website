@@ -10,7 +10,7 @@ module.exports = {
     DB_RENDER_URL: process.env.DB_RENDER_URL
   },
   images: {
-    domains: ['upload.wikimedia.org'],
+    domains: ['upload.wikimedia.org', 'images.igdb.com'],
     remotePatterns: [
       {
         protocol: 'https',

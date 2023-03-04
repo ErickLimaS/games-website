@@ -14,11 +14,14 @@ interface User {
 
 interface BookmarkedGame {
 
-    name: String,
-    slug: String,
-    releaseDate: String,
-    rating: Number,
-    dateAdded: Date
+    name: string,
+    slug: string,
+    cover: {
+        image_id: string,
+    },
+    releaseDate: date,
+    rating: number,
+    dateAdded: date
 
 }
 

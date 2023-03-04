@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import GameRating from '../GameRating'
 
-function SimilarGameCard({ props }: { props: GameInfo | SimilarGames }) {
+function SimilarGameCard({ props }: { props: GameInfo | SimilarGames | BookmarkedGame }) {
 
     let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover ? props.cover.image_id : undefined}.jpg`
 
