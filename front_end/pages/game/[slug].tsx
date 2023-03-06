@@ -195,7 +195,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                         <span></span>
                                     </>
                                 )}
-                                {game.age_ratings.find((item: AgeRating) => item.category === 1) && (
+                                {game.age_ratings?.find((item: AgeRating) => item.category === 1) && (
                                     <>
                                         <p>
                                             ESRB{' '}
@@ -280,19 +280,21 @@ export default function GamePage({ game }: { game: GameInfo }) {
                     <div className={Styles.game_details_wrapper}>
                         <section id={Styles.game_info}>
 
-                            <div>
+                            {game.summary || game.storyline && (
+                                <div>
 
-                                <h2>Sobre</h2>
+                                    <h2>Sobre</h2>
 
-                                {game.summary && (
-                                    <p>{game.summary}</p>
-                                )}
-                                {game.storyline && (
-                                    <p>{game.storyline}</p>
-                                )}
+                                    {game.summary && (
+                                        <p>{game.summary}</p>
+                                    )}
+                                    {game.storyline && (
+                                        <p>{game.storyline}</p>
+                                    )}
 
-                            </div>
-
+                                </div>
+                            )}
+                            
                             {game.game_modes && (
                                 <div id={Styles.game_modes}>
 

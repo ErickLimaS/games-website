@@ -20,7 +20,7 @@ function DateHumanReadable({ date, fullDate }: { date: number, fullDate?: boolea
                     'default',
                     { month: 'long' })
                 }
-
+                {' '}
                 {new Date(date * 1000).getFullYear()}
             </>
         )

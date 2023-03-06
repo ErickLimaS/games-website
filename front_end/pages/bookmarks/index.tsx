@@ -18,19 +18,19 @@ function Bookmarks() {
 
     const [loading, setLoading] = useState<boolean>(false)
 
+    const [sortedType, setSortedType] = useState<string | null>(null)
+
     const [gamesBookmarked, setGamesBookmarked] = useState<BookmarkedGame[]>([])
     const [recentsBookmarked, setRecentsBookmarked] = useState<BookmarkedGame[]>([])
 
+    // sets recents added to bookmarks games to array, then shows on page
     function filterRecentBookmarkedGames() {
 
         const dateSevenDaysAgo = (Date.now() - 7 * 24 * 60 * 60 * 1000)
 
         const filtered = user.bookmarks.filter(
-            // (item) => item.dateAdded >= dateSevenDaysAgo
-            (item) => item.releaseDate < dateSevenDaysAgo //test
+            (item) => item.dateAdded >= dateSevenDaysAgo
         )
-
-        console.log(dateSevenDaysAgo, filtered)
 
         if (filtered.length > 0) {
 
@@ -42,22 +42,50 @@ function Bookmarks() {
 
     }
 
-    function filterByBtnEvent(option: string) {
+    // sort games by rating and name
+    function sortByBtnEvent(option: string) {
+
+        setSortedType(option)
+
+        setLoading(true)
+
+        const ratingSorted = gamesBookmarked.sort((a, b) => a.rating - b.rating)
+        const nameSorted = gamesBookmarked.sort((a, b) => a.name.localeCompare(b.name))
 
         switch (option) {
             case 'rating_decrescent':
 
+                setGamesBookmarked(ratingSorted.reverse())
+
+                break
+
             case 'rating_crescent':
+
+                setGamesBookmarked(ratingSorted)
+
+                break
 
             case 'name_decrescent':
 
+                setGamesBookmarked(nameSorted)
+
+                break
+
             case 'name_crescent':
 
+                setGamesBookmarked(nameSorted.reverse())
+
+                break
+
             default:
+
+                setSortedType('')
 
                 return
 
         }
+
+        setLoading(false)
 
     }
 
@@ -112,100 +140,100 @@ function Bookmarks() {
 
                 <div id={Styles.bookmarked_games}>
 
-                    {/* <div id={Styles.sort_results} className={`${Styles.flex_row}`}>
-
-                        <div className={`${Styles.flex_row}`}>
-                            <button
-                                onClick={() => filterByBtnEvent('rating_decrescent')}
-                                data-active={(1 + 1) == 2 ? true : false}
-                                // hidden={(1 + 1) == 2 ? true : false}
-                                className={`${Styles.flex_row}`}
-                            >
-                                <SVG.SortNumericDown />
-                                Rating
-                            </button>
-
-                            <button
-                                onClick={() => filterByBtnEvent('rating_crescent')}
-                                data-active={(1 + 1) == 2 ? true : false}
-                                // hidden={(1 + 1) == 2 ? true : false}
-                                className={`${Styles.flex_row}`}
-                            >
-                                <SVG.SortNumericDownAlt />
-                                Rating
-                            </button>
-                        </div>
-
-                        <div className={`${Styles.flex_row}`}>
-                            <button
-                                onClick={() => filterByBtnEvent('name_decrescent')}
-                                data-active={(1 + 1) == 2 ? true : false}
-                                // hidden={(1 + 1) == 2 ? true : false}
-                                className={`${Styles.flex_row}`}
-                            >
-                                <SVG.SortAlphaDown />
-                                Nome
-                            </button>
-
-                            <button
-                                onClick={() => filterByBtnEvent('name_crescent')}
-                                data-active={(1 + 1) == 2 ? true : false}
-                                // hidden={(1 + 1) == 2 ? true : false}
-                                className={`${Styles.flex_row}`}
-                            >
-                                <SVG.SortAlphaDownAlt />
-                                Nome
-                            </button>
-                        </div>
-
-                    </div> */}
-
                     {!loading && gamesBookmarked.length > 0 ? (
+                        <>
+                            <div id={Styles.sort_results} className={`${Styles.flex_row}`}>
 
-                        <ul>
-                            {gamesBookmarked.map((item) => (
-                                <li key={gamesBookmarked.indexOf(item)} className={`${Styles.list_item}`}>
+                                <div className={`${Styles.flex_row}`}>
+                                    <button
+                                        onClick={() => sortByBtnEvent('rating_decrescent')}
+                                        data-active={sortedType === 'rating_decrescent' ? true : false}
+                                        className={`${Styles.flex_row}`}
+                                    >
+                                        <SVG.SortNumericDownAlt />
+                                        Nota
+                                    </button>
 
-                                    <Link href={`/game/${item.slug}`}>
+                                    <button
+                                        onClick={() => sortByBtnEvent('rating_crescent')}
+                                        data-active={sortedType === 'rating_crescent' ? true : false}
+                                        className={`${Styles.flex_row}`}
+                                    >
+                                        <SVG.SortNumericDown />
+                                        Nota
+                                    </button>
+                                </div>
 
-                                        <div className={`${Styles.card_list_item_heading} ${Styles.flex_row}`}>
-                                            <Image
-                                                src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${item.cover.image_id}.jpg`}
-                                                alt={item.name}
-                                                width={76} height={100}
-                                            />
+                                <div className={`${Styles.flex_row}`}>
+                                    <button
+                                        onClick={() => sortByBtnEvent('name_decrescent')}
+                                        data-active={sortedType === 'name_decrescent' ? true : false}
+                                        className={`${Styles.flex_row}`}
+                                    >
+                                        <SVG.SortAlphaDown />
+                                        Nome
+                                    </button>
 
-                                            <div>
-                                                <h2>{item.name}</h2>
+                                    <button
+                                        onClick={() => sortByBtnEvent('name_crescent')}
+                                        data-active={sortedType === 'name_crescent' ? true : false}
+                                        className={`${Styles.flex_row}`}
+                                    >
+                                        <SVG.SortAlphaDownAlt />
+                                        Nome
+                                    </button>
+                                </div>
 
-                                                <GameRating props={item.rating} size={44} />
+                            </div>
+
+                            <ul>
+                                {gamesBookmarked.map((item) => (
+                                    <li key={gamesBookmarked.indexOf(item)} className={`${Styles.list_item}`}>
+
+                                        <Link href={`/game/${item.slug}`}>
+
+                                            <div className={`${Styles.card_list_item_heading} ${Styles.flex_row}`}>
+                                                <Image
+                                                    src={`https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${item.cover.image_id}.jpg`}
+                                                    alt={item.name}
+                                                    width={76} height={100}
+                                                />
+
+                                                <div>
+                                                    <h2>{item.name}</h2>
+
+                                                    <GameRating props={item.rating} size={44} />
+                                                </div>
+
                                             </div>
 
-                                        </div>
+                                            <div className={`${Styles.card_item_more_info} ${Styles.flex_row}`}>
+                                                <div>
+                                                    <h3>Lançado em</h3>
+                                                    <p><DateHumanReadable date={item.releaseDate} fullDate /></p>
+                                                </div>
 
-                                        <div className={`${Styles.card_item_more_info} ${Styles.flex_row}`}>
-                                            <div>
-                                                <h3>Lançado em</h3>
-                                                <p><DateHumanReadable date={item.releaseDate} fullDate /></p>
+                                                <div>
+                                                    <h3>Adicionado em</h3>
+                                                    <p><DateHumanReadable date={item.dateAdded} fullDate /></p>
+                                                </div>
                                             </div>
 
-                                            <div>
-                                                <h3>Adicionado em</h3>
-                                                <p><DateHumanReadable date={item.releaseDate} fullDate /></p>
-                                            </div>
-                                        </div>
-
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
                     ) : (loading ? (
                         <>
-                            <div className={Styles.loading_list_item}></div>
-                            <div className={Styles.loading_list_item}></div>
-                            <div className={Styles.loading_list_item}></div>
-                            <div className={Styles.loading_list_item}></div>
+                            <div className={Styles.loading_grid} >
+                                <div className={Styles.loading_list_item}></div>
+                                <div className={Styles.loading_list_item}></div>
+                                <div className={Styles.loading_list_item}></div>
+                                <div className={Styles.loading_list_item}></div>
+                                <div className={Styles.loading_list_item}></div>
+                                <div className={Styles.loading_list_item}></div>
+                            </div>
                         </>
                     ) : (
                         <p>Sem jogos marcados.</p>

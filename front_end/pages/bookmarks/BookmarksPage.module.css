@@ -123,12 +123,25 @@
 
 #sort_results {
 
+    overflow: auto;
+
     margin-bottom: 16px;
 
     gap: 0 16px;
 
-    justify-content: flex-end;
+    justify-content: flex-start;
 
+}
+
+#sort_results::-webkit-scrollbar {
+    display: none;
+}
+
+@media(min-width: 568px) {
+    #sort_results {
+
+        justify-content: flex-end;
+    }
 }
 
 #sort_results>div {
@@ -167,16 +180,21 @@
 
 }
 
-#sort_results button[data-active] {
+#sort_results button[data-active=true] {
+
+    transition: all ease 100ms;
 
     background-color: var(--primary);
     border: 2px solid var(--white-25);
+
+    transform: scale(1.1);
 
 }
 
 #bookmarked_games {
 
     padding: 24px 0;
+    padding-bottom: 125px;
 
 }
 
@@ -223,6 +241,14 @@
     border: 2px solid var(--white-50);
 
     border-radius: 4px;
+
+}
+
+#bookmarked_games>ul li.list_item:hover {
+
+    transition: all ease 100ms;
+
+    transform: scale(1.01);
 
 }
 
@@ -286,4 +312,70 @@
     font-size: calc(var(--fs-p) - 4px);
     font-weight: 600;
 
+}
+
+.loading_grid {
+
+    min-height: 75vh;
+
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(1, 1fr);
+    align-content: center;
+    justify-items: center;
+
+}
+
+@media(min-width: 768px) {
+    .loading_grid {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+}
+
+@media(min-width: 1440px) {
+    .loading_grid {
+
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+}
+
+.loading_list_item {
+
+    animation: fade-in-out infinite 1400ms;
+
+    height: 220px;
+    width: 100%;
+
+    border-radius: 4px;
+
+    background-color: var(--white-50);
+
+}
+
+@media(max-width: 1439px) {
+
+    .loading_list_item:nth-child(4),
+    .loading_list_item:nth-child(5) {
+        display: none;
+    }
+}
+
+@keyframes fade-in-out {
+    0% {
+
+        background-color: var(--white-50);
+    }
+
+    50% {
+
+        background-color: var(--white-25);
+    }
+
+    100% {
+
+        background-color: var(--white-50);
+    }
 }
