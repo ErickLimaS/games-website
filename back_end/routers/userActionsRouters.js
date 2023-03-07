@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const expressAsyncHandler = require('express-async-handler')
 const { connect } = require('mongoose')
 const User = require('../models/userModel.js')
+const GamesBookmarked = require('../models/gamesBookmarkedModel.js')
 const { isAuth } = require('../utils.js')
 
 const userActionsRouter = express.Router()
@@ -34,7 +35,7 @@ userActionsRouter.put('/bookmark', isAuth, expressAsyncHandler(async (req, res) 
 
             case true:
 
-                if (user.bookmarks.find(item => item.slug === req.body.game.slug)) {
+                if (user.bookmarks?.find(item => item.slug === req.body.game.slug)) {
 
                     return res.status(405).json({
                         success: false,
@@ -44,13 +45,18 @@ userActionsRouter.put('/bookmark', isAuth, expressAsyncHandler(async (req, res) 
 
                 }
 
+                // iniciate bookmarks array
+                if (!user.bookmarks) {
+                    user.bookmarks = []
+                }
+
                 await User.findByIdAndUpdate(req.body.id, {
                     $push: {
-                        bookmarks: req.body.game,
+                        bookmarks: new GamesBookmarked(req.body.game),
                     }
                 })
 
-                user.save()
+                await user.save()
 
                 return res.status(202).json({
                     success: true,
@@ -60,7 +66,7 @@ userActionsRouter.put('/bookmark', isAuth, expressAsyncHandler(async (req, res) 
 
             case false:
 
-                if (!user.bookmarks.find(item => item.slug === req.body.game.slug)) {
+                if (!user.bookmarks?.find(item => item.slug === req.body.game.slug)) {
 
                     return res.status(405).json({
                         success: false,
