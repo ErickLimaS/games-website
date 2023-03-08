@@ -4,7 +4,6 @@ import Styles from './GamePage.module.css'
 import { BackgroundImage } from '../../styles/DynamicBcgImg'
 import * as SVG from '../../public/img/icons'
 import Image from 'next/image'
-import ErrorImg from '../../public/img/logo/logo.png'
 import Link from 'next/link'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
 import SimilarGameCard from '@/components/SimilarGameCard'
@@ -27,11 +26,11 @@ export default function GamePage({ game }: { game: GameInfo }) {
     // gets a random number on array range of artworks, to show a random img when page is loaded
     const [backgroundImgIndex, setBackgroundImgIndex] = useState<number>(0)
 
-    // gets the index to show the img and video to chosed ID
+    // index for the img and video
     const [imgSliderIndex, setImgSliderIndex] = useState<number>(0)
     const [videoSliderIndex, setVideoSliderIndex] = useState<number>(0)
 
-    // index for the Screenshots and Videos section tab
+    // index for the Screenshots and Videos tabs 
     const [tabIndex, setTabIndex] = useState<number>(0)
 
     const gameCoverImgSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${game.cover ? game.cover.image_id : undefined}.jpg`
@@ -66,6 +65,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
     }
 
+    // manage background img, if available 
     function setBackgroundToPage() {
 
         if (game.artworks) {
@@ -280,7 +280,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                     <div className={Styles.game_details_wrapper}>
                         <section id={Styles.game_info}>
 
-                            {game.summary || game.storyline && (
+                            {(game.summary || game.storyline) && (
                                 <div>
 
                                     <h2>Sobre</h2>

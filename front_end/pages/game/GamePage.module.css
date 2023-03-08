@@ -150,6 +150,7 @@ section#game_presentation #game_name_cover {
 
     justify-content: center;
     flex-wrap: wrap;
+    gap: 16px;
 
     margin-bottom: 16px;
 
@@ -183,8 +184,6 @@ section#game_presentation #game_name_cover {
     height: min-content;
 
     margin: auto 0;
-
-    margin-left: 16px;
 
     padding: 6px 10px;
 
@@ -939,6 +938,8 @@ section#game_presentation #game_name_cover {
 
 .similar_games_wrapper>ul {
 
+    padding: 16px 0;
+
     overflow: auto;
     gap: 16px 8px;
 
@@ -969,5 +970,18 @@ section#game_presentation #game_name_cover {
         grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
     }
+
+}
+.similar_games_wrapper ul>li {
+
+    box-shadow: 9px 9px 7px 0px var(--black-75)
+
+}
+
+.similar_games_wrapper ul>li:hover{
+
+    transition: all ease 100ms;
+
+    transform: scale(0.98);
 
 }
