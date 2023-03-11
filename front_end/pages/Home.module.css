@@ -185,7 +185,6 @@ section.position_top {
     padding-top: 16px;
 
     background: linear-gradient(to bottom, transparent, var(--background-color) 60%);
-    /* background: transparent; */
 
     min-height: 25vh;
 
@@ -199,7 +198,8 @@ section.position_top {
 
         padding-top: 0;
         background: linear-gradient(to bottom, transparent, var(--background-color) 25%);
-        margin: 40px 0;
+        margin-top: 40px;
+        padding-bottom: 40px;
 
         top: -15vh;
 
@@ -431,7 +431,8 @@ section.position_top {
 /* Genre Games Container */
 #genre_games {
 
-    margin-top: 32px;
+    margin-top: -1px;
+    padding-top: 32px;
 
     background-color: var(--background-color);
 
@@ -440,7 +441,7 @@ section.position_top {
 @media(min-width: 768px) {
     #genre_games {
 
-        margin-top: 0;
+        padding-top: 32px;
         padding: 0 5vw;
 
     }
@@ -579,7 +580,7 @@ section.position_top {
 }
 
 @media(min-width: 560px) {
-    
+
     #popular_platform_game #platform_content_container>h3 {
 
         font-size: var(--fs-h1);

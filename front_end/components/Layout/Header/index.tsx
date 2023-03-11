@@ -78,7 +78,7 @@ function Header() {
 
     }
     // width 560px
-    if (screenWidth > 560 && screenWidth <= 1020) {
+    else if (screenWidth > 560 && screenWidth <= 1020) {
       if (window.scrollY > 20) {
 
         const element: HTMLElement = document.getElementsByTagName('header')[0]
@@ -96,8 +96,8 @@ function Header() {
 
     }
     // width 1020px
-    if (screenWidth > 1020) {
-      if (window.scrollY > 140) {
+    else if (screenWidth > 1020) {
+      if (window.scrollY > 40) {
 
         const element: HTMLElement = document.getElementsByTagName('header')[0]
 

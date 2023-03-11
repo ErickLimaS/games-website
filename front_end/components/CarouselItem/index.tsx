@@ -3,14 +3,17 @@ import * as C from './CarouselItemStyle'
 import Link from 'next/link'
 import Image from 'next/image'
 
-function CarouselItem({ props }: { props: GameInfo }) {
+function CarouselItem({ props, showAllInfo }: { props: GameInfo, showAllInfo?: boolean | null }) {
 
     let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover && props.cover.image_id}.jpg`
 
     return (
         <C.CarouselItem {...props.artworks}>
 
-            <Link href={`/game/${props.slug}`} aria-label={props.name}>
+            <Link
+                href={`/game/${props.slug}`}
+                aria-label={props.name} data-active={showAllInfo ? true : false}
+            >
                 <span>
                     <div className='carousel_item_container'>
                         <Image

@@ -89,8 +89,14 @@ export const CarouselItem = styled.li<Props[]>`
         font-weight: 500;
 
     }
+
+    a[data-active=true] span{
+
+        border: 2px solid  var(--green);
+
+    }
     
-    >a:hover span{
+    >a:hover span, >a[data-active=true] span{
 
         animation: fade-in forwards 500ms;
 

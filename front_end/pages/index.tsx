@@ -11,6 +11,7 @@ import PageLoading from "@/components/PageLoading";
 import GameGenreCard from "@/components/GameGenreCard";
 import CustomDocumentHead from "@/components/CustomDocumentHead";
 import { PlatformBackgroundImage } from "@/styles/DynamicBcgImg";
+import { CSSProperties } from "styled-components";
 
 interface HomePage {
   heroSection: GameInfo[];
@@ -39,21 +40,25 @@ export default function Home() {
   }
 
   // sets style to UL tag on platform section
-  function inlineStylePlatformSection() {
+  function inlineStylePlatformSection(scrWidth?: number | null) {
 
-    if (screen.width >= 1440) {
+    if (!scrWidth) scrWidth = 0
 
-      return { position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 20.2}vw)` }
+    switch (true) {
+
+      case (scrWidth! > 1440):
+
+        return { position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 20.2}vw)` }
+
+      case (scrWidth! > 1020):
+
+        return { position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 20.6}vw)` }
+
+      default:
+
+        return
 
     }
-
-    else if (screen.width >= 1020) {
-
-      return { position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 20.6}vw)` }
-
-    }
-
-    return
 
   }
 
@@ -84,15 +89,23 @@ export default function Home() {
   }
 
   // returns array with the range that should be shown on carousel
-  function sliceFilterRange(currentCarouselRow: number) {
-    if (screen.width > 480 && screen.width < 660) {
-      return [currentCarouselRow * 2, (currentCarouselRow + 1) * 2];
-    }
-    else if (screen.width >= 660 && screen.width < 860) {
-      return [currentCarouselRow * 3, (currentCarouselRow + 1) * 3];
+  function sliceFilterRange(currentCarouselRow: number, scrWidth?: number | null) {
+
+    if (!scrWidth) scrWidth = 0
+
+    switch (true) {
+
+      case (scrWidth > 480 && scrWidth < 660):
+        return [currentCarouselRow * 2, (currentCarouselRow + 1) * 2];
+
+      case (scrWidth > 660 && scrWidth < 860):
+        return [currentCarouselRow * 3, (currentCarouselRow + 1) * 3];
+
+      default:
+        return [currentCarouselRow * 4, (currentCarouselRow + 1) * 4];
+
     }
 
-    return [currentCarouselRow * 4, (currentCarouselRow + 1) * 4];
   }
 
   const router = useRouter();
@@ -106,23 +119,17 @@ export default function Home() {
     // sets the game index inside the game hero section array
     setHeroGameInfoIndex(homePageData!.heroSection.indexOf(gameHovered));
 
-    // if game was previously setted, the function ends here
-    if (gameHovered == homePageData!.heroSection[heroGameInfoIndex]) {
-      return;
-    }
+    // if game was previously setted, the function ends here (happens when is hovered one or more times.)
+    if (gameHovered == homePageData!.heroSection[heroGameInfoIndex]) return;
 
     // sets the index for the background image artwork or screenshot
     setBackgroundHeroIndex(
-      randomizeIndex(
-        homePageData!.heroSection[
-          homePageData!.heroSection.indexOf(gameHovered)
-        ].artworks
-          ? homePageData!.heroSection[
-            homePageData!.heroSection.indexOf(gameHovered)
-          ].artworks
-          : homePageData!.heroSection[
-            homePageData!.heroSection.indexOf(gameHovered)
-          ].screenshots
+      randomizeIndex(homePageData!.heroSection[homePageData!.heroSection.indexOf(gameHovered)].artworks ?
+
+        homePageData!.heroSection[homePageData!.heroSection.indexOf(gameHovered)].artworks
+        :
+        homePageData!.heroSection[homePageData!.heroSection.indexOf(gameHovered)].screenshots
+
       )
     );
   }
@@ -166,9 +173,8 @@ export default function Home() {
 
           {homePageData!.heroSection[heroGameInfoIndex].game_modes && (
             <ul>
-              {homePageData!.heroSection[heroGameInfoIndex].game_modes
-                .slice(0, 3)
-                .map((item: { name: string; slug: string }, key: any) => (
+              {homePageData!.heroSection[heroGameInfoIndex].game_modes.slice(0, 3).map(
+                (item: { name: string; slug: string }, key: any) => (
                   <li key={key}>
                     <Link href={`/game-mode/${item.slug}`}>{item.name}</Link>
                   </li>
@@ -200,11 +206,10 @@ export default function Home() {
             </button>
 
             <button
-              disabled={
-                carouselRowNumber ===
-                  Math.ceil(homePageData!.heroSection.length / 4 - 1)
-                  ? true
-                  : false
+              disabled={carouselRowNumber === Math.ceil(homePageData!.heroSection.length / 4 - 1) ?
+                true
+                :
+                false
               }
               onClick={() => setCarouselRowNumber((curr) => curr + 1)}
             >
@@ -215,14 +220,14 @@ export default function Home() {
 
         {screen.width >= 480 && (
           <ul aria-live="polite">
-            {homePageData!.heroSection
-              .slice(
-                sliceFilterRange(carouselRowNumber)[0],
-                sliceFilterRange(carouselRowNumber)[1]
-              )
+            {homePageData!.heroSection.slice(
+              sliceFilterRange(carouselRowNumber, screen?.width)[0],
+              sliceFilterRange(carouselRowNumber, screen?.width)[1]
+            )
               .map((item: GameInfo) => (
-                <span key={item.id} onMouseEnter={() => hoverEvent(item)}>
-                  <CarouselItem props={item} />
+                <span id={`${item.id}`}
+                  key={item.id} onMouseEnter={() => hoverEvent(item)} >
+                  <CarouselItem props={item} showAllInfo={item.id == homePageData!.heroSection[heroGameInfoIndex].id} />
                 </span>
               ))}
           </ul>
@@ -231,7 +236,8 @@ export default function Home() {
         {screen.width <= 479 && (
           <ul aria-live="polite">
             {homePageData!.heroSection.map((item: GameInfo) => (
-              <span key={item.id} onTouchStartCapture={() => hoverEvent(item)}>
+              <span id={`${item.id}`}
+                key={item.id} onTouchStartCapture={() => hoverEvent(item)}>
                 <CarouselItem props={item} />
               </span>
             ))}
@@ -239,9 +245,8 @@ export default function Home() {
         )}
 
         <div id={Styles.carousel_indicators}>
-          {homePageData!.heroSection
-            .slice(0, homePageData!.heroSection.length / 4)
-            .map((item: GameInfo, key: number) => (
+          {homePageData!.heroSection.slice(0, homePageData!.heroSection.length / 4).map(
+            (item: GameInfo, key: number) => (
               <span
                 key={key}
                 data-active-row={carouselRowNumber === key ? true : false}
@@ -343,7 +348,7 @@ export default function Home() {
 
                 <ul
                   aria-live="polite"
-                  style={inlineStylePlatformSection() as any}
+                  style={inlineStylePlatformSection(screen?.width) as CSSProperties}
                 >
                   {homePageData.platformSection.map((item: GameInfo, key: any) => (
                     <span key={item.id} data-focused={platformCarouselRowNumber == key}>
