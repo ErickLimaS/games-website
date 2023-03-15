@@ -7,6 +7,8 @@ const hltb = require('howlongtobeat')
 const apiRouter = express.Router()
 
 const API_BASE = 'https://api.igdb.com/v4'
+const STEAM_GAMES_API = 'https://api.steampowered.com/ISteamApps/GetAppList/v0002/'
+const STEAM_GAME_BY_ID_API = 'https://store.steampowered.com/api/appdetails?filters=price_overview&appids='
 
 dotenv.config()
 
@@ -62,31 +64,57 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
 
         let response = {};
 
-        await axios(reqConfig(
-            req.body.query,
-            `Bearer ${authorization.access_token}`,
-            req.body.route
-        )).then(res =>
-            response = res.data
-        )
+        await axios(reqConfig(req.body.query, `Bearer ${authorization.access_token}`, req.body.route))
+            .then(res =>
+                response = res.data
+            )
 
-        // gets how how long the req game takes to be finished from site howlongtobeat.com
+        /*
+            If true, gets how how long the requested game 
+            takes to be finished from site howlongtobeat.com.
+            Search through steam game list than returns game price.
+        */
         if (req.body.hltbData == true) {
 
             let hltbService = new hltb.HowLongToBeatService()
 
             let gameRequested
 
+            // search game on HLTB
             await hltbService.search(response[0].name).then(res =>
-                res.length > 0 && (gameRequested = res.find(item => item.name === response[0].name || item.similarity == 1))
+                res.length > 0 && (gameRequested = res.find(item =>
+                    item.name === response[0].name || item.similarity == 1)
+                )
             )
 
+            // if game was found, sets info on response
             if (gameRequested) {
                 response[0].hltb = {
                     main: gameRequested.gameplayMain,
                     mainExtra: gameRequested.gameplayMainExtra,
                     completionist: gameRequested.gameplayCompletionist
                 }
+            }
+
+            let steamID
+
+            // gets game list from steam
+            await axios({ url: STEAM_GAMES_API, method: "GET" }).then(
+                ({ data }) => {
+                    steamID = data.applist.apps.find(item => item.name == response[0].name)?.appid
+                }
+            )
+
+            // if game ID was found, sets game price on response
+            if (steamID) {
+                await axios({ url: `${STEAM_GAME_BY_ID_API}${steamID}`, method: "GET" }).then(
+                    ({ data }) => {
+                        if (data[`${steamID}`].data) {
+                            response[0].price = {}
+                            response[0].price.steam = data[`${steamID}`]?.data.price_overview
+                        }
+                    }
+                )
             }
 
         }
