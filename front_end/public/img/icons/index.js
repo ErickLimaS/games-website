@@ -26,6 +26,7 @@ export { default as SortNumericDownAlt } from "./SortNumericDownAlt";
 export { default as SortNumericDown } from "./SortNumericDown";
 export { default as StarFill } from "./StarFill";
 export { default as Star } from "./Star";
+export { default as Steam } from "./Steam";
 export { default as Success } from "./Success";
 export { default as Sword } from "./Sword";
 export { default as ThreeDots } from "./ThreeDots";

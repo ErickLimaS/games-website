@@ -76,7 +76,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
             return game.screenshots[0]
         }
 
-        return { image_id: undefined }
+        return { image_id: undefined, height: undefined }
 
     }
 
@@ -214,6 +214,24 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
                             </div>
 
+
+                            {game.price?.steam && (
+
+                                <ul id={Styles.price_list} className={Styles.flex_row}>
+                                    <li>
+                                        <a
+                                            href={`https://store.steampowered.com/app/${game.steamId}`}
+                                            aria-label={`Ver o jogo ${game.name} na Steam`}
+                                            target='_blank'
+                                            rel='noreferrer'
+                                        >
+                                           <SVG.Steam aria-label='Logo da Steam' /> {game.price.steam.final_formatted} <span>na Steam</span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            )}
+
                             {game.platforms && (
                                 <ul id={Styles.platforms_list} className={Styles.flex_row}>
                                     {game.platforms.map((item: Platforms) => (
@@ -286,15 +304,15 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                     <h2>Sobre</h2>
 
                                     {game.summary && (
-                                        <p>{game.summary}</p>
+                                        <p id={Styles.summary}>{game.summary}</p>
                                     )}
                                     {game.storyline && (
-                                        <p>{game.storyline}</p>
+                                        <p id={Styles.storyline}>{game.storyline}</p>
                                     )}
 
                                 </div>
                             )}
-                            
+
                             {game.game_modes && (
                                 <div id={Styles.game_modes}>
 

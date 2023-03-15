@@ -107,6 +107,9 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
 
             // if game ID was found, sets game price on response
             if (steamID) {
+
+                response[0].steamId = steamID
+                
                 await axios({ url: `${STEAM_GAME_BY_ID_API}${steamID}`, method: "GET" }).then(
                     ({ data }) => {
                         if (data[`${steamID}`].data) {

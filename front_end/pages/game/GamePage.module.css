@@ -378,6 +378,16 @@ section#game_presentation #game_name_cover {
     }
 }
 
+#price_list {
+    margin-top: 24px;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
 #genre_list,
 #platforms_list {
 
@@ -392,6 +402,7 @@ section#game_presentation #game_name_cover {
 
 @media(min-width:568px) {
 
+    #price_list,
     #genre_list,
     #platforms_list {
 
@@ -405,10 +416,40 @@ section#game_presentation #game_name_cover {
 
 }
 
+#price_list li,
 #genre_list li,
 #platforms_list li {
 
     width: max-content;
+
+}
+
+#platforms_list li:hover,
+#platforms_list li:hover>* {
+
+    border-radius: 4px;
+
+    background-color: var(--white-50);
+
+    color: var(--primary);
+
+}
+
+#price_list li svg {
+
+    margin-right: 8px;
+
+}
+
+#price_list li span {
+
+    font-size: var(--fs-minus-1);
+
+}
+
+#price_list li:hover>* {
+
+    color: var(--white-75);
 
 }
 
@@ -972,13 +1013,13 @@ section#game_presentation #game_name_cover {
     }
 
 }
+
 .similar_games_wrapper ul>li {
 
     box-shadow: 9px 9px 7px 0px var(--black-75)
-
 }
 
-.similar_games_wrapper ul>li:hover{
+.similar_games_wrapper ul>li:hover {
 
     transition: all ease 100ms;
 

@@ -1,6 +1,17 @@
 interface GameInfo {
     id: number,
+    steamId: number | undefined,
     name: string,
+    price: {
+        steam: {
+            currency: string,
+            discount_percent: number,
+            final: number,
+            final_formatted: string,
+            initial: number,
+            initial_formatted: string
+        }
+    },
     rating: number,
     storyline: string,
     summary: string,
@@ -80,6 +91,7 @@ interface Videos {
 
 interface ArtworksAndScreenshots {
     image_id: string,
+    height: number,
     url: string | undefined
 }
 
