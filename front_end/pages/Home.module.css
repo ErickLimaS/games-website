@@ -518,6 +518,8 @@ section.position_top {
 /* Section Platform Games */
 #popular_platform_game {
 
+    overflow: hidden;
+
     background: linear-gradient(var(--background-color) 8%, transparent, var(--background-color) 85%);
 
     margin-top: 40px;
@@ -628,6 +630,8 @@ section.position_top {
 
 #popular_platform_game .game_list_container #carousel_container ul {
 
+    transition: all ease-in 100ms;
+
     padding: 16px 0;
 
     display: flex;
@@ -640,9 +644,10 @@ section.position_top {
 
     #popular_platform_game .game_list_container #carousel_container ul {
 
-        overflow: auto;
+        overflow-y: hidden;
+        overflow-x: auto;
 
-        padding: 0 16px;
+        padding: 16px;
 
         left: 0 !important;
 
@@ -659,8 +664,6 @@ section.position_top {
 #popular_platform_game #carousel_container span li {
 
     min-height: 160px !important;
-
-    border: 2px solid transparent;
 
     width: 20vw;
 

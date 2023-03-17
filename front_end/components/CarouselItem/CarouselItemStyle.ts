@@ -47,10 +47,11 @@ export const CarouselItem = styled.li<Props[]>`
 
         content: ' '; 
 
+
         display: block;
         text-align: center;
 
-        min-width:inherit;
+        min-width:100%;
         min-height:inherit;
 
         font-size: var(--fs-minus-2);
@@ -96,7 +97,9 @@ export const CarouselItem = styled.li<Props[]>`
 
     }
     
-    >a:hover span, >a[data-active=true] span{
+    >a:hover span,
+    >a[data-active=true] span,
+    >a[data-show-cover-name=true] span{
 
         animation: fade-in forwards 500ms;
 
@@ -105,7 +108,6 @@ export const CarouselItem = styled.li<Props[]>`
 
         border-radius: 4px 4px 0 0;
         background: var(--black-50);
-
 
         display: block;
 

@@ -202,7 +202,6 @@ function Header() {
           data-initial-close-state={menuVisibility == null ? true : false}
           data-expanded={menuVisibility}
           data-visibility={menuVisibility ? true : false}
-        // hidden={!menuVisibility ? true : false}
         >
 
           {user ? (
@@ -229,10 +228,10 @@ function Header() {
             {user && (
               <li className={Styles.mobile_only}><Link href='/bookmarks'><SVG.BookmarksFill /> Marcados</Link></li>
             )}
-            <li><Link href='/'>Lançamentos</Link></li>
-            <li><Link href='/'>Mais Esperados</Link></li>
-            <li><Link href='/'>Gêneros</Link></li>
-            <li><Link href='/'>Plataformas</Link></li>
+            <li><Link href='/recent-launchs'>Lançamentos</Link></li>
+            <li><Link href='/hyped'>Mais Esperados</Link></li>
+            <li><Link href='/genres'>Gêneros</Link></li>
+            <li><Link href='/platforms'>Plataformas</Link></li>
             {user && (
               <li className={Styles.mobile_only}>
                 <button onClick={() => logOutUser()}>

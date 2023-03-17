@@ -88,6 +88,7 @@ export async function fetchHomePageData(genre?: string, platform?: string) {
                         ${queryAllFields}
                         where rating > 70 & artworks != null & platforms = ${platform || `130`};
                         sort rating desc;
+                        sort rating_count desc;
                     };
                     query themes "Themes Limited To 18" {
                         fields *; 

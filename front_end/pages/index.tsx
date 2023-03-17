@@ -48,11 +48,11 @@ export default function Home() {
 
       case (scrWidth! > 1440):
 
-        return { position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 20.2}vw)` }
+        return { position: 'relative', left: `calc(37.8vw - ${platformCarouselRowNumber * 20.40}vw)` }
 
       case (scrWidth! > 1020):
 
-        return { position: 'relative', left: `calc(38vw - ${platformCarouselRowNumber * 20.6}vw)` }
+        return { position: 'relative', left: `calc(37.5vw - ${platformCarouselRowNumber * (20.55)}vw)` }
 
       default:
 
@@ -352,7 +352,10 @@ export default function Home() {
                 >
                   {homePageData.platformSection.map((item: GameInfo, key: any) => (
                     <span key={item.id} data-focused={platformCarouselRowNumber == key}>
-                      <CarouselItem props={item} />
+                      <CarouselItem
+                        props={item}
+                        showCoverAndName={platformCarouselRowNumber == key ? true : null}
+                      />
                     </span>
                   ))}
                 </ul>
