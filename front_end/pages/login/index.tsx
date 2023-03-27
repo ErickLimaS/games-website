@@ -1,13 +1,13 @@
-import { logInUser } from '@/api/server'
-import AlertMessage from '@/components/AlertMessage'
-import CustomDocumentHead from '@/components/CustomDocumentHead'
+import { logInUser } from '../../api/server'
+import AlertMessage from '../../components/AlertMessage'
+import CustomDocumentHead from '../../components/CustomDocumentHead'
 import Link from 'next/link'
 import React, { FormEvent, useEffect, useState } from 'react'
 import Styles from './LoginStyles.module.css'
 import Logo from '../../public/img/logo/logo.png'
 import Image from 'next/image'
 import Spinner from '../../public/img/icons/Spinner1S200Px'
-import store from '@/store'
+import store from '../../store'
 import { useRouter } from 'next/router'
 
 function Login() {
@@ -29,8 +29,8 @@ function Login() {
         const form = e.target as HTMLFormElement
 
         const user: LogIn = {
-            email: form.email.value,
-            password: form.password.value
+            email: form.email?.value,
+            password: form.password?.value
         }
 
         const res: ServerResponse = await store.dispatch(logInUser(user))
@@ -40,8 +40,7 @@ function Login() {
             // shows up a message about the server response
             const message = AlertMessage(res)
 
-            const pageContainer = document.getElementById(`conxtainer`);
-            document.body.insertBefore(message, pageContainer);
+            document.getElementById(Styles.container)!.appendChild(message);
 
             setLoading(false)
 

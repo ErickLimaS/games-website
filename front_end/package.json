@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "svg": "svgr -d public/img/icons public/img/svg"
+    "svg": "svgr -d public/img/icons public/img/svg",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@next/font": "13.1.2",
@@ -35,7 +36,16 @@
     "typescript": "4.9.4"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-export-default-from": "^7.18.10",
+    "@babel/plugin-transform-react-jsx": "^7.21.0",
     "@redux-devtools/core": "^3.13.1",
-    "@types/styled-components": "^5.1.26"
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "@types/styled-components": "^5.1.26",
+    "babel-jest": "^29.5.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
+    "next-router-mock": "^0.9.2",
+    "ts-jest": "^29.0.5"
   }
 }

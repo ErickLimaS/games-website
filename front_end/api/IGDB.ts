@@ -64,7 +64,7 @@ function errorHandling(error: any) {
 }
 
 // standardizes all important data fetched from API
-const queryAllFields = 'fields *, expansions.*, dlcs.*, similar_games.*, similar_games.cover.*, similar_games.themes.*, similar_games.cover, similar_games.involved_companies, similar_games.involved_companies.company.*, videos.*, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, age_ratings.category, age_ratings.rating_cover_url, cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, parent_game.*, parent_game.dlcs.*, parent_game.expansions.*, themes.*;'
+const queryAllFields = 'fields *, expansions.*, dlcs.*, release_dates.*, similar_games.*, similar_games.cover.*, similar_games.themes.*, similar_games.cover, similar_games.involved_companies, similar_games.involved_companies.company.*, videos.*, involved_companies.*, involved_companies.company.*, artworks.*, age_ratings.*, age_ratings.category, age_ratings.rating_cover_url, cover.*, game_modes.*, genres.*, keywords.*, screenshots.*, platforms.*, parent_game.*, parent_game.dlcs.*, parent_game.expansions.*, themes.*;'
 
 export async function fetchHomePageData(genre?: string, platform?: string) {
 
@@ -365,6 +365,74 @@ export async function fetchGameMode(
 
     }
     catch (err) {
+
+        return errorHandling(err)
+
+    }
+
+}
+
+export async function fetchLatestReleases() {
+
+    const date = new Date()
+    const monthStart = new Date(`${date.getFullYear()}-${date.getMonth() + 1}-01`)
+    const monthEnd = new Date(`${date.getFullYear()}-${date.getMonth() + 1}-31`)
+
+    try {
+        const { data } = await Axios(reqConfig(
+
+            {
+                query:
+                    `query games "Releases" {
+                        ${queryAllFields}
+                        where artworks != null & 
+                            rating >= 70 &
+                            release_dates.y = ${date.getFullYear()} & 
+                            first_release_date >= ${date.getTime()} &
+                            release_dates != null & 
+                            first_release_date != null &
+                            rating != null;
+                        sort first_release_date desc;
+                    };
+                    query games "Not Launch Yet" {
+                        ${queryAllFields}
+                        where artworks != null &
+                            release_dates.m = ${date.getMonth() + 1} & 
+                            release_dates.y = ${date.getFullYear()} & 
+                            first_release_date <= ${monthEnd.getTime()} &
+                            release_dates != null & 
+                            first_release_date != null;
+                        sort first_release_date desc;
+                    };
+                    query games "Launched This Month" {
+                        ${queryAllFields}
+                        where artworks != null &
+                            first_release_date <= ${date.getTime()} &
+                            release_dates.date != null &
+                            rating != null &
+                            release_dates != null;
+                        sort first_release_date desc;
+                    };
+                    query games "Best Ratings of The Month" {
+                        ${queryAllFields}
+                        where artworks != null &
+                            first_release_date >= ${monthStart.getTime()} &
+                            rating != null & 
+                            first_release_date != null;
+                        sort rating desc;
+                        sort rating_count desc;
+                        sort first_release_date desc;
+                    };
+                    `,
+                route: '/multiquery'
+            }
+        ))
+        
+        setToken(data)
+
+        return data.result
+
+    } catch (err) {
 
         return errorHandling(err)
 

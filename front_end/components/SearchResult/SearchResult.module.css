@@ -1,7 +1,7 @@
 li.result_item_container {
 
-    /* min-height: 80px; */
     max-height: 120px;
+    min-width: 260px;
     width: inherit;
 
     display: flex;

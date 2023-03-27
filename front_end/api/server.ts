@@ -4,7 +4,7 @@ import {
     USER_ADD_TO_BOOKMARKS_SUCCESS,
     USER_LOGIN_ERROR, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS,
     USER_SIGNUP_ERROR, USER_SIGNUP_REQUEST, USER_SIGNUP_SUCCESS
-} from "@/redux/constants/userConstants"
+} from "../redux/constants/userConstants"
 import Axios from "axios"
 import { Dispatch } from "react"
 import { AnyAction } from "redux"
