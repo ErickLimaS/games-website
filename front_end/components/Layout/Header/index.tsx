@@ -6,7 +6,7 @@ import Image from 'next/image'
 import List from '../../../public/img/icons/List'
 import * as SVG from '../../../public/img/icons'
 import { searchGame } from '@/api/IGDB'
-import SearchResult from '@/components/SearchResult'
+import GameListItem from '@/components/GameListItem'
 import { logInUserThroughToken, logOutUser } from '@/api/server'
 import store from '@/store'
 
@@ -265,7 +265,11 @@ function Header() {
                     width={22} height={22}
                     onError={() => setUserProfileImg('https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png')}
                   />
-                  {user.name.first} {user.name.last}
+                    {user.name.first.length > 20 ? (
+                      `${user.name.first.slice(0, 10)}...`
+                    ) : (
+                      `${user.name.first}`
+                    )}
                 </button>
 
                 <div
@@ -327,7 +331,7 @@ function Header() {
 
                 {searchResults.map((item: GameInfo) => (
 
-                  <SearchResult key={item.id} props={item} />
+                  <GameListItem key={item.id} props={item} />
 
                 ))}
 
@@ -385,7 +389,7 @@ function Header() {
 
                   {searchResults.map((item: GameInfo) => (
 
-                    <SearchResult key={item.id} props={item} />
+                    <GameListItem key={item.id} props={item} />
 
                   ))}
 
@@ -427,7 +431,11 @@ function Header() {
                     width={22} height={22}
                     onError={() => setUserProfileImg('https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png')}
                   />
-                  {user.name.first} {user.name.last}
+                  {user.name.first.length > 20 ? (
+                    `${user.name.first.slice(0,14)}...`
+                  ) : (
+                    `${user.name.first}`
+                  )}
                 </button>
 
                 <div

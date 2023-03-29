@@ -8,7 +8,7 @@ import { ReleasesContainerBcgImg } from '@/styles/DynamicBcgImg'
 import * as SVG from "../../public/img/icons"
 import CarouselItem from '@/components/CarouselItem'
 import DateHumanReadable from '@/components/DateHumanReadable'
-import SearchResult from '@/components/SearchResult'
+import GameListItem from '@/components/GameListItem'
 import CardMediumArtworkDescription from '@/components/CardMediumArtworkDescription'
 
 function RecentLaunchs() {
@@ -179,7 +179,7 @@ function RecentLaunchs() {
 
                             <ul>
                                 {bestRatings.slice(0, 8).map((item) => (
-                                    <SearchResult props={item} />
+                                    <GameListItem props={item} />
                                 ))}
                             </ul>
 

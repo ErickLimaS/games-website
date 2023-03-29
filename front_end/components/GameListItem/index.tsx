@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Styles from './SearchResult.module.css'
+import Styles from './GameListItem.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import GameRating from '../GameRating'
 import DateHumanReadable from '../DateHumanReadable'
 
-function SearchResult({ props }: { props: GameInfo }) {
+function GameListItem({ props }: { props: GameInfo }) {
 
     const [imageSrc, setImageSrc] = useState<string>(`https://images.igdb.com/igdb/image/upload/t_cover_small/${props.cover ? props.cover.image_id : 'undefined'}.jpg`)
 
@@ -47,4 +47,4 @@ function SearchResult({ props }: { props: GameInfo }) {
     )
 }
 
-export default SearchResult
+export default GameListItem
