@@ -1,12 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { fetchCompany } from '../../api/IGDB'
 import Styles from './CompanyPage.module.css'
 import NextArrow from '../../public/img/icons/NextArrow'
 import Image from 'next/image'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
 import DateHumanReadable from '@/components/DateHumanReadable'
-import SearchResult from '@/components/SearchResult'
+import GameListItem from '@/components/GameListItem'
 import CarouselItem from '@/components/CarouselItem'
 import PageLoading from '@/components/PageLoading'
 
@@ -126,7 +125,7 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
                                             <NextArrow />
                                         </button>
                                         <button
-                                            disabled={latestGamesBtnIndex  == (Math.ceil(games!.latestReleases!.length / 8) - 1)}
+                                            disabled={latestGamesBtnIndex == (Math.ceil(games!.latestReleases!.length / 8) - 1)}
                                             onClick={() => setLatestGamesBtnIndex(curr => curr + 1)}
                                             aria-label='Próximo'
                                         >
@@ -190,7 +189,7 @@ export default function CompanyPage({ companySlug }: { companySlug: string }) {
 
                             <ul>
                                 {games!.highestRatings!.map((item: GameInfo) => (
-                                    <SearchResult key={item.id} props={item} />
+                                    <GameListItem key={item.id} props={item} />
                                 ))}
                             </ul>
 
