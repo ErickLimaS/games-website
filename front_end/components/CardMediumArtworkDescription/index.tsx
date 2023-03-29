@@ -40,7 +40,7 @@ function CardMediumArtworkDescription({ props }: { props: GameInfo }) {
                                 }
                             </Link>
                         )))}
-                        <small><DateHumanReadable date={props.first_release_date} /></small>
+                        <small><DateHumanReadable date={props.first_release_date} fullDate /></small>
                     </div>
 
                     <p>{props.storyline || props.summary || "Sem Descrição Disponível."}</p>

@@ -144,7 +144,7 @@ export const ReleasesContainerBcgImg = styled.div<Props>`
     }
 
     @media (min-width: 1440px) {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)),
+      background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(20, 23, 30, 1)),
         ${(props) =>
     `url(https://images.igdb.com/igdb/image/upload/t_1080p/${props.image_id}.jpg)`};
     }

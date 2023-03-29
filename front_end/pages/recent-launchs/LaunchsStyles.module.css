@@ -1,8 +1,11 @@
 #content {
 
+    max-width: 1440px;
+
     position: relative;
 
     top: 140px;
+    margin: auto;
     margin-bottom: 140px;
 
 }
@@ -58,8 +61,17 @@
 
 #hero_game_info {
 
-    margin-top: 24px;
-    margin-bottom: 24px;
+    margin: 64px 0;
+
+}
+
+@media(min-width: 720px) {
+
+    #hero_game_info {
+
+        margin: 40px 0;
+
+    }
 
 }
 
@@ -84,8 +96,6 @@
 
 #hero_game_info>p {
 
-    max-width: 80%;
-
     margin-bottom: 16px;
 
     font-size: var(--fs-minus-1) !important;
@@ -96,6 +106,13 @@
 
     overflow: hidden;
 
+}
+
+@media(min-width: 880px) {
+
+    #hero_game_info>p {
+        max-width: 80%;
+    }
 }
 
 @media(min-width: 880px) {
@@ -240,6 +257,7 @@
 }
 
 .launchs_container div:last-child h2 {
+
     margin: 24px 0;
     font-size: var(--fs-h4);
 
@@ -256,6 +274,8 @@
 }
 
 .best_ratings_container>h2 {
+
+    text-align: center;
 
     margin-bottom: 24px;
 

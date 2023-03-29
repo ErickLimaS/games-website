@@ -122,7 +122,7 @@ function RecentLaunchs() {
 
                                     <h3>{item.name}</h3>
 
-                                    <small><DateHumanReadable date={item.first_release_date} /></small>
+                                    <small><DateHumanReadable date={item.first_release_date} fullDate/></small>
 
                                 </span>
                             ))}

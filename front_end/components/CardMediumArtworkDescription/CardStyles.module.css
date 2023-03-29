@@ -25,7 +25,7 @@
 
 #card_container>a:hover {
     transition: all ease 150ms;
-    background-color: var(--white-25);
+    background-color: var(--black);
 }
 
 .img_container {
@@ -35,7 +35,7 @@
     position: relative;
     top: 0;
 
-    min-height: 200px;
+    min-height: 160px;
     min-width: 100%;
 
     display: flex;
@@ -45,8 +45,7 @@
 @media((min-width: 480px) and (max-width: 719px)) {
 
     .img_container {
-        min-height: 300px;
-
+        min-height: 240px;
     }
 
 }
@@ -55,7 +54,6 @@
 
     .img_container {
         min-height: 180px;
-
     }
 
 }
@@ -90,10 +88,23 @@
 }
 
 .game_info {
-    margin: auto;
 
-    margin-left: 24px;
-    margin-right: 24px;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    margin-right: 8px;
+    margin-left: 8px;
+
+}
+
+@media(min-width: 480px) {
+
+    .game_info {
+        margin: auto;
+
+        margin-left: 24px;
+        margin-right: 24px;
+    }
+
 }
 
 .game_info h5 {

@@ -24,13 +24,7 @@ export const CarouselItem = styled.li<Props[]>`
 
     @media(min-width: 1440px){
 
-        min-height: 260px;
-
-    }
-
-    @media(min-width: 1440px){
-
-        min-height: 260px;
+        min-height: 180px;
 
     }
 
