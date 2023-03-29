@@ -6,7 +6,7 @@ import * as SVG from '../../public/img/icons'
 import Image from 'next/image'
 import Link from 'next/link'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
-import SimilarGameCard from '@/components/SimilarGameCard'
+import GameCoverCard from '@/components/GameCoverCard'
 import DateHumanReadable from '@/components/DateHumanReadable'
 import GameRating from '@/components/GameRating'
 import store, { RootState } from '@/store'
@@ -43,8 +43,8 @@ export default function GamePage({ game }: { game: GameInfo }) {
     }
 
     // returns the rating accordingly to this game ESRB
-    function rating(item: AgeRating | any) {
-        switch (item.rating) {
+    function rating(item: AgeRating | undefined) {
+        switch (item?.rating) {
             case 6:
                 return 'RP'
             case 7:
@@ -121,6 +121,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
     // resets img and video index; sets a background to this page  
     useLayoutEffect(() => {
 
+        setTabIndex(0)
         setImgSliderIndex(0)
         setVideoSliderIndex(0)
 
@@ -183,7 +184,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
                                 {game.involved_companies && (
                                     <>
-                                        <p>
+                                        <p id={Styles.company_name}>
                                             <Link
                                                 href={`/company/${game.involved_companies.find((item: InvolvedCompanies) =>
                                                     item.developer == true)?.company.slug || game.involved_companies[0].company.slug}`}
@@ -225,7 +226,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                             target='_blank'
                                             rel='noreferrer'
                                         >
-                                           <SVG.Steam aria-label='Logo da Steam' /> {game.price.steam.final_formatted} <span>na Steam</span>
+                                            <SVG.Steam aria-label='Logo da Steam' /> {game.price.steam.final_formatted} <span>na Steam</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -365,22 +366,27 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 role='tablist'
                                 aria-label='Tabela de Screenshots e Vídeos.'
                             >
-                                <button
-                                    role='tab'
-                                    id={Styles.screenshots_tab}
-                                    onClick={() => setTabIndex(0)}
-                                    aria-selected={tabIndex === 0} aria-controls={Styles.img_container}
-                                >
-                                    Screenshots
-                                </button>
-                                <button
-                                    role='tab'
-                                    onClick={() => setTabIndex(1)}
-                                    id={Styles.videos_tab}
-                                    aria-selected={tabIndex === 1} aria-controls={Styles.videos_container}
-                                >
-                                    Vídeos
-                                </button>
+                                {game.screenshots && (
+                                    <button
+                                        role='tab'
+                                        id={Styles.screenshots_tab}
+                                        onClick={() => setTabIndex(0)}
+                                        aria-selected={tabIndex === 0} aria-controls={Styles.img_container}
+                                    >
+                                        Screenshots
+                                    </button>
+                                )}
+
+                                {game.videos && (
+                                    <button
+                                        role='tab'
+                                        onClick={() => setTabIndex(1)}
+                                        id={Styles.videos_tab}
+                                        aria-selected={tabIndex === 1} aria-controls={Styles.videos_container}
+                                    >
+                                        Vídeos
+                                    </button>
+                                )}
                             </div>
 
                             {game.screenshots && (
@@ -492,7 +498,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                             <h2>Jogos Semelhantes</h2>
                             <ul className={Styles.flex_row}>
                                 {game.similar_games.map((item: SimilarGames) => (
-                                    <SimilarGameCard key={item.id} props={item} />
+                                    <GameCoverCard key={item.id} props={item} />
                                 ))}
                             </ul>
                         </div>

@@ -14,9 +14,7 @@ li.card_container {
 
 .card_container>a {
 
-    margin-bottom: 4px;
-
-    display: contents;
+    display: inline-flex;
 
 }
 

@@ -1,7 +1,7 @@
 import CustomDocumentHead from '@/components/CustomDocumentHead'
 import DateHumanReadable from '@/components/DateHumanReadable'
 import GameRating from '@/components/GameRating'
-import SimilarGameCard from '@/components/SimilarGameCard'
+import SimilarGameCard from '@/components/GameCoverCard'
 import { RootState } from '@/store'
 import Image from 'next/image'
 import Link from 'next/link'

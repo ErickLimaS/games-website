@@ -347,6 +347,18 @@ section#game_presentation #game_name_cover {
     }
 }
 
+#game_heading_info p#company_name {
+
+    min-width: auto;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+
+    overflow: hidden;
+
+}
+
 #game_heading_info>span {
 
     margin: auto 0;
@@ -363,10 +375,17 @@ section#game_presentation #game_name_cover {
 #game_heading_info a {
 
     height: min-content;
+
     margin: auto 0;
 
     font-size: var(--fs-minus-2);
     color: var(--white);
+
+}
+
+#game_heading_info>p:not(:first-child) {
+
+    min-width: fit-content;
 
 }
 

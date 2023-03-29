@@ -7,7 +7,7 @@ import Image from 'next/image'
 import ErrorImg from '../../public/img/logo/logo.png'
 import Link from 'next/link'
 import CustomDocumentHead from '@/components/CustomDocumentHead'
-import SimilarGameCard from '@/components/SimilarGameCard'
+import SimilarGameCard from '@/components/GameCoverCard'
 import DateHumanReadable from '@/components/DateHumanReadable'
 
 export default function GamePage({ game }: { game: GameInfo }) {

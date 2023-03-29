@@ -1,10 +1,10 @@
 import React from 'react'
-import Styles from './SimilarGameCard.module.css'
+import Styles from './GameCoverCard.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
 import GameRating from '../GameRating'
 
-function SimilarGameCard({ props }: { props: GameInfo | SimilarGames | BookmarkedGame }) {
+function GameCoverCard({ props }: { props: GameInfo | SimilarGames | BookmarkedGame }) {
 
     let imageSrc: string = `https://images.igdb.com/igdb/image/upload/t_cover_big_2x/${props.cover ? props.cover.image_id : undefined}.jpg`
 
@@ -30,4 +30,4 @@ function SimilarGameCard({ props }: { props: GameInfo | SimilarGames | Bookmarke
     )
 }
 
-export default SimilarGameCard
+export default GameCoverCard
