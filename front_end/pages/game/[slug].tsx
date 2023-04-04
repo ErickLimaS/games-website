@@ -13,6 +13,7 @@ import store, { RootState } from '@/store'
 import { useRouter } from 'next/router'
 import { useSelector } from 'react-redux'
 import { addToBookmark } from '@/api/server'
+import AgeRating from '@/components/AgeRating'
 
 export default function GamePage({ game }: { game: GameInfo }) {
 
@@ -39,29 +40,6 @@ export default function GamePage({ game }: { game: GameInfo }) {
     function screenshotSrc(index: number) {
 
         return `https://images.igdb.com/igdb/image/upload/t_screenshot_big/${game.screenshots[index].image_id}.jpg`
-
-    }
-
-    // returns the rating accordingly to this game ESRB
-    function rating(item: AgeRating | undefined) {
-        switch (item?.rating) {
-            case 6:
-                return 'RP'
-            case 7:
-                return 'EC'
-            case 8:
-                return 'E'
-            case 9:
-                return 'E10'
-            case 10:
-                return 'T'
-            case 11:
-                return 'M'
-            case 12:
-                return 'AO'
-            default:
-                return 'não disponível'
-        }
 
     }
 
@@ -116,6 +94,36 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
         return
 
+    }
+
+    const touchStartEvent = (event: React.TouchEvent<HTMLDivElement>) => {
+        touchstartX = event.touches[0].clientX
+    }
+
+    const touchEndEvent = (event: React.TouchEvent<HTMLDivElement>) => {
+        touchendX = event.changedTouches[0].clientX
+        handleGesture()
+    }
+
+    function prevImage() {
+        setImgSliderIndex(curr => curr == 0 ? (game.screenshots.length - 1) : curr - 1)
+    }
+
+    function nextImage() {
+        setImgSliderIndex(curr => curr == (game.screenshots.length - 1) ? 0 : curr + 1)
+    }
+
+    // handle drag on mobile scrolling 
+    let touchstartX = 0;
+    let touchendX = 0;
+
+    function handleGesture() {
+        if (touchendX < touchstartX) {
+            nextImage();
+        }
+        if (touchendX > touchstartX) {
+            prevImage();
+        }
     }
 
     // resets img and video index; sets a background to this page  
@@ -199,10 +207,9 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 {game.age_ratings?.find((item: AgeRating) => item.category === 1) && (
                                     <>
                                         <p>
-                                            ESRB{' '}
-                                            <b>
-                                                {rating(game.age_ratings.find((item: AgeRating) => item.category === 1))}
-                                            </b>
+                                            {AgeRating(game.age_ratings.find(
+                                                (item: AgeRating) => item.category === 1)
+                                            )}
                                         </p>
                                         <span></span>
                                     </>
@@ -395,6 +402,8 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                         role='tabpanel'
                                         aria-labelledby={Styles.screenshots_tab}
                                         hidden={tabIndex !== 0}
+                                        onTouchStart={(event) => touchStartEvent(event)}
+                                        onTouchEnd={(event) => touchEndEvent(event)}
                                     >
                                         <Image
                                             loader={() => screenshotSrc(imgSliderIndex)}
@@ -407,7 +416,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
                                             <button
                                                 disabled={imgSliderIndex == 0}
-                                                onClick={() => setImgSliderIndex(curr => curr - 1)}
+                                                onClick={() => prevImage()}
                                                 aria-label='Mostrar Foto Anterior'
                                             >
                                                 <SVG.NextArrow />
@@ -415,7 +424,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
 
                                             <button
                                                 disabled={imgSliderIndex == (game.screenshots.length - 1)}
-                                                onClick={() => setImgSliderIndex(curr => curr + 1)}
+                                                onClick={() => nextImage()}
                                                 aria-label='Mostrar Próxima Foto'
                                             >
                                                 <SVG.NextArrow />

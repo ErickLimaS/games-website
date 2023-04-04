@@ -7,7 +7,7 @@ li.card_container {
 
     min-width: max-content;
 
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
 
 }
