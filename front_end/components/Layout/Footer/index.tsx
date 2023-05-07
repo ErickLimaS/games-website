@@ -21,8 +21,8 @@ function Footer() {
           <h5>API</h5>
 
           <ul>
-            <li><a href='https://api-docs.igdb.com/#about' target='_blank' rel='noreferrer'>Twitch IGDB</a></li>
-            <li><a href='https://github.com/ckatzorke/howlongtobeat' target='_blank' rel='noreferrer'>HowLongToBeat API</a></li>
+            <li><a href='https://api-docs.igdb.com/#about' target='_blank' rel='noreferrer'>IGDB</a></li>
+            <li><a href='https://github.com/ckatzorke/howlongtobeat' target='_blank' rel='noreferrer'>HowLongToBeat</a></li>
           </ul>
         </div>
 

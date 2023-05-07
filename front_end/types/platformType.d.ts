@@ -1,5 +1,7 @@
 interface Platform {
 
+    id: number,
+    generation: number,
     name: string,
     summary: string | null,
     platform_logo: {
@@ -10,7 +12,7 @@ interface Platform {
 }
 
 interface PlatformVersion {
-    
+
     id: string | null,
     name: string | null,
     cpu: string | null,
@@ -21,5 +23,8 @@ interface PlatformVersion {
     media: string | null,
     online: string | null,
     connectivity: string | null,
+    platform_version_release_dates: {
+        date: number
+    } | null
 
 }

@@ -202,6 +202,74 @@ export async function fetchGamesByGenre(genreSlug: string) {
 
 }
 
+export async function fetchPlatforms(pagination?: { latestReleasePag: number }) {
+
+    try {
+        const { data } = await Axios(reqConfig(
+            {
+                query: `
+                    query platforms "All Platform" {
+                        fields *, platform_family, platform_logo.*, versions.*, versions.platform_version_release_dates.*;
+                        limit 400;
+                        sort name;
+                    };
+                    query platforms "Platforms Sony" {
+                        fields *, platform_family, versions.platform_version_release_dates.*, platform_logo.*;
+                        where platform_family = 1;
+                        limit 400;
+                        sort name;
+                    };
+                    query platforms "Platforms Microsoft" {
+                        fields *, platform_family, versions.platform_version_release_dates.*, platform_logo.*;
+                        where platform_family = 2;
+                        sort name;
+                    };
+                    query platforms "Platforms Nintendo" {
+                        fields *, platform_family, versions.platform_version_release_dates.*, platform_logo.*;
+                        where platform_family = 5;
+                        limit 400;
+                        sort name;
+                    };
+                    `,
+                route: '/multiquery'
+            }
+        ))
+
+        return data.result
+
+    } catch (err) {
+
+        return errorHandling(err)
+
+    }
+
+}
+
+export async function searchPlatform(platformNameSearched: string) {
+
+    try {
+        const { data } = await Axios(reqConfig(
+            {
+                query:
+                    `
+                    fields *, platform_family, versions.platform_version_release_dates.*, platform_logo.*;
+                    search "${platformNameSearched}";
+                    limit 10;
+                   `,
+                route: '/platforms'
+            }
+        ))
+
+        return data.result
+
+    } catch (err) {
+
+        return errorHandling(err)
+
+    }
+
+}
+
 export async function fetchPlatform(
     platformId: string,
     pagination?: {
@@ -427,7 +495,7 @@ export async function fetchLatestReleases() {
                 route: '/multiquery'
             }
         ))
-        
+
         setToken(data)
 
         return data.result

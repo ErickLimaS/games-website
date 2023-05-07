@@ -244,7 +244,7 @@ export default function GamePage({ game }: { game: GameInfo }) {
                                 <ul id={Styles.platforms_list} className={Styles.flex_row}>
                                     {game.platforms.map((item: Platforms) => (
                                         <li key={item.slug}>
-                                            <Link href={`/platforms/${item.id}`}>{item.name}</Link>
+                                            <Link href={`/platform/${item.id}`}>{item.name}</Link>
                                         </li>
                                     ))}
                                 </ul>

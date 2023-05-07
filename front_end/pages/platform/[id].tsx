@@ -1,7 +1,7 @@
 import CustomDocumentHead from '@/components/CustomDocumentHead'
 import PageLoading from '@/components/PageLoading'
 import React, { useEffect, useState } from 'react'
-import Styles from './PlatformsPage.module.css'
+import Styles from './PlatformPage.module.css'
 import { fetchPlatform } from '@/api/IGDB'
 import CarouselItem from '@/components/CarouselItem'
 import GameGenreCard from '@/components/GameGenreCard'
