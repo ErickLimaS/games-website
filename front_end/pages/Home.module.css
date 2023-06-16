@@ -447,6 +447,12 @@ section.position_top {
     }
 }
 
+#genre_games .section_heading  {
+
+    max-width: 1440px;
+
+}
+
 #genre_games .section_heading h2 {
 
     font-size: var(--fs-h4);
@@ -460,6 +466,14 @@ section.position_top {
     font-weight: 500;
 
     color: var(--green);
+
+}
+
+#genre_games .genre_game_cards_container {
+
+    margin: 0 auto;
+
+    max-width: 1440px;
 
 }
 

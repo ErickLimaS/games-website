@@ -258,7 +258,7 @@ export default function Home() {
 
       <section
         id={Styles.genre_games}
-        className={`${Styles.max_width} ${Styles.position_top}`}
+        className={`${Styles.position_top}`}
       >
         <div className={Styles.section_heading}>
           <h2>Terror +18</h2>

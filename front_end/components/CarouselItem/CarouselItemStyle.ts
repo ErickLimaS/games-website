@@ -60,7 +60,7 @@ export const CarouselItem = styled.li<Props[]>`
 
     .carousel_item_container{
 
-        height: 100%;
+        min-height: inherit;
         padding: 16px;
 
         display: flex;
@@ -98,9 +98,9 @@ export const CarouselItem = styled.li<Props[]>`
         animation: fade-in forwards 500ms;
 
         width: inherit;
-        height: 160px;
+        min-height: inherit;
 
-        border-radius: 4px 4px 0 0;
+        border-radius: 4px 4px;
         background: var(--black-50);
 
         display: block;
