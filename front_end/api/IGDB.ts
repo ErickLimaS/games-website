@@ -1,14 +1,11 @@
 import Axios from 'axios'
 
-// const API_BASE = 'http://localhost:9000/api'
 const API_BASE = process.env.API_RENDER_URL || `http://localhost:9000/api`
 
 function reqConfig(body?: object) {
 
     // provided by the API, expires after some time
     const TOKEN: any = typeof window !== "undefined" && localStorage.getItem('access_token') ? localStorage.getItem('access_token') : null
-
-    // let EXPIRATION: any = typeof window !== "undefined" && localStorage.getItem('expires_in') ? localStorage.getItem('expires_in') : null
 
     if (!TOKEN) {
 

@@ -76,50 +76,62 @@ apiRouter.post('/data', expressAsyncHandler(async (req, res) => {
         */
         if (req.body.hltbData == true) {
 
-            let hltbService = new hltb.HowLongToBeatService()
+            let steamID;
 
-            let gameRequested
+            // gets game list from steam
+            await axios({ url: STEAM_GAMES_API, method: "GET" }).then(
+              ({ data }) => {
+                steamID = data.applist.apps.find(
+                  (item) => item.name == response[0].name
+                )?.appid;
+              }
+            );
+
+            // if game ID was found, sets game price on response
+            if (steamID) {
+              response[0].steamId = steamID;
+
+              await axios({
+                url: `${STEAM_GAME_BY_ID_API}${steamID}`,
+                method: "GET",
+              }).then(({ data }) => {
+                if (data[`${steamID}`].data) {
+                  response[0].price = {};
+                  response[0].price.steam =
+                    data[`${steamID}`]?.data.price_overview;
+                }
+              });
+            }
+
+            // CURRENTLY NOT WORKING!!! SEEMS LIKE A PROBLEM ON API
+            let hltbService = new hltb.HowLongToBeatService();
+
+            let gameRequested;
 
             // search game on HLTB
-            await hltbService.search(response[0].name).then(res =>
-                res.length > 0 && (gameRequested = res.find(item =>
-                    item.name === response[0].name || item.similarity == 1)
-                )
-            )
+            try {
+                await hltbService.search(response[0].name).then((res) =>
+                    res.length > 0 &&(gameRequested = res.find((item) =>
+                        item.name === response[0].name || item.similarity == 1
+                    ))
+                );
+            } catch {
+                return res.status(200).json({
+                success: true,
+                result: response,
+                token: req.headers.authorization ? null : authorization,
+                });
+            }
 
             // if game was found, sets info on response
             if (gameRequested) {
                 response[0].hltb = {
-                    main: gameRequested.gameplayMain,
-                    mainExtra: gameRequested.gameplayMainExtra,
-                    completionist: gameRequested.gameplayCompletionist
-                }
+                main: gameRequested.gameplayMain,
+                mainExtra: gameRequested.gameplayMainExtra,
+                completionist: gameRequested.gameplayCompletionist,
+                };
             }
-
-            let steamID
-
-            // gets game list from steam
-            await axios({ url: STEAM_GAMES_API, method: "GET" }).then(
-                ({ data }) => {
-                    steamID = data.applist.apps.find(item => item.name == response[0].name)?.appid
-                }
-            )
-
-            // if game ID was found, sets game price on response
-            if (steamID) {
-
-                response[0].steamId = steamID
-                
-                await axios({ url: `${STEAM_GAME_BY_ID_API}${steamID}`, method: "GET" }).then(
-                    ({ data }) => {
-                        if (data[`${steamID}`].data) {
-                            response[0].price = {}
-                            response[0].price.steam = data[`${steamID}`]?.data.price_overview
-                        }
-                    }
-                )
-            }
-
+          
         }
 
         return res.status(200).json({
