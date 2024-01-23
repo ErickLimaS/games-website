@@ -6,6 +6,12 @@ const apiRouter = require('./routers/apiRouters.js')
 const userRouter = require('./routers/userRouters.js')
 const userActionsRouter = require('./routers/userActionsRouters.js')
 
+/* 
+    BACK END hosted on RENDER.COM
+    (very slow, once it is being used after a long period on "sleep mode")
+    could take from 30sec up to 2min loading! (crazy slow)
+*/
+
 dotenv.config()
 
 const PORT = process.env.PORT 
