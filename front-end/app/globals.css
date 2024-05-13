@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+
+    a,
+    button,
+    input,
+    select {
+
+        @apply focus:outline-none;
+        @apply focus:ring-2;
+        @apply focus:ring-white/50;
+
+    }
+
+}
