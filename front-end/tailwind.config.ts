@@ -9,7 +9,14 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'primary': '#050914',
+      },
+      aspectRatio: {
+        '5/2': "5/2"
+      }
+    },
   },
   plugins: [],
 }
