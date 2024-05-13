@@ -1,6 +1,6 @@
 {
   "name": "games-website",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Front and Back end for a website that uses Twitch API.",
   "main": "index.js",
   "repository": {
