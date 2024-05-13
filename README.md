@@ -1,4 +1,4 @@
-<h1 align="center">My Next Game - Site de Video Games</h1>
+<h1 align="center">(Meio bagunçado. Planejo refazer do zero...)<br/> My Next Game - Site de Video Games</h1>
 
 
 <br/>
@@ -25,13 +25,21 @@ My Next Game é uma aplicação web que utiliza as APIs <a href="https://api-doc
 
 ## :hammer: Como rodar o projeto?
 
- Apenas é preciso criar um arquivo `.ENV` na pasta `back_end` com as seguintes informações:
-  
-  - `PORT` (número da porta que rodará)
-  - `CLIENT_ID` (identificação dada pela twitch para o uso da API IGDB)
-  - `CLIENT_SECRET` (outra informação dada pela twitch)
-  - `JWT_SECRET` (segredo para descriptografar os dados pelo JWT)
-  - `MONGODB_URL` (URL do banco de dados, no meu caso, vindo do `MongoDB`)
+ Crie um arquivo `.env` na pasta `front_end` com as seguintes informações:
+
+```javascript
+API_RENDER_URL=[url de onde foi feito o deploy do backend]
+```
+
+ Crie um arquivo `.env` na pasta `back_end` com as seguintes informações:
+
+```javascript
+PORT=[número da porta que rodará]
+CLIENT_ID=[identificação dada pela twitch para o uso da API IGDB]
+CLIENT_SECRET=[outra informação dada pela twitch]
+JWT_SECRET=[segredo para descriptografar os dados pelo JWT]
+MONGODB_URL=[URL do banco de dados, no meu caso, vindo do MongoDB]
+```
 
 ## :heavy_check_mark: Tecnologias Utilizadas
 
