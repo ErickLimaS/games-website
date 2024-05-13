@@ -1,4 +1,4 @@
-<h1 align="center">(Meio bagunçado. Planejo refazer do zero...)<br/> My Next Game - Site de Video Games</h1>
+<h1 align="center">My Next Game - Site de Video Games</h1>
 
 
 <br/>
@@ -28,7 +28,7 @@ My Next Game é uma aplicação web que utiliza as APIs <a href="https://api-doc
  Crie um arquivo `.env` na pasta `front_end` com as seguintes informações:
 
 ```javascript
-API_RENDER_URL=[url de onde foi feito o deploy do backend]
+API_RENDER_URL=[url de onde foi feito o deploy do backend]/api
 ```
 
  Crie um arquivo `.env` na pasta `back_end` com as seguintes informações:
