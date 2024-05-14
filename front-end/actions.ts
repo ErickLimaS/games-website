@@ -2,7 +2,7 @@
 export async function getIgdbToken() {
 
     try {
-        const data = await fetch(`https://id.twitch.tv/oauth2/token?client_id=${process.env.IGDB_CLIENT_ID}&client_secret=${process.env.IGDB_CLIENT_SECRET}&grant_type=client_credentials`,
+        const data = await fetch(`https://id.twitch.tv/oauth2/token?client_id=${process.env.NEXT_PUBLIC_IGDB_CLIENT_ID}&client_secret=${process.env.NEXT_PUBLIC_IGDB_CLIENT_SECRET}&grant_type=client_credentials`,
             {
                 method: "POST"
             }

@@ -50,7 +50,7 @@ function HeroSection({ data }: { data: GameInfo[] }) {
                 <ul id="carousel" className='overflow-hidden'>
                     <motion.li
                         key={page}
-                        style={{ backgroundImage: `linear-gradient(transparent, var(--primary) 90%), url(//images.igdb.com/igdb/image/upload/t_1080p/${data[imageIndex].artworks[0].image_id}.jpg)` }}
+                        style={{ backgroundImage: `linear-gradient(rgba(0,0,0,.4), var(--primary) 90%), url(//images.igdb.com/igdb/image/upload/t_1080p/${data[imageIndex].artworks[0].image_id}.jpg)` }}
                         className={`bg-cover bg-no-repeat bg-center h-screen `}
                         custom={direction}
                         variants={variants}
@@ -74,8 +74,6 @@ function HeroSection({ data }: { data: GameInfo[] }) {
                             }
                         }}
                     >
-
-                        <div className='bg-black/40 absolute left-0 right-0 top-0 bottom-0' />
 
                         <div className='container relative top-1/3 mx-auto px-2'>
 

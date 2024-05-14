@@ -8,15 +8,26 @@ import 'swiper/css/pagination';
 
 type swiperTypes = {
     children: React.ReactNode,
-    title: string,
+    title?: string,
     changeIndexFunction?: (index: number) => void,
     loop?: boolean,
     slidesPerView?: number,
     breakpoints?: { bp480: number, bp760: number, bp1275: number },
-    showNavigationBtns?: boolean
+    showNavigationBtns?: boolean,
+    onlyLowerNavigation?: boolean
 }
 
-function SwiperCarousel({ children, title, changeIndexFunction, loop, slidesPerView, breakpoints, showNavigationBtns }: swiperTypes) {
+function SwiperCarousel({
+    children,
+    title,
+    changeIndexFunction,
+    loop,
+    slidesPerView,
+    breakpoints,
+    showNavigationBtns,
+    onlyLowerNavigation
+}: swiperTypes
+) {
     return (
         <React.Fragment>
 
@@ -25,7 +36,7 @@ function SwiperCarousel({ children, title, changeIndexFunction, loop, slidesPerV
                 <h2 className='text-white mb-3'>{title}</h2>
 
                 {showNavigationBtns && (
-                    <nav className='max-md:hidden block space-x-6'>
+                    <nav className={`${onlyLowerNavigation ? "hidden" : "max-md:hidden"}  block space-x-6`}>
                         <button className='swiper-button-prev' title='Previous'>
                             <ArrowLeftSvg className="fill-white/60 hover:fill-white/90" />
                         </button>
@@ -61,8 +72,8 @@ function SwiperCarousel({ children, title, changeIndexFunction, loop, slidesPerV
                 {children}
             </Swiper>
 
-            {showNavigationBtns && (
-                <nav className='flex justify-between mx-auto max-w-72 md:hidden mt-4 space-x-6'>
+            {(showNavigationBtns || onlyLowerNavigation) && (
+                <nav className={`flex justify-between mx-auto max-w-72 ${onlyLowerNavigation ? "max-md:hidden" : "md:hidden"} mt-4 space-x-6`}>
                     <button className='swiper-button-prev' title='Previous'>
                         <ArrowLeftSvg className="fill-white/60 hover:fill-white/90" />
                     </button>
