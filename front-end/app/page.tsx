@@ -1,3 +1,6 @@
+import { fetchHomePageData } from "@/api/igdb";
+import HeroSection from "./components/pages/Home/HeroSection";
+
 export async function generateMetadata() {
 
   return {
@@ -7,10 +10,16 @@ export async function generateMetadata() {
 
 }
 
-export default function Home() {
+export default async function Home() {
+
+  const igdbData = await fetchHomePageData("horror", "130")
+
   return (
-    <main className="rounded-lg bg-cyan-600 p-2 text-white">
-      home
+    <main>
+
+      {/* HERO */}
+      <HeroSection data={igdbData[0].result} />
+
     </main>
   );
 }

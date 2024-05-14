@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+
+    /* colors */
+    --primary: #050914;
+
+}
+
 @layer base {
 
     a,
-    button,
     input,
     select {
 
@@ -14,5 +20,13 @@
         @apply focus:ring-white/50;
 
     }
+
+    /* button {
+
+        @apply focus:outline-none;
+        @apply focus:ring-2;
+        @apply focus:ring-white/50;
+
+    } */
 
 }

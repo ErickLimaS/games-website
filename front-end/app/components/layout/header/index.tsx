@@ -7,7 +7,7 @@ import SearchForm from './SearchForm'
 
 function Header() {
     return (
-        <header className='bg-primary text-white'>
+        <header className='bg-gradient-to-b from-primary/25 text-white absolute top-0 w-full z-10'>
 
             <nav className='container mx-auto max-sm:px-8 px-2'>
 
