@@ -1,23 +1,29 @@
 import { cookies } from "next/headers"
 import { selectAllFields } from "./igdbConstants"
-import { getIgdbToken } from "@/actions"
+import { getIgdbToken } from "../../actions"
 
 const BASE_URL = "https://api.igdb.com/v4"
 
-async function postData(query: string) {
+async function cookiesServerSide() {
 
     const cookie = cookies()
-    const tokenOnCookies = cookie.get("igdbToken") ? JSON.parse(cookie.get("igdbToken")!.value).access_token : undefined
+    const tokenOnCookies = cookie.get("igdbToken") ? cookie.get("igdbToken")!.value : undefined
 
     // First, try to get token on cookies, else fetchs a temporary one for the first time
-    const TOKEN = tokenOnCookies || await getIgdbToken().then(res => res.access_token)
+    return tokenOnCookies
+
+}
+
+async function postData(query: string, clientToken?: string) {
+
+    const TOKEN = await cookiesServerSide()
 
     try {
         const res = await fetch(`${BASE_URL}/multiquery`,
             {
                 method: 'POST',
                 headers: {
-                    'Client-ID': `${process.env.IGDB_CLIENT_ID}`,
+                    'Client-ID': `${process.env.NEXT_PUBLIC_IGDB_CLIENT_ID}`,
                     'Authorization': `Bearer ${TOKEN}`
                 },
                 body: String.raw`${query}` || null
@@ -63,6 +69,20 @@ export async function fetchHomePageData(genre?: string, platform?: string) {
                         fields *; 
                         limit 18;
                     };
+                    `
+
+    const data = await postData(query)
+
+    return data
+
+}
+
+// Fetch Search Results
+export async function fetchSearchResults(searchValue: string) {
+
+    const query = `${selectAllFields}
+                    search "${searchValue}"; 
+                    limit 8;
                     `
 
     const data = await postData(query)

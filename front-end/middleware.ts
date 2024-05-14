@@ -20,7 +20,10 @@ const cookieMiddleware = async (request: NextRequest) => {
     const newToken = await getIgdbToken()
 
     // Setting cookies on the response using the `ResponseCookies` API
-    response.cookies.set('igdbToken', JSON.stringify(newToken))
+    // response.cookies.set('igdbToken', newToken.access_token, {
+    //     expires: newToken.expires_in
+    // })
+    response.cookies.set('igdbToken', newToken.access_token)
 
     return response
 };
