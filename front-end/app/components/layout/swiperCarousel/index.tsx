@@ -13,7 +13,9 @@ type swiperTypes = {
     loop?: boolean,
     slidesPerView?: number,
     breakpoints?: { bp480: number, bp760: number, bp1275: number },
-    showNavigationBtns?: boolean,
+    showNavigationBtns?: {
+        customClassName: string
+    },
     onlyLowerNavigation?: boolean
 }
 
@@ -37,10 +39,10 @@ function SwiperCarousel({
 
                 {showNavigationBtns && (
                     <nav className={`${onlyLowerNavigation ? "hidden" : "max-md:hidden"}  block space-x-6`}>
-                        <button className='swiper-button-prev' title='Previous'>
+                        <button className={`${showNavigationBtns?.customClassName}-swiper-button-prev`} title='Previous'>
                             <ArrowLeftSvg className="fill-white/60 hover:fill-white/90" />
                         </button>
-                        <button className='swiper-button-next' title='Next'>
+                        <button className={`${showNavigationBtns?.customClassName}-swiper-button-next`} title='Next'>
                             <ArrowRightSvg className="fill-white/60 hover:fill-white/90" />
                         </button>
                     </nav>
@@ -55,7 +57,10 @@ function SwiperCarousel({
                 spaceBetween={16}
                 loop={loop || false}
                 centeredSlides={true}
-                navigation={{ nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
+                navigation={{
+                    nextEl: `.${showNavigationBtns?.customClassName}-swiper-button-next`,
+                    prevEl: `.${showNavigationBtns?.customClassName}-swiper-button-prev`
+                }}
                 breakpoints={{
                     480: {
                         slidesPerView: breakpoints ? breakpoints.bp480 : 4.4
@@ -74,10 +79,10 @@ function SwiperCarousel({
 
             {(showNavigationBtns || onlyLowerNavigation) && (
                 <nav className={`flex justify-between mx-auto max-w-72 ${onlyLowerNavigation ? "max-md:hidden" : "md:hidden"} mt-4 space-x-6`}>
-                    <button className='swiper-button-prev' title='Previous'>
+                    <button className={`${showNavigationBtns?.customClassName}-swiper-button-prev`} title='Previous'>
                         <ArrowLeftSvg className="fill-white/60 hover:fill-white/90" />
                     </button>
-                    <button className='swiper-button-next' title='Next'>
+                    <button className={`${showNavigationBtns?.customClassName}-swiper-button-next`} title='Next'>
                         <ArrowRightSvg className="fill-white/60 hover:fill-white/90" />
                     </button>
                 </nav>

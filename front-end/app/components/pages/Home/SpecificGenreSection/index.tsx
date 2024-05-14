@@ -4,20 +4,30 @@ import Link from 'next/link'
 import React from 'react'
 import { SwiperSlide } from 'swiper/react'
 
-function SpecificGenreSection({ data, genreNumber }: { data: GameInfo[], genreNumber?: number }) {
-
-    console.log(data[1].genres)
+function SpecificGenreSection({ data, genre }: { data: GameInfo[], genre: string }) {
 
     return (
         <section className='bg-primary py-4'>
 
             <div className='container mx-auto px-2'>
 
-                <h2 className='text-4xl font-bold text-white mb-4'>Horror Games</h2>
+                <div className='flex justify-between items-center'>
+                    <h2 className='text-4xl font-bold text-white mb-4'>Horror Games</h2>
+
+                    <Link
+                        href={`/genre/${genre.split(/\s/)[0]}`}
+                        className='text-sm text-secondary font-semibold border-b-2 border-transparent hover:border-secondary transition-colors'
+                    >
+                        See All
+                    </Link>
+
+                </div>
 
                 <SwiperCarousel
                     slidesPerView={1.2}
-                    showNavigationBtns
+                    showNavigationBtns={{
+                        customClassName: "genre-section"
+                    }}
                     onlyLowerNavigation
                     breakpoints={{
                         bp480: 2.1,

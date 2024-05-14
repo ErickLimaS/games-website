@@ -104,7 +104,9 @@ function HeroSection({ data }: { data: GameInfo[] }) {
                     title='Featured & Recommended'
                     changeIndexFunction={(index: number) => setPage([index, index])}
                     slidesPerView={1.25}
-                    showNavigationBtns
+                    showNavigationBtns={{
+                        customClassName: "hero-section"
+                    }}
                     breakpoints={{
                         bp480: 2.05,
                         bp760: 3.2,
@@ -115,8 +117,14 @@ function HeroSection({ data }: { data: GameInfo[] }) {
                         <SwiperSlide key={key}>
 
                             <div
+                                data-active={page == key}
                                 title={item.name}
-                                style={{ backgroundImage: `url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)` }}
+                                style={{
+                                    backgroundImage: page == key ?
+                                        `linear-gradient(rgba(32, 232, 125, 0.35) 100%, rgba(32, 232, 125, 0.35) 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
+                                        :
+                                        `linear-gradient(transparent 100%, transparent 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
+                                }}
                                 className='flex aspect-6/4 bg-cover bg-no-repeat bg-center rounded-[4px]'
                             />
 

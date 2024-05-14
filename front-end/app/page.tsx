@@ -22,7 +22,7 @@ export default async function Home() {
       <HeroSection data={igdbData[0].result} />
 
       {/* HORROR GAMES */}
-      <SpecificGenreSection data={igdbData[1].result} />
+      <SpecificGenreSection data={igdbData[1].result} genre={igdbData[1].name} />
 
     </main>
   );
