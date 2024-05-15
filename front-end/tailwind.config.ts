@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        helveticaNow: ['var(--font-helvetica-now)']
+      },
       colors: {
         'primary': '#050914',
         'secondary': '#20e87d',

@@ -21,6 +21,23 @@
 
     }
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    small,
+    input,
+    select,
+    button,
+    a {
+
+        @apply font-helveticaNow;
+
+    }
+
     /* button {
 
         @apply focus:outline-none;
