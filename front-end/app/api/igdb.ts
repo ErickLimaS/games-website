@@ -1,13 +1,13 @@
 import { cookies } from "next/headers"
 import { selectAllFields } from "./igdbConstants"
-import { getIgdbToken } from "../../actions"
+import { getIgdbToken } from "@/actions"
 
 const BASE_URL = "https://api.igdb.com/v4"
 
 async function cookiesServerSide() {
 
     const cookie = cookies()
-    const tokenOnCookies = cookie.get("igdbToken") ? cookie.get("igdbToken")!.value : undefined
+    const tokenOnCookies = cookie.get("igdbToken") ? cookie.get("igdbToken")!.value : await getIgdbToken().then((res) => res.access_token)
 
     // First, try to get token on cookies, else fetchs a temporary one for the first time
     return tokenOnCookies
@@ -91,4 +91,3 @@ export async function fetchSearchResults(searchValue: string) {
 
 }
 
-export { getIgdbToken }
