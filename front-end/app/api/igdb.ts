@@ -50,7 +50,7 @@ export async function fetchHomePageData(genre?: string, platform?: string) {
 
     const query = `query games "This Month Releases" {
                         ${selectAllFields}
-                        where artworks != null & rating > 80 & first_release_date != null;
+                        where artworks != null & rating > 75 & first_release_date != null;
                         sort first_release_date desc;
                         limit 12;
                     };

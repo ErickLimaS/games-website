@@ -64,7 +64,7 @@ function SpecificGenreSection({ data, genre }: { data: GameInfo[], genre: string
                                             <Link
                                                 href={`/genre/${item.slug}`}
                                                 key={item.checksum}
-                                                className='p-1 bg-primary/85 rounded-sm'
+                                                className='p-1 bg-primary/85 rounded-sm text-sm'
                                             >
                                                 {item.name}
                                             </Link>

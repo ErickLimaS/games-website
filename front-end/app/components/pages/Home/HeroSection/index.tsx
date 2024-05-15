@@ -51,7 +51,7 @@ function HeroSection({ data }: { data: GameInfo[] }) {
                     <motion.li
                         key={page}
                         style={{ backgroundImage: `linear-gradient(rgba(0,0,0,.4), var(--primary) 90%), url(//images.igdb.com/igdb/image/upload/t_1080p/${data[imageIndex].artworks[0].image_id}.jpg)` }}
-                        className={`bg-cover bg-no-repeat bg-center h-screen `}
+                        className={`bg-cover bg-no-repeat bg-center h-screen`}
                         custom={direction}
                         variants={variants}
                         initial="enter"

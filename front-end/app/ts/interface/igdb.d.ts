@@ -25,7 +25,10 @@ interface GameInfo {
     screenshots: {}[],
     similar_games: {}[],
     tags: {}[],
-    themes: {}[],
+    themes: {
+        name: string,
+        slug: string,
+    }[],
     videos: {}[]
 
 }
