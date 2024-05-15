@@ -12,6 +12,7 @@ type swiperTypes = {
     initialIndex?: number,
     changeIndexFunction?: (index: number) => void,
     loop?: boolean,
+    isAlwaysCentered?: boolean,
     slidesPerView?: number,
     breakpoints?: { bp480: number, bp760: number, bp1275: number },
     showNavigationBtns?: {
@@ -28,6 +29,7 @@ function SwiperCarousel({
     initialIndex,
     changeIndexFunction,
     loop,
+    isAlwaysCentered,
     slidesPerView,
     breakpoints,
     showNavigationBtns,
@@ -75,7 +77,7 @@ function SwiperCarousel({
                     },
                     1275: {
                         slidesPerView: breakpoints ? breakpoints.bp1275 : 6.4,
-                        centeredSlides: false
+                        centeredSlides: isAlwaysCentered || false
                     }
                 }}
             >

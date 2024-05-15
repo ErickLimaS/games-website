@@ -44,6 +44,7 @@ function PopularPlatformGamesSection({ data }: { data: GameInfo[] }) {
                         initialIndex={currIndex}
                         changeIndexFunction={setCurrIndex}
                         slidesPerView={1.25}
+                        isAlwaysCentered
                         breakpoints={{
                             bp480: 2.05,
                             bp760: 3.2,
