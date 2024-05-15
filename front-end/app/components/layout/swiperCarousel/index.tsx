@@ -17,7 +17,7 @@ type swiperTypes = {
     showNavigationBtns?: {
         customClassName: string
     },
-    onlyLowerNavigation?: boolean | {
+    onlyLowerNavigation?: {
         showOnMobile?: boolean
     }
 }

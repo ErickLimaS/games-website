@@ -28,7 +28,9 @@ function SpecificGenreSection({ data, genre }: { data: GameInfo[], genre: string
                     showNavigationBtns={{
                         customClassName: "genre-section"
                     }}
-                    onlyLowerNavigation
+                    onlyLowerNavigation={{
+                        showOnMobile: false
+                    }}
                     breakpoints={{
                         bp480: 2.1,
                         bp760: 3,
