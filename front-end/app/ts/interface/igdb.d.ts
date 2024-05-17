@@ -16,11 +16,7 @@ interface GameInfo {
     summary: string,
     first_release_date: number,
     game_modes: {}[],
-    genres: {
-        name: string,
-        slug: string,
-        checksum: string
-    }[],
+    genres: igdbGenre[],
     platforms: {}[],
     screenshots: {}[],
     similar_games: {}[],
@@ -30,5 +26,17 @@ interface GameInfo {
         slug: string,
     }[],
     videos: {}[]
+
+}
+
+interface igdbGenre {
+
+    id: number,
+    created_at: number,
+    name: string,
+    slug: string,
+    updated_at: number,
+    url: string,
+    checksum: string,
 
 }

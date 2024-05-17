@@ -91,3 +91,18 @@ export async function fetchSearchResults(searchValue: string) {
 
 }
 
+
+// Fetch All Genres
+export async function fetchAllGenres() {
+
+    const query = `query genres "All Genres" {
+                        fields *;
+                        limit 18;
+                    };
+                    `
+
+    const data = await postData(query)
+
+    return data
+
+}
