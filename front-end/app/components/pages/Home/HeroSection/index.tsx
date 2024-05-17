@@ -98,40 +98,46 @@ function HeroSection({ data }: { data: GameInfo[] }) {
             </AnimatePresence>
 
             {/* SECOND CAROUSEL */}
-            <div className='container md:px-2 sm:mx-auto absolute z-10 bottom-[calc(6vh)] left-1/2 transform -translate-x-1/2'>
-
-                <SwiperCarousel
-                    title='Featured & Recommended'
-                    changeIndexFunction={(index: number) => setPage([index, index])}
-                    slidesPerView={1.25}
-                    showNavigationBtns={{
-                        customClassName: "hero-section"
-                    }}
-                    breakpoints={{
-                        bp480: 2.05,
-                        bp760: 3.2,
-                        bp1275: 4.2
-                    }}
+            <AnimatePresence>
+                <motion.div
+                    className='container md:px-2 sm:mx-auto absolute z-10 bottom-[calc(6vh)] left-1/2 transform -translate-x-1/2'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: { duration: 1.5 } }}
                 >
-                    {data.map((item, key: number) => (
-                        <SwiperSlide key={key}>
 
-                            <div
-                                data-active={page == key}
-                                title={item.name}
-                                style={{
-                                    backgroundImage: page == key ?
-                                        `linear-gradient(rgba(32, 232, 125, 0.35) 100%, rgba(32, 232, 125, 0.35) 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
-                                        :
-                                        `linear-gradient(transparent 100%, transparent 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
-                                }}
-                                className='flex aspect-6/4 bg-cover bg-no-repeat bg-center rounded-[4px]'
-                            />
+                    <SwiperCarousel
+                        title='Featured & Recommended'
+                        changeIndexFunction={(index: number) => setPage([index, index])}
+                        slidesPerView={1.25}
+                        showNavigationBtns={{
+                            customClassName: "hero-section"
+                        }}
+                        breakpoints={{
+                            bp480: 2.05,
+                            bp760: 3.2,
+                            bp1275: 4.2
+                        }}
+                    >
+                        {data.map((item, key: number) => (
+                            <SwiperSlide key={key}>
 
-                        </SwiperSlide>))}
-                </SwiperCarousel>
+                                <div
+                                    data-active={page == key}
+                                    title={item.name}
+                                    style={{
+                                        backgroundImage: page == key ?
+                                            `linear-gradient(rgba(32, 232, 125, 0.35) 100%, rgba(32, 232, 125, 0.35) 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
+                                            :
+                                            `linear-gradient(transparent 100%, transparent 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
+                                    }}
+                                    className='flex aspect-6/4 bg-cover bg-no-repeat bg-center rounded-[4px]'
+                                />
 
-            </div>
+                            </SwiperSlide>))}
+                    </SwiperCarousel>
+
+                </motion.div>
+            </AnimatePresence>
 
         </section >
     )

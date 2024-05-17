@@ -11,6 +11,10 @@
 
 @layer base {
 
+    body {
+        @apply bg-primary;
+    }
+
     a,
     input,
     select {

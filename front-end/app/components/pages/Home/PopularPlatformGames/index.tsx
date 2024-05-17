@@ -4,6 +4,7 @@ import Link from 'next/link'
 import React, { useState } from 'react'
 import { SwiperSlide } from 'swiper/react'
 import ArrowRightSvg from "@/public/assets/svgs/arrow-right.svg"
+import { AnimatePresence, motion } from 'framer-motion'
 
 function PopularPlatformGamesSection({ data }: { data: GameInfo[] }) {
 
@@ -24,72 +25,86 @@ function PopularPlatformGamesSection({ data }: { data: GameInfo[] }) {
             <div className='relative top-1/3'>
                 <div className='container w-fit mx-auto space-y-3'>
 
-                    <h3 className='max-lg:absolute max-lg:-top-1/2 max-lg:left-1/2 max-lg:transform max-lg:-translate-x-1/2 max-lg:w-[90%] mx-auto text-2xl sm:text-3xl md:text-5xl font-extrabold line-clamp-2 text-center text-white'>
-                        {data[currIndex].name}
-                    </h3>
+                    <AnimatePresence>
+                        <motion.h3
+                            className='max-lg:absolute max-lg:-top-1/2 max-lg:left-1/2 max-lg:transform max-lg:-translate-x-1/2 max-lg:w-[90%] mx-auto text-2xl sm:text-3xl md:text-5xl font-extrabold line-clamp-2 text-center text-white'
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1, transition: { duration: 1.5 } }}
+                        >
+                            {data[currIndex].name}
+                        </motion.h3>
 
-                    <div className='w-fit mx-auto space-x-4'>
-                        {data[currIndex].themes.slice(0, 3).map((item, key) => (
-                            <small key={key} className='text-white md:text-xl font-bold'>
-                                {item.name.toUpperCase()}
-                            </small>
-                        ))}
-                    </div>
+                        <div className='w-fit mx-auto space-x-4'>
+                            {data[currIndex].themes.slice(0, 3).map((item, key) => (
+                                <small key={key} className='text-white md:text-xl font-bold'>
+                                    {item.name.toUpperCase()}
+                                </small>
+                            ))}
+                        </div>
 
+                    </AnimatePresence>
+                    
                 </div>
 
-                <div className='mt-6'>
-
-                    <SwiperCarousel
-                        initialIndex={currIndex}
-                        changeIndexFunction={setCurrIndex}
-                        slidesPerView={1.25}
-                        isAlwaysCentered
-                        breakpoints={{
-                            bp480: 2.05,
-                            bp760: 3.2,
-                            bp1275: 4.2
-                        }}
-                        showNavigationBtns={{
-                            customClassName: "popular-platform"
-                        }}
-                        onlyLowerNavigation={{
-                            showOnMobile: true
-                        }}
+                <AnimatePresence>
+                    <motion.div
+                        className='mt-6'
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1, transition: { duration: 1.5 } }}
                     >
 
-                        {data.map((item, key) => (
-                            <SwiperSlide key={key}>
+                        <SwiperCarousel
+                            initialIndex={currIndex}
+                            changeIndexFunction={setCurrIndex}
+                            slidesPerView={1.25}
+                            isAlwaysCentered
+                            breakpoints={{
+                                bp480: 2.05,
+                                bp760: 3.2,
+                                bp1275: 4.2
+                            }}
+                            showNavigationBtns={{
+                                customClassName: "popular-platform"
+                            }}
+                            onlyLowerNavigation={{
+                                showOnMobile: true
+                            }}
+                        >
 
-                                <div
-                                    title={item.name}
-                                    style={{
-                                        backgroundImage: currIndex == key ?
-                                            `linear-gradient(rgba(0 ,0 ,0 , 0.35) 100%, rgba(0 ,0 ,0 , 0.35) 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
-                                            :
-                                            `linear-gradient(transparent 100%, transparent 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
-                                    }}
-                                    className={`relative flex aspect-6/4 bg-cover bg-no-repeat bg-center border-2 ${currIndex == key ? "border-secondary" : "border-transparent scale-90"} rounded-md transition-all`}
-                                >
+                            {data.map((item, key) => (
+                                <SwiperSlide key={key}>
 
-                                    <div>
+                                    <div
+                                        title={item.name}
+                                        style={{
+                                            backgroundImage: currIndex == key ?
+                                                `linear-gradient(rgba(0 ,0 ,0 , 0.35) 100%, rgba(0 ,0 ,0 , 0.35) 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
+                                                :
+                                                `linear-gradient(transparent 100%, transparent 100%), url(//images.igdb.com/igdb/image/upload/t_720p/${item.artworks[0]?.image_id}.jpg)`
+                                        }}
+                                        className={`relative flex aspect-[5/3] bg-cover bg-no-repeat bg-center border-2 ${currIndex == key ? "border-secondary" : "border-transparent scale-90"} rounded-md transition-all`}
+                                    >
 
-                                        <Link href={`/game/${item.slug}`}
-                                            className={`absolute bottom-1 right-1 ${currIndex == key ? "flex" : "hidden"} items-center gap-2 text-sm font-medium text-secondary transition-all`}
-                                        >
-                                            See Details <ArrowRightSvg width={16} height={16} />
-                                        </Link>
+                                        <div>
+
+                                            <Link href={`/game/${item.slug}`}
+                                                className={`absolute bottom-1 right-1 ${currIndex == key ? "flex" : "hidden"} items-center gap-2 text-sm font-medium text-secondary transition-all`}
+                                            >
+                                                See Details <ArrowRightSvg width={16} height={16} />
+                                            </Link>
+
+                                        </div>
 
                                     </div>
 
-                                </div>
+                                </SwiperSlide>
+                            ))}
 
-                            </SwiperSlide>
-                        ))}
+                        </SwiperCarousel>
 
-                    </SwiperCarousel>
+                    </motion.div>
+                </AnimatePresence>
 
-                </div>
             </div>
 
         </section>

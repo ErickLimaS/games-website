@@ -62,7 +62,7 @@ function SpecificGenreSection({ data, genre }: { data: GameInfo[], genre: string
                                     </p>
 
                                     <div className='py-2 space-x-1'>
-                                        {item.genres.slice(0, 3).map((item, key) => (
+                                        {item.genres.slice(0, 3).map((item) => (
                                             <Link
                                                 href={`/genre/${item.slug}`}
                                                 key={item.checksum}
